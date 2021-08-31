@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="incprogramsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="customers">
+    <Key>
+      <PropertyRef Name="custId" />
+    </Key>
+    <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="custname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="custAccountName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="company" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="mobile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="fax" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="custlevel" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="custCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="balance" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
+    <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+  </EntityType>
+  <EntityType Name="packages">
+    <Key>
+      <PropertyRef Name="packageId" />
+    </Key>
+    <Property Name="packageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="packageName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="branchCount" Type="Int32" Nullable="false" />
+    <Property Name="posCount" Type="Int32" Nullable="false" />
+    <Property Name="userCount" Type="Int32" Nullable="false" />
+    <Property Name="vendorCount" Type="Int32" Nullable="false" />
+    <Property Name="customerCount" Type="Int32" Nullable="false" />
+    <Property Name="itemCount" Type="Int32" Nullable="false" />
+    <Property Name="salesInvCount" Type="Int32" Nullable="false" />
+    <Property Name="programId" Type="Int32" />
+    <Property Name="verId" Type="Int32" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="3" />
+    <Property Name="isActive" Type="Int32" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="packageCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="storeCount" Type="Int32" />
+    <Property Name="endDate" Type="DateTime" Precision="7" />
+    <Property Name="islimitDate" Type="Int32" Nullable="false" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="programs" Relationship="Self.FK_packages_programs" FromRole="packages" ToRole="programs" />
+    <NavigationProperty Name="users" Relationship="Self.FK_packages_users" FromRole="packages" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="Self.FK_packages_users1" FromRole="packages" ToRole="users" />
+    <NavigationProperty Name="versions" Relationship="Self.FK_packages_versions" FromRole="packages" ToRole="versions" />
+    <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_packages" FromRole="packages" ToRole="packageUser" />
+  </EntityType>
+  <EntityType Name="packageUser">
+    <Key>
+      <PropertyRef Name="packageUserId" />
+    </Key>
+    <Property Name="packageUserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="packageId" Type="Int32" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="packageSaleCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="packageNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="customerId" Type="Int32" />
+    <Property Name="customerServerCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="isBooked" Type="Int32" Nullable="false" />
+    <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="customers" Relationship="Self.FK_packageUser_customers" FromRole="packageUser" ToRole="customers" />
+    <NavigationProperty Name="packages" Relationship="Self.FK_packageUser_packages" FromRole="packageUser" ToRole="packages" />
+    <NavigationProperty Name="users" Relationship="Self.FK_packageUser_users" FromRole="packageUser" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="Self.FK_packageUser_users1" FromRole="packageUser" ToRole="users" />
+    <NavigationProperty Name="users2" Relationship="Self.FK_packageUser_users2" FromRole="packageUser" ToRole="users" />
+    <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_packageUser" FromRole="packageUser" ToRole="posSerials" />
+  </EntityType>
+  <EntityType Name="posSerials">
+    <Key>
+      <PropertyRef Name="serialId" />
+    </Key>
+    <Property Name="serialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="serial" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="posDeviceCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="packageUserId" Type="Int32" />
+    <Property Name="isBooked" Type="Int32" Nullable="false" />
+    <Property Name="isActive" Type="Int32" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="apikey" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="packageUser" Relationship="Self.FK_posSerials_packageUser" FromRole="posSerials" ToRole="packageUser" />
+    <NavigationProperty Name="users" Relationship="Self.FK_posSerials_users" FromRole="posSerials" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="Self.FK_posSerials_users1" FromRole="posSerials" ToRole="users" />
+  </EntityType>
+  <EntityType Name="programs">
+    <Key>
+      <PropertyRef Name="programId" />
+    </Key>
+    <Property Name="programId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Int32" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="programCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="packages" Relationship="Self.FK_packages_programs" FromRole="programs" ToRole="packages" />
+    <NavigationProperty Name="users" Relationship="Self.FK_programs_users" FromRole="programs" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="Self.FK_programs_users1" FromRole="programs" ToRole="users" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccountName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="company" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="mobile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="fax" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="agentLevel" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="agentCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="balance" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="customers" Relationship="Self.FK_customers_users" FromRole="users" ToRole="customers" />
+    <NavigationProperty Name="customers1" Relationship="Self.FK_customers_users1" FromRole="users" ToRole="customers" />
+    <NavigationProperty Name="packages" Relationship="Self.FK_packages_users" FromRole="users" ToRole="packages" />
+    <NavigationProperty Name="packages1" Relationship="Self.FK_packages_users1" FromRole="users" ToRole="packages" />
+    <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_users" FromRole="users" ToRole="packageUser" />
+    <NavigationProperty Name="packageUser1" Relationship="Self.FK_packageUser_users1" FromRole="users" ToRole="packageUser" />
+    <NavigationProperty Name="packageUser2" Relationship="Self.FK_packageUser_users2" FromRole="users" ToRole="packageUser" />
+    <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_users" FromRole="users" ToRole="posSerials" />
+    <NavigationProperty Name="posSerials1" Relationship="Self.FK_posSerials_users1" FromRole="users" ToRole="posSerials" />
+    <NavigationProperty Name="programs" Relationship="Self.FK_programs_users" FromRole="users" ToRole="programs" />
+    <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
+    <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
+    <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+  </EntityType>
+  <EntityType Name="versions">
+    <Key>
+      <PropertyRef Name="verId" />
+    </Key>
+    <Property Name="verId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Int32" Nullable="false" />
+    <Property Name="versionscode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="packages" Relationship="Self.FK_packages_versions" FromRole="versions" ToRole="packages" />
+    <NavigationProperty Name="users" Relationship="Self.FK_versions_users" FromRole="versions" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="Self.FK_versions_users1" FromRole="versions" ToRole="users" />
+  </EntityType>
+  <Association Name="FK_customers_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="customers" Type="Self.customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="customers">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_customers_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="customers" Type="Self.customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="customers">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packageUser_customers">
+    <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customers">
+        <PropertyRef Name="custId" />
+      </Principal>
+      <Dependent Role="packageUser">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packages_programs">
+    <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
+    <End Role="packages" Type="Self.packages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="programs">
+        <PropertyRef Name="programId" />
+      </Principal>
+      <Dependent Role="packages">
+        <PropertyRef Name="programId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packages_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="packages" Type="Self.packages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="packages">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packages_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="packages" Type="Self.packages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="packages">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packages_versions">
+    <End Role="versions" Type="Self.versions" Multiplicity="0..1" />
+    <End Role="packages" Type="Self.packages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="versions">
+        <PropertyRef Name="verId" />
+      </Principal>
+      <Dependent Role="packages">
+        <PropertyRef Name="verId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packageUser_packages">
+    <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packages">
+        <PropertyRef Name="packageId" />
+      </Principal>
+      <Dependent Role="packageUser">
+        <PropertyRef Name="packageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packageUser_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="packageUser">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packageUser_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="packageUser">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_packageUser_users2">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="packageUser">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_posSerials_packageUser">
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
+    <End Role="posSerials" Type="Self.posSerials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packageUser">
+        <PropertyRef Name="packageUserId" />
+      </Principal>
+      <Dependent Role="posSerials">
+        <PropertyRef Name="packageUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_posSerials_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="posSerials" Type="Self.posSerials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="posSerials">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_posSerials_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="posSerials" Type="Self.posSerials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="posSerials">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_programs_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="programs" Type="Self.programs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="programs">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_programs_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="programs" Type="Self.programs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="programs">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_versions_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="versions" Type="Self.versions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="versions">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_versions_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="versions" Type="Self.versions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="versions">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="incprogramsdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="customers" EntityType="Self.customers" />
+    <EntitySet Name="packages" EntityType="Self.packages" />
+    <EntitySet Name="packageUser" EntityType="Self.packageUser" />
+    <EntitySet Name="posSerials" EntityType="Self.posSerials" />
+    <EntitySet Name="programs" EntityType="Self.programs" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="users" EntityType="Self.users" />
+    <EntitySet Name="versions" EntityType="Self.versions" />
+    <AssociationSet Name="FK_customers_users" Association="Self.FK_customers_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="customers" EntitySet="customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_customers_users1" Association="Self.FK_customers_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="customers" EntitySet="customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packageUser_customers" Association="Self.FK_packageUser_customers">
+      <End Role="customers" EntitySet="customers" />
+      <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packages_programs" Association="Self.FK_packages_programs">
+      <End Role="programs" EntitySet="programs" />
+      <End Role="packages" EntitySet="packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packages_users" Association="Self.FK_packages_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="packages" EntitySet="packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packages_users1" Association="Self.FK_packages_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="packages" EntitySet="packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packages_versions" Association="Self.FK_packages_versions">
+      <End Role="versions" EntitySet="versions" />
+      <End Role="packages" EntitySet="packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packageUser_packages" Association="Self.FK_packageUser_packages">
+      <End Role="packages" EntitySet="packages" />
+      <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packageUser_users" Association="Self.FK_packageUser_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packageUser_users1" Association="Self.FK_packageUser_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_packageUser_users2" Association="Self.FK_packageUser_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_posSerials_packageUser" Association="Self.FK_posSerials_packageUser">
+      <End Role="packageUser" EntitySet="packageUser" />
+      <End Role="posSerials" EntitySet="posSerials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_posSerials_users" Association="Self.FK_posSerials_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="posSerials" EntitySet="posSerials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_posSerials_users1" Association="Self.FK_posSerials_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="posSerials" EntitySet="posSerials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_programs_users" Association="Self.FK_programs_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="programs" EntitySet="programs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_programs_users1" Association="Self.FK_programs_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="programs" EntitySet="programs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_versions_users" Association="Self.FK_versions_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="versions" EntitySet="versions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_versions_users1" Association="Self.FK_versions_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="versions" EntitySet="versions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
