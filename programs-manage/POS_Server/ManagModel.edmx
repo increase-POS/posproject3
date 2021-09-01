@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="customers">
           <Key>
             <PropertyRef Name="custId" />
@@ -29,6 +29,7 @@
           <Property Name="balance" Type="decimal" Precision="18" Scale="3" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="isActive" Type="int" />
         </EntityType>
         <EntityType Name="packages">
           <Key>
@@ -74,6 +75,9 @@
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="bookDate" Type="datetime2" Precision="7" />
+          <Property Name="isActive" Type="int" />
+          <Property Name="expireDate" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -141,6 +145,7 @@
           <Property Name="balance" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="isActive" Type="int" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -454,8 +459,7 @@
             <End Role="versions" EntitySet="versions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="incprogramsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -486,6 +490,7 @@
           <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+          <Property Name="isActive" Type="Int32" />
         </EntityType>
         <EntityType Name="packages">
           <Key>
@@ -542,6 +547,9 @@
           <NavigationProperty Name="users1" Relationship="Self.FK_packageUser_users1" FromRole="packageUser" ToRole="users" />
           <NavigationProperty Name="users2" Relationship="Self.FK_packageUser_users2" FromRole="packageUser" ToRole="users" />
           <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_packageUser" FromRole="packageUser" ToRole="posSerials" />
+          <Property Name="bookDate" Type="DateTime" Precision="7" />
+          <Property Name="isActive" Type="Int32" />
+          <Property Name="expireDate" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -628,6 +636,7 @@
           <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
           <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
           <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+          <Property Name="isActive" Type="Int32" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -953,6 +962,7 @@
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="incprogramsdbModel.customers">
               <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="custId" ColumnName="custId" />
                 <ScalarProperty Name="custname" ColumnName="custname" />
                 <ScalarProperty Name="custAccountName" ColumnName="custAccountName" />
@@ -1007,6 +1017,9 @@
           <EntitySetMapping Name="packageUser">
             <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
               <MappingFragment StoreEntitySet="packageUser">
+                <ScalarProperty Name="expireDate" ColumnName="expireDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="bookDate" ColumnName="bookDate" />
                 <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
                 <ScalarProperty Name="packageId" ColumnName="packageId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -1070,6 +1083,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="incprogramsdbModel.users">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="AccountName" ColumnName="AccountName" />

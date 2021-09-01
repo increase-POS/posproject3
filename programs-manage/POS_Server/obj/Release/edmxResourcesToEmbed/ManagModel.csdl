@@ -27,6 +27,7 @@
     <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+    <Property Name="isActive" Type="Int32" />
   </EntityType>
   <EntityType Name="packages">
     <Key>
@@ -83,6 +84,9 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_packageUser_users1" FromRole="packageUser" ToRole="users" />
     <NavigationProperty Name="users2" Relationship="Self.FK_packageUser_users2" FromRole="packageUser" ToRole="users" />
     <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_packageUser" FromRole="packageUser" ToRole="posSerials" />
+    <Property Name="bookDate" Type="DateTime" Precision="7" />
+    <Property Name="isActive" Type="Int32" />
+    <Property Name="expireDate" Type="DateTime" Precision="7" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -169,6 +173,7 @@
     <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
     <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
     <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+    <Property Name="isActive" Type="Int32" />
   </EntityType>
   <EntityType Name="versions">
     <Key>

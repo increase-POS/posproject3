@@ -29,6 +29,6 @@ namespace Programs_Server.Models
         public Nullable<int> updateUserId { get; set; }
 
         public bool canDelete { get; set; }
-  
+        public Nullable<int> isActive { get; set; }
     }
 }

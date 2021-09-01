@@ -24,6 +24,7 @@
     <Property Name="balance" Type="decimal" Precision="18" Scale="3" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="isActive" Type="int" />
   </EntityType>
   <EntityType Name="packages">
     <Key>
@@ -69,6 +70,9 @@
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="bookDate" Type="datetime2" Precision="7" />
+    <Property Name="isActive" Type="int" />
+    <Property Name="expireDate" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -136,6 +140,7 @@
     <Property Name="balance" Type="decimal" Precision="18" Scale="3" Nullable="false" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="isActive" Type="int" />
   </EntityType>
   <EntityType Name="versions">
     <Key>

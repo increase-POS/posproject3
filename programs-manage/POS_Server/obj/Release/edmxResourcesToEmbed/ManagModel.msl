@@ -4,6 +4,7 @@
     <EntitySetMapping Name="customers">
       <EntityTypeMapping TypeName="incprogramsdbModel.customers">
         <MappingFragment StoreEntitySet="customers">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="custId" ColumnName="custId" />
           <ScalarProperty Name="custname" ColumnName="custname" />
           <ScalarProperty Name="custAccountName" ColumnName="custAccountName" />
@@ -58,6 +59,9 @@
     <EntitySetMapping Name="packageUser">
       <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
         <MappingFragment StoreEntitySet="packageUser">
+          <ScalarProperty Name="expireDate" ColumnName="expireDate" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="bookDate" ColumnName="bookDate" />
           <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
           <ScalarProperty Name="packageId" ColumnName="packageId" />
           <ScalarProperty Name="userId" ColumnName="userId" />
@@ -121,6 +125,7 @@
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="incprogramsdbModel.users">
         <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="AccountName" ColumnName="AccountName" />

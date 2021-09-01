@@ -217,8 +217,8 @@ D:\myproj\posproject3\programs-manage\POS_Server\bin\System.Web.WebPages.Deploym
 D:\myproj\posproject3\programs-manage\POS_Server\bin\System.Web.WebPages.Razor.xml
 D:\myproj\posproject3\programs-manage\POS_Server\bin\Antlr3.Runtime.pdb
 D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csprojAssemblyReference.cache
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.CoreCompileInputs.cache
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.CopyComplete
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.dll
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.pdb
+D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csprojAssemblyReference.cache

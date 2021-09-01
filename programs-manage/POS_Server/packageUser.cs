@@ -33,6 +33,9 @@ namespace Programs_Server
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<System.DateTime> bookDate { get; set; }
+        public Nullable<int> isActive { get; set; }
+        public Nullable<System.DateTime> expireDate { get; set; }
     
         public virtual customers customers { get; set; }
         public virtual packages packages { get; set; }
