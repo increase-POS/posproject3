@@ -1,4 +1,5 @@
-﻿using POS.Classes;
+﻿using AdministratorApp.Classes;
+using AdministratorApp.View.applications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,18 +47,18 @@ namespace AdministratorApp
             #region translate
             if (lang.Equals("en"))
             {
-                resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
                 grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
                 grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
             }
             #endregion
         }
 
-        List<string> menuList;
+       public static List<string> menuList;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -67,7 +68,8 @@ namespace AdministratorApp
                 //    SectionData.StartAwait(grid_mainWindow);
 
 
-               menuList = new List<string> { "home", "settings" };
+               menuList = new List<string> { "applications", "sales", "reports",  
+                   "sectionData","settings"};
 
 
 
@@ -83,29 +85,7 @@ namespace AdministratorApp
                 SectionData.ExceptionMessage(ex, this);
             }
         }
-        private void BTN_home_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            Button button = sender as Button;
-            colorTextRefreash(button.Tag.ToString());
-            fn_ColorIconRefreash(button.Tag.ToString());
-            FN_pathVisible(button.Tag.ToString());
-            //grid_main.Children.Clear();
-            //grid_main.Children.Add(uc_home.Instance);
-            //}
-            //catch (Exception ex)
-            //{
-            //    SectionData.ExceptionMessage(ex, this);
-            //}
-        }
-        private void Btn_settings_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            colorTextRefreash(button.Tag.ToString());
-            ColorIconRefreash(button.Tag.ToString());
-            openVisible(button.Tag.ToString());
-        }
+    
         void colorTextRefreash(string str)
         {
             foreach (TextBlock textBlock in FindControls.FindVisualChildren<TextBlock>(this))
@@ -197,6 +177,89 @@ namespace AdministratorApp
             {
                 SectionData.ExceptionMessage(ex, this);
             }
+        }
+        private void Btn_applications_Click(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            Button button = sender as Button;
+            colorTextRefreash(button.Tag.ToString());
+            ColorIconRefreash(button.Tag.ToString());
+            openVisible(button.Tag.ToString());
+            grid_main.Children.Clear();
+            grid_main.Children.Add(us_applications.Instance);
+            //}
+            //catch (Exception ex)
+            //{
+            //    SectionData.ExceptionMessage(ex, this);
+            //}
+        }
+       
+        private void Btn_sales_Click(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            Button button = sender as Button;
+            colorTextRefreash(button.Tag.ToString());
+            ColorIconRefreash(button.Tag.ToString());
+            openVisible(button.Tag.ToString());
+            grid_main.Children.Clear();
+            //grid_main.Children.Add(uc_home.Instance);
+            //}
+            //catch (Exception ex)
+            //{
+            //    SectionData.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            Button button = sender as Button;
+            colorTextRefreash(button.Tag.ToString());
+            ColorIconRefreash(button.Tag.ToString());
+            openVisible(button.Tag.ToString());
+            grid_main.Children.Clear();
+            //grid_main.Children.Add(uc_home.Instance);
+            //}
+            //catch (Exception ex)
+            //{
+            //    SectionData.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private void Btn_reports_Click(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            Button button = sender as Button;
+            colorTextRefreash(button.Tag.ToString());
+            ColorIconRefreash(button.Tag.ToString());
+            openVisible(button.Tag.ToString());
+            grid_main.Children.Clear();
+            //grid_main.Children.Add(uc_home.Instance);
+            //}
+            //catch (Exception ex)
+            //{
+            //    SectionData.ExceptionMessage(ex, this);
+            //}
+        }
+        private void Btn_settings_Click(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            Button button = sender as Button;
+            colorTextRefreash(button.Tag.ToString());
+            ColorIconRefreash(button.Tag.ToString());
+            openVisible(button.Tag.ToString());
+            grid_main.Children.Clear();
+            //grid_main.Children.Add(uc_home.Instance);
+            //}
+            //catch (Exception ex)
+            //{
+            //    SectionData.ExceptionMessage(ex, this);
+            //}
         }
 
     }

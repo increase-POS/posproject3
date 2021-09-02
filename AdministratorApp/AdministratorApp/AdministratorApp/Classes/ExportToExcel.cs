@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.Windows;
 
-namespace POS.Classes
+namespace AdministratorApp.Classes
 {
     class ExportToExcel
     {

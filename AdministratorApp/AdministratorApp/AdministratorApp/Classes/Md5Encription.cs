@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Classes
+namespace AdministratorApp.Classes
 {
     class Md5Encription
     {

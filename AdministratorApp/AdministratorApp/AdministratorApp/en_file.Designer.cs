@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace POS {
+namespace AdministratorApp
+{
     using System;
     
     
@@ -39,7 +40,7 @@ namespace POS {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("POS.en_file", typeof(en_file).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AdministratorApp.en_file", typeof(en_file).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

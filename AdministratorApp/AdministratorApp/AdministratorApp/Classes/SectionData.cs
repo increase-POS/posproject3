@@ -17,7 +17,7 @@ using System.Windows.Resources;
 using System.Windows.Shapes;
 using Tulpep.NotificationWindow;
 
-namespace POS.Classes
+namespace AdministratorApp.Classes
 {
     class SectionData
     {

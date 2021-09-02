@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Classes
+namespace AdministratorApp.Classes
 {
     class BadDateFixingConverter : JsonConverter
     {
