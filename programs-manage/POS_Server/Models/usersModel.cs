@@ -20,7 +20,7 @@ namespace Programs_Server.Models
         public string agentLevel { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string agentCode { get; set; }
+        public string code { get; set; }
         public string password { get; set; }
         public string type { get; set; }
         public string image { get; set; }

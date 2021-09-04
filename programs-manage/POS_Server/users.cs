@@ -30,6 +30,7 @@ namespace Programs_Server
             this.programs1 = new HashSet<programs>();
             this.versions = new HashSet<versions>();
             this.versions1 = new HashSet<versions>();
+            this.error = new HashSet<error>();
         }
     
         public int userId { get; set; }
@@ -45,7 +46,6 @@ namespace Programs_Server
         public string agentLevel { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string agentCode { get; set; }
         public string password { get; set; }
         public string type { get; set; }
         public string image { get; set; }
@@ -54,6 +54,7 @@ namespace Programs_Server
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
+        public string code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customers> customers { get; set; }
@@ -81,5 +82,7 @@ namespace Programs_Server
         public virtual ICollection<versions> versions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<versions> versions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<error> error { get; set; }
     }
 }

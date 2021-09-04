@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3d47278d967047ea8a1c02cf15a5092d" Name="Diagram1" ZoomLevel="95">
+      <Diagram DiagramId="cdb7a057a1ba455ea04d69c52da69932" Name="Diagram1">
         <EntityTypeShape EntityType="incprogramsdbModel.customers" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.packages" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.packageUser" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="incprogramsdbModel.packages" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="incprogramsdbModel.packageUser" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.posSerials" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.programs" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="incprogramsdbModel.programs" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.users" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.versions" Width="1.5" PointX="3" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="incprogramsdbModel.versions" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
         <AssociationConnector Association="incprogramsdbModel.FK_customers_users" ManuallyRouted="false" />
         <AssociationConnector Association="incprogramsdbModel.FK_customers_users1" ManuallyRouted="false" />
         <AssociationConnector Association="incprogramsdbModel.FK_packageUser_customers" ManuallyRouted="false" />
@@ -31,6 +31,8 @@
         <AssociationConnector Association="incprogramsdbModel.FK_programs_users1" ManuallyRouted="false" />
         <AssociationConnector Association="incprogramsdbModel.FK_versions_users" ManuallyRouted="false" />
         <AssociationConnector Association="incprogramsdbModel.FK_versions_users1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="incprogramsdbModel.error" Width="1.5" PointX="3" PointY="12.25" />
+        <AssociationConnector Association="incprogramsdbModel.FK_error_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

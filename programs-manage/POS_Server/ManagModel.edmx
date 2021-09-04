@@ -31,6 +31,18 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="int" />
         </EntityType>
+        <EntityType Name="error">
+          <Key>
+            <PropertyRef Name="errorId" />
+          </Key>
+          <Property Name="errorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="num" Type="nvarchar" MaxLength="200" />
+          <Property Name="msg" Type="ntext" />
+          <Property Name="stackTrace" Type="ntext" />
+          <Property Name="targetSite" Type="ntext" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+        </EntityType>
         <EntityType Name="packages">
           <Key>
             <PropertyRef Name="packageId" />
@@ -137,7 +149,6 @@
           <Property Name="agentLevel" Type="nvarchar" MaxLength="500" />
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
-          <Property Name="agentCode" Type="nvarchar" MaxLength="500" />
           <Property Name="password" Type="nvarchar" MaxLength="500" />
           <Property Name="type" Type="nvarchar" MaxLength="10" />
           <Property Name="image" Type="ntext" />
@@ -146,6 +157,7 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="int" />
+          <Property Name="code" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -182,6 +194,18 @@
             </Principal>
             <Dependent Role="customers">
               <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_error_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="error" Type="Self.error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="error">
+              <PropertyRef Name="createUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -379,6 +403,7 @@
         </Association>
         <EntityContainer Name="incprogramsdbModelStoreContainer">
           <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="error" EntityType="Self.error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="packages" EntityType="Self.packages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="packageUser" EntityType="Self.packageUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
@@ -393,6 +418,10 @@
           <AssociationSet Name="FK_customers_users1" Association="Self.FK_customers_users1">
             <End Role="users" EntitySet="users" />
             <End Role="customers" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_error_users" Association="Self.FK_error_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="error" EntitySet="error" />
           </AssociationSet>
           <AssociationSet Name="FK_packages_programs" Association="Self.FK_packages_programs">
             <End Role="programs" EntitySet="programs" />
@@ -487,10 +516,10 @@
           <Property Name="balance" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="isActive" Type="Int32" />
           <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
-          <Property Name="isActive" Type="Int32" />
         </EntityType>
         <EntityType Name="packages">
           <Key>
@@ -541,15 +570,15 @@
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="bookDate" Type="DateTime" Precision="7" />
+          <Property Name="isActive" Type="Int32" />
+          <Property Name="expireDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="customers" Relationship="Self.FK_packageUser_customers" FromRole="packageUser" ToRole="customers" />
           <NavigationProperty Name="packages" Relationship="Self.FK_packageUser_packages" FromRole="packageUser" ToRole="packages" />
           <NavigationProperty Name="users" Relationship="Self.FK_packageUser_users" FromRole="packageUser" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_packageUser_users1" FromRole="packageUser" ToRole="users" />
           <NavigationProperty Name="users2" Relationship="Self.FK_packageUser_users2" FromRole="packageUser" ToRole="users" />
           <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_packageUser" FromRole="packageUser" ToRole="posSerials" />
-          <Property Name="bookDate" Type="DateTime" Precision="7" />
-          <Property Name="isActive" Type="Int32" />
-          <Property Name="expireDate" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -615,7 +644,6 @@
           <Property Name="agentLevel" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="createDate" Type="DateTime" Precision="7" />
           <Property Name="updateDate" Type="DateTime" Precision="7" />
-          <Property Name="agentCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -623,6 +651,7 @@
           <Property Name="balance" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="isActive" Type="Int32" />
           <NavigationProperty Name="customers" Relationship="Self.FK_customers_users" FromRole="users" ToRole="customers" />
           <NavigationProperty Name="customers1" Relationship="Self.FK_customers_users1" FromRole="users" ToRole="customers" />
           <NavigationProperty Name="packages" Relationship="Self.FK_packages_users" FromRole="users" ToRole="packages" />
@@ -636,7 +665,8 @@
           <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
           <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
           <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
-          <Property Name="isActive" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="error" Relationship="incprogramsdbModel.FK_error_users" FromRole="users" ToRole="error" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -952,7 +982,37 @@
             <End Role="users" EntitySet="users" />
             <End Role="versions" EntitySet="versions" />
           </AssociationSet>
+          <EntitySet Name="error" EntityType="incprogramsdbModel.error" />
+          <AssociationSet Name="FK_error_users" Association="incprogramsdbModel.FK_error_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="error" EntitySet="error" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="error">
+          <Key>
+            <PropertyRef Name="errorId" />
+          </Key>
+          <Property Name="errorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="num" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="msg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="stackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="targetSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_error_users" FromRole="error" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_error_users">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.error" Role="error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="error">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -962,7 +1022,6 @@
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="incprogramsdbModel.customers">
               <MappingFragment StoreEntitySet="customers">
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="custId" ColumnName="custId" />
                 <ScalarProperty Name="custname" ColumnName="custname" />
                 <ScalarProperty Name="custAccountName" ColumnName="custAccountName" />
@@ -983,6 +1042,7 @@
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1017,9 +1077,6 @@
           <EntitySetMapping Name="packageUser">
             <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
               <MappingFragment StoreEntitySet="packageUser">
-                <ScalarProperty Name="expireDate" ColumnName="expireDate" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="bookDate" ColumnName="bookDate" />
                 <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
                 <ScalarProperty Name="packageId" ColumnName="packageId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -1033,6 +1090,9 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="bookDate" ColumnName="bookDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="expireDate" ColumnName="expireDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1083,7 +1143,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="incprogramsdbModel.users">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="AccountName" ColumnName="AccountName" />
@@ -1097,7 +1157,6 @@
                 <ScalarProperty Name="agentLevel" ColumnName="agentLevel" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-                <ScalarProperty Name="agentCode" ColumnName="agentCode" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="image" ColumnName="image" />
@@ -1105,6 +1164,7 @@
                 <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1120,6 +1180,19 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="error">
+            <EntityTypeMapping TypeName="incprogramsdbModel.error">
+              <MappingFragment StoreEntitySet="error">
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="targetSite" ColumnName="targetSite" />
+                <ScalarProperty Name="stackTrace" ColumnName="stackTrace" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="errorId" ColumnName="errorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

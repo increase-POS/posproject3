@@ -204,6 +204,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Classes\Calculate.cs" />
     <Compile Include="Controllers\customersController.cs" />
+    <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\packagesController.cs" />
     <Compile Include="Controllers\packageUserController.cs" />
     <Compile Include="Controllers\posSerialsController.cs" />
@@ -211,6 +212,9 @@
     <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Controllers\versionsController.cs" />
     <Compile Include="customers.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="error.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -232,6 +236,7 @@
       <DependentUpon>ManagModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\customersModel.cs" />
+    <Compile Include="Models\errorModel.cs" />
     <Compile Include="Models\packagesModel.cs" />
     <Compile Include="Models\packageUserModel.cs" />
     <Compile Include="Models\posSerialsModel.cs" />

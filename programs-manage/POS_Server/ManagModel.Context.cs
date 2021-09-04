@@ -33,5 +33,6 @@ namespace Programs_Server
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<versions> versions { get; set; }
+        public virtual DbSet<error> error { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace Programs_Server.Controllers
                                     agentLevel = S.agentLevel,
                                     createDate = S.createDate,
                                     updateDate = S.updateDate,
-                                    agentCode = S.agentCode,
+                                    code = S.code,
                                     password = S.password,
                                     type = S.type,
                                     image = S.image,
@@ -137,7 +137,7 @@ namespace Programs_Server.Controllers
                        S.agentLevel,
                        S.createDate,
                        S.updateDate,
-                       S.agentCode,
+                       S.code,
                        S.password,
                        S.type,
                        S.image,
@@ -228,7 +228,7 @@ namespace Programs_Server.Controllers
                             tmpObject.agentLevel = newObject.agentLevel;
                           //  tmpObject.createDate = newObject.createDate;
                          
-                            tmpObject.agentCode = newObject.agentCode;
+                            tmpObject.code = newObject.code;
                             tmpObject.password = newObject.password;
                             tmpObject.type = newObject.type;
                             tmpObject.image = newObject.image;
