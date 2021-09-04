@@ -126,6 +126,7 @@
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
     <Compile Include="Classes\ApiClasses\Customers.cs" />
     <Compile Include="Classes\ApiClasses\Packages.cs" />
+    <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
     <Compile Include="Classes\ApiClasses\PackageUser.cs" />
     <Compile Include="Classes\ApiClasses\PosSerials.cs" />
     <Compile Include="Classes\ApiClasses\Programs.cs" />
