@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\GitHub\posproject3\AdministratorApp\AdministratorApp\AdministratorApp\obj\Debug\
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\
 AdministratorApp
 none
 false
 DEBUG;TRACE
-E:\GitHub\posproject3\AdministratorApp\AdministratorApp\AdministratorApp\App.xaml
-3-2010333582
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\App.xaml
+51509847503
 
-241294347312
-137-17063488
-MainWindow.xaml;View\applications\us_applications.xaml;View\applications\us_programs.xaml;
+34-329001125
+37-87206093
+MainWindow.xaml;View\applications\uc_applications.xaml;View\applications\us_programs.xaml;View\sectionData\uc_sectionData.xaml;View\sectionData\uc_users.xaml;
 
-True
+False
 

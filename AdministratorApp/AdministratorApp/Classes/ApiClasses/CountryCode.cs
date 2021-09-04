@@ -10,8 +10,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using AdministratorApp.Classes;
 
-namespace AdministratorApp.Classes
+namespace AdministratorApp.ApiClasses
 {
     public class CountryCode
     {

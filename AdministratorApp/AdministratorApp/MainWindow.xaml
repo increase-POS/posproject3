@@ -10,7 +10,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"  WindowStyle="None"
         WindowState="Maximized" d:DesignWidth="1200" d:DesignHeight="800"   >
-    <Grid Margin="0" x:Name="grid_mainWindow" >
+    <Grid Margin="0" x:Name="grid_mainGrid" >
         <Grid Background="#E8E8E8"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -323,5 +323,8 @@
             <Grid   x:Name="grid_main" Grid.Row="0" Grid.Column="1"/>
 
         </Grid>
+        
+        <!--<mah:ProgressRing Width="30" Height="50"  Grid.RowSpan="3" Grid.Column="1" />-->
+
     </Grid>
 </Window>

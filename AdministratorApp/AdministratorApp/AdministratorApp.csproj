@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ControlzEx">
-      <HintPath>..\packages\ControlzEx.4.4.0\lib\netcoreapp3.1\ControlzEx.dll</HintPath>
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
     <Reference Include="FontAwesome.WPF">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
@@ -47,8 +47,8 @@
     <Reference Include="LiveCharts.Wpf">
       <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro">
-      <HintPath>..\packages\MahApps.Metro.2.4.5\lib\net47\MahApps.Metro.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.2.4.7\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors">
       <HintPath>..\packages\MaterialDesignColors.2.0.0\lib\net452\MaterialDesignColors.dll</HintPath>
@@ -78,7 +78,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors">
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -86,6 +86,8 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing.Common">
       <HintPath>..\packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
@@ -93,6 +95,8 @@
     <Reference Include="System.Reactive">
       <HintPath>..\packages\System.Reactive.4.0.0\lib\net46\System.Reactive.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -117,11 +121,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\applications\us_applications.xaml.cs">
-      <DependentUpon>us_applications.xaml</DependentUpon>
+    <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
+    <Compile Include="Classes\ApiClasses\City.cs" />
+    <Compile Include="Classes\ApiClasses\CountryCode.cs" />
+    <Compile Include="Classes\ApiClasses\Customers.cs" />
+    <Compile Include="Classes\ApiClasses\Packages.cs" />
+    <Compile Include="Classes\ApiClasses\PackageUser.cs" />
+    <Compile Include="Classes\ApiClasses\PosSerials.cs" />
+    <Compile Include="Classes\ApiClasses\Programs.cs" />
+    <Compile Include="Classes\ApiClasses\Users.cs" />
+    <Compile Include="Classes\ApiClasses\versions.cs" />
+    <Compile Include="Classes\DynamicallyClass.cs" />
+    <Compile Include="Classes\HelpClass.cs" />
+    <Compile Include="View\applications\uc_applications.xaml.cs">
+      <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
+      <DependentUpon>uc_sectionData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\uc_users.xaml.cs">
+      <DependentUpon>uc_users.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -134,16 +156,12 @@
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\Animations.cs" />
     <Compile Include="Classes\BadDateFixingConverter.cs" />
-    <Compile Include="Classes\City.cs" />
     <Compile Include="Classes\ClassStaticy.cs" />
-    <Compile Include="Classes\CountryCode.cs" />
     <Compile Include="Classes\DataGridHelper.cs" />
     <Compile Include="Classes\ErrorClass.cs" />
     <Compile Include="Classes\ExportToExcel.cs" />
     <Compile Include="Classes\FindVisualChildren.cs" />
     <Compile Include="Classes\Md5Encription.cs" />
-    <Compile Include="Classes\SectionData.cs" />
-    <Compile Include="Classes\User.cs" />
     <Compile Include="Classes\ValidatorExtensions.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="Global.cs" />
@@ -151,11 +169,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\applications\us_applications.xaml">
+    <Page Include="View\applications\uc_applications.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\applications\us_programs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\uc_sectionData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\uc_users.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,7 +221,6 @@
   <ItemGroup>
     <Folder Include="View\reports\" />
     <Folder Include="View\sales\" />
-    <Folder Include="View\sectionData\" />
     <Folder Include="View\settings\" />
   </ItemGroup>
   <ItemGroup>

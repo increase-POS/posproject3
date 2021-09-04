@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace POS.Classes
+namespace AdministratorApp.ApiClasses
 {
     public class Packages
     {
@@ -76,7 +76,7 @@ namespace POS.Classes
         public async Task<string> Save(Packages obj)
         {
             var myContent = JsonConvert.SerializeObject(obj);
-            myContent = System.Web.HttpUtility.UrlEncode(myContent);
+            myContent = HttpUtility.UrlEncode(myContent);
             Uri uri = new Uri(Global.APIUri + urimainpath + "Save?Object=" + myContent);
 
             HttpResponseMessage response = new HttpResponseMessage();

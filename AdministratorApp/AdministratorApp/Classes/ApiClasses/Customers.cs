@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace POS.Classes
+namespace AdministratorApp.ApiClasses
 {
     public class Customers
     {
@@ -93,7 +89,7 @@ namespace POS.Classes
             // ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             // 
             var myContent = JsonConvert.SerializeObject(obj);
-            myContent = HttpUtility.UrlEncode(myContent);
+            myContent = System.Web.HttpUtility.UrlEncode(myContent);
 
 
             /*

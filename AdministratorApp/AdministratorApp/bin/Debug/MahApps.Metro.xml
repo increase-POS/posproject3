@@ -9044,6 +9044,22 @@
             <param name="child">A node in a visual tree</param>
             <returns>All ancestors in visual tree of <paramref name="child"/> element</returns>
         </member>
+        <member name="M:MahApps.Metro.Controls.TreeHelper.GetVisualAncestry(System.Windows.DependencyObject)">
+            <summary>
+            Returns full visual ancestry, starting at the leaf.
+            <para>If element is not of <see cref="T:System.Windows.Media.Visual"/> or <see cref="T:System.Windows.Media.Media3D.Visual3D"/> the logical ancestry is used.</para>
+            </summary>
+            <param name="leaf">The starting object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MahApps.Metro.Controls.TreeHelper.GetVisualAncestor``1(System.Windows.DependencyObject)">
+            <summary>
+            Tries to find and returns a visual ancestor, starting at the leaf.
+            <para>If element is not of <see cref="T:System.Windows.Media.Visual"/> or <see cref="T:System.Windows.Media.Media3D.Visual3D"/> the logical ancestry is used.</para>
+            </summary>
+            <param name="leaf">The starting object.</param>
+            <returns></returns>
+        </member>
         <member name="M:MahApps.Metro.Controls.TreeHelper.FindChild``1(System.Windows.DependencyObject,System.String)">
             <summary>
             Finds a Child of a given item in the visual tree. 

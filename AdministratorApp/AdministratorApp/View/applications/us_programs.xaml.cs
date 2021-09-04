@@ -18,21 +18,23 @@ namespace AdministratorApp.View.applications
     /// <summary>
     /// Interaction logic for us_programs.xaml
     /// </summary>
-    public partial class us_programs : UserControl
+    public partial class uc_programs : UserControl
     {
-        private static us_programs _instance;
-        public static us_programs Instance
+        private static uc_programs _instance;
+        public static uc_programs Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new us_programs();
+                    _instance = new uc_programs();
                 return _instance;
             }
         }
-        public us_programs()
+        public uc_programs()
         {
             InitializeComponent();
         }
+
+        
     }
 }

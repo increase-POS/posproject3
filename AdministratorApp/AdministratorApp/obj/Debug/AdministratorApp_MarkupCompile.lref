@@ -1,6 +1,8 @@
 ﻿
-FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\AdministratorApp\App.xaml;;
-FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\AdministratorApp\MainWindow.xaml;;
-FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\AdministratorApp\View\applications\us_applications.xaml;;
-FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\AdministratorApp\View\applications\us_programs.xaml;;
+FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\App.xaml;;
+FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\MainWindow.xaml;;
+FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\View\applications\uc_applications.xaml;;
+FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\View\applications\us_programs.xaml;;
+FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_sectionData.xaml;;
+FE:\GitHub\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_users.xaml;;
 
