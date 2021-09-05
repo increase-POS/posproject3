@@ -17,7 +17,7 @@ namespace AdministratorApp.ApiClasses
         public int programId { get; set; }
         public string name { get; set; }
         public string details { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
         public int isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }

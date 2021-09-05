@@ -15,6 +15,7 @@ namespace AdministratorApp.ApiClasses
     {
 
         public int verId { get; set; }
+        public int programId { get; set; }
         public string name { get; set; }
         public string details { get; set; }
         public int isActive { get; set; }

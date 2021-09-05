@@ -453,3 +453,11 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\AdministratorA
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\AdministratorApp.csproj.CopyComplete
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\AdministratorApp.exe
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\AdministratorApp.pdb
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sectionData\uc_agents.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sectionData\uc_customers.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sectionData\uc_agents.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sectionData\uc_customers.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_packages.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_versions.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_packages.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_versions.baml

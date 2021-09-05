@@ -13,7 +13,6 @@ namespace AdministratorApp.ApiClasses
 {
     public class Users
     {
-
         public int userId { get; set; }
         public string code { get; set; }
         public string name { get; set; }
@@ -37,14 +36,12 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
         public bool canDelete { get; set; }
-
         private string urimainpath = "users/";
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
         /// <returns></returns>
         /// 
-
         public async Task<List<Users>> GetAll()
         {
             List<Users> memberships = null;
@@ -72,7 +69,6 @@ namespace AdministratorApp.ApiClasses
             }
 
         }
-
         public async Task<string> Save(Users obj)
         {
             var myContent = JsonConvert.SerializeObject(obj);
@@ -92,7 +88,6 @@ namespace AdministratorApp.ApiClasses
                 return "";
             }
         }
-
         public async Task<Users> GetByID(int userId)
         {
             Users obj = new Users();
@@ -114,7 +109,6 @@ namespace AdministratorApp.ApiClasses
                 return obj;
             }
         }
-
         public async Task<string> Delete(int userId, int signuserId, bool final)
         {
             HttpResponseMessage response = new HttpResponseMessage();
@@ -131,10 +125,5 @@ namespace AdministratorApp.ApiClasses
                 return "";
             }
         }
-
-
-
-
-
     }
 }

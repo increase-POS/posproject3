@@ -235,15 +235,7 @@
                 </StackPanel>-->
                     <!--<Border Grid.Column="2" Height="30" BorderBrush="White" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>-->
 
-                    <materialDesign:Badged VerticalAlignment="Center" Margin="7.5,10,7.5,10"  Grid.Column="4" DockPanel.Dock="Right" 
-                      BadgeBackground="{StaticResource Red}"  BadgeForeground="White"  Badge="+9">
-                        <Button Grid.Column="4" x:Name="BTN_message"
-                    Background="{x:Null}" BorderBrush="{x:Null}" Width="25" Height="25" 
-                    Padding="0" >
-                            <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="Message"  FlowDirection="LeftToRight"
-                                         Width="25" Height="25"/>
-                        </Button>
-                    </materialDesign:Badged>
+                 
 
 
 

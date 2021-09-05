@@ -137,8 +137,20 @@
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\applications\uc_packages.xaml.cs">
+      <DependentUpon>uc_packages.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\applications\uc_versions.xaml.cs">
+      <DependentUpon>uc_versions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\uc_agents.xaml.cs">
+      <DependentUpon>uc_agents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\uc_customers.xaml.cs">
+      <DependentUpon>uc_customers.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
@@ -159,7 +171,6 @@
     <Compile Include="Classes\BadDateFixingConverter.cs" />
     <Compile Include="Classes\ClassStaticy.cs" />
     <Compile Include="Classes\DataGridHelper.cs" />
-    <Compile Include="Classes\ErrorClass.cs" />
     <Compile Include="Classes\ExportToExcel.cs" />
     <Compile Include="Classes\FindVisualChildren.cs" />
     <Compile Include="Classes\Md5Encription.cs" />
@@ -174,7 +185,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\applications\uc_packages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\applications\uc_versions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\applications\us_programs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\uc_agents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\uc_customers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

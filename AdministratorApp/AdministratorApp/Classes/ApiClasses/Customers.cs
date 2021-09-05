@@ -11,29 +11,27 @@ namespace AdministratorApp.ApiClasses
     {
 
         public int custId { get; set; }
+        public string custCode { get; set; }
         public string custname { get; set; }
-        public string custAccountName { get; set; }
         public string lastName { get; set; }
-        public string company { get; set; }
+        public string custAccountName { get; set; }
+        public string password { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
         public string mobile { get; set; }
         public string fax { get; set; }
         public string address { get; set; }
         public string custlevel { get; set; }
+        public string company { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string custCode { get; set; }
-        public string password { get; set; }
         public string image { get; set; }
         public string notes { get; set; }
         public Nullable<decimal> balance { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-
         public bool canDelete { get; set; }
         public Nullable<int> isActive { get; set; }
-
 
         private string urimainpath = "customers/";
         /// <summary>
@@ -41,13 +39,6 @@ namespace AdministratorApp.ApiClasses
         /// </summary>
         /// <returns></returns>
         /// 
-
-
-       
-
-      
-
-      
 
         public async Task<List<Customers>> GetAll()
         {
@@ -76,10 +67,6 @@ namespace AdministratorApp.ApiClasses
             }
 
         }
-
-
-    
-
         public async Task<string> Save(Customers obj)
         {
 
@@ -125,11 +112,7 @@ namespace AdministratorApp.ApiClasses
                 return "";
             }
         }
-
-
-       
-
-            public async Task<Customers> GetByID(int custId)
+        public async Task<Customers> GetByID(int custId)
         {
             Customers obj = new Customers();
             // new Uri(Global.APIUri + "Customers/GetByID?custId=" + custId);
@@ -159,9 +142,6 @@ namespace AdministratorApp.ApiClasses
                 return obj;
             }
         }
-
-
-      
         public async Task<string> Delete(int custId, int userId, bool final)
         {
             // request.RequestUri = new Uri(Global.APIUri + "Customers/Delete?custId=" + custId + "&userId=" + userId + "&final=" + final);
@@ -187,10 +167,5 @@ namespace AdministratorApp.ApiClasses
                 return "";
             }
         }
-  
-
-
-
-
     }
 }
