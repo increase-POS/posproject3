@@ -31,6 +31,7 @@
     <EntitySetMapping Name="packages">
       <EntityTypeMapping TypeName="incprogramsdbModel.packages">
         <MappingFragment StoreEntitySet="packages">
+          <ScalarProperty Name="notes" ColumnName="notes" />
           <ScalarProperty Name="packageId" ColumnName="packageId" />
           <ScalarProperty Name="packageName" ColumnName="packageName" />
           <ScalarProperty Name="details" ColumnName="details" />
@@ -81,6 +82,7 @@
     <EntitySetMapping Name="posSerials">
       <EntityTypeMapping TypeName="incprogramsdbModel.posSerials">
         <MappingFragment StoreEntitySet="posSerials">
+          <ScalarProperty Name="notes" ColumnName="notes" />
           <ScalarProperty Name="serialId" ColumnName="serialId" />
           <ScalarProperty Name="serial" ColumnName="serial" />
           <ScalarProperty Name="posDeviceCode" ColumnName="posDeviceCode" />
@@ -153,6 +155,8 @@
     <EntitySetMapping Name="versions">
       <EntityTypeMapping TypeName="incprogramsdbModel.versions">
         <MappingFragment StoreEntitySet="versions">
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="programId" ColumnName="programId" />
           <ScalarProperty Name="verId" ColumnName="verId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="details" ColumnName="details" />

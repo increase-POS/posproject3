@@ -18,6 +18,7 @@ namespace Programs_Server
         public programs()
         {
             this.packages = new HashSet<packages>();
+            this.versions = new HashSet<versions>();
         }
     
         public int programId { get; set; }
@@ -35,5 +36,7 @@ namespace Programs_Server
         public virtual ICollection<packages> packages { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<versions> versions { get; set; }
     }
 }

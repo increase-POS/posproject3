@@ -51,8 +51,9 @@ namespace Programs_Server.Controllers
                                     updateDate = S.updateDate,
                                     createUserId = S.createUserId,
                                     updateUserId = S.updateUserId,
-                               
+                                    programId=S.programId,
 
+                                    notes=S.notes,
 
 
                                 }).ToList();
@@ -119,8 +120,8 @@ namespace Programs_Server.Controllers
                        S.updateDate,
                        S.createUserId,
                        S.updateUserId,
-                      
-
+                     S.programId,
+                       S.notes,
                    })
                    .FirstOrDefault();
 
@@ -196,9 +197,9 @@ namespace Programs_Server.Controllers
                            
                            // tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-                        
 
-
+                            tmpObject.programId = newObject.programId;
+                            tmpObject.notes = newObject.notes;
                             entity.SaveChanges();
 
                             message = tmpObject.verId.ToString();

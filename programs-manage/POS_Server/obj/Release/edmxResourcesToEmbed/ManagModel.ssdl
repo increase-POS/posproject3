@@ -64,6 +64,7 @@
     <Property Name="islimitDate" Type="int" Nullable="false" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="packageUser">
     <Key>
@@ -101,6 +102,7 @@
     <Property Name="apikey" Type="nvarchar" MaxLength="500" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="programs">
     <Key>
@@ -167,6 +169,8 @@
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="programId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <Association Name="FK_customers_users">
     <End Role="users" Type="Self.users" Multiplicity="0..1" />
@@ -372,6 +376,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_versions_programs">
+    <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
+    <End Role="versions" Type="Self.versions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="programs">
+        <PropertyRef Name="programId" />
+      </Principal>
+      <Dependent Role="versions">
+        <PropertyRef Name="programId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_versions_users">
     <End Role="users" Type="Self.users" Multiplicity="0..1" />
     <End Role="versions" Type="Self.versions" Multiplicity="*" />
@@ -473,6 +489,10 @@
     <AssociationSet Name="FK_programs_users1" Association="Self.FK_programs_users1">
       <End Role="users" EntitySet="users" />
       <End Role="programs" EntitySet="programs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_versions_programs" Association="Self.FK_versions_programs">
+      <End Role="programs" EntitySet="programs" />
+      <End Role="versions" EntitySet="versions" />
     </AssociationSet>
     <AssociationSet Name="FK_versions_users" Association="Self.FK_versions_users">
       <End Role="users" EntitySet="users" />

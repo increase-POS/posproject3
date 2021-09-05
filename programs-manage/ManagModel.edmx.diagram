@@ -33,6 +33,7 @@
         <AssociationConnector Association="incprogramsdbModel.FK_versions_users1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="incprogramsdbModel.error" Width="1.5" PointX="3" PointY="12.25" />
         <AssociationConnector Association="incprogramsdbModel.FK_error_users" />
+        <AssociationConnector Association="incprogramsdbModel.FK_versions_programs" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

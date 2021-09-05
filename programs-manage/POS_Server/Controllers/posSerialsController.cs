@@ -54,7 +54,7 @@ namespace Programs_Server.Controllers
                                     createUserId = S.createUserId,
                                     updateUserId = S.updateUserId,
                                     canDelete = true,
-
+                                    notes=   S.notes,
 
 
                                 }).ToList();
@@ -123,7 +123,7 @@ namespace Programs_Server.Controllers
                        S.apikey,
                        S.createUserId,
                        S.updateUserId,
-                     
+                      S.notes,
 
                    })
                    .FirstOrDefault();
@@ -206,7 +206,7 @@ namespace Programs_Server.Controllers
                             tmpObject.apikey = newObject.apikey;
                           //  tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
-                    
+                            tmpObject.notes = newObject.notes;
 
 
                             entity.SaveChanges();

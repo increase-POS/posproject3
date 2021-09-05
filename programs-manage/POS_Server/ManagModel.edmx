@@ -69,6 +69,7 @@
           <Property Name="islimitDate" Type="int" Nullable="false" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="packageUser">
           <Key>
@@ -106,6 +107,7 @@
           <Property Name="apikey" Type="nvarchar" MaxLength="500" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="programs">
           <Key>
@@ -172,6 +174,8 @@
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="programId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_customers_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
@@ -377,6 +381,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_versions_programs">
+          <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
+          <End Role="versions" Type="Self.versions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="programId" />
+            </Principal>
+            <Dependent Role="versions">
+              <PropertyRef Name="programId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_versions_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="versions" Type="Self.versions" Multiplicity="*" />
@@ -479,6 +495,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="programs" EntitySet="programs" />
           </AssociationSet>
+          <AssociationSet Name="FK_versions_programs" Association="Self.FK_versions_programs">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="versions" EntitySet="versions" />
+          </AssociationSet>
           <AssociationSet Name="FK_versions_users" Association="Self.FK_versions_users">
             <End Role="users" EntitySet="users" />
             <End Role="versions" EntitySet="versions" />
@@ -552,6 +572,7 @@
           <NavigationProperty Name="users1" Relationship="Self.FK_packages_users1" FromRole="packages" ToRole="users" />
           <NavigationProperty Name="versions" Relationship="Self.FK_packages_versions" FromRole="packages" ToRole="versions" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_packages" FromRole="packages" ToRole="packageUser" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="packageUser">
           <Key>
@@ -598,6 +619,7 @@
           <NavigationProperty Name="packageUser" Relationship="Self.FK_posSerials_packageUser" FromRole="posSerials" ToRole="packageUser" />
           <NavigationProperty Name="users" Relationship="Self.FK_posSerials_users" FromRole="posSerials" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_posSerials_users1" FromRole="posSerials" ToRole="users" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="programs">
           <Key>
@@ -616,6 +638,7 @@
           <NavigationProperty Name="packages" Relationship="Self.FK_packages_programs" FromRole="programs" ToRole="packages" />
           <NavigationProperty Name="users" Relationship="Self.FK_programs_users" FromRole="programs" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_programs_users1" FromRole="programs" ToRole="users" />
+          <NavigationProperty Name="versions" Relationship="incprogramsdbModel.FK_versions_programs" FromRole="programs" ToRole="versions" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -684,6 +707,9 @@
           <NavigationProperty Name="packages" Relationship="Self.FK_packages_versions" FromRole="versions" ToRole="packages" />
           <NavigationProperty Name="users" Relationship="Self.FK_versions_users" FromRole="versions" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_versions_users1" FromRole="versions" ToRole="users" />
+          <Property Name="programId" Type="Int32" />
+          <NavigationProperty Name="programs" Relationship="incprogramsdbModel.FK_versions_programs" FromRole="versions" ToRole="programs" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_customers_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
@@ -987,6 +1013,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="error" EntitySet="error" />
           </AssociationSet>
+          <AssociationSet Name="FK_versions_programs" Association="incprogramsdbModel.FK_versions_programs">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="versions" EntitySet="versions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="error">
           <Key>
@@ -1010,6 +1040,18 @@
             </Principal>
             <Dependent Role="error">
               <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_versions_programs">
+          <End Type="incprogramsdbModel.programs" Role="programs" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.versions" Role="versions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="programId" />
+            </Principal>
+            <Dependent Role="versions">
+              <PropertyRef Name="programId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1049,6 +1091,7 @@
           <EntitySetMapping Name="packages">
             <EntityTypeMapping TypeName="incprogramsdbModel.packages">
               <MappingFragment StoreEntitySet="packages">
+                <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="packageId" ColumnName="packageId" />
                 <ScalarProperty Name="packageName" ColumnName="packageName" />
                 <ScalarProperty Name="details" ColumnName="details" />
@@ -1099,6 +1142,7 @@
           <EntitySetMapping Name="posSerials">
             <EntityTypeMapping TypeName="incprogramsdbModel.posSerials">
               <MappingFragment StoreEntitySet="posSerials">
+                <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="serialId" ColumnName="serialId" />
                 <ScalarProperty Name="serial" ColumnName="serial" />
                 <ScalarProperty Name="posDeviceCode" ColumnName="posDeviceCode" />
@@ -1171,6 +1215,8 @@
           <EntitySetMapping Name="versions">
             <EntityTypeMapping TypeName="incprogramsdbModel.versions">
               <MappingFragment StoreEntitySet="versions">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="programId" ColumnName="programId" />
                 <ScalarProperty Name="verId" ColumnName="verId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="details" ColumnName="details" />

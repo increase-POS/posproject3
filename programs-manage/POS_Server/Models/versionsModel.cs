@@ -16,7 +16,9 @@ namespace Programs_Server.Models
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> programId { get; set; }
         public bool canDelete { get; set; }
-       
+        public string notes { get; set; }
+
     }
 }

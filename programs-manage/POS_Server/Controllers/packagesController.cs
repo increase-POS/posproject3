@@ -65,7 +65,7 @@ namespace Programs_Server.Controllers
                                     islimitDate = S.islimitDate,
                                     createUserId = S.createUserId,
                                     updateUserId = S.updateUserId,
-
+                                    notes=   S.notes,
 
 
                                 }).ToList();
@@ -145,7 +145,7 @@ namespace Programs_Server.Controllers
                        S.islimitDate,
                        S.createUserId,
                        S.updateUserId,
-                   
+                       S.notes,
                    })
                    .FirstOrDefault();
 
@@ -247,8 +247,8 @@ namespace Programs_Server.Controllers
                                     tmpObject. storeCount = newObject.storeCount;
                                     tmpObject. endDate = newObject.endDate;
                                      tmpObject.islimitDate = newObject.islimitDate;
-                                   // tmpObject. createUserId = newObject.createUserId;
-                               
+                            // tmpObject. createUserId = newObject.createUserId;
+                            tmpObject.notes = newObject.notes;
 
 
                             entity.SaveChanges();

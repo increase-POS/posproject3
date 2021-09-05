@@ -30,7 +30,8 @@ namespace Programs_Server.Models
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
-      
+        public string notes { get; set; }
+
 
     }
 }
