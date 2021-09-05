@@ -461,3 +461,11 @@ E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applicati
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_versions.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_packages.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\applications\uc_versions.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_packageUser.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_posSerials.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_sale.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_sales.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_packageUser.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_posSerials.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_sale.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_sales.baml

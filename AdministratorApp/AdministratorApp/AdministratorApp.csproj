@@ -146,6 +146,18 @@
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sales\uc_packageUser.xaml.cs">
+      <DependentUpon>uc_packageUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_posSerials.xaml.cs">
+      <DependentUpon>uc_posSerials.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_sale.xaml.cs">
+      <DependentUpon>uc_sale.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_sales.xaml.cs">
+      <DependentUpon>uc_sales.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\uc_agents.xaml.cs">
       <DependentUpon>uc_agents.xaml</DependentUpon>
     </Compile>
@@ -197,6 +209,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sales\uc_packageUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_posSerials.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_sale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_sales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\uc_agents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,8 +256,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="ar_file.resx" />
-    <EmbeddedResource Include="en_file.resx" />
+    <EmbeddedResource Include="ar_file.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="en_file.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -248,7 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\reports\" />
-    <Folder Include="View\sales\" />
     <Folder Include="View\settings\" />
   </ItemGroup>
   <ItemGroup>

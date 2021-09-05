@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdministratorApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,7 @@ namespace AdministratorApp.View.applications
         public uc_packages()
         {
             InitializeComponent();
+        HelpClass.defaultDatePickerStyle(dp_endDate);
         }
     }
 }

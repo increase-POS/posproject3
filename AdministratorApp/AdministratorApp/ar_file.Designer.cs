@@ -5321,7 +5321,8 @@ namespace AdministratorApp
         /// <summary>
         ///   Looks up a localized string similar to البيانات.
         /// </summary>
-        internal static string trSectionData {
+        internal static string trsectionData
+        {
             get {
                 return ResourceManager.GetString("trSectionData", resourceCulture);
             }

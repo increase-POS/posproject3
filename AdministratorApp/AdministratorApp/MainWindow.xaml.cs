@@ -21,6 +21,7 @@ using WPFTabTip;
 using AdministratorApp.ApiClasses;
 using System.Threading;
 using AdministratorApp.View.sectionData;
+using AdministratorApp.View.sales;
 
 namespace AdministratorApp
 {
@@ -43,7 +44,7 @@ namespace AdministratorApp
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         void windowFlowDirection()
@@ -69,20 +70,20 @@ namespace AdministratorApp
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_mainGrid);
+                    HelpClass.StartAwait(grid_mainGrid);
                 //windowFlowDirection();
-                menuList = new List<string> { "applications", "sales", "reports",  
+                menuList = new List<string> { "applications", "sales", "reports",
                    "sectionData","settings"};
 
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_mainGrid);
+                    HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_mainGrid);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
        
@@ -155,17 +156,17 @@ namespace AdministratorApp
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_mainGrid);
+                    HelpClass.StartAwait(grid_mainGrid);
                 Application.Current.Shutdown();
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_mainGrid);
+                    HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_mainGrid);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void BTN_Minimize_Click(object sender, RoutedEventArgs e)
@@ -176,7 +177,7 @@ namespace AdministratorApp
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_applications_Click(object sender, RoutedEventArgs e)
@@ -194,7 +195,7 @@ namespace AdministratorApp
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
        
@@ -207,11 +208,11 @@ namespace AdministratorApp
                 ColorIconRefreash(button.Tag.ToString());
                 openVisible(button.Tag.ToString());
                 grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_home.Instance);
+                grid_main.Children.Add(uc_sales.Instance);
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
        
@@ -229,7 +230,7 @@ namespace AdministratorApp
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -246,7 +247,7 @@ namespace AdministratorApp
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_settings_Click(object sender, RoutedEventArgs e)
@@ -262,7 +263,7 @@ namespace AdministratorApp
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 

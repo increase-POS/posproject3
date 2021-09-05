@@ -20,7 +20,7 @@ using Tulpep.NotificationWindow;
 
 namespace AdministratorApp.Classes
 {
-    class SectionData
+    class HelpClass
     {
         public static bool iscodeExist = false;
          
@@ -91,13 +91,13 @@ namespace AdministratorApp.Classes
 
             if (pb.Password.Equals(""))
             {
-                SectionData.showPasswordValidate(pb, p_error, tt_error, "trEmptyPasswordToolTip");
+                HelpClass.showPasswordValidate(pb, p_error, tt_error, "trEmptyPasswordToolTip");
                 p_error.Visibility = Visibility.Visible;
                 isValid = false;
             }
             else
             {
-                SectionData.clearPasswordValidate(pb, p_error);
+                HelpClass.clearPasswordValidate(pb, p_error);
                 p_error.Visibility = Visibility.Collapsed;
             }
             return isValid;
@@ -301,7 +301,6 @@ namespace AdministratorApp.Classes
         {
             dp.Loaded += delegate
             {
-
                 var textBox1 = (TextBox)dp.Template.FindName("PART_TextBox", dp);
                 if (textBox1 != null)
                 {
@@ -415,8 +414,8 @@ namespace AdministratorApp.Classes
                 _str = MainWindow.resourcemanager.GetString("trAccounting");
                 else if (str == "reports")
                 _str = MainWindow.resourcemanager.GetString("trReports");
-                else if (str == "sectionData")
-                _str = MainWindow.resourcemanager.GetString("trSectionData");
+                else if (str == "HelpClass")
+                _str = MainWindow.resourcemanager.GetString("trHelpClass");
                 else if (str == "settings")
                 _str = MainWindow.resourcemanager.GetString("trSettings");
                 #endregion
@@ -499,7 +498,7 @@ namespace AdministratorApp.Classes
                 else if (str == "salesStatistic")
                 _str = MainWindow.resourcemanager.GetString("trStatistic");
                 #endregion
-                #region  sectionData
+                #region  HelpClass
                 if (str == "suppliers")
                 _str = MainWindow.resourcemanager.GetString("trSuppliers");
                 else if (str == "customers")

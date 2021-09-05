@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace AdministratorApp.View.sectionData
 {
     /// <summary>
-    /// Interaction logic for ud_sectionData.xaml
+    /// Interaction logic for ud_HelpClass.xaml
     /// </summary>
     public partial class uc_sectionData : UserControl
     {
@@ -41,7 +41,7 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_mainGrid);
+                    HelpClass.StartAwait(grid_mainGrid);
 
 
 
@@ -52,13 +52,13 @@ namespace AdministratorApp.View.sectionData
 
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_mainGrid);
+                    HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_mainGrid);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -94,7 +94,7 @@ namespace AdministratorApp.View.sectionData
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -109,7 +109,7 @@ namespace AdministratorApp.View.sectionData
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -124,7 +124,7 @@ namespace AdministratorApp.View.sectionData
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }

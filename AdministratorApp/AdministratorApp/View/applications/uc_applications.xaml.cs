@@ -40,8 +40,8 @@ namespace AdministratorApp.View.applications
         {
             try
             {
-                //if (sender != null)
-                //    SectionData.StartAwait(grid_mainGrid);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_mainGrid);
 
 
                 menuList = new List<string> { "programs", "versions", "packages" };
@@ -50,14 +50,14 @@ namespace AdministratorApp.View.applications
 
 
 
-                //if (sender != null)
-                //    SectionData.EndAwait(grid_mainGrid);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
-                //if (sender != null)
-                //    SectionData.EndAwait(grid_mainGrid);
-                SectionData.ExceptionMessage(ex, this);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -92,7 +92,7 @@ namespace AdministratorApp.View.applications
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -107,7 +107,7 @@ namespace AdministratorApp.View.applications
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -122,7 +122,7 @@ namespace AdministratorApp.View.applications
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }
