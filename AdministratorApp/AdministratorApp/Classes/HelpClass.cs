@@ -22,16 +22,10 @@ namespace AdministratorApp.Classes
 {
     class HelpClass
     {
-        public static bool iscodeExist = false;
+       static public BrushConverter brushConverter = new BrushConverter();
+        public static ImageBrush imageBrush = new ImageBrush();
          
-
-        public static string code;
-
-        public static BrushConverter bc = new BrushConverter();
-
-        public static ImageBrush brush = new ImageBrush();
-         
-        public static bool IsValid(string txt)
+        public static bool EmailIsValid(string txt)
         {//for email
             Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
                    RegexOptions.CultureInvariant | RegexOptions.Singleline);
@@ -46,22 +40,51 @@ namespace AdministratorApp.Classes
         {
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            c.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            c.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
-        public static bool validateEmptyTextBox(TextBox tb, Path p_error, ToolTip tt_error, string tr)
+        public static bool validateEmpty(string str, Path p_error)
+        {
+            bool isValid = true;
+            if (str.Equals(""))
+            {
+                p_error.Visibility = Visibility.Visible;
+                #region Tooltip
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = MainWindow.resourcemanager.GetString("trIsRequired");
+                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                p_error.ToolTip = toolTip;
+                #endregion
+                isValid = false;
+            }
+            else
+            {
+                p_error.Visibility = Visibility.Collapsed;
+            }
+            return isValid;
+        }
+        public static void clearValidate( Path p_error)
+        {
+            p_error.Visibility = Visibility.Collapsed;
+        }
+        #region validateEmpty 
+        /*
+        public static bool validateEmptyTextBox(TextBox tb, Path p_error)
         {
             bool isValid = true;
             if (tb.Text.Equals(""))
             {
                 p_error.Visibility = Visibility.Visible;
-                tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-                tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                #region Tooltip
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = MainWindow.resourcemanager.GetString("trIsRequired");
+                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                p_error.ToolTip = toolTip;
+                #endregion
                 isValid = false;
             }
             else
             {
-                tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
                 p_error.Visibility = Visibility.Collapsed;
             }
             return isValid;
@@ -74,12 +97,12 @@ namespace AdministratorApp.Classes
             {
                 p_error.Visibility = Visibility.Visible;
                 tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-                cb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                cb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
                 isValid = false;
             }
             else
             {
-                cb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+                cb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
                 p_error.Visibility = Visibility.Collapsed;
 
             }
@@ -111,13 +134,13 @@ namespace AdministratorApp.Classes
                 {
                     p_error.Visibility = Visibility.Visible;
                     tt_error.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
-                    tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                    tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
                 isValid = false;
                 }
                 else
                 {
                     p_error.Visibility = Visibility.Collapsed;
-                    tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+                    tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
                 isValid = true;
                 }
             }
@@ -130,11 +153,11 @@ namespace AdministratorApp.Classes
             {
                 p_error.Visibility = Visibility.Visible;
                 tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-                tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
             }
             else
             {
-                tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+                tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
                 p_error.Visibility = Visibility.Collapsed;
             }
         }
@@ -145,46 +168,53 @@ namespace AdministratorApp.Classes
             {
                 p_error.Visibility = Visibility.Visible;
                 tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-                tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+                tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
             }
             else
             {
-                tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+                tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
                 p_error.Visibility = Visibility.Collapsed;
             }
         }
-        public static void clearValidate(TextBox tb , Path p_error)
+        */
+        #endregion
+        #region clearValidate
+        /*
+            public static void clearValidate(TextBox tb , Path p_error)
         {
-            tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+            tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
             p_error.Visibility = Visibility.Collapsed;
         }
         public static void clearPasswordValidate(PasswordBox pb, Path p_error)
         {
-            pb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+            pb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
             p_error.Visibility = Visibility.Collapsed;
         }
         public static void clearComboBoxValidate(ComboBox cb, Path p_error)
         {
-            cb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
+            cb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
             p_error.Visibility = Visibility.Collapsed;
         }
+         */
+        #endregion
+
         public static void showTextBoxValidate(TextBox tb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
         public static void showPasswordValidate(PasswordBox tb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
         public static void showComboBoxValidate(ComboBox cb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            cb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            cb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
         public static void showDatePickerValidate(DatePicker dp, Path p_error, ToolTip tt_error, string tr)
@@ -193,7 +223,7 @@ namespace AdministratorApp.Classes
 
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
         public static void showTimePickerValidate(TimePicker tp, Path p_error, ToolTip tt_error, string tr)
@@ -202,7 +232,7 @@ namespace AdministratorApp.Classes
 
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
        
@@ -213,7 +243,7 @@ namespace AdministratorApp.Classes
         {
             p_error.Visibility = Visibility.Visible;
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
+            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
         public static void getMobile(string _mobile , ComboBox _area , TextBox _tb)
@@ -288,8 +318,8 @@ namespace AdministratorApp.Classes
             StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
 
             BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-            brush.ImageSource = temp;
-            img.Background = brush;
+            imageBrush.ImageSource = temp;
+            img.Background = imageBrush;
         }
         public static decimal calcPercentage(decimal value, decimal percentage)
         {
@@ -330,7 +360,7 @@ namespace AdministratorApp.Classes
         /// لمنع  الصفر بالبداية
         /// </summary>
         /// <param name="txb"></param>
-        static public void InputJustNumber(ref TextBox txb)
+        static public void InputJustNumber(TextBox txb)
         {
             if (txb.Text.Count() == 2 && txb.Text == "00")
             {

@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Margin="10,0,410,0">
+        <Grid Margin="10,0,360,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -29,7 +29,7 @@
                        x:Name="btn_packageUser" Click="Btn_packageUser_Click" Tag="packageUser"/>
             <Button   Grid.Column="2"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                 Content="Versions" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                 Content="Serials" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                        x:Name="btn_posSerials" Click="Btn_posSerials_Click" Tag="posSerials"/>
 
         </Grid>

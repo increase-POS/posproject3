@@ -2365,4 +2365,7 @@
   <data name="trMustBeMoreThanZero" xml:space="preserve">
     <value>العدد يجب أن يكون أكبر من الصفر</value>
   </data>
+  <data name="trIsRequired" xml:space="preserve">
+    <value>هذا الحقل إجباري</value>
+  </data>
 </root>

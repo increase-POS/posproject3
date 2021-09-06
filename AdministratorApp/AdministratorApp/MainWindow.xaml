@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"  WindowStyle="None"
         WindowState="Maximized" d:DesignWidth="1200" d:DesignHeight="800"   >
     <Grid Margin="0" x:Name="grid_mainGrid" >
-        <Grid Background="#E8E8E8"  >
+        <Grid Background="#EEF1F8"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
@@ -210,9 +210,9 @@
             </Grid>
 
 
-            <Grid Width="400" Height="125" Margin="0,0,0,65"    Grid.ColumnSpan="2"
+            <Grid Width="350" Height="125" Margin="0,0,0,65"    Grid.ColumnSpan="2"
                   HorizontalAlignment="Right" VerticalAlignment="Top" Background="#FFFFFF"  >
-                <Grid Width="400" Height="60" Margin="0,0,0,65"    Grid.ColumnSpan="2"
+                <Grid Width="350" Height="60" Margin="0,0,0,65"    Grid.ColumnSpan="2"
                   HorizontalAlignment="Right" VerticalAlignment="Top" Background="#FFFFFF"  >
                     <Grid.ColumnDefinitions>
 
@@ -309,7 +309,7 @@
                 </Grid>
             </Grid>
            
-            <Rectangle Width="400"  Grid.ColumnSpan="2" Fill="White" Margin="0,125,0,0"
+            <Rectangle Width="350"  Grid.ColumnSpan="2" Fill="White" Margin="0,125,0,0"
                         HorizontalAlignment="Right"  />
 
             <Grid   x:Name="grid_main" Grid.Row="0" Grid.Column="1"/>

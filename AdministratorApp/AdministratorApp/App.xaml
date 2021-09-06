@@ -251,6 +251,7 @@
             <SolidColorBrush x:Key="veryLightGrey" Color="#DFDFDF"/>
             <SolidColorBrush x:Key="lightGreen" Color="#E2EFDA"/>
             <SolidColorBrush x:Key="lightRed" Color="#FCE4D6"/>
+            
             <!--#endregion-->
         <ResourceDictionary.MergedDictionaries>
             <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

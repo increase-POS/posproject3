@@ -469,3 +469,5 @@ E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_posSerials.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_sale.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_sales.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_acceptCancelPopup.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_acceptCancelPopup.baml

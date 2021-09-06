@@ -33,8 +33,8 @@ namespace AdministratorApp
         public static ResourceManager resourcemanager;
         public static ResourceManager resourcemanagerreport;
         static public MainWindow mainWindow;
-        public static string lang;
-        internal static Users userLogin;
+        public static string lang = "en";
+        internal static Users userLogin = new Users();
         public MainWindow()
         {
             try
@@ -74,7 +74,7 @@ namespace AdministratorApp
                 //windowFlowDirection();
                 menuList = new List<string> { "applications", "sales", "reports",
                    "sectionData","settings"};
-
+                userLogin.userId = 1;
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
