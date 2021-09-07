@@ -220,7 +220,6 @@ E:\GitHub\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.dll
 E:\GitHub\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.pdb
 D:\myproj\posproject3\AdministratorApp\netoaster\bin\Debug\netoaster.dll
 D:\myproj\posproject3\AdministratorApp\netoaster\bin\Debug\netoaster.pdb
-D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\ToasterWindow.g.cs
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster_MarkupCompile.cache
@@ -234,3 +233,4 @@ D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csproj.Core
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.dll
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.pdb
 E:\GitHub\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
+D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache

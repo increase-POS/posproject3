@@ -43,15 +43,22 @@ namespace AdministratorApp.Classes
         /// 
           #region Countries
         //phone 
-        public static IEnumerable<CountryCode> countrynum;
+        public static IEnumerable<Country> countrynum;
         public static IEnumerable<City> citynum;
         public static IEnumerable<City> citynumofcountry;
-        public static CountryCode countrycodes = new CountryCode();
+        public static Country countrycodes = new Country();
         public static City cityCodes = new City();
 
-        static public async Task<IEnumerable<CountryCode>> RefreshCountry()
+        static public async Task<IEnumerable<Country>> RefreshCountry()
         {
-            countrynum = await countrycodes.GetAllCountries();
+
+
+           
+           countrynum = await countrycodes.GetAll();
+           
+
+
+
             return countrynum;
         }
 

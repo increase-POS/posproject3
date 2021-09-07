@@ -123,7 +123,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
     <Compile Include="Classes\ApiClasses\City.cs" />
-    <Compile Include="Classes\ApiClasses\CountryCode.cs" />
+    <Compile Include="Classes\ApiClasses\Country.cs" />
     <Compile Include="Classes\ApiClasses\Customers.cs" />
     <Compile Include="Classes\ApiClasses\Packages.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
