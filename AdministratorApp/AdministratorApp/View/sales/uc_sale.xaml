@@ -149,7 +149,7 @@
                     </DockPanel>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_package" Padding="10,5,5,5"    
+                            <ComboBox   x:Name="cb_package" Padding="10,5,5,5"     IsEditable="True"
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Package..."    
@@ -168,7 +168,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5"    
+                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5"     IsEditable="True"
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Agent..."    
@@ -178,7 +178,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_user" Padding="10,5,5,5"    
+                            <ComboBox   x:Name="cb_user" Padding="10,5,5,5"     IsEditable="True"
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="User..."    

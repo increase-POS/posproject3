@@ -15,6 +15,7 @@ namespace AdministratorApp.ApiClasses
     {
 
         public int packageId { get; set; }
+        public string packageCode { get; set; }
         public string packageName { get; set; }
         public string details { get; set; }
         public int branchCount { get; set; }
@@ -24,16 +25,17 @@ namespace AdministratorApp.ApiClasses
         public int customerCount { get; set; }
         public int itemCount { get; set; }
         public int salesInvCount { get; set; }
+        public int storeCount { get; set; }
         public Nullable<int> programId { get; set; }
+        public string programName { get; set; }
         public Nullable<int> verId { get; set; }
+        public string verName { get; set; }
         public Nullable<decimal> price { get; set; }
         public int isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string packageCode { get; set; }
-        public Nullable<int> storeCount { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
-        public int islimitDate { get; set; }
+        public bool islimitDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
@@ -45,7 +47,6 @@ namespace AdministratorApp.ApiClasses
         /// </summary>
         /// <returns></returns>
         /// 
-
         public async Task<List<Packages>> GetAll()
         {
             List<Packages> memberships = null;

@@ -21,6 +21,17 @@ namespace AdministratorApp.View.applications
     /// </summary>
     public partial class uc_applications : UserControl
     {
+        public uc_applications()
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private static uc_applications _instance;
         public static uc_applications Instance
         {
@@ -30,10 +41,6 @@ namespace AdministratorApp.View.applications
                     _instance = new uc_applications();
                 return _instance;
             }
-        }
-        public uc_applications()
-        {
-            InitializeComponent();
         }
         public static List<string> menuList;
         private void Window_Loaded(object sender, RoutedEventArgs e)

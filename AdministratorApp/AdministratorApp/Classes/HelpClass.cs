@@ -46,7 +46,7 @@ namespace AdministratorApp.Classes
         public static bool validateEmpty(string str, Path p_error)
         {
             bool isValid = true;
-            if (str.Equals(""))
+            if (string.IsNullOrWhiteSpace(str))
             {
                 p_error.Visibility = Visibility.Visible;
                 #region Tooltip

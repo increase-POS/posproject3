@@ -133,6 +133,7 @@
     <Compile Include="Classes\ApiClasses\Users.cs" />
     <Compile Include="Classes\ApiClasses\versions.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
+    <Compile Include="Classes\FillCombo.cs" />
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>

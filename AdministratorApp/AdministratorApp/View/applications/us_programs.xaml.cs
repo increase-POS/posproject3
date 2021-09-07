@@ -29,7 +29,14 @@ namespace AdministratorApp.View.applications
     {
         public uc_programs()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private static uc_programs _instance;
         public static uc_programs Instance
@@ -47,57 +54,12 @@ namespace AdministratorApp.View.applications
         byte tgl_programState;
         string searchText = "";
         public static List<string> requiredControlList;
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-                if (programs is null)
-                    await RefreshProgramsList();
-                tgl_programState = 1;
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-
-                if (programs is null)
-                    await RefreshProgramsList();
-
-                tgl_programState = 0;
-                await Search();
-
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name" };
-
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -108,14 +70,12 @@ namespace AdministratorApp.View.applications
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
-
-
                 translate();
                 Keyboard.Focus(tb_code);
-                //HelpClass.clearValidate(tb_code, p_errorCode);
 
                 await RefreshProgramsList();
                 await Search();
+                Clear();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -173,7 +133,6 @@ namespace AdministratorApp.View.applications
             //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
 
         }
-
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -205,6 +164,239 @@ namespace AdministratorApp.View.applications
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (programs is null)
+                    await RefreshProgramsList();
+                tgl_programState = 1;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (programs is null)
+                    await RefreshProgramsList();
+                tgl_programState = 0;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Clear();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Dg_program_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //selection
+
+                if (dg_program.SelectedIndex != -1)
+                {
+                    program = dg_program.SelectedItem as Programs;
+                    this.DataContext = program;
+
+                    if (program != null)
+                    {
+                        #region delete
+                        if (program.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (program.isActive == 0)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
+                        #endregion
+                    }
+                }
+
+                clearValidate();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_add_Click(object sender, RoutedEventArgs e)
+        {//add
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                program = new Programs();
+                if (validate())
+                {
+                    program.programCode = "Pr-0000009";
+                    program.name = tb_name.Text;
+                    program.details = tb_details.Text;
+                    program.notes = tb_notes.Text;
+                    program.isActive = 1;
+                    program.createUserId = MainWindow.userLogin.userId;
+                    program.updateUserId = MainWindow.userLogin.userId;
+
+                    int s = int.Parse(await program.Save(program));
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        Clear();
+                        await RefreshProgramsList();
+                        await Search();
+                    }
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_update_Click(object sender, RoutedEventArgs e)
+        {//update
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (validate())
+                {
+                    program.name = tb_name.Text;
+                    program.details = tb_details.Text;
+                    program.notes = tb_notes.Text;
+                    program.updateUserId = MainWindow.userLogin.userId;
+
+                    int s = int.Parse(await program.Save(program));
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        await RefreshProgramsList();
+                        await Search();
+                    }
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//delete
+
+                HelpClass.StartAwait(grid_main);
+                if (program.programId != 0)
+                {
+                    if ((!program.canDelete) && (program.isActive == 0))
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+                        if (w.isOk)
+                            await activate();
+                    }
+                    else
+                    {
+                        #region
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        if (program.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        if (!program.canDelete)
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+                        if (w.isOk)
+                        {
+                            string popupContent = "";
+                            if (program.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                            if ((!program.canDelete) && (program.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+
+                            int s = int.Parse(await program.Delete(program.programId, MainWindow.userLogin.userId, program.canDelete));
+                            if (s < 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshProgramsList();
+                                await Search();
+                                Clear();
+
+                            }
+                        }
+                    }
+
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async Task activate()
+        {//activate
+            program.isActive = 1;
+            int s = int.Parse(await program.Save(program));
+            if (s <= 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            else
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                await RefreshProgramsList();
+                await Search();
+            }
+        }
+        #region Refresh & Search
         async Task Search()
         {
             //search
@@ -226,52 +418,12 @@ namespace AdministratorApp.View.applications
             dg_program.ItemsSource = programsQuery;
             txt_count.Text = programsQuery.Count().ToString();
         }
+        #endregion
+        #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
             this.DataContext = new Programs();
-
-            ////clear
-            //btn_items.IsEnabled = false;
-            //tb_code.Clear();
-            //tb_name.Clear();
-            //tgl_ActivePrograms.IsChecked = true;
-            //cb_discountType.SelectedIndex = -1;
-            //tb_discountValue.Clear();
-            //dp_startDate.SelectedDate = null;
-            //dp_endDate.SelectedDate = null;
-            //tp_startTime.SelectedTime = null;
-            //tp_endTime.SelectedTime = null;
-            //tb_note.Clear();
-
-            //HelpClass.clearValidate(tb_name, p_errorName);
-            //HelpClass.clearValidate(tb_code, p_errorCode);
-            //HelpClass.clearValidate(tb_discountValue, p_errorDiscountValue);
-            //HelpClass.clearComboBoxValidate(cb_discountType, p_errorDiscountType);
-            //TextBox tbStartDate = (TextBox)dp_startDate.Template.FindName("PART_TextBox", dp_startDate);
-            //HelpClass.clearValidate(tbStartDate, p_errorStartDate);
-            //TextBox tbEndDate = (TextBox)dp_endDate.Template.FindName("PART_TextBox", dp_endDate);
-            //HelpClass.clearValidate(tbEndDate, p_errorEndDate);
-            //TextBox tbStartTime = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //HelpClass.clearValidate(tbStartTime, p_errorStartTime);
-            //TextBox tbEndTime = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //HelpClass.clearValidate(tbEndTime, p_errorEndTime);
-        }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                Clear();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            clearValidate();
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -369,181 +521,6 @@ namespace AdministratorApp.View.applications
             }
             catch { }
         }
-        private void Dg_program_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //selection
-                clearValidate();
-
-                if (dg_program.SelectedIndex != -1)
-                {
-                    program = dg_program.SelectedItem as Programs;
-                    this.DataContext = program;
-
-                    if (program != null)
-                    {
-                        #region delete
-                        if (program.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (program.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                    }
-                }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {//delete
-
-                HelpClass.StartAwait(grid_main);
-                if (program.programId != 0)
-                {
-                    if ((!program.canDelete) && (program.isActive == 0))
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                            await activate();
-                    }
-                    else
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        if (program.canDelete)
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                        if (!program.canDelete)
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                        {
-                            string popupContent = "";
-                            if (program.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                            if ((!program.canDelete) && (program.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
-
-                            int s = int.Parse(await program.Delete(program.programId, MainWindow.userLogin.userId, program.canDelete));
-                            if (s < 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
-
-                    await RefreshProgramsList();
-                    await Search();
-                }
-                Clear();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async Task activate()
-        {//activate
-            program.isActive = 1;
-            int s = int.Parse(await program.Save(program));
-            if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-            else
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshProgramsList();
-                await Search();
-            }
-        }
-        private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        {//add
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                program.programId = 0;
-                if (validate())
-                {
-                    program.programCode = "Pr-0000009";
-                    program.name = tb_name.Text;
-                    program.details = tb_details.Text;
-                    program.notes = tb_notes.Text;
-                    program.isActive = 1;
-                    program.createUserId = MainWindow.userLogin.userId;
-                    program.updateUserId = MainWindow.userLogin.userId;
-                    
-                    int s = int.Parse(await program.Save(program));
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshProgramsList();
-                        await Search();
-                    }
-                }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_update_Click(object sender, RoutedEventArgs e)
-        {//update
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (validate())
-                {
-                    program.name = tb_name.Text;
-                    program.details = tb_details.Text;
-                    program.notes = tb_notes.Text;
-                    program.updateUserId = MainWindow.userLogin.userId;
-
-                    int s = int.Parse(await program.Save(program));
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshProgramsList();
-                        await Search();
-                    }
-                }
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        #endregion
     }
 }

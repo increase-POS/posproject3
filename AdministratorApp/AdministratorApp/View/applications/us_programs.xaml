@@ -99,25 +99,22 @@
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,5,5,17.5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_program"  AutoGenerateColumns="False"   
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
-                        <DataGrid.OpacityMask>
-                            <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
-                        </DataGrid.OpacityMask>
+                       x:Name="dg_program"  AutoGenerateColumns="False"   Background="White"
+                        ColumnWidth="SizeToHeader" SelectionChanged="Dg_program_SelectionChanged"    
+                               AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="Background" Value="#e7f3fa" />
                                 <Setter Property="BorderBrush" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0 0 1 0"/>
-                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-                            </Style>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
                             </Style>
                         </DataGrid.Resources>
+                        <DataGrid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
+                        </DataGrid.OpacityMask>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=code}">
+                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=programCode}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -128,14 +125,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Name" Width="*">
-                                <DataGridTextColumn.Binding>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="name"></Binding>
-                                        <Binding Path="lastName"></Binding>
-                                    </MultiBinding>
-                                </DataGridTextColumn.Binding>
+                            <DataGridTextColumn Width="*"  Header="Name" Binding="{Binding Path=name}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -146,7 +136,6 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-
                             <DataGridTextColumn Width="*"  Header="Details" Binding="{Binding Path=details}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -275,7 +264,7 @@
                         <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
                     </DockPanel>
                     <Border   CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                            <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
+                        <TextBox x:Name="tb_code"  Text="{Binding programCode, Mode=TwoWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"
                                       materialDesign:HintAssist.Hint="code..."  
                                      Foreground="#4E4E4E"  FontWeight="SemiBold" KeyboardNavigation.IsTabStop="False"
@@ -286,7 +275,7 @@
                     <Border Grid.Row="1" CornerRadius="10" x:Name="brd_name" Margin="10,5,10,5"   BorderThickness="1"
                             BorderBrush="{StaticResource MainColor}" >
                             <Grid>
-                                <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="name..."  
                                      Foreground="#4E4E4E"  
@@ -298,9 +287,6 @@
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" x:Name="p_error_name"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                    <Path.ToolTip>
-                                        <ToolTip x:Name="tt_error_name"  Style="{StaticResource ToolTipError}"/>
-                                    </Path.ToolTip>
                                 </Path>
                             </Grid>
                         </Border>
@@ -318,9 +304,6 @@
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                              VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                <Path.ToolTip>
-                                    <ToolTip   x:Name="tt_error_address"   Style="{StaticResource ToolTipError}"/>
-                                </Path.ToolTip>
                             </Path>
 
                         </Grid>

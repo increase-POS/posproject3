@@ -25,8 +25,9 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
+        public string programName { get; set; }
         public string notes { get; set; }
-
+        
         private string urimainpath = "versions/";
         /// <summary>
         /// ///////////////////////////////////////

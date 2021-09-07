@@ -10,22 +10,25 @@
             <FontFamily x:Key="Font-cairo-light" >cairo light, /AdministratorApp;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-bold" >cairo bold , /AdministratorApp;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
 
+            
+            
+            <!--#region  DataGrid-->
+            <!--<Style TargetType="DataGridRow">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding isActive}" Value="0">
+                        <Setter Property="TextBlock.TextDecorations" Value="Strikethrough " />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="strikethrough">
+                <Setter Property="TextBlock.TextDecorations" Value="Strikethrough " />
+            </Style>-->
+            <!--#endregion-->
+            
         <!--#endregion-->
         <Style x:Key="ToolTipError" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource {x:Type ToolTip}}">
             <Setter Property="Foreground" Value="Red"/>
             <Setter Property="Background" Value="#15FF0000"/>
-        </Style>
-        <Style TargetType="DataGridRow">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding isActive}" Value="0">
-                    <!--<Setter Property="Background" Value="#A1A1A1" />-->
-                    <Setter Property="TextBlock.TextDecorations" Value="Strikethrough " />
-                    <!--<Setter Property="TextBlock.Foreground" Value="White" />-->
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="strikethrough">
-            <Setter Property="TextBlock.TextDecorations" Value="Strikethrough " />
         </Style>
         <!--#region ScrollBarTrackThumb-->
         <Style x:Key="ScrollBarTrackThumb"
