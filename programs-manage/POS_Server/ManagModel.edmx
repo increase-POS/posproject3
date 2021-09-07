@@ -5,6 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cities">
+          <Key>
+            <PropertyRef Name="cityId" />
+          </Key>
+          <Property Name="cityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cityCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="countryId" Type="int" />
+        </EntityType>
+        <EntityType Name="countriesCodes">
+          <Key>
+            <PropertyRef Name="countryId" />
+          </Key>
+          <Property Name="countryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="currency" Type="nvarchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="isDefault" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="customers">
           <Key>
             <PropertyRef Name="custId" />
@@ -64,9 +82,9 @@
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="packageCode" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="storeCount" Type="int" />
+          <Property Name="storeCount" Type="int" Nullable="false" />
+          <Property Name="islimitDate" Type="bit" Nullable="false" />
           <Property Name="endDate" Type="datetime2" Precision="7" />
-          <Property Name="islimitDate" Type="int" Nullable="false" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
@@ -116,13 +134,13 @@
           <Property Name="programId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="details" Type="nvarchar" MaxLength="500" />
-          <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="isActive" Type="int" Nullable="false" />
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="programCode" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -177,6 +195,18 @@
           <Property Name="programId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <Association Name="FK_cities_countriesCodes">
+          <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
+          <End Role="cities" Type="Self.cities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="countriesCodes">
+              <PropertyRef Name="countryId" />
+            </Principal>
+            <Dependent Role="cities">
+              <PropertyRef Name="countryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_customers_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="customers" Type="Self.customers" Multiplicity="*" />
@@ -418,6 +448,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="incprogramsdbModelStoreContainer">
+          <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="error" EntityType="Self.error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="packages" EntityType="Self.packages" Schema="dbo" store:Type="Tables" />
@@ -427,6 +459,10 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cities_countriesCodes" Association="Self.FK_cities_countriesCodes">
+            <End Role="countriesCodes" EntitySet="countriesCodes" />
+            <End Role="cities" EntitySet="cities" />
+          </AssociationSet>
           <AssociationSet Name="FK_customers_users" Association="Self.FK_customers_users">
             <End Role="users" EntitySet="users" />
             <End Role="customers" EntitySet="customers" />
@@ -541,6 +577,19 @@
           <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
         </EntityType>
+        <EntityType Name="error">
+          <Key>
+            <PropertyRef Name="errorId" />
+          </Key>
+          <Property Name="errorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="num" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="msg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="stackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="targetSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <NavigationProperty Name="users" Relationship="Self.FK_error_users" FromRole="error" ToRole="users" />
+        </EntityType>
         <EntityType Name="packages">
           <Key>
             <PropertyRef Name="packageId" />
@@ -562,17 +611,17 @@
           <Property Name="createDate" Type="DateTime" Precision="7" />
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="packageCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="storeCount" Type="Int32" />
+          <Property Name="storeCount" Type="Int32" Nullable="false" />
+          <Property Name="islimitDate" Type="Boolean" Nullable="false" />
           <Property Name="endDate" Type="DateTime" Precision="7" />
-          <Property Name="islimitDate" Type="Int32" Nullable="false" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="programs" Relationship="Self.FK_packages_programs" FromRole="packages" ToRole="programs" />
           <NavigationProperty Name="users" Relationship="Self.FK_packages_users" FromRole="packages" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_packages_users1" FromRole="packages" ToRole="users" />
           <NavigationProperty Name="versions" Relationship="Self.FK_packages_versions" FromRole="packages" ToRole="versions" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_packages" FromRole="packages" ToRole="packageUser" />
-          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="packageUser">
           <Key>
@@ -616,10 +665,10 @@
           <Property Name="apikey" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_posSerials_packageUser" FromRole="posSerials" ToRole="packageUser" />
           <NavigationProperty Name="users" Relationship="Self.FK_posSerials_users" FromRole="posSerials" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_posSerials_users1" FromRole="posSerials" ToRole="users" />
-          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="programs">
           <Key>
@@ -628,17 +677,17 @@
           <Property Name="programId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="details" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="isActive" Type="Int32" Nullable="false" />
           <Property Name="createDate" Type="DateTime" Precision="7" />
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="programCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="packages" Relationship="Self.FK_packages_programs" FromRole="programs" ToRole="packages" />
           <NavigationProperty Name="users" Relationship="Self.FK_programs_users" FromRole="programs" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_programs_users1" FromRole="programs" ToRole="users" />
-          <NavigationProperty Name="versions" Relationship="incprogramsdbModel.FK_versions_programs" FromRole="programs" ToRole="versions" />
+          <NavigationProperty Name="versions" Relationship="Self.FK_versions_programs" FromRole="programs" ToRole="versions" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -675,8 +724,10 @@
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
           <Property Name="isActive" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="customers" Relationship="Self.FK_customers_users" FromRole="users" ToRole="customers" />
           <NavigationProperty Name="customers1" Relationship="Self.FK_customers_users1" FromRole="users" ToRole="customers" />
+          <NavigationProperty Name="error" Relationship="Self.FK_error_users" FromRole="users" ToRole="error" />
           <NavigationProperty Name="packages" Relationship="Self.FK_packages_users" FromRole="users" ToRole="packages" />
           <NavigationProperty Name="packages1" Relationship="Self.FK_packages_users1" FromRole="users" ToRole="packages" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_users" FromRole="users" ToRole="packageUser" />
@@ -688,8 +739,6 @@
           <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
           <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
           <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
-          <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="error" Relationship="incprogramsdbModel.FK_error_users" FromRole="users" ToRole="error" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -704,12 +753,12 @@
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
+          <Property Name="programId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="packages" Relationship="Self.FK_packages_versions" FromRole="versions" ToRole="packages" />
+          <NavigationProperty Name="programs" Relationship="Self.FK_versions_programs" FromRole="versions" ToRole="programs" />
           <NavigationProperty Name="users" Relationship="Self.FK_versions_users" FromRole="versions" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_versions_users1" FromRole="versions" ToRole="users" />
-          <Property Name="programId" Type="Int32" />
-          <NavigationProperty Name="programs" Relationship="incprogramsdbModel.FK_versions_programs" FromRole="versions" ToRole="programs" />
-          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_customers_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
@@ -744,6 +793,18 @@
             </Principal>
             <Dependent Role="packageUser">
               <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_error_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="error" Type="Self.error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="error">
+              <PropertyRef Name="createUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -903,6 +964,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_versions_programs">
+          <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
+          <End Role="versions" Type="Self.versions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programs">
+              <PropertyRef Name="programId" />
+            </Principal>
+            <Dependent Role="versions">
+              <PropertyRef Name="programId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_versions_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="versions" Type="Self.versions" Multiplicity="*" />
@@ -929,6 +1002,7 @@
         </Association>
         <EntityContainer Name="incprogramsdbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="customers" EntityType="Self.customers" />
+          <EntitySet Name="error" EntityType="Self.error" />
           <EntitySet Name="packages" EntityType="Self.packages" />
           <EntitySet Name="packageUser" EntityType="Self.packageUser" />
           <EntitySet Name="posSerials" EntityType="Self.posSerials" />
@@ -947,6 +1021,10 @@
           <AssociationSet Name="FK_packageUser_customers" Association="Self.FK_packageUser_customers">
             <End Role="customers" EntitySet="customers" />
             <End Role="packageUser" EntitySet="packageUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_error_users" Association="Self.FK_error_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="error" EntitySet="error" />
           </AssociationSet>
           <AssociationSet Name="FK_packages_programs" Association="Self.FK_packages_programs">
             <End Role="programs" EntitySet="programs" />
@@ -1000,6 +1078,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="programs" EntitySet="programs" />
           </AssociationSet>
+          <AssociationSet Name="FK_versions_programs" Association="Self.FK_versions_programs">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="versions" EntitySet="versions" />
+          </AssociationSet>
           <AssociationSet Name="FK_versions_users" Association="Self.FK_versions_users">
             <End Role="users" EntitySet="users" />
             <End Role="versions" EntitySet="versions" />
@@ -1008,50 +1090,42 @@
             <End Role="users" EntitySet="users" />
             <End Role="versions" EntitySet="versions" />
           </AssociationSet>
-          <EntitySet Name="error" EntityType="incprogramsdbModel.error" />
-          <AssociationSet Name="FK_error_users" Association="incprogramsdbModel.FK_error_users">
-            <End Role="users" EntitySet="users" />
-            <End Role="error" EntitySet="error" />
-          </AssociationSet>
-          <AssociationSet Name="FK_versions_programs" Association="incprogramsdbModel.FK_versions_programs">
-            <End Role="programs" EntitySet="programs" />
-            <End Role="versions" EntitySet="versions" />
+          <EntitySet Name="cities" EntityType="incprogramsdbModel.cities" />
+          <EntitySet Name="countriesCodes" EntityType="incprogramsdbModel.countriesCodes" />
+          <AssociationSet Name="FK_cities_countriesCodes" Association="incprogramsdbModel.FK_cities_countriesCodes">
+            <End Role="countriesCodes" EntitySet="countriesCodes" />
+            <End Role="cities" EntitySet="cities" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="error">
+        <EntityType Name="cities">
           <Key>
-            <PropertyRef Name="errorId" />
+            <PropertyRef Name="cityId" />
           </Key>
-          <Property Name="errorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="num" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="msg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="stackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="targetSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="createDate" Type="DateTime" Precision="7" />
-          <Property Name="createUserId" Type="Int32" />
-          <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_error_users" FromRole="error" ToRole="users" />
+          <Property Name="cityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cityCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="countryId" Type="Int32" />
+          <NavigationProperty Name="countriesCodes" Relationship="incprogramsdbModel.FK_cities_countriesCodes" FromRole="cities" ToRole="countriesCodes" />
         </EntityType>
-        <Association Name="FK_error_users">
-          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
-          <End Type="incprogramsdbModel.error" Role="error" Multiplicity="*" />
+        <EntityType Name="countriesCodes">
+          <Key>
+            <PropertyRef Name="countryId" />
+          </Key>
+          <Property Name="countryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isDefault" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="cities" Relationship="incprogramsdbModel.FK_cities_countriesCodes" FromRole="countriesCodes" ToRole="cities" />
+        </EntityType>
+        <Association Name="FK_cities_countriesCodes">
+          <End Type="incprogramsdbModel.countriesCodes" Role="countriesCodes" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.cities" Role="cities" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="userId" />
+            <Principal Role="countriesCodes">
+              <PropertyRef Name="countryId" />
             </Principal>
-            <Dependent Role="error">
-              <PropertyRef Name="createUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_versions_programs">
-          <End Type="incprogramsdbModel.programs" Role="programs" Multiplicity="0..1" />
-          <End Type="incprogramsdbModel.versions" Role="versions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="programs">
-              <PropertyRef Name="programId" />
-            </Principal>
-            <Dependent Role="versions">
-              <PropertyRef Name="programId" />
+            <Dependent Role="cities">
+              <PropertyRef Name="countryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1088,10 +1162,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="error">
+            <EntityTypeMapping TypeName="incprogramsdbModel.error">
+              <MappingFragment StoreEntitySet="error">
+                <ScalarProperty Name="errorId" ColumnName="errorId" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="stackTrace" ColumnName="stackTrace" />
+                <ScalarProperty Name="targetSite" ColumnName="targetSite" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="packages">
             <EntityTypeMapping TypeName="incprogramsdbModel.packages">
               <MappingFragment StoreEntitySet="packages">
-                <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="packageId" ColumnName="packageId" />
                 <ScalarProperty Name="packageName" ColumnName="packageName" />
                 <ScalarProperty Name="details" ColumnName="details" />
@@ -1110,10 +1196,11 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="packageCode" ColumnName="packageCode" />
                 <ScalarProperty Name="storeCount" ColumnName="storeCount" />
-                <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="islimitDate" ColumnName="islimitDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1142,7 +1229,6 @@
           <EntitySetMapping Name="posSerials">
             <EntityTypeMapping TypeName="incprogramsdbModel.posSerials">
               <MappingFragment StoreEntitySet="posSerials">
-                <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="serialId" ColumnName="serialId" />
                 <ScalarProperty Name="serial" ColumnName="serial" />
                 <ScalarProperty Name="posDeviceCode" ColumnName="posDeviceCode" />
@@ -1154,6 +1240,7 @@
                 <ScalarProperty Name="apikey" ColumnName="apikey" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1163,13 +1250,13 @@
                 <ScalarProperty Name="programId" ColumnName="programId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="details" ColumnName="details" />
-                <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="programCode" ColumnName="programCode" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1187,7 +1274,6 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="incprogramsdbModel.users">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="AccountName" ColumnName="AccountName" />
@@ -1209,14 +1295,13 @@
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="code" ColumnName="code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="versions">
             <EntityTypeMapping TypeName="incprogramsdbModel.versions">
               <MappingFragment StoreEntitySet="versions">
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="programId" ColumnName="programId" />
                 <ScalarProperty Name="verId" ColumnName="verId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="details" ColumnName="details" />
@@ -1226,19 +1311,28 @@
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createUserId" ColumnName="createUserId" />
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="programId" ColumnName="programId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="error">
-            <EntityTypeMapping TypeName="incprogramsdbModel.error">
-              <MappingFragment StoreEntitySet="error">
-                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="targetSite" ColumnName="targetSite" />
-                <ScalarProperty Name="stackTrace" ColumnName="stackTrace" />
-                <ScalarProperty Name="msg" ColumnName="msg" />
-                <ScalarProperty Name="num" ColumnName="num" />
-                <ScalarProperty Name="errorId" ColumnName="errorId" />
+          <EntitySetMapping Name="cities">
+            <EntityTypeMapping TypeName="incprogramsdbModel.cities">
+              <MappingFragment StoreEntitySet="cities">
+                <ScalarProperty Name="countryId" ColumnName="countryId" />
+                <ScalarProperty Name="cityCode" ColumnName="cityCode" />
+                <ScalarProperty Name="cityId" ColumnName="cityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countriesCodes">
+            <EntityTypeMapping TypeName="incprogramsdbModel.countriesCodes">
+              <MappingFragment StoreEntitySet="countriesCodes">
+                <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="countryId" ColumnName="countryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -26,6 +26,7 @@ namespace Programs_Server
         }
     
         public virtual DbSet<customers> customers { get; set; }
+        public virtual DbSet<error> error { get; set; }
         public virtual DbSet<packages> packages { get; set; }
         public virtual DbSet<packageUser> packageUser { get; set; }
         public virtual DbSet<posSerials> posSerials { get; set; }
@@ -33,6 +34,7 @@ namespace Programs_Server
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<versions> versions { get; set; }
-        public virtual DbSet<error> error { get; set; }
+        public virtual DbSet<cities> cities { get; set; }
+        public virtual DbSet<countriesCodes> countriesCodes { get; set; }
     }
 }

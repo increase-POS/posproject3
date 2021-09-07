@@ -105,7 +105,6 @@ C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\System.Web.WebPa
 C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\System.Web.WebPages.Razor.xml
 C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Antlr3.Runtime.pdb
 C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.AssemblyReference.cache
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.CopyComplete
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.dll
@@ -222,3 +221,4 @@ D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csp
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.dll
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.pdb
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csprojAssemblyReference.cache
+C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.AssemblyReference.cache

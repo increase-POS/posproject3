@@ -51,9 +51,10 @@ namespace Programs_Server.Controllers
                                     updateDate = S.updateDate,
                                     createUserId = S.createUserId,
                                     updateUserId = S.updateUserId,
-                                    programId=S.programId,
+                                    programId = S.programId,
+                                    programName=S.programs.name,
 
-                                    notes=S.notes,
+                                    notes =S.notes,
 
 
                                 }).ToList();
@@ -120,7 +121,8 @@ namespace Programs_Server.Controllers
                        S.updateDate,
                        S.createUserId,
                        S.updateUserId,
-                     S.programId,
+                       S.programId,
+                       programName = S.programs.name,
                        S.notes,
                    })
                    .FirstOrDefault();

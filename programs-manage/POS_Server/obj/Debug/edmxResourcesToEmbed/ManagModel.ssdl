@@ -1,5 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="cities">
+    <Key>
+      <PropertyRef Name="cityId" />
+    </Key>
+    <Property Name="cityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cityCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="countryId" Type="int" />
+  </EntityType>
+  <EntityType Name="countriesCodes">
+    <Key>
+      <PropertyRef Name="countryId" />
+    </Key>
+    <Property Name="countryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="currency" Type="nvarchar" MaxLength="50" />
+    <Property Name="name" Type="nvarchar" MaxLength="100" />
+    <Property Name="isDefault" Type="tinyint" Nullable="false" />
+  </EntityType>
   <EntityType Name="customers">
     <Key>
       <PropertyRef Name="custId" />
@@ -59,9 +77,9 @@
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="packageCode" Type="nvarchar" MaxLength="500" Nullable="false" />
-    <Property Name="storeCount" Type="int" />
+    <Property Name="storeCount" Type="int" Nullable="false" />
+    <Property Name="islimitDate" Type="bit" Nullable="false" />
     <Property Name="endDate" Type="datetime2" Precision="7" />
-    <Property Name="islimitDate" Type="int" Nullable="false" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
@@ -111,13 +129,13 @@
     <Property Name="programId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="details" Type="nvarchar" MaxLength="500" />
-    <Property Name="note" Type="nvarchar" MaxLength="500" />
     <Property Name="isActive" Type="int" Nullable="false" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="programCode" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -172,6 +190,18 @@
     <Property Name="programId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
   </EntityType>
+  <Association Name="FK_cities_countriesCodes">
+    <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
+    <End Role="cities" Type="Self.cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countriesCodes">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="cities">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_customers_users">
     <End Role="users" Type="Self.users" Multiplicity="0..1" />
     <End Role="customers" Type="Self.customers" Multiplicity="*" />
@@ -413,6 +443,8 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="incprogramsdbModelStoreContainer">
+    <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="error" EntityType="Self.error" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="packages" EntityType="Self.packages" Schema="dbo" store:Type="Tables" />
@@ -422,6 +454,10 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_cities_countriesCodes" Association="Self.FK_cities_countriesCodes">
+      <End Role="countriesCodes" EntitySet="countriesCodes" />
+      <End Role="cities" EntitySet="cities" />
+    </AssociationSet>
     <AssociationSet Name="FK_customers_users" Association="Self.FK_customers_users">
       <End Role="users" EntitySet="users" />
       <End Role="customers" EntitySet="customers" />

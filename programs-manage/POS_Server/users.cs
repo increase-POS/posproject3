@@ -19,6 +19,7 @@ namespace Programs_Server
         {
             this.customers = new HashSet<customers>();
             this.customers1 = new HashSet<customers>();
+            this.error = new HashSet<error>();
             this.packages = new HashSet<packages>();
             this.packages1 = new HashSet<packages>();
             this.packageUser = new HashSet<packageUser>();
@@ -30,7 +31,6 @@ namespace Programs_Server
             this.programs1 = new HashSet<programs>();
             this.versions = new HashSet<versions>();
             this.versions1 = new HashSet<versions>();
-            this.error = new HashSet<error>();
         }
     
         public int userId { get; set; }
@@ -61,6 +61,8 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customers> customers1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<error> error { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packages> packages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packages> packages1 { get; set; }
@@ -82,7 +84,5 @@ namespace Programs_Server
         public virtual ICollection<versions> versions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<versions> versions1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<error> error { get; set; }
     }
 }

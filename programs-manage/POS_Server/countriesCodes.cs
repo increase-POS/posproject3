@@ -12,30 +12,21 @@ namespace Programs_Server
     using System;
     using System.Collections.Generic;
     
-    public partial class versions
+    public partial class countriesCodes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public versions()
+        public countriesCodes()
         {
-            this.packages = new HashSet<packages>();
+            this.cities = new HashSet<cities>();
         }
     
-        public int verId { get; set; }
+        public int countryId { get; set; }
+        public string code { get; set; }
+        public string currency { get; set; }
         public string name { get; set; }
-        public string details { get; set; }
-        public int isActive { get; set; }
-        public string versionscode { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> programId { get; set; }
-        public string notes { get; set; }
+        public byte isDefault { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<packages> packages { get; set; }
-        public virtual programs programs { get; set; }
-        public virtual users users { get; set; }
-        public virtual users users1 { get; set; }
+        public virtual ICollection<cities> cities { get; set; }
     }
 }

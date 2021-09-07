@@ -45,7 +45,7 @@ namespace Programs_Server.Controllers
                                     programId = S.programId,
                                     name = S.name,
                                     details = S.details,
-                                    note = S.note,
+                                    notes = S.notes,
                                     isActive = S.isActive,
                                     createDate = S.createDate,
                                     updateDate = S.updateDate,
@@ -115,7 +115,7 @@ namespace Programs_Server.Controllers
                        S.programId,
                        S.name,
                        S.details,
-                       S.note,
+                       S.notes,
                        S.isActive,
                        S.createDate,
                        S.updateDate,
@@ -192,7 +192,7 @@ namespace Programs_Server.Controllers
                             tmpObject.programId = newObject.programId;
                             tmpObject.name = newObject.name;
                             tmpObject.details = newObject.details;
-                            tmpObject.note = newObject.note;
+                            tmpObject.notes = newObject.notes;
                             tmpObject.isActive = newObject.isActive;
                         //    tmpObject.createDate = newObject.createDate;
                           

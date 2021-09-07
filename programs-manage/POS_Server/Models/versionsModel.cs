@@ -12,6 +12,7 @@ namespace Programs_Server.Models
         public string details { get; set; }
         public int isActive { get; set; }
         public string versionscode { get; set; }
+        public string programName { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
