@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace AdministratorApp.Classes
 {
-    static public class FillCombo
+    public class FillCombo
     {
         /// <summary>
         /// Programs
@@ -33,5 +33,45 @@ namespace AdministratorApp.Classes
             combo.SelectedValuePath = "verId";
             combo.DisplayMemberPath = "name";
         }
+
+
+
+        /// <summary>
+        /// area code methods
+        /// </summary>
+        /// <returns></returns>
+        /// 
+          #region Countries
+        //phone 
+        public static IEnumerable<CountryCode> countrynum;
+        public static IEnumerable<City> citynum;
+        public static IEnumerable<City> citynumofcountry;
+        public static CountryCode countrycodes = new CountryCode();
+        public static City cityCodes = new City();
+
+        static public async Task<IEnumerable<CountryCode>> RefreshCountry()
+        {
+            countrynum = await countrycodes.GetAllCountries();
+            return countrynum;
+        }
+
+        static public async Task<IEnumerable<City>> RefreshCity()
+        {
+            citynum = await cityCodes.Get();
+            return citynum;
+        }
+        #endregion
+
+        static public async Task fillCountries(ComboBox combo)
+        {
+            if (countrynum is null)
+                await RefreshCountry();
+
+            combo.ItemsSource = countrynum.ToList();
+            combo.SelectedValuePath = "countryId";
+            combo.DisplayMemberPath = "code";
+        }
+        
+       
     }
 }

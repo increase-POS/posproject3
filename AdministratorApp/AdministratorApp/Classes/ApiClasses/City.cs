@@ -14,8 +14,7 @@ using AdministratorApp.Classes;
 
 namespace AdministratorApp.ApiClasses
 {
-    class City
-
+    public class City
     {
         public int cityId { get; set; }
         public string cityCode { get; set; }
