@@ -207,7 +207,7 @@
     </Compile>
     <Compile Include="Classes\Calculate.cs" />
     <Compile Include="Controllers\cityController.cs" />
-    <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\customersController.cs" />
     <Compile Include="Controllers\errorController.cs" />
     <Compile Include="Controllers\packagesController.cs" />
@@ -251,6 +251,7 @@
     <Compile Include="Models\programsModel.cs" />
     <Compile Include="Models\usersModel.cs" />
     <Compile Include="Models\Validation.cs" />
+    <Compile Include="Models\CountriesModel.cs" />
     <Compile Include="Models\versionsModel.cs" />
     <Compile Include="packages.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>

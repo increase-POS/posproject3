@@ -109,4 +109,3 @@ C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_S
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.csproj.CopyComplete
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.dll
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.pdb
-C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.csproj.AssemblyReference.cache

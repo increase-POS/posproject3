@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>https://localhost:443</_PublishTargetUrl>
-    <History>True|2021-09-07T15:28:32.9400709Z;True|2021-09-07T18:01:16.9255179+03:00;True|2021-09-07T17:57:34.8096091+03:00;True|2021-09-07T16:46:11.1246342+03:00;True|2021-09-07T15:43:58.0320657+03:00;True|2021-09-07T15:13:30.6095126+03:00;True|2021-09-06T15:10:57.5075288+03:00;True|2021-09-05T19:34:09.7905646+03:00;True|2021-09-04T18:47:45.5249816+03:00;True|2021-09-02T14:24:41.1041260+03:00;True|2021-09-02T13:47:06.2043058+03:00;True|2021-08-31T16:58:30.8770703+03:00;</History>
+    <History>True|2021-09-07T15:52:01.1861273Z;True|2021-09-07T18:28:32.9400709+03:00;True|2021-09-07T18:01:16.9255179+03:00;True|2021-09-07T17:57:34.8096091+03:00;True|2021-09-07T16:46:11.1246342+03:00;True|2021-09-07T15:43:58.0320657+03:00;True|2021-09-07T15:13:30.6095126+03:00;True|2021-09-06T15:10:57.5075288+03:00;True|2021-09-05T19:34:09.7905646+03:00;True|2021-09-04T18:47:45.5249816+03:00;True|2021-09-02T14:24:41.1041260+03:00;True|2021-09-02T13:47:06.2043058+03:00;True|2021-08-31T16:58:30.8770703+03:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
@@ -108,13 +108,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/07/2021 14:45:16</publishTime>
     </File>
     <File Include="bin/Programs_Server.dll">
-      <publishTime>09/07/2021 18:28:32</publishTime>
+      <publishTime>09/08/2021 01:30:48</publishTime>
     </File>
     <File Include="bin/Programs_Server.pdb">
-      <publishTime>09/07/2021 18:28:32</publishTime>
+      <publishTime>09/08/2021 01:30:48</publishTime>
     </File>
     <File Include="bin/Programs_Server.xml">
-      <publishTime>09/07/2021 18:28:32</publishTime>
+      <publishTime>09/08/2021 01:30:48</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/07/2021 14:45:16</publishTime>
@@ -339,55 +339,55 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/07/2021 14:45:12</publishTime>
     </File>
     <File Include="favicon.ico">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.svg">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.ttf">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.woff">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.woff2">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>08/31/2021 17:04:20</publishTime>
     </File>
     <File Include="ManagModel.edmx.diagram">
-      <publishTime>09/07/2021 17:56:47</publishTime>
+      <publishTime>07/09/2021 17:56:47</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.min.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.min.map">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.slim.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.slim.min.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.slim.min.map">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
-      <publishTime>05/07/2021 14:45:13</publishTime>
+      <publishTime>07/05/2021 14:45:13</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>08/31/2021 16:55:29</publishTime>
@@ -405,7 +405,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/07/2021 14:45:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/09/2021 16:46:10</publishTime>
+      <publishTime>09/07/2021 16:46:10</publishTime>
     </File>
   </ItemGroup>
 </Project>

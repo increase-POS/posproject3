@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
-using Programs_Server.Models;
+using Programs_Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Programs_Server.Models;
+
+
 
 namespace Programs_Server.Controllers
 {
@@ -31,8 +34,8 @@ namespace Programs_Server.Controllers
             {
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
-                    var cityList = entity.cities
-                  
+                    var cityList = entity.cities.ToList()
+
                    .Select(c => new {
                     c.cityId,   
                     c.cityCode,

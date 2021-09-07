@@ -18,6 +18,9 @@ namespace Programs_Server.Controllers
 
     {
         // GET api/<controller>
+
+
+
         [HttpGet]
         [Route("GetAll")]
         public IHttpActionResult GetAll()
