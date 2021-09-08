@@ -1,9 +1,11 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
+using Microsoft.Win32;
 using netoaster;
 using POS.View.windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -27,7 +29,6 @@ namespace AdministratorApp.View.sectionData
     /// </summary>
     public partial class uc_users : UserControl
     {
-       
         public uc_users()
         {
             try
@@ -60,7 +61,7 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name" };
+                requiredControlList = new List<string> { "name", "lastName", "accountName", "password", "type", "mobile" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -77,6 +78,7 @@ namespace AdministratorApp.View.sectionData
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
+                FillCombo.fillUserType(cb_type);
 
 
 
@@ -142,139 +144,40 @@ namespace AdministratorApp.View.sectionData
             //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
 
         }
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {//refresh
-
-                HelpClass.StartAwait(grid_main);
-                await RefreshUsersList();
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (users is null)
-                    await RefreshUsersList();
-                tgl_userState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (users is null)
-                    await RefreshUsersList();
-                tgl_userState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                Clear();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //selection
-
-                if (dg_user.SelectedIndex != -1)
-                {
-                    user = dg_user.SelectedItem as Users;
-                    this.DataContext = user;
-
-                    if (user != null)
-                    {
-                        #region delete
-                        if (user.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (user.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                    }
-                }
-
-                clearValidate();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
             try
             {
                 HelpClass.StartAwait(grid_main);
+
+
+                //chk duplicate userName
+                bool duplicateUserName = false;
+                duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, 0);
+                //chk password length
+                bool passLength = false;
+                passLength = chkPasswordLength(pb_password.Password);
+
+
                 user = new Users();
-                if (validate())
+                if (HelpClass.validate(requiredControlList, this))
                 {
-                    //user.userCode = "Pr-0000009";
-                    //user.name = tb_name.Text;
-                    //user.details = tb_details.Text;
-                    //user.notes = tb_notes.Text;
+                    user.code = "Us-000001";
+                    user.name = tb_name.Text;
+                    user.lastName = tb_lastName.Text;
+                    user.accountName = tb_accountName.Text;
+                    user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
+                    user.email = tb_email.Text;
+                    user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
+                    if (!tb_phone.Text.Equals(""))
+                        user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                    if (!tb_fax.Text.Equals(""))
+                        user.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
+                    if (cb_type.SelectedValue != null)
+                    user.type = cb_type.SelectedValue.ToString();
+                    user.address = tb_address.Text;
+                    user.notes = tb_notes.Text;
                     user.isActive = 1;
                     user.createUserId = MainWindow.userLogin.userId;
                     user.updateUserId = MainWindow.userLogin.userId;
@@ -285,6 +188,16 @@ namespace AdministratorApp.View.sectionData
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                       
+                        if (isImgPressed)
+                        {
+                            int userId = s;
+                            string b = await user.uploadImage(imgFileName,
+                                Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
+                            user.image = b;
+                            isImgPressed = false;
+                        }
+
                         Clear();
                         await RefreshUsersList();
                         await Search();
@@ -305,11 +218,25 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (validate())
+                if (HelpClass.validate(requiredControlList, this))
                 {
+                    user.code = "Us-000001";
                     user.name = tb_name.Text;
-                    //user.details = tb_details.Text;
-                    //user.notes = tb_notes.Text;
+                    user.lastName = tb_lastName.Text;
+                    user.accountName = tb_accountName.Text;
+                    //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
+                    user.email = tb_email.Text;
+                    user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
+                    if (!tb_phone.Text.Equals(""))
+                        user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                    if (!tb_fax.Text.Equals(""))
+                        user.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
+                    if (cb_type.SelectedValue != null)
+                        user.type = cb_type.SelectedValue.ToString();
+                    user.address = tb_address.Text;
+                    user.notes = tb_notes.Text;
+                    user.isActive = 1;
+                    user.createUserId = MainWindow.userLogin.userId;
                     user.updateUserId = MainWindow.userLogin.userId;
 
                     int s = int.Parse(await user.Save(user));
@@ -320,6 +247,21 @@ namespace AdministratorApp.View.sectionData
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         await RefreshUsersList();
                         await Search();
+                        if (isImgPressed)
+                        {
+                            int userId = s;
+                            string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
+                            user.image = b;
+                            isImgPressed = false;
+                            if (!b.Equals(""))
+                            {
+                                await getImg();
+                            }
+                            else
+                            {
+                                HelpClass.clearImg(btn_image);
+                            }
+                        }
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -378,11 +320,9 @@ namespace AdministratorApp.View.sectionData
                                 await RefreshUsersList();
                                 await Search();
                                 Clear();
-
                             }
                         }
                     }
-
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -405,6 +345,132 @@ namespace AdministratorApp.View.sectionData
                 await Search();
             }
         }
+        #endregion
+        #region events
+        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (users is null)
+                    await RefreshUsersList();
+                tgl_userState = 1;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (users is null)
+                    await RefreshUsersList();
+                tgl_userState = 0;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Clear();
+
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //selection
+                if (dg_user.SelectedIndex != -1)
+                {
+                    user = dg_user.SelectedItem as Users;
+                    this.DataContext = user;
+                    if (user != null)
+                    {
+                       await getImg();
+                        #region delete
+                        if (user.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (user.isActive == 0)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
+                        #endregion
+                        HelpClass.getMobile(user.mobile, cb_areaMobile, tb_mobile);
+                        HelpClass.getPhone(user.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
+                        HelpClass.getPhone(user.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
+                    }
+                }
+                HelpClass.clearValidate(requiredControlList, this);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//refresh
+
+                HelpClass.StartAwait(grid_main);
+                await RefreshUsersList();
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
         #region Refresh & Search
         async Task Search()
         {
@@ -433,7 +499,23 @@ namespace AdministratorApp.View.sectionData
         void Clear()
         {
             this.DataContext = new Users();
-            clearValidate();
+
+            #region password
+            pb_password.Clear();
+            #endregion
+            #region Phone
+            //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
+            //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
+            tb_mobile.Clear();
+            tb_email.Clear();
+            #endregion
+            #region image
+            HelpClass.clearImg(btn_image);
+            #endregion
+
+
+            // last 
+            HelpClass.clearValidate(requiredControlList, this);
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -476,135 +558,218 @@ namespace AdministratorApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try
             {
-                validate();
+                HelpClass.validate(requiredControlList,this);
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
         {
             try
             {
-                validate();
+                HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        bool validate()
+
+
+        #endregion
+
+        private async Task<bool> chkIfUserNameIsExists(string username, int uId)
         {
             bool isValid = true;
-            try
+            if (users == null)
+               await RefreshUsersList();
+            if (users.Any(i => i.name == username && i.userId != uId))
+                isValid = false;
+
+            if (!isValid)
             {
-                foreach (var control in requiredControlList)
-                {
-                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(this).Where(x => x.Name == "tb_" + control)
-                        .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
-                         .FirstOrDefault();
-                    if (!HelpClass.validateEmpty(textBox.Text, path))
-                        isValid = false;
-                }
+                p_error_name.Visibility = Visibility.Visible;
+                #region Tooltip
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = MainWindow.resourcemanager.GetString("trErrorDuplicateUserNameToolTip");
+                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                p_error_name.ToolTip = toolTip;
+                #endregion
             }
-            catch { }
             return isValid;
         }
-        void clearValidate()
+       
+        #region Password
+        private void ValidateEmpty_PasswordChanged(object sender, RoutedEventArgs e)
         {
             try
             {
-                foreach (var control in requiredControlList)
-                {
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    HelpClass.clearValidate(path);
-                }
+                HelpClass.validate(requiredControlList, this);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                tb_passwordMirror.Text = pb_password.Password;
+                tb_passwordMirror.Visibility = Visibility.Visible;
+                pb_password.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            { HelpClass.ExceptionMessage(ex, this); }
+        }
+
+        private void P_showPassword_MouseLeave(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                tb_passwordMirror.Visibility = Visibility.Collapsed;
+                pb_password.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            { HelpClass.ExceptionMessage(ex, this); }
+        }
+        private bool chkPasswordLength(string password)
+        {
+            bool isValid = true;
+
+            if (password.Length < 6)
+                isValid = false;
+
+            if (!isValid)
+            {
+                p_error_password.Visibility = Visibility.Visible;
+                #region Tooltip
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = MainWindow.resourcemanager.GetString("trErrorPasswordLengthToolTip");
+                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                p_error_password.ToolTip = toolTip;
+                #endregion
+            }
+
+            return isValid;
         }
         #endregion
+        #region Phone
         int? countryid;
-        Boolean firstchange = false;
-        Boolean firstchangefax = false;
-        private void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (firstchange == true)
-                {
+                HelpClass.StartAwait(grid_main);
                     if (cb_areaPhone.SelectedValue != null)
-                    {
+                {
                         if (cb_areaPhone.SelectedIndex >= 0)
+                        {
                             countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        FillCombo.citynumofcountry = FillCombo.citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
-                        cb_areaPhoneLocal.ItemsSource = FillCombo.citynumofcountry;
-                        cb_areaPhoneLocal.SelectedValuePath = "cityId";
-                        cb_areaPhoneLocal.DisplayMemberPath = "cityCode";
-                        if (FillCombo.citynumofcountry.Count() > 0)
-                        {
-                            cb_areaPhoneLocal.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            cb_areaPhoneLocal.Visibility = Visibility.Collapsed;
+                            await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid ,brd_areaPhoneLocal);
                         }
                     }
-                }
-                else
-                {
-                    firstchange = true;
-                }
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        private void Cb_areaFax_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_areaFax_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (firstchangefax == true)
-                {
+                HelpClass.StartAwait(grid_main);
                     if (cb_areaFax.SelectedValue != null)
-                    {
+                {
                         if (cb_areaFax.SelectedIndex >= 0)
+                        {
                             countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        FillCombo.citynumofcountry = FillCombo.citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
-                        cb_areaFaxLocal.ItemsSource = FillCombo.citynumofcountry;
-                        cb_areaFaxLocal.SelectedValuePath = "cityId";
-                        cb_areaFaxLocal.DisplayMemberPath = "cityCode";
-                        if (FillCombo.citynumofcountry.Count() > 0)
-                        {
-                            cb_areaFaxLocal.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            cb_areaFaxLocal.Visibility = Visibility.Collapsed;
+                          await  FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid ,brd_areaFaxLocal);
                         }
                     }
-                }
-                else
-                {
-                    firstchangefax = true;
-                }
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+       
+        #endregion
+        #region Image
+        string imgFileName = "pic/no-image-icon-125x125.png";
+        bool isImgPressed = false;
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        private void Btn_image_Click(object sender, RoutedEventArgs e)
+        {
+            //select image
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                isImgPressed = true;
+                openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
+                    btn_image.Background = HelpClass.imageBrush;
+                    imgFileName = openFileDialog.FileName;
+                }
+                else
+                { }
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async Task getImg()
+        {
+            if (string.IsNullOrEmpty(user.image))
+            {
+                HelpClass.clearImg(btn_image);
+            }
+            else
+            {
+                byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
 
-        
+                var bitmapImage = new BitmapImage();
+                if (imageBuffer != null)
+                {
+                    using (var memoryStream = new MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+
+                    btn_image.Background = new ImageBrush(bitmapImage);
+                    // configure trmporary path
+                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
+                    tmpPath = System.IO.Path.Combine(tmpPath, user.image);
+                    openFileDialog.FileName = tmpPath;
+                }
+                else
+                    HelpClass.clearImg(btn_image);
+            }
+        }
+        #endregion
     }
 }

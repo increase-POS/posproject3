@@ -280,15 +280,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button  Grid.Row="0"   FlowDirection="LeftToRight"
-                Grid.RowSpan="3" x:Name="img_vendor" VerticalAlignment="Center"
+                        <!--<Grid x:Name="grid_image" Grid.RowSpan="3"  Grid.Column="1">-->
+                            <Button  Grid.Row="0"   FlowDirection="LeftToRight"
+                        Grid.RowSpan="3" x:Name="btn_image" Click="Btn_image_Click" VerticalAlignment="Center"
                      Margin="0"  BorderBrush="{x:Null}" materialDesign:ButtonAssist.CornerRadius="5"
                          HorizontalAlignment="Center" Height="140" Width="140" Grid.Column="1">
-                    <Button.Background>
-                        <ImageBrush Stretch="UniformToFill"  x:Name="IMG_customer"
+                                <Button.Background>
+                                    <ImageBrush Stretch="UniformToFill"  x:Name="img_image"
                                             ImageSource="/pic/no-image-icon-125x125.png"   />
-                    </Button.Background>
-                </Button>
+                                </Button.Background>
+                            </Button>
+                        <!--</Grid>-->
+                
                         <Border   CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"
@@ -307,8 +310,9 @@
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" />
-                        <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                     Height="40"   Margin="4,0"  
+                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_name"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -323,8 +327,9 @@
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" />
-                        <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                     Height="40"   Margin="4,0" 
+                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_lastName"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -354,8 +359,9 @@
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" />
-                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                     Height="40"   Margin="4,0"
+                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_accountName"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -364,7 +370,7 @@
                         </Border>
                         <Border Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_password"  Text="{Binding password, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_passwordMirror"   Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="password..."  
                                      Foreground="#4E4E4E"   Visibility="Collapsed"
@@ -377,18 +383,20 @@
                                  Foreground="#4E4E4E"  
                                   MaxLength="20" BorderThickness="0"
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                 Height="40"   Margin="4,0"    />
-                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,30,5"
+                                 Height="40"   Margin="4,0"   
+                                 LostFocus="validateEmpty_LostFocus" PasswordChanged="ValidateEmpty_PasswordChanged"/>
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,30,5" x:Name="p_error_password"
                               HorizontalAlignment="Right"     Visibility="Collapsed" 
                          VerticalAlignment="Center" Width="15"  Height="15"
-                                  x:Name="p_errorPassword"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                                 <Path Fill="#7e7e7e"  Stretch="Fill" Margin="5,5,5,5"
                               HorizontalAlignment="Right"    Visibility="Visible" 
                          VerticalAlignment="Center" Width="20"  Height="15" x:Name="p_showPassword" 
                               Data="M11,0.5C6,0.5,1.7,3.6,0,8c1.7,4.4,6,7.5,11,7.5s9.3-3.1,11-7.5C20.3,3.6,16,0.5,11,0.5z M11,13
-	c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S13.8,13,11,13z M11,5C9.3,5,8,6.3,8,8s1.3,3,3,3s3-1.3,3-3S12.7,5,11,5z"  >
+	c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S13.8,13,11,13z M11,5C9.3,5,8,6.3,8,8s1.3,3,3,3s3-1.3,3-3S12.7,5,11,5z"  
+                                  MouseEnter="P_showPassword_MouseEnter" 
+                                  MouseLeave="P_showPassword_MouseLeave">
                                 </Path>
                             </Grid>
                         </Border>
@@ -405,12 +413,18 @@
                     </DockPanel>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_job" Padding="10,5,5,5"    IsEditable="True" 
+                            <ComboBox   x:Name="cb_type" Padding="10,0,5,0"    IsEditable="True" 
+                                        SelectedValue="{Binding type, Mode=OneWay}"
                                           TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Job..."    
                                           VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
+                                          Height="40" LostFocus="validateEmpty_LostFocus"  />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_type"
+                              HorizontalAlignment="Right" Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
                         </Grid>
                     </Border>
 
@@ -432,7 +446,8 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <ComboBox   x:Name="cb_areaMobile" Padding="10,5,5,5"    
+                                <ComboBox   x:Name="cb_areaMobile" Padding="10,0,5,0" 
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                           TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
                                           VerticalAlignment="Center" BorderThickness="0"
                                           Height="40" Width="60"    />
@@ -446,12 +461,14 @@
                                          Text="{Binding mobile, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="Mobile..."   Foreground="#4E4E4E"
                                          MaxLength="9"  
-                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40"    />
-                                <Path Fill="#E81123" Stretch="Fill"   DockPanel.Dock="Right" x:Name="p_errorMobile" 
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
+                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
+                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_mobile" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
                                       Width="15"  Height="15" Margin="5,5,15,5" 
                                       Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
-                        </Path>
+                                </Path>
                                     </Grid>
                                 </Border>
 
@@ -464,7 +481,9 @@
                         </Grid.ColumnDefinitions>
                                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid   >
-                            <ComboBox x:Name="cb_areaPhone" Padding="10,5,5,5" TextBlock.Foreground="#4E4E4E"
+                                <ComboBox x:Name="cb_areaPhone" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
+                                      
                        Height="40" Margin="4,0"   Width="60"   BorderThickness="0" 
                                       SelectionChanged="Cb_areaPhone_SelectionChanged"/>
                             </Grid>
@@ -473,7 +492,9 @@
                         <Border Visibility="Collapsed" x:Name="brd_areaPhoneLocal" Grid.Row="1" Grid.Column="1" 
                                 CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
-                      <ComboBox  x:Name="cb_areaPhoneLocal" Padding="10,5,5,5" 
+                                <ComboBox  x:Name="cb_areaPhoneLocal" Padding="10,0,5,0"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
+                                 
                         TextBlock.Foreground="#4E4E4E" Margin="4,0"
                          Height="40" Width="60"    BorderThickness="0"   />
                                     </Grid>
@@ -485,7 +506,8 @@
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Phone..."    
                            Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                     MaxLength="15"    Height="40"   Margin="4,0"  />
+                     MaxLength="15"    Height="40"   Margin="4,0" 
+                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -505,7 +527,9 @@
 
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                     <Grid   >
-                         <ComboBox x:Name="cb_areaFax" Padding="10,5,5,5" TextBlock.Foreground="#4E4E4E"
+                                <ComboBox x:Name="cb_areaFax" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
+                                   
                           Margin="4,0"  Height="40" Width="60"    BorderThickness="0" 
                                    SelectionChanged="Cb_areaFax_SelectionChanged"/>
                                     </Grid>
@@ -513,7 +537,8 @@
 
                         <Border Visibility="Collapsed" x:Name="brd_areaFaxLocal" Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
-                           <ComboBox  x:Name="cb_areaFaxLocal" Padding="10,5,5,5" TextBlock.Foreground="#4E4E4E"
+                                <ComboBox  x:Name="cb_areaFaxLocal" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                            Margin="4,0" Height="40" Width="60" BorderThickness="0"  />
                                     </Grid>
                         </Border>
@@ -522,7 +547,8 @@
                                 <TextBox x:Name="tb_fax"  Text="{Binding fax, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Fax..."    
-                                     Foreground="#4E4E4E"  Height="40"  Margin="4,0"   />
+                                     Foreground="#4E4E4E"  Height="40"  Margin="4,0"  
+                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_errorFax"
                                   HorizontalAlignment="Right" Visibility="Collapsed" 
                              VerticalAlignment="Center" Width="15"  Height="15"
@@ -571,7 +597,7 @@
 
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                 <Grid   >
-                            <TextBox  x:Name="tb_note" Text="{Binding notes, Mode=OneWay}"
+                            <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                   Padding="10,0,5,0"  
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"

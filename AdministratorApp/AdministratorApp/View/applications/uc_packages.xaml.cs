@@ -509,6 +509,7 @@ namespace AdministratorApp.View.applications
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try

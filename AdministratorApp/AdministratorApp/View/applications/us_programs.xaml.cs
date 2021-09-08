@@ -466,6 +466,7 @@ namespace AdministratorApp.View.applications
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+         
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try
@@ -501,8 +502,21 @@ namespace AdministratorApp.View.applications
                         .FirstOrDefault();
                     Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
                          .FirstOrDefault();
-                    if (!HelpClass.validateEmpty(textBox.Text, path))
-                        isValid = false;
+                    if (textBox != null && path != null)
+                        if (!HelpClass.validateEmpty(textBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(this).Where(x => x.Name == "cb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
+                         .FirstOrDefault();
+                    if (comboBox != null && path != null)
+                        if (!HelpClass.validateEmpty(comboBox.Text, path))
+                            isValid = false;
                 }
             }
             catch { }
@@ -516,7 +530,8 @@ namespace AdministratorApp.View.applications
                 {
                     Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
-                    HelpClass.clearValidate(path);
+                    if (path != null)
+                        HelpClass.clearValidate(path);
                 }
             }
             catch { }

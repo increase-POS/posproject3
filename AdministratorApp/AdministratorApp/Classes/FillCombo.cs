@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace AdministratorApp.Classes
@@ -35,13 +36,12 @@ namespace AdministratorApp.Classes
         }
 
 
-
+        #region Countries
         /// <summary>
         /// area code methods
         /// </summary>
         /// <returns></returns>
         /// 
-          #region Countries
         //phone 
         public static IEnumerable<Country> countrynum;
         public static IEnumerable<City> citynum;
@@ -51,14 +51,7 @@ namespace AdministratorApp.Classes
 
         static public async Task<IEnumerable<Country>> RefreshCountry()
         {
-
-
-           
            countrynum = await countrycodes.GetAll();
-           
-
-
-
             return countrynum;
         }
 
@@ -67,7 +60,6 @@ namespace AdministratorApp.Classes
             citynum = await cityCodes.Get();
             return citynum;
         }
-        #endregion
 
         static public async Task fillCountries(ComboBox combo)
         {
@@ -78,7 +70,37 @@ namespace AdministratorApp.Classes
             combo.SelectedValuePath = "countryId";
             combo.DisplayMemberPath = "code";
         }
-        
-       
+        static public async Task fillCountriesLocal(ComboBox combo , int countryid,Border border)
+        {
+            if (citynum is null)
+                await RefreshCity();
+            FillCombo.citynumofcountry = FillCombo.citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
+            combo.ItemsSource = FillCombo.citynumofcountry;
+            combo.SelectedValuePath = "cityId";
+            combo.DisplayMemberPath = "cityCode";
+            if (FillCombo.citynumofcountry.Count() > 0)
+                border.Visibility = Visibility.Visible;
+            else
+                border.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+        /// <summary>
+        /// fill user type
+        /// </summary>
+        #region fill user type
+        static public void fillUserType(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "admin" },
+                new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "employee" },
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+
+        #endregion
+
     }
 }

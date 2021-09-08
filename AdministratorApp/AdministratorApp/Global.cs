@@ -11,6 +11,8 @@ namespace AdministratorApp
         public const string APIKey = "1234";
         //public const string APIUri = "http://localhost:443/api/";
         public const string APIUri = "https://141.95.1.58:443/api/";
+
+
         public static string ScannedImageLocation = "Thumb/Scan/scan.jpg";
         public const string TMPFolder = "Thumb";
         public const string TMPItemsFolder = "Thumb/items"; // folder to save items photos locally 

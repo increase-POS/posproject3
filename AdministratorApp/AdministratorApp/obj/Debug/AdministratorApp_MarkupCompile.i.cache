@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\
 AdministratorApp
 none
 false
 DEBUG;TRACE
-D:\myproj\posproject3\AdministratorApp\AdministratorApp\App.xaml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\App.xaml
 1487715440
 
-44-372541649
-37-750519499
+45-2109665285
+38-1693573719
 MainWindow.xaml;View\applications\uc_applications.xaml;View\applications\uc_packages.xaml;View\applications\uc_versions.xaml;View\applications\us_programs.xaml;View\sales\uc_packageUser.xaml;View\sales\uc_posSerials.xaml;View\sales\uc_sale.xaml;View\sales\uc_sales.xaml;View\sectionData\uc_agents.xaml;View\sectionData\uc_customers.xaml;View\sectionData\uc_sectionData.xaml;View\sectionData\uc_users.xaml;View\windows\wd_acceptCancelPopup.xaml;
 
-False
+True
 

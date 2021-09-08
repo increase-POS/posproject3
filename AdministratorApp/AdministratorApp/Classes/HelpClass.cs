@@ -25,16 +25,13 @@ namespace AdministratorApp.Classes
        static public BrushConverter brushConverter = new BrushConverter();
         public static ImageBrush imageBrush = new ImageBrush();
          
-        public static bool EmailIsValid(string txt)
+        public static bool IsValidEmail(string txt)
         {//for email
             Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
                    RegexOptions.CultureInvariant | RegexOptions.Singleline);
             bool isValidEmail = regex.IsMatch(txt);
-
-            if (!isValidEmail) return false;
-
-            else return true;
-
+            if (isValidEmail) return true;
+            else return false;
         }
         public static void SetError(Control c, Path p_error, ToolTip tt_error, string tr)
         {
@@ -197,7 +194,71 @@ namespace AdministratorApp.Classes
         }
          */
         #endregion
+        #region validate
+        public static bool validate(List<string> requiredControlList ,UserControl userControl)
+        {
+            bool isValid = true;
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (textBox != null && path != null)
+                        if (!HelpClass.validateEmpty(textBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(userControl).Where(x => x.Name == "cb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (comboBox != null && path != null)
+                        if (!HelpClass.validateEmpty(comboBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    PasswordBox passwordBox = FindControls.FindVisualChildren<PasswordBox>(userControl).Where(x => x.Name == "pb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (passwordBox != null && path != null)
+                        if (!HelpClass.validateEmpty(passwordBox.Password, path))
+                            isValid = false;
+                }
 
+
+                #region Email
+                TextBox textBoxEmail = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_email" )
+                        .FirstOrDefault();
+                if (textBoxEmail != null)
+                    if (!textBoxEmail.Text.Equals(""))
+                        if (!HelpClass.IsValidEmail(textBoxEmail.Text))
+                            isValid = false;
+                #endregion
+            }
+            catch { }
+            return isValid;
+        }
+        public static void clearValidate(List<string> requiredControlList, UserControl userControl)
+        {
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (path != null)
+                        HelpClass.clearValidate(path);
+                }
+            }
+            catch { }
+        }
+        #endregion
         public static void showTextBoxValidate(TextBox tb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
@@ -421,9 +482,10 @@ namespace AdministratorApp.Classes
             }
 
         }
+
       
-       
-      
+
+
         public static string translate(string str)
         {
             string _str = "";
