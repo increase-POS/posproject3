@@ -11,6 +11,19 @@ namespace AdministratorApp.Classes
     public class FillCombo
     {
         /// <summary>
+        /// Packages
+        /// </summary>
+        static Packages package = new Packages();
+        static IEnumerable<Packages> packages;
+        static public async Task fillPackage(ComboBox combo)
+        {
+            packages = await package.GetAll();
+            combo.ItemsSource = packages.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "packageId";
+            combo.DisplayMemberPath = "packageName";
+        }
+
+        /// <summary>
         /// Programs
         /// </summary>
         static Programs program = new Programs();
@@ -22,6 +35,7 @@ namespace AdministratorApp.Classes
             combo.SelectedValuePath = "programId";
             combo.DisplayMemberPath = "name";
         }
+
         /// <summary>
         /// Version
         /// </summary>
@@ -35,6 +49,40 @@ namespace AdministratorApp.Classes
             combo.DisplayMemberPath = "name";
         }
 
+
+        /// <summary>
+        /// User & Agent 
+        /// </summary>
+        static Users user = new Users();
+        static IEnumerable<Users> users;
+        static public async Task fillUser(ComboBox combo)
+        {
+            users = await user.GetAll();
+            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type != "agent");
+            combo.SelectedValuePath = "userId";
+            combo.DisplayMemberPath = "name";
+        }
+        static public async Task fillAgent(ComboBox combo)
+        {
+            users = await user.GetAll();
+            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "agent");
+            combo.SelectedValuePath = "userId";
+            combo.DisplayMemberPath = "name";
+        }
+
+
+        /// <summary>
+        /// Customer
+        /// </summary>
+        static Customers customer = new Customers();
+        static IEnumerable<Customers> customers;
+        static public async Task fillCustomer(ComboBox combo)
+        {
+            customers = await customer.GetAll();
+            combo.ItemsSource = customers.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "custId";
+            combo.DisplayMemberPath = "custname";
+        }
 
         #region Countries
         /// <summary>
@@ -54,13 +102,11 @@ namespace AdministratorApp.Classes
            countrynum = await countrycodes.GetAll();
             return countrynum;
         }
-
         static public async Task<IEnumerable<City>> RefreshCity()
         {
             citynum = await cityCodes.Get();
             return citynum;
         }
-
         static public async Task fillCountries(ComboBox combo)
         {
             if (countrynum is null)
@@ -93,6 +139,21 @@ namespace AdministratorApp.Classes
             var typelist = new[] {
                 new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "admin" },
                 new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "employee" },
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+
+        #endregion
+
+        #region fill Agent Level
+        static public void fillAgentLevel(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trVip")       , Value = "Vip" },
+                new { Text = MainWindow.resourcemanager.GetString("trNormal")   , Value = "Normal" },
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";

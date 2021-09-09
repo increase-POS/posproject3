@@ -61,7 +61,7 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastName", "accountName", "password", "type", "mobile" };
+                requiredControlList = new List<string> { "name", "lastName", "accountName",  "type", "mobile" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -161,7 +161,7 @@ namespace AdministratorApp.View.sectionData
 
 
                 user = new Users();
-                if (HelpClass.validate(requiredControlList, this))
+                if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength)
                 {
                     user.code = "Us-000001";
                     user.name = tb_name.Text;
@@ -403,6 +403,7 @@ namespace AdministratorApp.View.sectionData
                 HelpClass.StartAwait(grid_main);
 
                 Clear();
+                p_error_password.Visibility = Visibility.Collapsed;
 
 
 
@@ -487,6 +488,7 @@ namespace AdministratorApp.View.sectionData
         async Task<IEnumerable<Users>> RefreshUsersList()
         {
             users = await user.GetAll();
+            users = users.Where(x => x.type != "agent");
             return users;
         }
         void RefreshUsersView()
@@ -558,19 +560,18 @@ namespace AdministratorApp.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try
             {
                 HelpClass.validate(requiredControlList,this);
+                p_error_password.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
         {
             try
@@ -583,43 +584,31 @@ namespace AdministratorApp.View.sectionData
             }
         }
 
-
         #endregion
-
         private async Task<bool> chkIfUserNameIsExists(string username, int uId)
         {
             bool isValid = true;
             if (users == null)
                await RefreshUsersList();
-            if (users.Any(i => i.name == username && i.userId != uId))
+            if (users.Any(i => i.name == username && i.userId != uId && i.type != "agent"))
                 isValid = false;
-
             if (!isValid)
-            {
-                p_error_name.Visibility = Visibility.Visible;
-                #region Tooltip
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = MainWindow.resourcemanager.GetString("trErrorDuplicateUserNameToolTip");
-                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
-                p_error_name.ToolTip = toolTip;
-                #endregion
-            }
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateUserNameToolTip"), animation: ToasterAnimation.FadeIn);
             return isValid;
         }
-       
         #region Password
         private void ValidateEmpty_PasswordChanged(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.validate(requiredControlList, this);
+                p_error_password.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)
         {
             try
@@ -631,7 +620,6 @@ namespace AdministratorApp.View.sectionData
             catch (Exception ex)
             { HelpClass.ExceptionMessage(ex, this); }
         }
-
         private void P_showPassword_MouseLeave(object sender, MouseEventArgs e)
         {
             try
@@ -762,7 +750,7 @@ namespace AdministratorApp.View.sectionData
                     btn_image.Background = new ImageBrush(bitmapImage);
                     // configure trmporary path
                     string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
                     tmpPath = System.IO.Path.Combine(tmpPath, user.image);
                     openFileDialog.FileName = tmpPath;
                 }

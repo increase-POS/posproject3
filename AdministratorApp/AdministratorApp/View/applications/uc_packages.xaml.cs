@@ -141,127 +141,8 @@ namespace AdministratorApp.View.applications
             //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
 
         }
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {//refresh
+        #region Add - Update - Delete - activate  
 
-                HelpClass.StartAwait(grid_main);
-                await RefreshPackagesList();
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (packages is null)
-                    await RefreshPackagesList();
-                tgl_packageState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (packages is null)
-                    await RefreshPackagesList();
-                tgl_packageState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_clear_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                Clear();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Dg_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //selection
-
-                if (dg_package.SelectedIndex != -1)
-                {
-                    package = dg_package.SelectedItem as Packages;
-                    this.DataContext = package;
-
-                    if (package != null)
-                    {
-                        #region delete
-                        if (package.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (package.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                    }
-                }
-
-                clearValidate();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
             try
@@ -437,6 +318,130 @@ namespace AdministratorApp.View.applications
                 await Search();
             }
         }
+        #endregion
+        #region events
+        private void Dg_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //selection
+
+                if (dg_package.SelectedIndex != -1)
+                {
+                    package = dg_package.SelectedItem as Packages;
+                    this.DataContext = package;
+
+                    if (package != null)
+                    {
+                        #region delete
+                        if (package.canDelete)
+                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                        else
+                        {
+                            if (package.isActive == 0)
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                            else
+                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        }
+                        #endregion
+                    }
+                }
+
+                clearValidate();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//refresh
+
+                HelpClass.StartAwait(grid_main);
+                await RefreshPackagesList();
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (packages is null)
+                    await RefreshPackagesList();
+                tgl_packageState = 1;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (packages is null)
+                    await RefreshPackagesList();
+                tgl_packageState = 0;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Clear();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
         #region Refresh & Search
         async Task Search()
         {

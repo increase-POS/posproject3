@@ -444,7 +444,7 @@
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <ComboBox   x:Name="cb_areaMobile" Padding="10,0,5,0" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
@@ -454,7 +454,7 @@
                             </Grid>
                         </Border>
 
-                        <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                     <Grid   >
                                 <TextBox Margin="4,0" x:Name="tb_mobile"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
@@ -479,7 +479,7 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid   >
                                 <ComboBox x:Name="cb_areaPhone" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
@@ -490,7 +490,7 @@
                         </Border>
 
                         <Border Visibility="Collapsed" x:Name="brd_areaPhoneLocal" Grid.Row="1" Grid.Column="1" 
-                                CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                                CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                                 <ComboBox  x:Name="cb_areaPhoneLocal" Padding="10,0,5,0"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
@@ -500,13 +500,13 @@
                                     </Grid>
                                 </Border>
 
-                        <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                                             <Grid   >
                                 <TextBox x:Name="tb_phone"  Text="{Binding phone, Mode=OneWay}"   Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Phone..."    
                            Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                     MaxLength="15"    Height="40"   Margin="4,0" 
+                     MaxLength="9"    Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
@@ -525,7 +525,7 @@
                         </Grid.ColumnDefinitions>
 
 
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                     <Grid   >
                                 <ComboBox x:Name="cb_areaFax" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
@@ -535,19 +535,21 @@
                                     </Grid>
                                 </Border>
 
-                        <Border Visibility="Collapsed" x:Name="brd_areaFaxLocal" Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Visibility="Collapsed" x:Name="brd_areaFaxLocal" Grid.Row="1" Grid.Column="1"
+                                CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                                 <ComboBox  x:Name="cb_areaFaxLocal" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                            Margin="4,0" Height="40" Width="60" BorderThickness="0"  />
                                     </Grid>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="2"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" Grid.Column="2"  CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                            <Grid>
                                 <TextBox x:Name="tb_fax"  Text="{Binding fax, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Fax..."    
-                                     Foreground="#4E4E4E"  Height="40"  Margin="4,0"  
+                                     Foreground="#4E4E4E"  Height="40"  Margin="4,0"   MaxLength="9" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_errorFax"
                                   HorizontalAlignment="Right" Visibility="Collapsed" 
@@ -567,8 +569,9 @@
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"  Margin="4,0"  />
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                     Height="40"  Margin="4,0" 
+                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_email" 
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
