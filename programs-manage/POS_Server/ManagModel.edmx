@@ -29,7 +29,6 @@
           </Key>
           <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="custname" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="custAccountName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="lastName" Type="nchar" MaxLength="10" />
           <Property Name="company" Type="nchar" MaxLength="10" />
           <Property Name="email" Type="nvarchar" MaxLength="500" />
@@ -41,13 +40,13 @@
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="custCode" Type="nvarchar" MaxLength="500" />
-          <Property Name="password" Type="nvarchar" MaxLength="500" />
           <Property Name="image" Type="ntext" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
           <Property Name="balance" Type="decimal" Precision="18" Scale="3" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="int" />
+          <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -88,6 +87,7 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="packageUser">
           <Key>
@@ -141,6 +141,7 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -178,6 +179,7 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="int" />
           <Property Name="code" Type="nvarchar" MaxLength="500" />
+          <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -194,6 +196,7 @@
           <Property Name="updateUserId" Type="int" />
           <Property Name="programId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_cities_countriesCodes">
           <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
@@ -554,7 +557,6 @@
           </Key>
           <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="custname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="custAccountName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="company" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -566,7 +568,6 @@
           <Property Name="createDate" Type="DateTime" Precision="7" />
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="custCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="balance" Type="Decimal" Precision="18" Scale="3" />
@@ -576,6 +577,7 @@
           <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+          <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -622,6 +624,7 @@
           <NavigationProperty Name="users1" Relationship="Self.FK_packages_users1" FromRole="packages" ToRole="users" />
           <NavigationProperty Name="versions" Relationship="Self.FK_packages_versions" FromRole="packages" ToRole="versions" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_packages" FromRole="packages" ToRole="packageUser" />
+          <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="packageUser">
           <Key>
@@ -688,6 +691,7 @@
           <NavigationProperty Name="users" Relationship="Self.FK_programs_users" FromRole="programs" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_programs_users1" FromRole="programs" ToRole="users" />
           <NavigationProperty Name="versions" Relationship="Self.FK_versions_programs" FromRole="programs" ToRole="versions" />
+          <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -739,6 +743,7 @@
           <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
           <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
           <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+          <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -759,6 +764,7 @@
           <NavigationProperty Name="programs" Relationship="Self.FK_versions_programs" FromRole="versions" ToRole="programs" />
           <NavigationProperty Name="users" Relationship="Self.FK_versions_users" FromRole="versions" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_versions_users1" FromRole="versions" ToRole="users" />
+          <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_customers_users">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
@@ -1138,9 +1144,9 @@
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="incprogramsdbModel.customers">
               <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="hashCode" ColumnName="hashCode" />
                 <ScalarProperty Name="custId" ColumnName="custId" />
                 <ScalarProperty Name="custname" ColumnName="custname" />
-                <ScalarProperty Name="custAccountName" ColumnName="custAccountName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="company" ColumnName="company" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -1152,7 +1158,6 @@
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="custCode" ColumnName="custCode" />
-                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
@@ -1178,6 +1183,7 @@
           <EntitySetMapping Name="packages">
             <EntityTypeMapping TypeName="incprogramsdbModel.packages">
               <MappingFragment StoreEntitySet="packages">
+                <ScalarProperty Name="hashCode" ColumnName="hashCode" />
                 <ScalarProperty Name="packageId" ColumnName="packageId" />
                 <ScalarProperty Name="packageName" ColumnName="packageName" />
                 <ScalarProperty Name="details" ColumnName="details" />
@@ -1247,6 +1253,7 @@
           <EntitySetMapping Name="programs">
             <EntityTypeMapping TypeName="incprogramsdbModel.programs">
               <MappingFragment StoreEntitySet="programs">
+                <ScalarProperty Name="hashCode" ColumnName="hashCode" />
                 <ScalarProperty Name="programId" ColumnName="programId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="details" ColumnName="details" />
@@ -1274,6 +1281,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="incprogramsdbModel.users">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="hashCode" ColumnName="hashCode" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="AccountName" ColumnName="AccountName" />
@@ -1302,6 +1310,7 @@
           <EntitySetMapping Name="versions">
             <EntityTypeMapping TypeName="incprogramsdbModel.versions">
               <MappingFragment StoreEntitySet="versions">
+                <ScalarProperty Name="hashCode" ColumnName="hashCode" />
                 <ScalarProperty Name="verId" ColumnName="verId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="details" ColumnName="details" />

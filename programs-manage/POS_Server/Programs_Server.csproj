@@ -206,6 +206,7 @@
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Classes\Calculate.cs" />
+    <Compile Include="Classes\Md5Encription.cs" />
     <Compile Include="Controllers\cityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\customersController.cs" />

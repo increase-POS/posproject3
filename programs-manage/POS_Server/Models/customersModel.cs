@@ -9,7 +9,7 @@ namespace Programs_Server.Models
     {
         public int custId { get; set; }
         public string custname { get; set; }
-        public string custAccountName { get; set; }
+      //  public string custAccountName { get; set; }
         public string lastName { get; set; }
         public string company { get; set; }
         public string email { get; set; }
@@ -21,7 +21,7 @@ namespace Programs_Server.Models
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public string custCode { get; set; }
-        public string password { get; set; }
+       // public string password { get; set; }
         public string image { get; set; }
         public string notes { get; set; }
         public Nullable<decimal> balance { get; set; }
@@ -30,5 +30,6 @@ namespace Programs_Server.Models
 
         public bool canDelete { get; set; }
         public Nullable<int> isActive { get; set; }
+        public string hashCode { get; set; }
     }
 }

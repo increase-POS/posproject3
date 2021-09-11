@@ -31,6 +31,7 @@ namespace Programs_Server
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> programId { get; set; }
         public string notes { get; set; }
+        public string hashCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packages> packages { get; set; }

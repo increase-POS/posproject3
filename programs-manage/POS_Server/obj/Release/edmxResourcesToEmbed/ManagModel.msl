@@ -4,9 +4,9 @@
     <EntitySetMapping Name="customers">
       <EntityTypeMapping TypeName="incprogramsdbModel.customers">
         <MappingFragment StoreEntitySet="customers">
+          <ScalarProperty Name="hashCode" ColumnName="hashCode" />
           <ScalarProperty Name="custId" ColumnName="custId" />
           <ScalarProperty Name="custname" ColumnName="custname" />
-          <ScalarProperty Name="custAccountName" ColumnName="custAccountName" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="company" ColumnName="company" />
           <ScalarProperty Name="email" ColumnName="email" />
@@ -18,7 +18,6 @@
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="updateDate" ColumnName="updateDate" />
           <ScalarProperty Name="custCode" ColumnName="custCode" />
-          <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="image" ColumnName="image" />
           <ScalarProperty Name="notes" ColumnName="notes" />
           <ScalarProperty Name="balance" ColumnName="balance" />
@@ -44,6 +43,7 @@
     <EntitySetMapping Name="packages">
       <EntityTypeMapping TypeName="incprogramsdbModel.packages">
         <MappingFragment StoreEntitySet="packages">
+          <ScalarProperty Name="hashCode" ColumnName="hashCode" />
           <ScalarProperty Name="packageId" ColumnName="packageId" />
           <ScalarProperty Name="packageName" ColumnName="packageName" />
           <ScalarProperty Name="details" ColumnName="details" />
@@ -113,6 +113,7 @@
     <EntitySetMapping Name="programs">
       <EntityTypeMapping TypeName="incprogramsdbModel.programs">
         <MappingFragment StoreEntitySet="programs">
+          <ScalarProperty Name="hashCode" ColumnName="hashCode" />
           <ScalarProperty Name="programId" ColumnName="programId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="details" ColumnName="details" />
@@ -140,6 +141,7 @@
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="incprogramsdbModel.users">
         <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="hashCode" ColumnName="hashCode" />
           <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="AccountName" ColumnName="AccountName" />
@@ -168,6 +170,7 @@
     <EntitySetMapping Name="versions">
       <EntityTypeMapping TypeName="incprogramsdbModel.versions">
         <MappingFragment StoreEntitySet="versions">
+          <ScalarProperty Name="hashCode" ColumnName="hashCode" />
           <ScalarProperty Name="verId" ColumnName="verId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="details" ColumnName="details" />

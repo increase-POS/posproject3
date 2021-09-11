@@ -6,7 +6,6 @@
     </Key>
     <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="custname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="custAccountName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="lastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="company" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -18,7 +17,6 @@
     <Property Name="createDate" Type="DateTime" Precision="7" />
     <Property Name="updateDate" Type="DateTime" Precision="7" />
     <Property Name="custCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="balance" Type="Decimal" Precision="18" Scale="3" />
@@ -28,6 +26,7 @@
     <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+    <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="error">
     <Key>
@@ -74,6 +73,7 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_packages_users1" FromRole="packages" ToRole="users" />
     <NavigationProperty Name="versions" Relationship="Self.FK_packages_versions" FromRole="packages" ToRole="versions" />
     <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_packages" FromRole="packages" ToRole="packageUser" />
+    <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="packageUser">
     <Key>
@@ -140,6 +140,7 @@
     <NavigationProperty Name="users" Relationship="Self.FK_programs_users" FromRole="programs" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_programs_users1" FromRole="programs" ToRole="users" />
     <NavigationProperty Name="versions" Relationship="Self.FK_versions_programs" FromRole="programs" ToRole="versions" />
+    <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -191,6 +192,7 @@
     <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
     <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
     <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+    <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="versions">
     <Key>
@@ -211,6 +213,7 @@
     <NavigationProperty Name="programs" Relationship="Self.FK_versions_programs" FromRole="versions" ToRole="programs" />
     <NavigationProperty Name="users" Relationship="Self.FK_versions_users" FromRole="versions" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_versions_users1" FromRole="versions" ToRole="users" />
+    <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_customers_users">
     <End Role="users" Type="Self.users" Multiplicity="0..1" />

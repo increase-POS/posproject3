@@ -7,6 +7,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Programs_Server.Models;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Web;
 
 namespace Programs_Server.Controllers
 {
@@ -47,7 +50,7 @@ namespace Programs_Server.Controllers
                                 {
                                     custId = S.custId,
                                     custname = S.custname,
-                                    custAccountName = S.custAccountName,
+                                  //  custAccountName = S.custAccountName,
                                     lastName = S.lastName,
                                     company = S.company,
                                     email = S.email,
@@ -59,7 +62,7 @@ namespace Programs_Server.Controllers
                                     createDate = S.createDate,
                                     updateDate = S.updateDate,
                                     custCode = S.custCode,
-                                    password = S.password,
+                                   // password = S.password,
                                     image = S.image,
                                     notes = S.notes,
                                     balance = S.balance,
@@ -127,7 +130,7 @@ namespace Programs_Server.Controllers
 
                        S.custId,
                        S.custname,
-                       S.custAccountName,
+                      // S.custAccountName,
                        S.lastName,
                        S.company,
                        S.email,
@@ -139,7 +142,7 @@ namespace Programs_Server.Controllers
                        S.createDate,
                        S.updateDate,
                        S.custCode,
-                       S.password,
+                      // S.password,
                        S.image,
                        S.notes,
                        S.balance,
@@ -216,7 +219,7 @@ namespace Programs_Server.Controllers
                             tmpObject.updateUserId = newObject.updateUserId;
                             tmpObject.custId = newObject.custId;
                        tmpObject.custname=newObject.custname;
-                       tmpObject.custAccountName=newObject.custAccountName;
+                    //   tmpObject.custAccountName=newObject.custAccountName;
                        tmpObject.lastName=newObject.lastName;
                        tmpObject.company=newObject.company;
                        tmpObject.email=newObject.email;
@@ -228,7 +231,7 @@ namespace Programs_Server.Controllers
                        tmpObject.createDate=newObject.createDate;
                      
                        tmpObject.custCode=newObject.custCode;
-                       tmpObject.password=newObject.password;
+                     //  tmpObject.password=newObject.password;
                        tmpObject.image=newObject.image;
                        tmpObject.notes=newObject.notes;
                        tmpObject.balance=newObject.balance;
@@ -314,7 +317,146 @@ namespace Programs_Server.Controllers
                 return "-3";
         }
 
+        [Route("PostCustomerImage")]
+        public IHttpActionResult PostCustomerImage()
+        {
 
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+
+                foreach (string file in httpRequest.Files)
+                {
+
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+
+                    var postedFile = httpRequest.Files[file];
+                    string imageName = postedFile.FileName;
+                    string imageWithNoExt = Path.GetFileNameWithoutExtension(postedFile.FileName);
+
+                    if (postedFile != null && postedFile.ContentLength > 0)
+                    {
+
+                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB
+
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png", ".bmp", ".jpeg", ".tiff", ".jfif" };
+                        var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
+                        var extension = ext.ToLower();
+
+                        if (!AllowedFileExtensions.Contains(extension))
+                        {
+
+                            var message = string.Format("Please Upload image of type .jpg,.gif,.png, .jfif, .bmp , .jpeg ,.tiff");
+                            return Ok(message);
+                        }
+                        else if (postedFile.ContentLength > MaxContentLength)
+                        {
+
+                            var message = string.Format("Please Upload a file upto 1 mb.");
+
+                            return Ok(message);
+                        }
+                        else
+                        {
+                            //  check if image exist
+                            var pathCheck = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\customer"), imageWithNoExt);
+                            var files = Directory.GetFiles(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\customer"), imageWithNoExt + ".*");
+                            if (files.Length > 0)
+                            {
+                                File.Delete(files[0]);
+                            }
+
+                            //Userimage myfolder name where i want to save my image
+                            var filePath = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\customer"), imageName);
+                            postedFile.SaveAs(filePath);
+
+                        }
+                    }
+
+                    var message1 = string.Format("Image Updated Successfully.");
+                    return Ok(message1);
+                }
+                var res = string.Format("Please Upload a image.");
+
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                var res = string.Format("some Message");
+
+                return Ok(res);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetImage")]
+        public HttpResponseMessage GetImage(string imageName)
+        {
+            if (String.IsNullOrEmpty(imageName))
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+            string localFilePath;
+
+            localFilePath = Path.Combine(System.Web.Hosting.HostingEnvironment.MapPath("~\\images\\customer"), imageName);
+
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
+            response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = imageName;
+
+            return response;
+        }
+        [HttpPost]
+        [Route("UpdateImage")]
+        public int UpdateImage(string customerObject)
+        {
+            var re = Request;
+            var headers = re.Headers;
+            string token = "";
+            if (headers.Contains("APIKey"))
+            {
+                token = headers.GetValues("APIKey").First();
+            }
+            Validation validation = new Validation();
+            bool valid = validation.CheckApiKey(token);
+
+            customerObject = customerObject.Replace("\\", string.Empty);
+            customerObject = customerObject.Trim('"');
+
+            customers customerObj = JsonConvert.DeserializeObject<customers>(customerObject, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+            if (customerObj.updateUserId == 0 || customerObj.updateUserId == null)
+            {
+                Nullable<int> id = null;
+                customerObj.updateUserId = id;
+            }
+            if (customerObj.createUserId == 0 || customerObj.createUserId == null)
+            {
+                Nullable<int> id = null;
+                customerObj.createUserId = id;
+            }
+            if (valid)
+            {
+                try
+                {
+                    customers customer;
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var customerEntity = entity.Set<customers>();
+                        customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
+                        customer.image = customerObj.image;
+                        entity.SaveChanges();
+                    }
+                    return customer.custId;
+                }
+
+                catch
+                {
+                    return 0;
+                }
+            }
+            else
+                return 0;
+        }
 
     }
 }

@@ -52,10 +52,11 @@ namespace Programs_Server.Controllers
                                     programCode = S.programCode,
                                     createUserId = S.createUserId,
                                     updateUserId = S.updateUserId,
+                                    hashCode=S.hashCode,
+
                                   
 
-
-                                }).ToList();
+    }).ToList();
                     /*
 
       
@@ -122,7 +123,7 @@ namespace Programs_Server.Controllers
                        S.programCode,
                        S.createUserId,
                        S.updateUserId,
-                    
+                     S.hashCode,
                    })
                    .FirstOrDefault();
 
@@ -182,7 +183,12 @@ namespace Programs_Server.Controllers
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
-                            message = newObject.programId.ToString();
+                            int newId = newObject.programId;
+                          //  message = newObject.programId.ToString();
+                            var tmpnewObject = entity.programs.Where(p => p.programId == newObject.programId).FirstOrDefault();
+                            newObject.hashCode =Classes.Md5Encription.MD5Hash(newObject.programCode+newObject.programId);
+                            entity.SaveChanges();
+                           message = newObject.programId.ToString();
                         }
                         else
                         {

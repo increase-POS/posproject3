@@ -24,7 +24,6 @@
     </Key>
     <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="custname" Type="nvarchar" MaxLength="500" Nullable="false" />
-    <Property Name="custAccountName" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="lastName" Type="nchar" MaxLength="10" />
     <Property Name="company" Type="nchar" MaxLength="10" />
     <Property Name="email" Type="nvarchar" MaxLength="500" />
@@ -36,13 +35,13 @@
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="custCode" Type="nvarchar" MaxLength="500" />
-    <Property Name="password" Type="nvarchar" MaxLength="500" />
     <Property Name="image" Type="ntext" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
     <Property Name="balance" Type="decimal" Precision="18" Scale="3" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="isActive" Type="int" />
+    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="error">
     <Key>
@@ -83,6 +82,7 @@
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="packageUser">
     <Key>
@@ -136,6 +136,7 @@
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -173,6 +174,7 @@
     <Property Name="updateUserId" Type="int" />
     <Property Name="isActive" Type="int" />
     <Property Name="code" Type="nvarchar" MaxLength="500" />
+    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="versions">
     <Key>
@@ -189,6 +191,7 @@
     <Property Name="updateUserId" Type="int" />
     <Property Name="programId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <Association Name="FK_cities_countriesCodes">
     <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />

@@ -17,7 +17,9 @@ namespace Programs_Server.Models
         public string programCode { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-     
+        public string hashCode { get; set; }
+
+
         public bool canDelete { get; set; }
     
     }
