@@ -357,8 +357,31 @@ namespace AdministratorApp.View.sales
             }
             catch { }
         }
+
         #endregion
 
-        
+        private async void Btn_add_Click_1(object sender, RoutedEventArgs e)
+        {
+            string msg = "";
+            PackageUser pkumodel = new PackageUser();
+            PackageUser pkuitem = new PackageUser();
+
+            pkuitem.createUserId = 1;
+            pkuitem.packageId = 1;
+            pkuitem.notes = "notee";
+          //  pkuitem.customerServerCode = "cc";
+           pkuitem.packageSaleCode = "ca";
+            
+            pkuitem.userId = 1;
+            //pkuitem.customerId = 4;
+         //  pkuitem.isActive = 1;
+           // pkuitem.isBooked = 1;
+           // pkuitem.expireDate = DateTime.Now;
+            pkuitem.packageNumber = "p11";
+            msg = await pkumodel.Save(pkuitem);
+
+            MessageBox.Show(msg);
+
+        }
     }
 }

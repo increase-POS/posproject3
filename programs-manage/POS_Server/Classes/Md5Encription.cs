@@ -29,5 +29,25 @@ namespace Programs_Server.Classes
 
             return strBuilder.ToString();
         }
+
+
+        public static string EncodeHash(string text)
+        {
+            const string chars = "01234679ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+
+            SHA256Managed hashstring = new SHA256Managed();
+            byte[] hash = hashstring.ComputeHash(bytes);
+
+            char[] hash2 = new char[16];
+
+
+            for (int i = 0; i < hash2.Length; i++)
+            {
+                hash2[i] = chars[hash[i] % chars.Length];
+            }
+
+            return new string(hash2);
+        }
     }
 }

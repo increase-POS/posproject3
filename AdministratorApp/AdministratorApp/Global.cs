@@ -9,7 +9,7 @@ namespace AdministratorApp
     class Global
     {
         public const string APIKey = "1234";
-        //public const string APIUri = "http://localhost:443/api/";
+        //public const string APIUri = "https://localhost:443/api/";
         public const string APIUri = "https://141.95.1.58:443/api/";
 
 

@@ -458,5 +458,46 @@ namespace Programs_Server.Controllers
                 return 0;
         }
 
+
+        [HttpGet]
+        [Route("GetLastNumOfCode")]
+        public IHttpActionResult GetLastNumOfCode(string type)
+        {
+            var re = Request;
+            var headers = re.Headers;
+            string token = "";
+            if (headers.Contains("APIKey"))
+            {
+                token = headers.GetValues("APIKey").First();
+            }
+            Validation validation = new Validation();
+            bool valid = validation.CheckApiKey(token);
+
+            if (valid) // APIKey is valid
+            {
+                List<string> numberList;
+                int lastNum = 0;
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    numberList = entity.customers.Where(b => b.custCode.Contains(type + "-")).Select(b => b.custCode).ToList();
+
+                    for (int i = 0; i < numberList.Count; i++)
+                    {
+                        string code = numberList[i];
+                        string s = code.Substring(code.LastIndexOf("-") + 1);
+                        numberList[i] = s;
+                    }
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+                return Ok(lastNum);
+            }
+            return NotFound();
+        }
+
+
     }
 }

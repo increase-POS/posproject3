@@ -151,41 +151,48 @@ namespace AdministratorApp.View.applications
                 package = new Packages();
                 if (validate())
                 {
-                    package.packageCode = "pk-0000009";
-                    package.packageName = tb_packageName.Text;
-                    package.details = tb_details.Text;
-                    package.programId = (int)cb_program.SelectedValue;
-                    package.verId = (int)cb_version.SelectedValue;
-                    package.price = decimal.Parse( tb_price.Text);
-                    package.branchCount = int.Parse(tb_branchCount.Text);
-                    package.posCount = int.Parse(tb_posCount.Text);
-                    package.userCount = int.Parse(tb_userCount.Text);
-                    package.vendorCount = int.Parse(tb_vendorCount.Text);
-                    package.customerCount = int.Parse(tb_customerCount.Text);
-                    package.itemCount = int.Parse(tb_itemCount.Text);
-                    package.salesInvCount = int.Parse(tb_salesInvCount.Text);
-                    package.storeCount = int.Parse(tb_storeCount.Text);
-                    package.islimitDate = (bool) tgl_islimitDate.IsChecked;
-                    if (dp_endDate.SelectedDate != null)
-                        package.endDate = dp_endDate.SelectedDate.Value;
-                    else package.endDate = null;
-                    package.notes = tb_notes.Text;
-                    package.isActive = 1;
-                    package.createUserId = MainWindow.userLogin.userId;
-                    package.updateUserId = MainWindow.userLogin.userId;
+                    string isExist = await package.isExistCode(tb_code.Text.Trim());
+                    if (isExist == "0")
+                    {
+                        package.packageCode = tb_code.Text.Trim();
+                        package.packageName = tb_packageName.Text;
+                        package.details = tb_details.Text;
+                        package.programId = (int)cb_program.SelectedValue;
+                        package.verId = (int)cb_version.SelectedValue;
+                        package.price = decimal.Parse(tb_price.Text);
+                        package.branchCount = int.Parse(tb_branchCount.Text);
+                        package.posCount = int.Parse(tb_posCount.Text);
+                        package.userCount = int.Parse(tb_userCount.Text);
+                        package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        package.customerCount = int.Parse(tb_customerCount.Text);
+                        package.itemCount = int.Parse(tb_itemCount.Text);
+                        package.salesInvCount = int.Parse(tb_salesInvCount.Text);
+                        package.storeCount = int.Parse(tb_storeCount.Text);
+                        package.islimitDate = (bool)tgl_islimitDate.IsChecked;
+                        if (dp_endDate.SelectedDate != null)
+                            package.endDate = dp_endDate.SelectedDate.Value;
+                        else package.endDate = null;
+                        package.notes = tb_notes.Text;
+                        package.isActive = 1;
+                        package.createUserId = MainWindow.userLogin.userId;
+                        package.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await package.Save(package));
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        int s = int.Parse(await package.Save(package));
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            Clear();
+                            await RefreshPackagesList();
+                            await Search();
+                        }
+                    }
                     else
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshPackagesList();
-                        await Search();
+                        MessageBox.Show("exist ");
                     }
                 }
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

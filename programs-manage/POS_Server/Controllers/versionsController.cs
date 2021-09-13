@@ -281,5 +281,44 @@ namespace Programs_Server.Controllers
 
 
 
+        [HttpGet]
+        [Route("GetLastNumOfCode")]
+        public IHttpActionResult GetLastNumOfCode(int programId)
+        {
+            var re = Request;
+            var headers = re.Headers;
+            string token = "";
+            if (headers.Contains("APIKey"))
+            {
+                token = headers.GetValues("APIKey").First();
+            }
+            Validation validation = new Validation();
+            bool valid = validation.CheckApiKey(token);
+
+            if (valid) // APIKey is valid
+            {
+                List<string> numberList;
+                int lastNum = 0;
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    numberList = entity.versions.Where(b => b.programId== programId).Select(b => b.versionscode).ToList();
+
+                    for (int i = 0; i < numberList.Count; i++)
+                    {
+                        string code = numberList[i];
+                        string s = code.Substring(code.LastIndexOf("-") + 1);
+                        numberList[i] = s;
+                    }
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+                return Ok(lastNum);
+            }
+            return NotFound();
+        }
+
     }
 }

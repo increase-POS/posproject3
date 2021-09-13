@@ -264,7 +264,10 @@ namespace AdministratorApp.View.applications
                 version= new Versions();
                 if (validate())
                 {
-                    version.versionscode = "vr-0000009";
+
+                    tb_code.Text = await version.generateCodeNumber((int)cb_program.SelectedValue);
+                    version.versionscode = tb_code.Text;
+                    //version.versionscode = "vr-0000009";
                     version.name = tb_name.Text;
                     version.programId = (int) cb_program.SelectedValue;
                     version.details = tb_details.Text;

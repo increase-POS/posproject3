@@ -134,6 +134,27 @@ namespace AdministratorApp.ApiClasses
             }
         }
 
+        public async Task<string> isExistCode(string packageCode)
+        {
+            string obj = "";
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            using (var client = new HttpClient())
+            {
+
+                Uri uri = new Uri(Global.APIUri + urimainpath + "isExistCode?packageCode=" + packageCode);
+
+                response = await ApiConnect.ApiGetConnect(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    obj = JsonConvert.DeserializeObject<string>(jsonString);
+                    return obj;
+                }
+
+                return obj;
+            }
+        }
 
 
 

@@ -122,6 +122,37 @@ namespace AdministratorApp.ApiClasses
             }
         }
 
+        public async Task<string> generateCodeNumber(int programId)
+        {
+            int sequence = await GetLastNumOfCode(programId);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999)
+                strSeq = sequence.ToString().PadLeft(3, '0');
+            string transNum = "V" + "-" + strSeq;
+            return transNum;
+        }
+
+
+        public async Task<int> GetLastNumOfCode(int programId)
+        {
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            using (var client = new HttpClient())
+            {
+
+                Uri uri = new Uri(Global.APIUri + urimainpath + "GetLastNumOfCode?programId=" + programId);
+
+                response = await ApiConnect.ApiGetConnect(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string message = await response.Content.ReadAsStringAsync();
+                    message = JsonConvert.DeserializeObject<string>(message);
+                    return int.Parse(message);
+                }
+                return 0;
+            }
+        }
 
 
 

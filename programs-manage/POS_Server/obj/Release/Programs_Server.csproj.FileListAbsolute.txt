@@ -220,5 +220,5 @@ D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csp
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.CopyComplete
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.dll
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.pdb
-D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csprojAssemblyReference.cache
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.AssemblyReference.cache
+D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csprojAssemblyReference.cache

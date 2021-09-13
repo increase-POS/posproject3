@@ -149,7 +149,9 @@ namespace AdministratorApp.View.sectionData
                 customer = new Customers();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    customer.custCode = "Cu-000001";
+                    tb_custCode.Text = await customer.generateCodeNumber("c");
+                    customer.custCode = tb_custCode.Text;
+                  //  customer.custCode = "Cu-000001";
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
                     customer.email = tb_email.Text;

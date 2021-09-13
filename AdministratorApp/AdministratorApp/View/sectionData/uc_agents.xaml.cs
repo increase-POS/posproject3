@@ -163,7 +163,8 @@ namespace AdministratorApp.View.sectionData
                 user = new Users();
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength)
                 {
-                    user.code = "Ag-000001";
+                    tb_code.Text = await user.generateCodeNumber("ag");
+                    user.code = tb_code.Text;
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
                     user.accountName = tb_accountName.Text;

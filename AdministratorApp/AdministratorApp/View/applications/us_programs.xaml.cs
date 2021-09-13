@@ -262,7 +262,9 @@ namespace AdministratorApp.View.applications
                 program = new Programs();
                 if (validate())
                 {
-                    program.programCode = "Pr-0000009";
+                    string isExist = await program.isExistCode(tb_code.Text.Trim());
+                    if (isExist == "0") { 
+                    program.programCode = tb_code.Text.Trim();
                     program.name = tb_name.Text;
                     program.details = tb_details.Text;
                     program.notes = tb_notes.Text;
@@ -279,6 +281,11 @@ namespace AdministratorApp.View.applications
                         Clear();
                         await RefreshProgramsList();
                         await Search();
+                    }
+                    }
+                    else
+                    {
+                        MessageBox.Show("exist ");
                     }
                 }
 

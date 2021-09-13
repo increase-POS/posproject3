@@ -137,6 +137,52 @@ namespace Programs_Server.Controllers
                 return NotFound();
         }
 
+        [HttpGet]
+        [Route("isExistCode")]
+        public IHttpActionResult isExistCode(string programCode)
+        {
+            string result = "";
+            var re = Request;
+            var headers = re.Headers;
+            string token = "";
+            if (headers.Contains("APIKey"))
+            {
+                token = headers.GetValues("APIKey").First();
+            }
+            Validation validation = new Validation();
+            bool valid = validation.CheckApiKey(token);
+
+            if (valid)
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var List = entity.programs
+                   .Where(u => u.programCode == programCode)
+                   .Select(S => new
+                   {
+
+                       S.programCode,
+                  
+                   })
+                   .ToList();
+                    if (List.Count > 0)
+                    {
+                        result = "1";
+                    }
+                    else
+                    {
+                        result = "0";
+                    }
+                    if (List == null)
+                        return NotFound();
+                    else
+                        return Ok(result);
+                }
+            }
+            else
+                return NotFound();
+        }
+
         // add or update location
         [HttpPost]
         [Route("Save")]

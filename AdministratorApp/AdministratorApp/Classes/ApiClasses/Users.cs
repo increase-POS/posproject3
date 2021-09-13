@@ -129,7 +129,37 @@ namespace AdministratorApp.ApiClasses
             }
         }
 
+        public async Task<string> generateCodeNumber(string type)
+        {
+            int sequence = await GetLastNumOfCode(type);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999999)
+                strSeq = sequence.ToString().PadLeft(6, '0');
+            string transNum = type.ToUpper() + "-" + strSeq;
+            return transNum;
+        }
 
+       
+        public async Task<int> GetLastNumOfCode(string type)
+        {
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            using (var client = new HttpClient())
+            {
+
+                Uri uri = new Uri(Global.APIUri + urimainpath + "GetLastNumOfCode?type=" + type);
+
+                response = await ApiConnect.ApiGetConnect(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string message = await response.Content.ReadAsStringAsync();
+                    message = JsonConvert.DeserializeObject<string>(message);
+                    return int.Parse(message);
+                }
+                return 0;
+            }
+        }
 
         public async Task<string> uploadImage(string imagePath, string imageName, int userId)
         {

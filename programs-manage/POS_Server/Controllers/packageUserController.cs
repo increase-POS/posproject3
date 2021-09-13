@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Programs_Server.Models;
-
+using Programs_Server.Classes;
 namespace Programs_Server.Controllers
 {
 
@@ -151,7 +151,9 @@ namespace Programs_Server.Controllers
         // add or update location
         [HttpPost]
         [Route("Save")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public string Save(string Object)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             var re = Request;
             var headers = re.Headers;
@@ -211,7 +213,29 @@ namespace Programs_Server.Controllers
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
+
+                            // get packageuser code
+
+                            if (newObject.packageUserId>0)
+                            {
+                                string packagecode;
+                                var tmpPackage = entity.packages.Where(p => p.packageId == newObject.packageId).FirstOrDefault();
+                                packagecode = tmpPackage.packageCode;
+                                string usercode;
+                                var tmpUser = entity.users.Where(p => p.userId == newObject.userId).FirstOrDefault();
+                                usercode = tmpUser.code;
+
+                                string timestamp = DateTime.Now.ToFileTime().ToString();
+                                string id = newObject.packageUserId.ToString();
+                                string strcode = packagecode + usercode + timestamp + id;
+                                string finalcode = Md5Encription.EncodeHash(strcode);
+                                newObject.packageSaleCode = finalcode;
+                             
+                                entity.SaveChanges();
+                            }
+                           
                             message = newObject.packageUserId.ToString();
+
                         }
                         else
                         {
@@ -221,7 +245,7 @@ namespace Programs_Server.Controllers
                             tmpObject.packageUserId = newObject.packageUserId;
                             tmpObject.packageId = newObject.packageId;
                             tmpObject.userId = newObject.userId;
-                            tmpObject.packageSaleCode = newObject.packageSaleCode;
+                         //   tmpObject.packageSaleCode = newObject.packageSaleCode;
                             tmpObject.packageNumber = newObject.packageNumber;
                             tmpObject.customerId = newObject.customerId;
                             tmpObject.customerServerCode = newObject.customerServerCode;
