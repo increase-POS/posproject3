@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Programs_Server.Models;
+using Programs_Server.Classes;
 
 namespace Programs_Server.Controllers
 {
@@ -188,7 +189,29 @@ namespace Programs_Server.Controllers
 
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
+
+                            if (newObject.serialId > 0)
+                            {
+                               
+                           var tmpPackage = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
+                                string pkucode = tmpPackage.packageSaleCode;
+                                int packageUserId;
+                                packageUserId = (int)newObject.packageUserId;
+
+                                string timestamp = DateTime.Now.ToFileTime().ToString();
+                                string id = newObject.serialId.ToString();
+                                string strcode = packageUserId + pkucode +  timestamp + id;
+                                string finalcode = Md5Encription.EncodeHash(strcode);
+                                newObject.serial = finalcode;
+
+                                entity.SaveChanges();
+                            }
+
+                         
                             message = newObject.serialId.ToString();
+                            //
+
+
                         }
                         else
                         {
@@ -285,8 +308,140 @@ namespace Programs_Server.Controllers
             else
                 return "-3";
         }
+        public string MultiserialSave(posSerials serialObject, int count)
+        {
+            string message = "";
+            int savedcount = 0;
+
+            if (serialObject.updateUserId == 0 || serialObject.updateUserId == null)
+            {
+                Nullable<int> id = null;
+                serialObject.updateUserId = id;
+            }
+            if (serialObject.createUserId == 0 || serialObject.createUserId == null)
+            {
+                Nullable<int> id = null;
+                serialObject.createUserId = id;
+            }
+            if (serialObject.packageUserId == 0 || serialObject.packageUserId == null)
+            {
+                Nullable<int> id = null;
+                serialObject.packageUserId = id;
+            }
+            //
+            for (int i = 0; i < count; i++)
+            {
+                serialObject.serialId = 0;
+                string res = posSerialSave(serialObject);
+                if (int.Parse(res) > 0)
+                {
+                    savedcount++;
+                }
+            }
+            return message;
+        }
+        [HttpPost]
+        [Route("MultiSave")]
+        public string MultiSave(string Object,int count)
+        {
+            var re = Request;
+            var headers = re.Headers;
+            string token = "";
+            string message = "";
+            int savedcount = 0;
+            if (headers.Contains("APIKey"))
+            {
+                token = headers.GetValues("APIKey").First();
+            }
+            Validation validation = new Validation();
+            bool valid = validation.CheckApiKey(token);
+
+            if (valid)
+            {
+                Object = Object.Replace("\\", string.Empty);
+                Object = Object.Trim('"');
+                posSerials newObject = JsonConvert.DeserializeObject<posSerials>(Object, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.updateUserId = id;
+                }
+                if (newObject.createUserId == 0 || newObject.createUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.createUserId = id;
+                }
+                if (newObject.packageUserId == 0 || newObject.packageUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.packageUserId = id;
+                }
+                //
+                for (int i = 0; i < count; i++)
+                {
+                    newObject.serialId = 0;
+                    string res = posSerialSave(newObject);
+                    if (int.Parse(res) > 0)
+                    {
+                        savedcount++;
+                    }
+                }
+
+                //
+            }
+            return message;
+        }
+
+        private string posSerialSave(posSerials newObject)
+        {
+          string  message = "";
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<posSerials>();
+                    if (newObject.serialId == 0)
+                    {
+                        newObject.createDate = DateTime.Now;
+                        newObject.updateDate = DateTime.Now;
+                        newObject.updateUserId = newObject.createUserId;
 
 
+                        locationEntity.Add(newObject);
+                        entity.SaveChanges();
 
-    }
+                        if (newObject.serialId > 0)
+                        {
+
+                            var tmpPackage = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
+                            string pkucode = tmpPackage.packageSaleCode;
+                            int packageUserId;
+                            packageUserId = (int)newObject.packageUserId;
+
+                            string timestamp = DateTime.Now.ToFileTime().ToString();
+                            string id = newObject.serialId.ToString();
+                            string strcode = packageUserId + pkucode + timestamp + id;
+                            string finalcode = Md5Encription.EncodeHash(strcode);
+                            newObject.serial = finalcode;
+
+                            entity.SaveChanges();
+                        }
+
+
+                        message = newObject.serialId.ToString();
+                        //
+
+
+                    }
+                 
+                    //  entity.SaveChanges();
+                }
+            }
+            catch
+            {
+                message = "-1";
+            }
+            return message;
+        }
+        }
 }

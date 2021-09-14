@@ -82,7 +82,7 @@
     <Property Name="packageUserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="packageId" Type="Int32" />
     <Property Name="userId" Type="Int32" />
-    <Property Name="packageSaleCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="packageSaleCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="packageNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="customerId" Type="Int32" />
     <Property Name="customerServerCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />

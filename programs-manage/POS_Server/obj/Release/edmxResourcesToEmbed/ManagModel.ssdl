@@ -91,7 +91,7 @@
     <Property Name="packageUserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="packageId" Type="int" />
     <Property Name="userId" Type="int" />
-    <Property Name="packageSaleCode" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="packageSaleCode" Type="nvarchar" MaxLength="500" />
     <Property Name="packageNumber" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="customerId" Type="int" />
     <Property Name="customerServerCode" Type="nvarchar" MaxLength="500" />

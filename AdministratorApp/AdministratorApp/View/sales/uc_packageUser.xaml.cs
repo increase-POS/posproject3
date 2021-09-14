@@ -37,5 +37,28 @@ namespace AdministratorApp.View.sales
             HelpClass.defaultDatePickerStyle(dp_bookDate);
             HelpClass.defaultDatePickerStyle(dp_expireDate);
         }
+
+        private void Btn_add_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            /*
+             * 
+             
+            pkuitem.createUserId = 1;
+            pkuitem.packageId = 1;
+            pkuitem.notes = "notee";
+            pkuitem.customerServerCode = "cc";
+            pkuitem.packageSaleCode = "ca";
+            //  pkuitem.packageNumber="p1" ;
+            pkuitem.userId = 1;
+            pkuitem.customerId =4;
+            pkuitem.isActive = 1;
+            pkuitem.isBooked = 1;
+          pkuitem.expireDate =DateTime.Now;
+            pkuitem.packageNumber = "p11";
+            msg = pkumodel.save(pkuitem);
+             * */
+        }
     }
 }

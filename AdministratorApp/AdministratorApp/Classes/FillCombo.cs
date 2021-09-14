@@ -137,8 +137,8 @@ namespace AdministratorApp.Classes
         static public void fillUserType(ComboBox combo)
         {
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "admin" },
-                new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "employee" },
+                new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "ad" },
+                new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "u" },
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";

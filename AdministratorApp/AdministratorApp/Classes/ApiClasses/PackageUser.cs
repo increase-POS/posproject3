@@ -89,6 +89,26 @@ namespace AdministratorApp.ApiClasses
             }
         }
 
+        public async Task<string> MultiSave(PackageUser obj, int count)
+        {
+            var myContent = JsonConvert.SerializeObject(obj);
+            myContent = HttpUtility.UrlEncode(myContent);
+            Uri uri = new Uri(Global.APIUri + urimainpath + "MultiSave?Object=" + myContent+ "&count="+ count);
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            response = await ApiConnect.ApiPostConnect(uri);
+            using (var client = new HttpClient())
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    message = JsonConvert.DeserializeObject<string>(message);
+                    return message;
+                }
+                return "";
+            }
+        }
+
         public async Task<PackageUser> GetByID(int packageUserId)
         {
             PackageUser obj = new PackageUser();

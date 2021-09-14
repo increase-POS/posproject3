@@ -276,6 +276,76 @@ namespace Programs_Server.Controllers
             return message;
         }
 
+        // add or update location
+        [HttpPost]
+        [Route("MultiSave")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public string MultiSave(string Object,int count)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        {
+            var re = Request;
+            var headers = re.Headers;
+            string token = "";
+          
+            int savedcount = 0;
+            if (headers.Contains("APIKey"))
+            {
+                token = headers.GetValues("APIKey").First();
+            }
+            Validation validation = new Validation();
+            bool valid = validation.CheckApiKey(token);
+
+            if (valid)
+            {
+                Object = Object.Replace("\\", string.Empty);
+                Object = Object.Trim('"');
+                packageUser newObject = JsonConvert.DeserializeObject<packageUser>(Object, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.updateUserId = id;
+                }
+                if (newObject.createUserId == 0 || newObject.createUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.createUserId = id;
+                }
+                if (newObject.packageId == 0 || newObject.packageId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.packageId = id;
+                }
+                if (newObject.userId == 0 || newObject.userId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.userId = id;
+                }
+                if (newObject.customerId == 0 || newObject.customerId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.customerId = id;
+                }
+                //
+ 
+                for(int i = 0; i < count; i++)
+                {
+                    newObject.packageUserId = 0;
+                    string res = packUserSave(newObject);
+                    if (int.Parse(res) > 0)
+                    {
+                        savedcount ++;
+                    }
+                }
+                
+
+            //
+
+
+
+            }
+            return savedcount.ToString();
+        }
+
         [HttpPost]
         [Route("Delete")]
         public string Delete(int packageUserId, int userId, bool final)
@@ -338,7 +408,56 @@ namespace Programs_Server.Controllers
                 return "-3";
         }
 
+private string packUserSave(packageUser newObject) {
+            string message = "";
+            try
+            {
 
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<packageUser>();
+                    if (newObject.packageUserId == 0)
+                    {
+                        newObject.createDate = DateTime.Now;
+                        newObject.updateDate = DateTime.Now;
+                        newObject.updateUserId = newObject.createUserId;
+
+
+                        locationEntity.Add(newObject);
+                        entity.SaveChanges();
+
+                        // get packageuser code
+
+                        if (newObject.packageUserId > 0)
+                        {
+                            string packagecode;
+                            var tmpPackage = entity.packages.Where(p => p.packageId == newObject.packageId).FirstOrDefault();
+                            packagecode = tmpPackage.packageCode;
+                            string usercode;
+                            var tmpUser = entity.users.Where(p => p.userId == newObject.userId).FirstOrDefault();
+                            usercode = tmpUser.code;
+
+                            string timestamp = DateTime.Now.ToFileTime().ToString();
+                            string id = newObject.packageUserId.ToString();
+                            string strcode = packagecode + usercode + timestamp + id;
+                            string finalcode = Md5Encription.EncodeHash(strcode);
+                            newObject.packageSaleCode = finalcode;
+
+                            entity.SaveChanges();
+                        }
+
+                        message = newObject.packageUserId.ToString();
+
+                    }
+                   
+                }
+            }
+            catch
+            {
+                message = "-1";
+            }
+ return message;
+        }
 
     }
 }

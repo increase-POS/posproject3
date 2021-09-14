@@ -146,7 +146,7 @@ namespace AdministratorApp.View.sectionData
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        {//add
+        { //add
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -163,7 +163,11 @@ namespace AdministratorApp.View.sectionData
                 user = new Users();
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength)
                 {
-                    user.code = "Us-000001";
+                    if (cb_type.SelectedValue != null)
+                    { 
+                    tb_code.Text = await user.generateCodeNumber(cb_type.SelectedValue.ToString());
+                    user.code = tb_code.Text;
+                }
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
                     user.accountName = tb_accountName.Text;

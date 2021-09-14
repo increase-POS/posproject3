@@ -256,7 +256,7 @@
                     </Border>
                     <Border   CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <TextBox x:Name="tb_count"   Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"
+                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="False"
                                       materialDesign:HintAssist.Hint="count..."  
                                      Foreground="#4E4E4E"  FontWeight="SemiBold" KeyboardNavigation.IsTabStop="False"
                                       MaxLength="50" BorderThickness="0" 

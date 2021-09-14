@@ -51,6 +51,8 @@ namespace AdministratorApp.View.sales
         byte tgl_packageState;
         string searchText = "";
         public static List<string> requiredControlList;
+        PackageUser packuser = new PackageUser();
+        PackageUser packuserModel = new PackageUser();
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -363,22 +365,36 @@ namespace AdministratorApp.View.sales
         private async void Btn_add_Click_1(object sender, RoutedEventArgs e)
         {
             string msg = "";
-            PackageUser pkumodel = new PackageUser();
-            PackageUser pkuitem = new PackageUser();
-
+        
+          packuser.packageId=int.Parse(cb_package.SelectedValue.ToString());
+            packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
+            if(cb_customer.SelectedValue != null)
+            packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
+            packuser.createUserId = MainWindow.userID;
+            packuser.packageNumber = "pos12";
+            /*
             pkuitem.createUserId = 1;
             pkuitem.packageId = 1;
             pkuitem.notes = "notee";
-          //  pkuitem.customerServerCode = "cc";
-           pkuitem.packageSaleCode = "ca";
-            
+            pkuitem.customerServerCode = "cc";
+            pkuitem.packageSaleCode = "ca";
+            //  pkuitem.packageNumber="p1" ;
             pkuitem.userId = 1;
-            //pkuitem.customerId = 4;
-         //  pkuitem.isActive = 1;
-           // pkuitem.isBooked = 1;
-           // pkuitem.expireDate = DateTime.Now;
+            pkuitem.customerId =4;
+            pkuitem.isActive = 1;
+            pkuitem.isBooked = 1;
+          pkuitem.expireDate =DateTime.Now;
             pkuitem.packageNumber = "p11";
-            msg = await pkumodel.Save(pkuitem);
+            msg = pkumodel.save(pkuitem);
+             * */
+
+
+            //pkuitem.customerId = 4;
+            //  pkuitem.isActive = 1;
+            // pkuitem.isBooked = 1;
+            // pkuitem.expireDate = DateTime.Now;
+
+            msg = await packuserModel.MultiSave(packuser,int.Parse(tb_count.Text));
 
             MessageBox.Show(msg);
 
