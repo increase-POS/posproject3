@@ -45,21 +45,21 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="1" Grid.Column="1"  x:Name="txt_packageCode" Text="{Binding packageCode, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock Grid.Row="2"  Grid.Column="0"   x:Name="txt_packageNameTitle" Text="Package"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="2" Grid.Column="1"   x:Name="txt_packageName" Text="{Binding packageName, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_detailsTitle" Text="Details"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_details" Text="{Binding details, Mode=OneWay}"  Margin="10" 
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                     </Grid>
@@ -85,22 +85,22 @@
                         <TextBlock  Grid.Row="1"  Grid.Column="0"  x:Name="txt_programTitle" Text="program"  Margin="10,5,5,5"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
-                        <TextBlock  Grid.Row="1" Grid.Column="1"  x:Name="txt_program" Text="{Binding program, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        <TextBlock  Grid.Row="1" Grid.Column="1"  x:Name="txt_program" Text="{Binding programName, Mode=OneWay}"  Margin="10"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock Grid.Row="2"  Grid.Column="0"   x:Name="txt_versionTitle" Text="version"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
-                        <TextBlock Grid.Row="2" Grid.Column="1"   x:Name="txt_version" Text="{Binding version, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        <TextBlock Grid.Row="2" Grid.Column="1"   x:Name="txt_version" Text="{Binding verName, Mode=OneWay}"  Margin="10"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_priceTitle" Text="price"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_price" Text="{Binding price, Mode=OneWay}"  Margin="10" 
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
                        
                     </Grid>
@@ -130,14 +130,14 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="1" Grid.Column="1"  x:Name="txt_branchCountCode" Text="{Binding branchCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock Grid.Row="1"  Grid.Column="2"   x:Name="txt_storeCountNameTitle" Text="storeCount"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="1" Grid.Column="3"   x:Name="txt_storeCountName" Text="{Binding storeCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
                             <!--#endregion-->
 
@@ -146,14 +146,14 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="2" Grid.Column="1"  x:Name="txt_userCountCode" Text="{Binding userCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock Grid.Row="2"  Grid.Column="2"   x:Name="txt_posCountNameTitle" Text="posCount"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="2" Grid.Column="3"   x:Name="txt_posCountName" Text="{Binding posCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
                         <!--#endregion-->
 
@@ -163,14 +163,14 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="3" Grid.Column="1"  x:Name="txt_customerCountCode" Text="{Binding customerCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock Grid.Row="3"  Grid.Column="2"   x:Name="txt_vendorCountNameTitle" Text="vendorCount"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="3" Grid.Column="3"   x:Name="txt_vendorCountName" Text="{Binding vendorCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
                         <!--#endregion-->
 
@@ -180,14 +180,14 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="4" Grid.Column="1"  x:Name="txt_salesInvCountCode" Text="{Binding salesInvCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
                         <TextBlock Grid.Row="4"  Grid.Column="2"   x:Name="txt_itemCountNameTitle" Text="itemCount"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="4" Grid.Column="3"   x:Name="txt_itemCountName" Text="{Binding itemCount, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
                         <!--#endregion-->
 
@@ -198,7 +198,7 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="5" Grid.Column="1"  x:Name="txt_endDateCode" Text="{Binding endDate, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"    >
                             <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
