@@ -48,7 +48,13 @@ namespace AdministratorApp.Classes
             combo.SelectedValuePath = "verId";
             combo.DisplayMemberPath = "name";
         }
-
+        static public async Task fillVersionByProgram(ComboBox combo, int programId)
+        {
+            versions = await version.GetAll();
+            combo.ItemsSource = versions.Where(x => x.programId == programId &&  x.isActive == 1);
+            combo.SelectedValuePath = "verId";
+            combo.DisplayMemberPath = "name";
+        }
 
         /// <summary>
         /// User & Agent 
@@ -69,8 +75,6 @@ namespace AdministratorApp.Classes
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }
-
-
         /// <summary>
         /// Customer
         /// </summary>
@@ -160,7 +164,6 @@ namespace AdministratorApp.Classes
             combo.ItemsSource = typelist;
 
         }
-
         #endregion
 
     }

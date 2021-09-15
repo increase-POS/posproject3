@@ -18,7 +18,7 @@ namespace AdministratorApp.ApiClasses
         public string serial { get; set; }
         public string posDeviceCode { get; set; }
         public Nullable<int> packageUserId { get; set; }
-        public int isBooked { get; set; }
+        public bool isBooked { get; set; }
         public int isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }

@@ -372,6 +372,7 @@ namespace AdministratorApp.View.sales
             packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
             packuser.createUserId = MainWindow.userID;
             packuser.packageNumber = "pos12";
+            packuser.isActive = 1;
             /*
             pkuitem.createUserId = 1;
             pkuitem.packageId = 1;

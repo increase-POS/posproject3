@@ -49,6 +49,8 @@ namespace AdministratorApp.View.applications
             }
         }
         Programs program = new Programs();
+
+
         IEnumerable<Programs> programsQuery;
         IEnumerable<Programs> programs;
         byte tgl_programState;

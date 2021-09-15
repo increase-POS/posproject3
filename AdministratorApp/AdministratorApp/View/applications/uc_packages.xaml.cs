@@ -77,7 +77,6 @@ namespace AdministratorApp.View.applications
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 await FillCombo.fillProgram(cb_program);
-                await FillCombo.fillVersion(cb_version);
                 translate();
                 Keyboard.Focus(tb_code);
 
@@ -592,5 +591,24 @@ namespace AdministratorApp.View.applications
             catch { }
         }
         #endregion
+        private async void Cb_program_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+            //HelpClass.StartAwait(grid_main);
+            if (cb_program.SelectedValue != null)
+                await FillCombo.fillVersionByProgram(cb_version, (int)cb_program.SelectedValue);
+            if (package.verId != null )
+                cb_version.SelectedValue = package.verId;
+            //HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                //HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
     }
 }

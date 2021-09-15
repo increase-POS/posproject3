@@ -330,6 +330,7 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Program..."    
                                           VerticalAlignment="Center" BorderThickness="0"
+                                        SelectionChanged="Cb_program_SelectionChanged"
                                           Height="40"   LostFocus="validateEmpty_LostFocus"/>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_program"
                               HorizontalAlignment="Right" Visibility="Collapsed"   

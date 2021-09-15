@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdministratorApp.View.sales"
-             mc:Ignorable="d"   
+             mc:Ignorable="d"   Loaded="UserControl_Loaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="950">
     <Grid x:Name="grid_main">
@@ -44,7 +44,7 @@
 	c0-1.4,0.2-2.8,0.6-4.2C68,27.3,58.3,36.5,57.9,48.2C57.5,60,66.7,69.7,78.5,70.1c11.7,0.4,21.5-8.8,21.9-20.6c0.1-2-0.2-4-0.7-5.9
 	C97.6,44.8,95.2,45.5,92.7,45.5z"/>
                             </Border>
-                            <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_search" TextChanged="Tb_search_TextChanged" Grid.Column="1"    Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  
@@ -57,10 +57,10 @@
                                    Margin="5,0,5,0" Text="Active" Foreground="#6e6e6e"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
-                    <ToggleButton Grid.Column="2"    x:Name="tgl_isActive"   
+                    <ToggleButton Grid.Column="2"    x:Name="tgl_isActive" Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"   
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
                                           Margin="0" Height="13" Width="28" />
-                    <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Grid.Row="0" Grid.Column="3" Padding="0" 
+                    <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="3" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
                              Margin="5,1"     RenderTransformOrigin="0.5,0.5"
@@ -98,7 +98,7 @@
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,5,5,17.5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_program"  AutoGenerateColumns="False"    Background="White"
+                       x:Name="dg_packageUser" SelectionChanged="Dg_packageUser_SelectionChanged"  AutoGenerateColumns="False"    Background="White"
                         ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                         <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
@@ -112,7 +112,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=code}">
+                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=packageSaleCode}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -123,14 +123,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-
-                            <DataGridTextColumn Header="Name" Width="*">
-                                <DataGridTextColumn.Binding>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="name"></Binding>
-                                        <Binding Path="lastName"></Binding>
-                                    </MultiBinding>
-                                </DataGridTextColumn.Binding>
+                            <DataGridTextColumn Width="*"  Header="Agent" Binding="{Binding Path=userName}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -141,8 +134,18 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-
-                            <DataGridTextColumn Width="*"  Header="Details" Binding="{Binding Path=details}">
+                            <DataGridTextColumn Width="*"  Header="Customer" Binding="{Binding Path=customerName}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="Package Number" Binding="{Binding Path=packageNumber}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -251,7 +254,7 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid  Background="{StaticResource MainColor}" Height="40" >
-                <TextBlock Text="Package User" x:Name="txt_title" Margin="10,0,0,0" Foreground="White" 
+                <TextBlock Text="Package Agent" x:Name="txt_title" Margin="10,0,0,0" Foreground="White" 
                      FontSize="14"      HorizontalAlignment="Left"  VerticalAlignment="Center" 
                            FontWeight="Bold" />
             </Grid>
@@ -259,7 +262,7 @@
                 <StackPanel>
                     <DockPanel LastChildFill="True"  >
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" >
+                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Click="Btn_clear_Click" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" >
                             <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="20" Height="20">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
@@ -273,7 +276,7 @@
                         <Grid>
                             <TextBox x:Name="tb_packageSaleCode"  Text="{Binding packageSaleCode, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="Package Code..."  
+                                      materialDesign:HintAssist.Hint="Package Sale Code..."  
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -288,7 +291,7 @@
 
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5"     IsEditable="True"
+                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5" SelectedValue="{Binding userId, Mode=OneWay}"     IsEditable="True"
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Agent..."    
@@ -298,7 +301,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5"    IsEditable="True" 
+                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5" SelectedValue="{Binding customerId, Mode=OneWay}"     IsEditable="True" 
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Customer..."    
@@ -348,7 +351,7 @@
                         <Border Grid.Column="2" CornerRadius="10" Margin="10,5,10,5" 
                                 IsEnabled="{Binding Path=IsChecked, ElementName=tgl_islimitDate}" BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid>
-                                <DatePicker   x:Name="dp_bookDate" Padding="10,5,5,5"    
+                                <DatePicker   x:Name="dp_bookDate"  SelectedDate="{Binding bookDate, Mode=OneWay}" Padding="10,5,5,5"    
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0" 
                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
                                       materialDesign:HintAssist.Hint="Book Date..."    
@@ -365,7 +368,7 @@
                     <Border Grid.Column="2" CornerRadius="10" Margin="10,5,10,5" 
                                 IsEnabled="{Binding Path=IsChecked, ElementName=tgl_islimitDate}" BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
-                            <DatePicker   x:Name="dp_expireDate" Padding="10,5,5,5"    
+                            <DatePicker   x:Name="dp_expireDate"  SelectedDate="{Binding expireDate, Mode=OneWay}" Padding="10,5,5,5"    
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0" 
                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
                                       materialDesign:HintAssist.Hint="Expire Date..."    
@@ -397,20 +400,9 @@
                     BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"  />
 
             <Grid Grid.Row="3" Margin="5,5,5,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" x:Name="btn_add"  
                         materialDesign:ButtonAssist.CornerRadius="10"      Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
-                        Margin="5"    Content="add" Click="Btn_add_Click"/>
-                <Button Grid.Column="1" x:Name="btn_update" 
-                       materialDesign:ButtonAssist.CornerRadius="10"       Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                        Margin="5"    Content="update"/>
-                <Button Grid.Column="2" x:Name="btn_delete"  
-                       materialDesign:ButtonAssist.CornerRadius="10"       Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                        Margin="5"    Content="delete"/>
+                        Margin="5"    Content="Save" Click="Btn_add_Click"/>
             </Grid>
         </Grid>
     </Grid>

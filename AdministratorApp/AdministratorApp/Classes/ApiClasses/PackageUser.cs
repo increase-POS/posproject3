@@ -17,11 +17,13 @@ namespace AdministratorApp.ApiClasses
         public int packageUserId { get; set; }
         public Nullable<int> packageId { get; set; }
         public Nullable<int> userId { get; set; }
+        public string userName { get; set; }
         public string packageNumber { get; set; }
         public Nullable<int> customerId { get; set; }
+        public string customerName { get; set; }
         public string packageSaleCode { get; set; }
         public string customerServerCode { get; set; }
-        public int isBooked { get; set; }
+        public bool isBooked { get; set; }
         public Nullable<System.DateTime> bookDate { get; set; }
         public Nullable<System.DateTime> expireDate { get; set; }
         public string notes { get; set; }
