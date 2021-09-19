@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdministratorApp.View.sales"
-             mc:Ignorable="d"   
+             mc:Ignorable="d"   Loaded="UserControl_Loaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="950">
     <Grid x:Name="grid_main">
@@ -44,7 +44,7 @@
 	c0-1.4,0.2-2.8,0.6-4.2C68,27.3,58.3,36.5,57.9,48.2C57.5,60,66.7,69.7,78.5,70.1c11.7,0.4,21.5-8.8,21.9-20.6c0.1-2-0.2-4-0.7-5.9
 	C97.6,44.8,95.2,45.5,92.7,45.5z"/>
                             </Border>
-                            <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_search" TextChanged="Tb_search_TextChanged" Grid.Column="1"    Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  
@@ -57,10 +57,10 @@
                                    Margin="5,0,5,0" Text="Active" Foreground="#6e6e6e"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
-                    <ToggleButton Grid.Column="2"    x:Name="tgl_isActive"   
+                    <ToggleButton Grid.Column="2"    x:Name="tgl_isActive"  Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"  
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
                                           Margin="0" Height="13" Width="28" />
-                    <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Grid.Row="0" Grid.Column="3" Padding="0" 
+                    <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="3" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
                              Margin="5,1"     RenderTransformOrigin="0.5,0.5"
@@ -242,7 +242,7 @@
                 <StackPanel>
                     <DockPanel LastChildFill="True"  >
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" >
+                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Click="Btn_clear_Click" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" >
                             <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="20" Height="20">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 

@@ -148,8 +148,6 @@ namespace AdministratorApp
                     }
                 }
             }
-
-            
         }
        
         private void BTN_Close_Click(object sender, RoutedEventArgs e)
