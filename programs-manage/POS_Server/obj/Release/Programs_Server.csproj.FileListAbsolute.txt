@@ -222,3 +222,11 @@ D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.dll
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.pdb
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Release\Programs_Server.csproj.AssemblyReference.cache
 D:\myproj\posproject3\programs-manage\POS_Server\obj\Release\Programs_Server.csprojAssemblyReference.cache
+D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Logging.dll
+D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Tokens.dll
+D:\myproj\posproject3\programs-manage\POS_Server\bin\System.IdentityModel.Tokens.Jwt.dll
+D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Logging.xml
+D:\myproj\posproject3\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Tokens.xml
+D:\myproj\posproject3\programs-manage\POS_Server\bin\System.IdentityModel.Tokens.Jwt.xml

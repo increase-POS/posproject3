@@ -489,3 +489,13 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sectionData\uc_agents.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sectionData\uc_customers.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_acceptCancelPopup.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.Logging.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\RestSharp.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.Logging.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\RestSharp.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
