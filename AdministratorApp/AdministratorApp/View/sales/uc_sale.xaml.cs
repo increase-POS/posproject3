@@ -364,7 +364,7 @@ namespace AdministratorApp.View.sales
 
         private async void Btn_add_Click_1(object sender, RoutedEventArgs e)
         {
-            string msg = "";
+            int msg =0;
         
           packuser.packageId=int.Parse(cb_package.SelectedValue.ToString());
             packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
@@ -397,7 +397,7 @@ namespace AdministratorApp.View.sales
 
             msg = await packuserModel.MultiSave(packuser,int.Parse(tb_count.Text));
 
-            MessageBox.Show(msg);
+            MessageBox.Show(msg.ToString());
 
         }
     }

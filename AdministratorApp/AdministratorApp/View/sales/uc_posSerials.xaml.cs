@@ -144,7 +144,7 @@ namespace AdministratorApp.View.sales
                     posSerial.createUserId = MainWindow.userLogin.userId;
                     posSerial.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await posSerial.Save(posSerial));
+                    int s = await posSerial.Save(posSerial);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else

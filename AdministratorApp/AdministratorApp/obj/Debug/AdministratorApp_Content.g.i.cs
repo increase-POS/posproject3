@@ -8,14 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/increase-login-bg-rtl.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/increase-login-bg.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/increase-logo.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/increaselogo.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/no-image-icon-125x125.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/no-image-icon-40x40.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/no-image-icon-512x512.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/no-image-icon-90x90.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pic/profilephotos.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlservertypes/readme.htm")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlservertypes/x64/msvcr120.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlservertypes/x64/sqlserverspatial140.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlservertypes/x86/msvcr120.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlservertypes/x86/sqlserverspatial140.dll")]
 
 

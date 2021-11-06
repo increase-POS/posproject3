@@ -175,7 +175,7 @@ namespace AdministratorApp.View.sales
                     packageUser.createUserId = MainWindow.userLogin.userId;
                     packageUser.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await packageUser.Save(packageUser));
+                    int s = await packageUser.Save(packageUser);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else

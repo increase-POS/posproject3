@@ -7,161 +7,168 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+using Programs_Server.Models.VM;
+using System.Security.Claims;
+using System.Web;
+
 namespace Programs_Server.Controllers
 {
     [RoutePrefix("api/Country")]
     public class CountryController : ApiController
     {
         // GET api/<controller>
-        [HttpGet]
+        [HttpPost]
         [Route("GetAll")]
-        public IHttpActionResult GetAll()
+        public string GetAll(string token)
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            bool canDelete = false;
 
-            if (headers.Contains("APIKey"))
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-                token = headers.GetValues("APIKey").First();
+                return TokenManager.GenerateToken(strP);
             }
-
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-
-            if (valid) // APIKey is valid
+            else
             {
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                try
                 {
-                    var List = entity.countriesCodes.ToList()
-                         .Select(c => new {
-                             c.countryId,
-                             c.code,
-                         }).ToList();
-                
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var List = entity.countriesCodes.ToList()
+                             .Select(c => new
+                             {
+                                 c.countryId,
+                                 c.code,
+                             }).ToList();
 
-                    if (List == null)
-                        return NotFound();
-                    else
-                        return Ok(List);
+                        return TokenManager.GenerateToken(List);
+                    }
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
                 }
             }
-            //else
-            return NotFound();
+
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetAllCities")]
-        public IHttpActionResult GetAllCities()
+        public string GetAllCities(string token)
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-
-            if (headers.Contains("APIKey"))
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-
-            if (valid) // APIKey is valid
-            {
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                {
-                    var countrylist = entity.countriesCodes.ToList()
-                         .Select(c => new {
-                             c.countryId,
-                             c.code,
-                             c.isDefault,
-                         }).ToList();
-
-
-                    if (countrylist == null)
-                    { return Ok(countrylist); }
-                    //return ("no");
-                    //return NotFound();
-                    else
-                    { return Ok(countrylist);}
-                        
-                }
+                return TokenManager.GenerateToken(strP);
             }
             else
-                return NotFound();
+            {
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var countrylist = entity.countriesCodes.ToList()
+                             .Select(c => new
+                             {
+                                 c.countryId,
+                                 c.code,
+                                 c.isDefault,
+                             }).ToList();
+
+
+                        return TokenManager.GenerateToken(countrylist);
+
+                    }
+
+
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
         }
 
 
-
-        [HttpGet]
+        [HttpPost]
         [Route("GetAllRegion")]
-        public IHttpActionResult GetAllRegion()
+        public string GetAllRegion(string token)
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-
-            if (headers.Contains("APIKey"))
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-
-            if (valid) // APIKey is valid
-            {
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                {
-                    var countrylist = entity.countriesCodes.ToList()
-                         .Select(c => new {
-                             c.countryId,
-                             c.code,
-                             c.currency,
-                             c.name,
-                             c.isDefault,
-
-                         }).ToList();
-
-
-                    if (countrylist == null)
-                        return NotFound();
-                    else
-                        return Ok(countrylist);
-                }
+                return TokenManager.GenerateToken(strP);
             }
             else
-                return NotFound();
+            {
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var countrylist = entity.countriesCodes.ToList()
+                             .Select(c => new
+                             {
+                                 c.countryId,
+                                 c.code,
+                                 c.currency,
+                                 c.name,
+                                 c.isDefault,
+
+                             }).ToList();
+                        return TokenManager.GenerateToken(countrylist);
+
+                    }
+
+                }
+
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
         }
 
         [HttpPost]
         [Route("UpdateIsdefault")]
-        public string UpdateIsdefault(int countryId)
+        public string UpdateIsdefault(string token)
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            string message = "";
-            if (headers.Contains("APIKey"))
-            {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
 
-            if (valid)
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-               
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int countryId = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "countryId")
+                    {
+                        countryId = int.Parse(c.Value);
+                    }
+
+
+                }
 
                 try
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         // reset all to 0
-                        List<countriesCodes> objectlist = entity.countriesCodes.Where(x=>x.isDefault==1).ToList();
+                        List<countriesCodes> objectlist = entity.countriesCodes.Where(x => x.isDefault == 1).ToList();
                         if (objectlist.Count > 0)
                         {
-                            for(int i=0;i< objectlist.Count; i++)
+                            for (int i = 0; i < objectlist.Count; i++)
                             {
                                 objectlist[i].isDefault = 0;
 
@@ -190,54 +197,66 @@ namespace Programs_Server.Controllers
                     message = "-1";
                 }
             }
-            return message;
+            return TokenManager.GenerateToken(message);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetByID")]
-        public IHttpActionResult GetByID()
+        public string GetByID(string token)//Id
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            int cId = 0;
-            if (headers.Contains("APIKey"))
-            {
-                token = headers.GetValues("APIKey").First();
-            }
-            if (headers.Contains("Id"))
-            {
-                cId = Convert.ToInt32(headers.GetValues("Id").First());
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
 
-            if (valid)
-            {
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                {
-                    var list = entity.countriesCodes.ToList()
-                   .Where(c => c.countryId == cId)
-                   .Select(c => new {
-                       c.countryId,
-                       c.code,
-                       c.currency,
-                       c.name,
-                       c.isDefault
-                   })
-                   .FirstOrDefault();
+            string message = "";
 
-                    if (list == null)
-                        return NotFound();
-                    else
-                        return Ok(list);
-                }
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
             }
             else
-                return NotFound();
+            {
+                int Id = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "Id")
+                    {
+                        Id = int.Parse(c.Value);
+                    }
+
+
+                }
+
+                try
+                {
+
+
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var list = entity.countriesCodes.ToList()
+                       .Where(c => c.countryId == Id)
+                       .Select(c => new
+                       {
+                           c.countryId,
+                           c.code,
+                           c.currency,
+                           c.name,
+                           c.isDefault
+                       })
+                       .FirstOrDefault();
+                        return TokenManager.GenerateToken(list);
+
+                    }
+                }
+
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
         }
-
-
 
     }
 }

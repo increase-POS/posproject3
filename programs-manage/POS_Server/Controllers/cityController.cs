@@ -7,7 +7,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Programs_Server.Models;
-
+using Programs_Server.Models.VM;
+using System.Security.Claims;
+using System.Web;
 
 
 namespace Programs_Server.Controllers
@@ -16,45 +18,58 @@ namespace Programs_Server.Controllers
     public class cityController : ApiController
     {
         // GET api/<controller> get all coupons
-        [HttpGet]
+        [HttpPost]
         [Route("Get")]
-        public IHttpActionResult Get()
-        {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            if (headers.Contains("APIKey"))
+  
+            public string Get(string token)
             {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
 
-            if (valid) // APIKey is valid
-            {
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                // public ResponseVM GetPurinv(string token)
+
+                //int mainBranchId, int userId    DateTime? date=new DateTime?();
+
+                token = TokenManager.readToken(HttpContext.Current.Request);
+                var strP = TokenManager.GetPrincipal(token);
+                if (strP != "0") //invalid authorization
                 {
-                    var cityList = entity.cities.ToList()
-
-                   .Select(c => new {
-                    c.cityId,   
-                    c.cityCode,
-                    c.countryId
-                   })
-                   .ToList();
-
-                    if (cityList == null)
-                        return NotFound();
-                    else
-                        return Ok(cityList);
+                    return TokenManager.GenerateToken(strP);
                 }
+                else
+                {
+
+                    try
+                    {
+
+
+                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                        {
+
+                            var list = entity.cities
+
+                       .Select(c => new
+                       {
+                           c.cityId,
+                           c.cityCode,
+                           c.countryId
+                       })
+                       .ToList();
+
+
+                            return TokenManager.GenerateToken(list);
+                        }
+
+                    }
+                    catch
+                    {
+                        return TokenManager.GenerateToken("0");
+                    }
+
+                }
+
+
             }
-            //else
-                return NotFound();
-        }
 
 
 
-       
     }
 }

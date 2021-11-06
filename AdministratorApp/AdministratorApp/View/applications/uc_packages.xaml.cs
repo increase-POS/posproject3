@@ -176,7 +176,7 @@ namespace AdministratorApp.View.applications
                         package.createUserId = MainWindow.userLogin.userId;
                         package.updateUserId = MainWindow.userLogin.userId;
 
-                        int s = int.Parse(await package.Save(package));
+                        int s = await package.Save(package);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
@@ -231,7 +231,7 @@ namespace AdministratorApp.View.applications
                     package.createUserId = MainWindow.userLogin.userId;
                     package.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await package.Save(package));
+                    int s = await package.Save(package);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -287,8 +287,8 @@ namespace AdministratorApp.View.applications
                             if (package.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
                             if ((!package.canDelete) && (package.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                            int s = int.Parse(await package.Delete(package.packageId, MainWindow.userLogin.userId, package.canDelete));
-                            if (s < 0)
+                            int s = await package.Delete(package.packageId, MainWindow.userLogin.userId, package.canDelete);
+                            if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
@@ -314,7 +314,7 @@ namespace AdministratorApp.View.applications
         private async Task activate()
         {//activate
             package.isActive = 1;
-            int s = int.Parse(await package.Save(package));
+            int s = await package.Save(package);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

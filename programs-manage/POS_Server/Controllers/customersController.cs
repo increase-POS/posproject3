@@ -10,10 +10,12 @@ using Programs_Server.Models;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Web;
+using Programs_Server.Models.VM;
+using System.Security.Claims;
+using Newtonsoft.Json.Converters;
 
 namespace Programs_Server.Controllers
 {
-
 
     [RoutePrefix("api/customers")]
 
@@ -24,26 +26,23 @@ namespace Programs_Server.Controllers
 
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetAll")]
-        public IHttpActionResult GetAll()
+        public string GetAll(string token)
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
+           
             bool canDelete = false;
-
-            if (headers.Contains("APIKey"))
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-                token = headers.GetValues("APIKey").First();
+                return TokenManager.GenerateToken(strP);
             }
-
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-
-            if (valid) // APIKey is valid
+            else
             {
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
                     var List = (from S in entity.customers
                                 select new customersModel()
@@ -94,33 +93,48 @@ namespace Programs_Server.Controllers
                         }
                     }
 
-                    if (List == null)
-                        return NotFound();
-                    else
-                        return Ok(List);
+                        return TokenManager.GenerateToken(List);
+                    }
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
                 }
             }
-            //else
-            return NotFound();
         }
 
         // GET api/<controller>
-        [HttpGet]
+        [HttpPost]
         [Route("GetByID")]
-        public IHttpActionResult GetByID(int custId)
+        public string GetByID(string token)//string token
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            if (headers.Contains("APIKey"))
-            {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
+            string message = "";
 
-            if (valid)
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int custId = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "custId")
+                    {
+                        custId = int.Parse(c.Value);
+                    }
+
+
+                }
+                try
+                {
+
+                
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
                     var row = entity.customers
@@ -130,7 +144,7 @@ namespace Programs_Server.Controllers
 
                        S.custId,
                        S.custname,
-                      // S.custAccountName,
+                       // S.custAccountName,
                        S.lastName,
                        S.company,
                        S.email,
@@ -142,7 +156,7 @@ namespace Programs_Server.Controllers
                        S.createDate,
                        S.updateDate,
                        S.custCode,
-                      // S.password,
+                       // S.password,
                        S.image,
                        S.notes,
                        S.balance,
@@ -152,126 +166,169 @@ namespace Programs_Server.Controllers
                        S.isActive,
                    })
                    .FirstOrDefault();
-
-                    if (row == null)
-                        return NotFound();
-                    else
-                        return Ok(row);
+                        
+ return TokenManager.GenerateToken(row);
+                    }
+            }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
                 }
             }
-            else
-                return NotFound();
+          
         }
 
         // add or update location
         [HttpPost]
         [Route("Save")]
-        public string Save(string Object)
+        public string Save(string token)//string token//Object
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
+
             string message = "";
-            if (headers.Contains("APIKey"))
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-                token = headers.GetValues("APIKey").First();
+                return TokenManager.GenerateToken(strP);
             }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-
-            if (valid)
+            else
             {
-                Object = Object.Replace("\\", string.Empty);
-                Object = Object.Trim('"');
-                customers newObject = JsonConvert.DeserializeObject<customers>(Object, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-                if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                string Object = "";
+                customers newObject = null;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
                 {
-                    Nullable<int> id = null;
-                    newObject.updateUserId = id;
-                }
-                if (newObject.createUserId == 0 || newObject.createUserId == null)
-                {
-                    Nullable<int> id = null;
-                    newObject.createUserId = id;
-                }
-
-                try
-                {
-                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    if (c.Type == "Object")
                     {
-                        var locationEntity = entity.Set<customers>();
-                        if (newObject.custId == 0)
-                        {
-                            newObject.createDate = DateTime.Now;
-                            newObject.updateDate = DateTime.Now;
-                            newObject.updateUserId = newObject.createUserId;
-
-
-                            locationEntity.Add(newObject);
-                            entity.SaveChanges();
-                            message = newObject.custId.ToString();
-                        }
-                        else
-                        {
-                            var tmpObject = entity.customers.Where(p => p.custId == newObject.custId).FirstOrDefault();
-
-                            tmpObject.updateDate = DateTime.Now;
-                            tmpObject.updateUserId = newObject.updateUserId;
-                            tmpObject.custId = newObject.custId;
-                       tmpObject.custname=newObject.custname;
-                    //   tmpObject.custAccountName=newObject.custAccountName;
-                       tmpObject.lastName=newObject.lastName;
-                       tmpObject.company=newObject.company;
-                       tmpObject.email=newObject.email;
-                       tmpObject.phone=newObject.phone;
-                       tmpObject.mobile=newObject.mobile;
-                       tmpObject.fax=newObject.fax;
-                       tmpObject.address=newObject.address;
-                       tmpObject.custlevel=newObject.custlevel;
-                       tmpObject.createDate=newObject.createDate;
-                     
-                       tmpObject.custCode=newObject.custCode;
-                     //  tmpObject.password=newObject.password;
-                       tmpObject.image=newObject.image;
-                       tmpObject.notes=newObject.notes;
-                       tmpObject.balance=newObject.balance;
-                     //  tmpObject.createUserId=newObject.createUserId;
-                       tmpObject.updateUserId=newObject.updateUserId;
-
-                            tmpObject.isActive = newObject.isActive;
-
-                            entity.SaveChanges();
-
-                            message = tmpObject.custId.ToString();
-                        }
-                        //  entity.SaveChanges();
+                        Object = c.Value.Replace("\\", string.Empty);
+                        Object = Object.Trim('"');
+                        newObject = JsonConvert.DeserializeObject<customers>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                        break;
                     }
                 }
-                catch
+                if (newObject != null)
                 {
-                    message = "-1";
+
+                    if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.updateUserId = id;
+                    }
+                    if (newObject.createUserId == 0 || newObject.createUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.createUserId = id;
+                    }
+
+                    try
+                    {
+                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                        {
+                            var locationEntity = entity.Set<customers>();
+                            if (newObject.custId == 0)
+                            {
+                                newObject.createDate = DateTime.Now;
+                                newObject.updateDate = DateTime.Now;
+                                newObject.updateUserId = newObject.createUserId;
+
+
+                                locationEntity.Add(newObject);
+                                entity.SaveChanges();
+                                message = newObject.custId.ToString();
+                            }
+                            else
+                            {
+                                var tmpObject = entity.customers.Where(p => p.custId == newObject.custId).FirstOrDefault();
+
+                                tmpObject.updateDate = DateTime.Now;
+                                tmpObject.updateUserId = newObject.updateUserId;
+                                tmpObject.custId = newObject.custId;
+                                tmpObject.custname = newObject.custname;
+                                //   tmpObject.custAccountName=newObject.custAccountName;
+                                tmpObject.lastName = newObject.lastName;
+                                tmpObject.company = newObject.company;
+                                tmpObject.email = newObject.email;
+                                tmpObject.phone = newObject.phone;
+                                tmpObject.mobile = newObject.mobile;
+                                tmpObject.fax = newObject.fax;
+                                tmpObject.address = newObject.address;
+                                tmpObject.custlevel = newObject.custlevel;
+                                tmpObject.createDate = newObject.createDate;
+
+                                tmpObject.custCode = newObject.custCode;
+                                //  tmpObject.password=newObject.password;
+                                tmpObject.image = newObject.image;
+                                tmpObject.notes = newObject.notes;
+                                tmpObject.balance = newObject.balance;
+                                //  tmpObject.createUserId=newObject.createUserId;
+                                tmpObject.updateUserId = newObject.updateUserId;
+
+                                tmpObject.isActive = newObject.isActive;
+
+                                entity.SaveChanges();
+
+                                message = tmpObject.custId.ToString();
+                            }
+                            //  entity.SaveChanges();
+                        }
+                        return TokenManager.GenerateToken(message);
+                    }
+                    catch
+                    {
+                        return TokenManager.GenerateToken("0");
+                    }
                 }
+                else
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+
+
             }
-            return message;
+
+
+
+            
         }
 
         [HttpPost]
         [Route("Delete")]
-        public string Delete(int custId, int userId, bool final)
+        public string Delete(string token)//string token//int custId, int userId, bool final
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            int message = 0;
-            if (headers.Contains("APIKey"))
-            {
-                token = headers.GetValues("APIKey").First();
-            }
 
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-            if (valid)
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int custId = 0;
+                int userId = 0;
+                bool final = false;
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "custId")
+                    {
+                        custId = int.Parse(c.Value);
+                    }
+                    else if (c.Type == "userId")
+                    {
+                        userId = int.Parse(c.Value);
+                    }
+                    else if (c.Type == "final")
+                    {
+                        final = bool.Parse(c.Value);
+                    }
+
+                }
+
                 if (final)
                 {
                     try
@@ -281,14 +338,16 @@ namespace Programs_Server.Controllers
                             customers objectDelete = entity.customers.Find(custId);
 
                             entity.customers.Remove(objectDelete);
-                            message = entity.SaveChanges();
+                            message = entity.SaveChanges().ToString();
 
-                            return message.ToString();
+                           // return message;
+                            return TokenManager.GenerateToken(message);
                         }
                     }
+                  
                     catch
                     {
-                        return "-1";
+                        return TokenManager.GenerateToken("0");
                     }
                 }
                 else
@@ -302,19 +361,75 @@ namespace Programs_Server.Controllers
                             objectDelete.isActive = 0;
                             objectDelete.updateUserId = userId;
                             objectDelete.updateDate = DateTime.Now;
-                            message = entity.SaveChanges();
+                            message = entity.SaveChanges().ToString();
 
-                            return message.ToString(); ;
+                           
+                            return TokenManager.GenerateToken(message.ToString());
                         }
                     }
                     catch
                     {
-                        return "-2";
+                        return TokenManager.GenerateToken("0");
                     }
                 }
             }
-            else
-                return "-3";
+
+            //var re = Request;
+            //var headers = re.Headers;
+            //string token = "";
+            //int message = 0;
+            //if (headers.Contains("APIKey"))
+            //{
+            //    token = headers.GetValues("APIKey").First();
+            //}
+
+            //Validation validation = new Validation();
+            //bool valid = validation.CheckApiKey(token);
+            //if (valid)
+            //{
+            //    if (final)
+            //    {
+            //        try
+            //        {
+            //            using (incprogramsdbEntities entity = new incprogramsdbEntities())
+            //            {
+            //                customers objectDelete = entity.customers.Find(custId);
+
+            //                entity.customers.Remove(objectDelete);
+            //                message = entity.SaveChanges();
+
+            //                return message.ToString();
+            //            }
+            //        }
+            //        catch
+            //        {
+            //            return "-1";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        try
+            //        {
+            //            using (incprogramsdbEntities entity = new incprogramsdbEntities())
+            //            {
+            //                customers objectDelete = entity.customers.Find(custId);
+
+            //                objectDelete.isActive = 0;
+            //                objectDelete.updateUserId = userId;
+            //                objectDelete.updateDate = DateTime.Now;
+            //                message = entity.SaveChanges();
+
+            //                return message.ToString(); ;
+            //            }
+            //        }
+            //        catch
+            //        {
+            //            return "-2";
+            //        }
+            //    }
+            //}
+            //else
+            //    return "-3";
         }
 
         [Route("PostCustomerImage")]
@@ -408,95 +523,212 @@ namespace Programs_Server.Controllers
         }
         [HttpPost]
         [Route("UpdateImage")]
-        public int UpdateImage(string customerObject)
+        public string  UpdateImage(string token)//customerObject
         {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            if (headers.Contains("APIKey"))
-            {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
 
-            customerObject = customerObject.Replace("\\", string.Empty);
-            customerObject = customerObject.Trim('"');
+            string message = "";
 
-            customers customerObj = JsonConvert.DeserializeObject<customers>(customerObject, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-            if (customerObj.updateUserId == 0 || customerObj.updateUserId == null)
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
             {
-                Nullable<int> id = null;
-                customerObj.updateUserId = id;
-            }
-            if (customerObj.createUserId == 0 || customerObj.createUserId == null)
-            {
-                Nullable<int> id = null;
-                customerObj.createUserId = id;
-            }
-            if (valid)
-            {
-                try
-                {
-                    customers customer;
-                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                    {
-                        var customerEntity = entity.Set<customers>();
-                        customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
-                        customer.image = customerObj.image;
-                        entity.SaveChanges();
-                    }
-                    return customer.custId;
-                }
-
-                catch
-                {
-                    return 0;
-                }
+                return TokenManager.GenerateToken(strP);
             }
             else
-                return 0;
-        }
-
-
-        [HttpGet]
-        [Route("GetLastNumOfCode")]
-        public IHttpActionResult GetLastNumOfCode(string type)
-        {
-            var re = Request;
-            var headers = re.Headers;
-            string token = "";
-            if (headers.Contains("APIKey"))
             {
-                token = headers.GetValues("APIKey").First();
-            }
-            Validation validation = new Validation();
-            bool valid = validation.CheckApiKey(token);
-
-            if (valid) // APIKey is valid
-            {
-                List<string> numberList;
-                int lastNum = 0;
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                string Object = "";
+                customers customerObj = null;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
                 {
-                    numberList = entity.customers.Where(b => b.custCode.Contains(type + "-")).Select(b => b.custCode).ToList();
-
-                    for (int i = 0; i < numberList.Count; i++)
+                    if (c.Type == "Object")
                     {
-                        string code = numberList[i];
-                        string s = code.Substring(code.LastIndexOf("-") + 1);
-                        numberList[i] = s;
-                    }
-                    if (numberList.Count > 0)
-                    {
-                        numberList.Sort();
-                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                        Object = c.Value.Replace("\\", string.Empty);
+                        Object = Object.Trim('"');
+                        customerObj = JsonConvert.DeserializeObject<customers>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                        break;
                     }
                 }
-                return Ok(lastNum);
+                if (customerObj != null)
+                {
+
+
+                    if (customerObj.updateUserId == 0 || customerObj.updateUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        customerObj.updateUserId = id;
+                    }
+                    if (customerObj.createUserId == 0 || customerObj.createUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        customerObj.createUserId = id;
+                    }
+                    try
+                    {
+                        customers customer;
+                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                        {
+                            var customerEntity = entity.Set<customers>();
+                            customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
+                            customer.image = customerObj.image;
+                            entity.SaveChanges();
+                        }
+                        // return customer.custId;
+                        return TokenManager.GenerateToken(customer.custId.ToString());
+                    }
+
+                    catch
+                    {
+                        return TokenManager.GenerateToken("0");
+                    }
+
+                }
+                else
+                {
+                    return TokenManager.GenerateToken("0");
+                }
             }
-            return NotFound();
-        }
+
+
+
+            //var re = Request;
+            //var headers = re.Headers;
+            //string token = "";
+            //if (headers.Contains("APIKey"))
+            //{
+            //    token = headers.GetValues("APIKey").First();
+            //}
+            //Validation validation = new Validation();
+            //bool valid = validation.CheckApiKey(token);
+
+                //customerObject = customerObject.Replace("\\", string.Empty);
+                //customerObject = customerObject.Trim('"');
+
+                //customers customerObj = JsonConvert.DeserializeObject<customers>(customerObject, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                //if (customerObj.updateUserId == 0 || customerObj.updateUserId == null)
+                //{
+                //    Nullable<int> id = null;
+                //    customerObj.updateUserId = id;
+                //}
+                //if (customerObj.createUserId == 0 || customerObj.createUserId == null)
+                //{
+                //    Nullable<int> id = null;
+                //    customerObj.createUserId = id;
+                //}
+                //if (valid)
+                //{
+                //    try
+                //    {
+                //        customers customer;
+                //        using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                //        {
+                //            var customerEntity = entity.Set<customers>();
+                //            customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
+                //            customer.image = customerObj.image;
+                //            entity.SaveChanges();
+                //        }
+                //        return customer.custId;
+                //    }
+
+                //    catch
+                //    {
+                //        return 0;
+                //    }
+                //}
+                //else
+                //    return 0;
+            }
+
+
+        [HttpPost]
+        [Route("GetLastNumOfCode")]
+        public string GetLastNumOfCode(string token)//tring type
+        {
+
+            bool canDelete = false;
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                string type = "";
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "type")
+                    {
+                        type = c.Value;
+                    }
+
+
+                }
+
+                try
+                {
+
+                    List<string> numberList;
+                    int lastNum = 0;
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        numberList = entity.customers.Where(b => b.custCode.Contains(type + "-")).Select(b => b.custCode).ToList();
+
+                        for (int i = 0; i < numberList.Count; i++)
+                        {
+                            string code = numberList[i];
+                            string s = code.Substring(code.LastIndexOf("-") + 1);
+                            numberList[i] = s;
+                        }
+                        if (numberList.Count > 0)
+                        {
+                            numberList.Sort();
+                            lastNum = int.Parse(numberList[numberList.Count - 1]);
+                        }
+                    }
+
+                    return TokenManager.GenerateToken(lastNum);
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+                //var re = Request;
+                //var headers = re.Headers;
+                //string token = "";
+                //if (headers.Contains("APIKey"))
+                //{
+                //    token = headers.GetValues("APIKey").First();
+                //}
+                //Validation validation = new Validation();
+                //bool valid = validation.CheckApiKey(token);
+
+                //if (valid) // APIKey is valid
+                //{
+                //    List<string> numberList;
+                //    int lastNum = 0;
+                //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                //    {
+                //        numberList = entity.customers.Where(b => b.custCode.Contains(type + "-")).Select(b => b.custCode).ToList();
+
+                //        for (int i = 0; i < numberList.Count; i++)
+                //        {
+                //            string code = numberList[i];
+                //            string s = code.Substring(code.LastIndexOf("-") + 1);
+                //            numberList[i] = s;
+                //        }
+                //        if (numberList.Count > 0)
+                //        {
+                //            numberList.Sort();
+                //            lastNum = int.Parse(numberList[numberList.Count - 1]);
+                //        }
+                //    }
+                //    return Ok(lastNum);
+                //}
+                //return NotFound();
+            }
 
 
     }

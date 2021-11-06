@@ -276,7 +276,7 @@ namespace AdministratorApp.View.applications
                     version.createUserId = MainWindow.userLogin.userId;
                     version.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await version.Save(version));
+                    int s = await version.Save(version);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -310,7 +310,7 @@ namespace AdministratorApp.View.applications
                     version.notes = tb_notes.Text;
                     version.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await version.Save(version));
+                    int s = await version.Save(version);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -366,8 +366,8 @@ namespace AdministratorApp.View.applications
                             if (version.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
                             if ((!version.canDelete) && (version.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                            int s = int.Parse(await version.Delete(version.verId, MainWindow.userLogin.userId, version.canDelete));
-                            if (s < 0)
+                            int s =await version.Delete(version.verId, MainWindow.userLogin.userId, version.canDelete);
+                            if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
@@ -393,7 +393,7 @@ namespace AdministratorApp.View.applications
         private async Task activate()
         {//activate
             version.isActive = 1;
-            int s = int.Parse(await version.Save(version));
+            int s = await version.Save(version);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

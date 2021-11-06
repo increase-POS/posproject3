@@ -8,6 +8,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Security.Claims;
+using Newtonsoft.Json.Converters;
 
 namespace AdministratorApp.ApiClasses
 {
@@ -28,97 +30,109 @@ namespace AdministratorApp.ApiClasses
         /// 
         public async Task<List<Country>> GetAll()
         {
-            List<Country> memberships = null;
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
+            List<Country> list = new List<Country>();
+            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("mainBranchId", mainBranchId.ToString());
+            //parameters.Add("userId", userId.ToString());
+            //parameters.Add("date", date.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath+ "GetAll");
+
+            foreach (Claim c in claims)
             {
-                Uri uri = new Uri(Global.APIUri + urimainpath + "GetAll");
-                response = await ApiConnect.ApiGetConnect(uri);
-
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
+                if (c.Type == "scopes")
                 {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-
-                    memberships = JsonConvert.DeserializeObject<List<Country>>(jsonString);
-
-                    return memberships;
+                    list.Add(JsonConvert.DeserializeObject<Country>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
-                else //web api sent error response 
-                {
-                    memberships = new List<Country>();
-                }
-                return memberships;
             }
+            return list;
+
+            ////List<Country> memberships = null;
+
+            ////HttpResponseMessage response = new HttpResponseMessage();
+            ////using (var client = new HttpClient())
+            ////{
+            ////    Uri uri = new Uri(Global.APIUri + urimainpath + "GetAll");
+            ////    response = await ApiConnect.ApiGetConnect(uri);
+
+            ////    response = await ApiConnect.ApiGetConnect(uri);
+            ////    if (response.IsSuccessStatusCode)
+            ////    {
+            ////        var jsonString = await response.Content.ReadAsStringAsync();
+
+            ////        memberships = JsonConvert.DeserializeObject<List<Country>>(jsonString);
+
+            ////        return memberships;
+            ////    }
+            ////    else //web api sent error response 
+            ////    {
+            ////        memberships = new List<Country>();
+            ////    }
+            ////    return memberships;
+            ////}
 
         }
 
         public async Task<List<Country>> GetAllRegion()
         {
-            List<Country> memberships = null;
+            List<Country> list = new List<Country>();
+            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("mainBranchId", mainBranchId.ToString());
+            //parameters.Add("userId", userId.ToString());
+            //parameters.Add("date", date.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAllRegion");
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
+            foreach (Claim c in claims)
             {
-                Uri uri = new Uri(Global.APIUri + urimainpath + "GetAllRegion");
-                response = await ApiConnect.ApiGetConnect(uri);
-
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
+                if (c.Type == "scopes")
                 {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-
-                    memberships = JsonConvert.DeserializeObject<List<Country>>(jsonString);
-
-                    return memberships;
+                    list.Add(JsonConvert.DeserializeObject<Country>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
-                else //web api sent error response 
-                {
-                    memberships = new List<Country>();
-                }
-                return memberships;
             }
+            return list;
+
+            //List<Country> memberships = null;
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //using (var client = new HttpClient())
+            //{
+            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetAllRegion");
+            //    response = await ApiConnect.ApiGetConnect(uri);
+
+            //    response = await ApiConnect.ApiGetConnect(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var jsonString = await response.Content.ReadAsStringAsync();
+
+            //        memberships = JsonConvert.DeserializeObject<List<Country>>(jsonString);
+
+            //        return memberships;
+            //    }
+            //    else //web api sent error response 
+            //    {
+            //        memberships = new List<Country>();
+            //    }
+            //    return memberships;
+            //}
 
         }
 
-        public async Task<Country> GetByID(int countryId)
+       
+        public async Task<int> UpdateIsdefault(int countryId)
         {
-            Country obj = new Country();
-          
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
-            {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("countryId", countryId.ToString());
 
-                Uri uri = new Uri(Global.APIUri + urimainpath + "GetByID?countryId=" + countryId);
+            //parameters.Add("userId", userId.ToString());
+            //parameters.Add("final", final.ToString());
 
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                   var jsonString = await response.Content.ReadAsStringAsync();
-                    obj = JsonConvert.DeserializeObject<Country>(jsonString);
-                    return obj;
-                }
+            string method = urimainpath+ "UpdateIsdefault";
+            //  return await APIResult.post(method, parameters);
+            return await APIResult.post(method, parameters);
 
-                return obj;
-            }
-        }
-
-        public async Task<string> UpdateIsdefault(int countryId)
-        {
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
-            {
-                Uri uri = new Uri(Global.APIUri + urimainpath + "UpdateIsdefault?countryId=" + countryId);
-                response = await ApiConnect.ApiPostConnect(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var message = await response.Content.ReadAsStringAsync();
-                    message = JsonConvert.DeserializeObject<string>(message);
-                    return message;
-                }
-                return "";
-            }
+         
         }
 
 

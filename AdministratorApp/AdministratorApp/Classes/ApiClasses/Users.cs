@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+using System.Security.Claims;
+using Newtonsoft.Json.Converters;
+
 namespace AdministratorApp.ApiClasses
 {
     public class Users
@@ -47,86 +50,139 @@ namespace AdministratorApp.ApiClasses
         /// 
         public async Task<List<Users>> GetAll()
         {
-            List<Users> memberships = null;
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
+            List<Users> list = new List<Users>();
+
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAll");
+
+            foreach (Claim c in claims)
             {
-                Uri uri = new Uri(Global.APIUri + urimainpath + "GetAll");
-                response = await ApiConnect.ApiGetConnect(uri);
-
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
+                if (c.Type == "scopes")
                 {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-
-                    memberships = JsonConvert.DeserializeObject<List<Users>>(jsonString);
-
-                    return memberships;
+                    list.Add(JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
-                else //web api sent error response 
-                {
-                    memberships = new List<Users>();
-                }
-                return memberships;
             }
+            return list;
+
+            //List<Users> memberships = null;
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //using (var client = new HttpClient())
+            //{
+            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetAll");
+            //    response = await ApiConnect.ApiGetConnect(uri);
+
+            //    response = await ApiConnect.ApiGetConnect(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var jsonString = await response.Content.ReadAsStringAsync();
+
+            //        memberships = JsonConvert.DeserializeObject<List<Users>>(jsonString);
+
+            //        return memberships;
+            //    }
+            //    else //web api sent error response 
+            //    {
+            //        memberships = new List<Users>();
+            //    }
+            //    return memberships;
+            //}
 
         }
-        public async Task<string> Save(Users obj)
+        public async Task<int> Save(Users obj)
         {
-            var myContent = JsonConvert.SerializeObject(obj);
-            myContent = HttpUtility.UrlEncode(myContent);
-            Uri uri = new Uri(Global.APIUri + urimainpath + "Save?Object=" + myContent);
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            response = await ApiConnect.ApiPostConnect(uri);
-            using (var client = new HttpClient())
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    var message = await response.Content.ReadAsStringAsync();
-                    message = JsonConvert.DeserializeObject<string>(message);
-                    return message;
-                }
-                return "";
-            }
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = urimainpath + "Save";
+
+            var myContent = JsonConvert.SerializeObject(obj);
+            parameters.Add("Object", myContent);
+            return await APIResult.post(method, parameters);
+
+
+            //var myContent = JsonConvert.SerializeObject(obj);
+            //myContent = HttpUtility.UrlEncode(myContent);
+            //Uri uri = new Uri(Global.APIUri + urimainpath + "Save?Object=" + myContent);
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //response = await ApiConnect.ApiPostConnect(uri);
+            //using (var client = new HttpClient())
+            //{
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var message = await response.Content.ReadAsStringAsync();
+            //        message = JsonConvert.DeserializeObject<string>(message);
+            //        return message;
+            //    }
+            //    return "";
+            //}
         }
         public async Task<Users> GetByID(int userId)
         {
-            Users obj = new Users();
-          
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
+
+
+            Users item = new Users();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("userId", userId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByID", parameters);
+
+            foreach (Claim c in claims)
             {
-
-                Uri uri = new Uri(Global.APIUri + urimainpath + "GetByID?userId=" + userId);
-
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
+                if (c.Type == "scopes")
                 {
-                   var jsonString = await response.Content.ReadAsStringAsync();
-                    obj = JsonConvert.DeserializeObject<Users>(jsonString);
-                    return obj;
+                    item = JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
                 }
-
-                return obj;
             }
+
+
+            return item;
+
+
+            //Users obj = new Users();
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //using (var client = new HttpClient())
+            //{
+
+            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetByID?userId=" + userId);
+
+            //    response = await ApiConnect.ApiGetConnect(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //       var jsonString = await response.Content.ReadAsStringAsync();
+            //        obj = JsonConvert.DeserializeObject<Users>(jsonString);
+            //        return obj;
+            //    }
+
+            //    return obj;
+            //}
         }
-        public async Task<string> Delete(int userId, int signuserId, bool final)
+        public async Task<int> Delete(int userId, int signuserId, bool final)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
-            {
-                Uri uri = new Uri(Global.APIUri + urimainpath + "Delete?userId=" + userId + "&signuserId=" + signuserId + "&final=" + final);
-                response = await ApiConnect.ApiPostConnect(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var message = await response.Content.ReadAsStringAsync();
-                    message = JsonConvert.DeserializeObject<string>(message);
-                    return message;
-                }
-                return "";
-            }
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("userId", userId.ToString());
+            parameters.Add("signuserId", signuserId.ToString());
+            parameters.Add("final", final.ToString());
+
+            string method = urimainpath + "Delete";
+            return await APIResult.post(method, parameters);
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //using (var client = new HttpClient())
+            //{
+            //    Uri uri = new Uri(Global.APIUri + urimainpath + "Delete?userId=" + userId + "&signuserId=" + signuserId + "&final=" + final);
+            //    response = await ApiConnect.ApiPostConnect(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var message = await response.Content.ReadAsStringAsync();
+            //        message = JsonConvert.DeserializeObject<string>(message);
+            //        return message;
+            //    }
+            //    return "";
+            //}
         }
 
         public async Task<string> generateCodeNumber(string type)
@@ -144,21 +200,39 @@ namespace AdministratorApp.ApiClasses
         public async Task<int> GetLastNumOfCode(string type)
         {
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
+
+            int item = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("type", type);
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetLastNumOfCode", parameters);
+
+            foreach (Claim c in claims)
             {
-
-                Uri uri = new Uri(Global.APIUri + urimainpath + "GetLastNumOfCode?type=" + type);
-
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
+                if (c.Type == "scopes")
                 {
-                    string message = await response.Content.ReadAsStringAsync();
-                    message = JsonConvert.DeserializeObject<string>(message);
-                    return int.Parse(message);
+                    item = int.Parse(c.Value);
+                    break;
                 }
-                return 0;
             }
+
+            return item;
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //using (var client = new HttpClient())
+            //{
+
+            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetLastNumOfCode?type=" + type);
+
+            //    response = await ApiConnect.ApiGetConnect(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        string message = await response.Content.ReadAsStringAsync();
+            //        message = JsonConvert.DeserializeObject<string>(message);
+            //        return int.Parse(message);
+            //    }
+            //    return 0;
+            //}
         }
 
         public async Task<string> uploadImage(string imagePath, string imageName, int userId)
@@ -228,42 +302,53 @@ namespace AdministratorApp.ApiClasses
             }
             return "";
         }
-        public async Task<string> updateImage(Users user)
+        public async Task<int> updateImage(Users user)
+
         {
-            string message = "";
 
-            // ... Use HttpClient.
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
-            string myContent = JsonConvert.SerializeObject(user);
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = urimainpath + "UpdateImage";
 
-            using (var client = new HttpClient())
-            {
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                client.BaseAddress = new Uri(Global.APIUri);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-                client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
+            var myContent = JsonConvert.SerializeObject(user);
+            parameters.Add("Object", myContent);
+            return await APIResult.post(method, parameters);
 
-                HttpRequestMessage request = new HttpRequestMessage();
 
-                // encoding parameter to get special characters
-                myContent = HttpUtility.UrlEncode(myContent);
+            //    string message = "";
 
-                request.RequestUri = new Uri(Global.APIUri + "Users/UpdateImage?userObject=" + myContent);
-                request.Headers.Add("APIKey", Global.APIKey);
-                request.Method = HttpMethod.Post;
-                //set content type
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await client.SendAsync(request);
+            //    // ... Use HttpClient.
+            //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    message = await response.Content.ReadAsStringAsync();
-                    message = JsonConvert.DeserializeObject<string>(message);
-                }
-                return message;
-            }
+            //    string myContent = JsonConvert.SerializeObject(user);
+
+            //    using (var client = new HttpClient())
+            //    {
+            //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            //        client.BaseAddress = new Uri(Global.APIUri);
+            //        client.DefaultRequestHeaders.Clear();
+            //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+            //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
+
+            //        HttpRequestMessage request = new HttpRequestMessage();
+
+            //        // encoding parameter to get special characters
+            //        myContent = HttpUtility.UrlEncode(myContent);
+
+            //        request.RequestUri = new Uri(Global.APIUri + "Users/UpdateImage?userObject=" + myContent);
+            //        request.Headers.Add("APIKey", Global.APIKey);
+            //        request.Method = HttpMethod.Post;
+            //        //set content type
+            //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //        var response = await client.SendAsync(request);
+
+            //        if (response.IsSuccessStatusCode)
+            //        {
+            //            message = await response.Content.ReadAsStringAsync();
+            //            message = JsonConvert.DeserializeObject<string>(message);
+            //        }
+            //        return message;
+            //    }
         }
         public async Task<byte[]> downloadImage(string imageName)
 

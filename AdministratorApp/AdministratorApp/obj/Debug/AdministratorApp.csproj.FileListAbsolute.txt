@@ -499,3 +499,9 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.Iden
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.IdentityModel.Tokens.xml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\RestSharp.xml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.CodeDom.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.CodeDom.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Threading.Tasks.Extensions.xml

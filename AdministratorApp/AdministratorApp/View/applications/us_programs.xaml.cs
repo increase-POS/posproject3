@@ -274,7 +274,7 @@ namespace AdministratorApp.View.applications
                     program.createUserId = MainWindow.userLogin.userId;
                     program.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await program.Save(program));
+                    int s = await program.Save(program);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -312,7 +312,7 @@ namespace AdministratorApp.View.applications
                     program.notes = tb_notes.Text;
                     program.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = int.Parse(await program.Save(program));
+                    int s = await program.Save(program);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -368,7 +368,7 @@ namespace AdministratorApp.View.applications
                             if (program.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
                             if ((!program.canDelete) && (program.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                            int s = int.Parse(await program.Delete(program.programId, MainWindow.userLogin.userId, program.canDelete));
+                            int s = await program.Delete(program.programId, MainWindow.userLogin.userId, program.canDelete);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -395,7 +395,7 @@ namespace AdministratorApp.View.applications
         private async Task activate()
         {//activate
             program.isActive = 1;
-            int s = int.Parse(await program.Save(program));
+            int s = await program.Save(program);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Web;
 using AdministratorApp.Classes;
 
+using System.Security.Claims;
+
 namespace AdministratorApp.ApiClasses
 {
     public class City
@@ -25,29 +27,49 @@ namespace AdministratorApp.ApiClasses
       
         public async Task<List<City>> Get()
         {
-            List<City> memberships = null;
 
-            HttpResponseMessage response = new HttpResponseMessage();
-            using (var client = new HttpClient())
+
+            List<City> list = new List<City>();
+            //  Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("mainBranchId", mainBranchId.ToString());
+            //parameters.Add("userId", userId.ToString());
+            //parameters.Add("date", date.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath+"Get");
+
+            foreach (Claim c in claims)
             {
-                Uri uri = new Uri(Global.APIUri + urimainpath + "Get");
-                response = await ApiConnect.ApiGetConnect(uri);
-
-                response = await ApiConnect.ApiGetConnect(uri);
-                if (response.IsSuccessStatusCode)
+                if (c.Type == "scopes")
                 {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-
-                    memberships = JsonConvert.DeserializeObject<List<City>>(jsonString);
-
-                    return memberships;
+                    list.Add(JsonConvert.DeserializeObject<City>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
-                else //web api sent error response 
-                {
-                    memberships = new List<City>();
-                }
-                return memberships;
             }
+            return list;
+
+
+            //List<City> memberships = null;
+
+            //HttpResponseMessage response = new HttpResponseMessage();
+            //using (var client = new HttpClient())
+            //{
+            //    Uri uri = new Uri(Global.APIUri + urimainpath + "Get");
+            //    response = await ApiConnect.ApiGetConnect(uri);
+
+            //    response = await ApiConnect.ApiGetConnect(uri);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        var jsonString = await response.Content.ReadAsStringAsync();
+
+            //        memberships = JsonConvert.DeserializeObject<List<City>>(jsonString);
+
+            //        return memberships;
+            //    }
+            //    else //web api sent error response 
+            //    {
+            //        memberships = new List<City>();
+            //    }
+            //    return memberships;
+            //}
 
         }
 
