@@ -31,7 +31,6 @@ namespace Programs_Server
         public virtual DbSet<packageUser> packageUser { get; set; }
         public virtual DbSet<posSerials> posSerials { get; set; }
         public virtual DbSet<programs> programs { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<versions> versions { get; set; }
         public virtual DbSet<cities> cities { get; set; }

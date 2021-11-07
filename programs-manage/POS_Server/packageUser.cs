@@ -27,7 +27,6 @@ namespace Programs_Server
         public string packageNumber { get; set; }
         public Nullable<int> customerId { get; set; }
         public string customerServerCode { get; set; }
-        public int isBooked { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -36,6 +35,8 @@ namespace Programs_Server
         public Nullable<System.DateTime> bookDate { get; set; }
         public Nullable<int> isActive { get; set; }
         public Nullable<System.DateTime> expireDate { get; set; }
+        public Nullable<bool> isOnlineServer { get; set; }
+        public bool isBooked { get; set; }
     
         public virtual customers customers { get; set; }
         public virtual packages packages { get; set; }

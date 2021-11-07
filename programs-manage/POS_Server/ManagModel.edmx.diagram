@@ -4,14 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bf8daa9d8e824081a854e3362c99ece9" Name="Diagram1">
+      <Diagram DiagramId="bf8daa9d8e824081a854e3362c99ece9" Name="Diagram1" ZoomLevel="99">
         <EntityTypeShape EntityType="incprogramsdbModel.customers" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.error" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.packages" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.packageUser" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.posSerials" Width="1.5" PointX="7.5" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.programs" Width="1.5" PointX="3" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.users" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="incprogramsdbModel.versions" Width="1.5" PointX="8.25" PointY="15.25" IsExpanded="true" />
         <AssociationConnector Association="incprogramsdbModel.FK_customers_users" ManuallyRouted="false" />

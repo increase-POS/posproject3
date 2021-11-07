@@ -615,7 +615,7 @@ namespace Programs_Server.Controllers
             //else
             //    return "-3";
         }
-        public string MultiserialSave(posSerials serialObject, int count)
+        public int MultiserialSave(posSerials serialObject, int count)
         {
             string message = "";
             int savedcount = 0;
@@ -645,7 +645,7 @@ namespace Programs_Server.Controllers
                     savedcount++;
                 }
             }
-            return message;
+            return savedcount;
         }
         [HttpPost]
         [Route("MultiSave")]
@@ -791,10 +791,13 @@ namespace Programs_Server.Controllers
 
                         if (newObject.serialId > 0)
                         {
-
-                            var tmpPackage = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
-                            string pkucode = tmpPackage.packageSaleCode;
-                            int packageUserId;
+                            string pkucode;
+                            using (incprogramsdbEntities entity2 = new incprogramsdbEntities())
+                            {
+                                var tmpPackage = entity2.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
+                               pkucode = tmpPackage.packageSaleCode;
+                            }
+                                int packageUserId;
                             packageUserId = (int)newObject.packageUserId;
 
                             string timestamp = DateTime.Now.ToFileTime().ToString();

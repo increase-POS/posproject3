@@ -83,10 +83,9 @@
     <Property Name="packageId" Type="Int32" />
     <Property Name="userId" Type="Int32" />
     <Property Name="packageSaleCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="packageNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="packageNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="customerId" Type="Int32" />
     <Property Name="customerServerCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="isBooked" Type="Int32" Nullable="false" />
     <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="createDate" Type="DateTime" Precision="7" />
     <Property Name="updateDate" Type="DateTime" Precision="7" />
@@ -101,16 +100,17 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_packageUser_users1" FromRole="packageUser" ToRole="users" />
     <NavigationProperty Name="users2" Relationship="Self.FK_packageUser_users2" FromRole="packageUser" ToRole="users" />
     <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_packageUser" FromRole="packageUser" ToRole="posSerials" />
+    <Property Name="isOnlineServer" Type="Boolean" />
+    <Property Name="isBooked" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
       <PropertyRef Name="serialId" />
     </Key>
     <Property Name="serialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="serial" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="serial" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="posDeviceCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="packageUserId" Type="Int32" />
-    <Property Name="isBooked" Type="Int32" Nullable="false" />
     <Property Name="isActive" Type="Int32" Nullable="false" />
     <Property Name="createDate" Type="DateTime" Precision="7" />
     <Property Name="updateDate" Type="DateTime" Precision="7" />
@@ -121,6 +121,7 @@
     <NavigationProperty Name="packageUser" Relationship="Self.FK_posSerials_packageUser" FromRole="posSerials" ToRole="packageUser" />
     <NavigationProperty Name="users" Relationship="Self.FK_posSerials_users" FromRole="posSerials" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_posSerials_users1" FromRole="posSerials" ToRole="users" />
+    <Property Name="isBooked" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="programs">
     <Key>
@@ -141,16 +142,6 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_programs_users1" FromRole="programs" ToRole="users" />
     <NavigationProperty Name="versions" Relationship="Self.FK_versions_programs" FromRole="programs" ToRole="versions" />
     <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="users">
     <Key>
@@ -462,7 +453,6 @@
     <EntitySet Name="packageUser" EntityType="Self.packageUser" />
     <EntitySet Name="posSerials" EntityType="Self.posSerials" />
     <EntitySet Name="programs" EntityType="Self.programs" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="users" EntityType="Self.users" />
     <EntitySet Name="versions" EntityType="Self.versions" />
     <AssociationSet Name="FK_customers_users" Association="Self.FK_customers_users">

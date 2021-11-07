@@ -425,8 +425,6 @@ namespace Programs_Server.Controllers
                     }
 
 
-
-
                     catch
                     {
                         return TokenManager.GenerateToken("0");
@@ -573,7 +571,7 @@ namespace Programs_Server.Controllers
 
 
 
-            string message = "";
+            int message = 0;
 
             token = TokenManager.readToken(HttpContext.Current.Request);
             var strP = TokenManager.GetPrincipal(token);
@@ -583,6 +581,7 @@ namespace Programs_Server.Controllers
             }
             else
             {
+
                 string Object = "";
                 int count = 0;
                 int savedcount = 0;
@@ -590,19 +589,22 @@ namespace Programs_Server.Controllers
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
+                    if (c.Type == "count")
+                    {
+                        count = int.Parse(c.Value);
+
+                    }
                     if (c.Type == "Object")
                     {
                         Object = c.Value.Replace("\\", string.Empty);
                         Object = Object.Trim('"');
                         newObject = JsonConvert.DeserializeObject<packageUser>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
 
-                    }
-                    else if (c.Type == "count")
-                    {
-                        count = int.Parse(c.Value);
 
                     }
+
                 }
+
                 if (newObject != null)
                 {
                     if (newObject.updateUserId == 0 || newObject.updateUserId == null)
@@ -633,20 +635,24 @@ namespace Programs_Server.Controllers
                     //
                     try
                     {
+
+                        
                         for (int i = 0; i < count; i++)
                         {
                             newObject.packageUserId = 0;
-                            string res = packUserSave(newObject);
-                            if (int.Parse(res) > 0)
+                            int res = packUserSave(newObject);
+                            if (res > 0)
                             {
-                                savedcount++;
+                             //   savedcount++;
+                                message += res;
+
                             }
                         }
 
 
                         //
 
-                        return TokenManager.GenerateToken(savedcount.ToString());
+                        return TokenManager.GenerateToken(message.ToString());
 
                     }
 
@@ -868,9 +874,9 @@ namespace Programs_Server.Controllers
             //    return "-3";
         }
 
-        private string packUserSave(packageUser newObject)
+        private int packUserSave(packageUser newObject)
         {
-            string message = "";
+            int message = 0;
             try
             {
 
@@ -879,6 +885,8 @@ namespace Programs_Server.Controllers
                     var locationEntity = entity.Set<packageUser>();
                     if (newObject.packageUserId == 0)
                     {
+
+                        int posCount = 0;
                         newObject.createDate = DateTime.Now;
                         newObject.updateDate = DateTime.Now;
                         newObject.updateUserId = newObject.createUserId;
@@ -888,15 +896,24 @@ namespace Programs_Server.Controllers
                         entity.SaveChanges();
 
                         // get packageuser code
-
+                      
                         if (newObject.packageUserId > 0)
                         {
+                            posSerialsController posmod = new posSerialsController();
                             string packagecode;
-                            var tmpPackage = entity.packages.Where(p => p.packageId == newObject.packageId).FirstOrDefault();
-                            packagecode = tmpPackage.packageCode;
                             string usercode;
-                            var tmpUser = entity.users.Where(p => p.userId == newObject.userId).FirstOrDefault();
-                            usercode = tmpUser.code;
+
+                            using (incprogramsdbEntities entity1 = new incprogramsdbEntities())
+                            {
+                                var tmpPackage = entity1.packages.Where(p => p.packageId == newObject.packageId).FirstOrDefault();
+                                posCount = tmpPackage.posCount;
+                        }
+                        //   packagecode = tmpPackage.packageCode;
+                        packagecode = newObject.packageId.ToString();
+                                //  var tmpUser = entity1.users.Where(p => p.userId == newObject.userId).FirstOrDefault();
+                                // usercode = tmpUser.userId;
+                                usercode = newObject.userId.ToString();
+                         //   }
 
                             string timestamp = DateTime.Now.ToFileTime().ToString();
                             string id = newObject.packageUserId.ToString();
@@ -905,9 +922,22 @@ namespace Programs_Server.Controllers
                             newObject.packageSaleCode = finalcode;
 
                             entity.SaveChanges();
-                        }
+                           
+                           
+                            // create pos serials
+                                posSerials postemp = new posSerials();
+                            postemp.createUserId = newObject.createUserId;
+                            postemp.isActive = 1;
 
-                        message = newObject.packageUserId.ToString();
+                            postemp.isBooked = false;
+                            postemp.packageUserId = newObject.packageUserId;
+                            // postemp.posDeviceCode = "";
+                           // postemp.serialId
+                        message=    posmod.MultiserialSave(postemp, posCount);
+                            
+                        }
+                      
+                     //   message = newObject.packageUserId.ToString();
 
                     }
 
@@ -915,7 +945,7 @@ namespace Programs_Server.Controllers
             }
             catch
             {
-                message = "-1";
+                message = -1;
             }
             return message;
         }

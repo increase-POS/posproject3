@@ -92,10 +92,10 @@
     <Property Name="packageId" Type="int" />
     <Property Name="userId" Type="int" />
     <Property Name="packageSaleCode" Type="nvarchar" MaxLength="500" />
-    <Property Name="packageNumber" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="packageNumber" Type="nvarchar" MaxLength="500" />
     <Property Name="customerId" Type="int" />
     <Property Name="customerServerCode" Type="nvarchar" MaxLength="500" />
-    <Property Name="isBooked" Type="int" Nullable="false" />
+    <Property Name="isBooked" Type="bit" Nullable="false" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
@@ -104,16 +104,17 @@
     <Property Name="bookDate" Type="datetime2" Precision="7" />
     <Property Name="isActive" Type="int" />
     <Property Name="expireDate" Type="datetime2" Precision="7" />
+    <Property Name="isOnlineServer" Type="bit" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
       <PropertyRef Name="serialId" />
     </Key>
     <Property Name="serialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="serial" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="serial" Type="nvarchar" MaxLength="500" />
     <Property Name="posDeviceCode" Type="nvarchar" MaxLength="500" />
     <Property Name="packageUserId" Type="int" />
-    <Property Name="isBooked" Type="int" Nullable="false" />
+    <Property Name="isBooked" Type="bit" Nullable="false" />
     <Property Name="isActive" Type="int" Nullable="false" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
@@ -137,16 +138,6 @@
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
     <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="users">
     <Key>
@@ -454,7 +445,6 @@
     <EntitySet Name="packageUser" EntityType="Self.packageUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_cities_countriesCodes" Association="Self.FK_cities_countriesCodes">

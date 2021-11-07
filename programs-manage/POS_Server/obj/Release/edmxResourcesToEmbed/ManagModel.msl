@@ -73,6 +73,8 @@
     <EntitySetMapping Name="packageUser">
       <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
         <MappingFragment StoreEntitySet="packageUser">
+          <ScalarProperty Name="isBooked" ColumnName="isBooked" />
+          <ScalarProperty Name="isOnlineServer" ColumnName="isOnlineServer" />
           <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
           <ScalarProperty Name="packageId" ColumnName="packageId" />
           <ScalarProperty Name="userId" ColumnName="userId" />
@@ -80,7 +82,6 @@
           <ScalarProperty Name="packageNumber" ColumnName="packageNumber" />
           <ScalarProperty Name="customerId" ColumnName="customerId" />
           <ScalarProperty Name="customerServerCode" ColumnName="customerServerCode" />
-          <ScalarProperty Name="isBooked" ColumnName="isBooked" />
           <ScalarProperty Name="notes" ColumnName="notes" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="updateDate" ColumnName="updateDate" />
@@ -95,11 +96,11 @@
     <EntitySetMapping Name="posSerials">
       <EntityTypeMapping TypeName="incprogramsdbModel.posSerials">
         <MappingFragment StoreEntitySet="posSerials">
+          <ScalarProperty Name="isBooked" ColumnName="isBooked" />
           <ScalarProperty Name="serialId" ColumnName="serialId" />
           <ScalarProperty Name="serial" ColumnName="serial" />
           <ScalarProperty Name="posDeviceCode" ColumnName="posDeviceCode" />
           <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
-          <ScalarProperty Name="isBooked" ColumnName="isBooked" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="updateDate" ColumnName="updateDate" />
@@ -124,17 +125,6 @@
           <ScalarProperty Name="createUserId" ColumnName="createUserId" />
           <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
           <ScalarProperty Name="notes" ColumnName="notes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="incprogramsdbModel.sysdiagrams">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
