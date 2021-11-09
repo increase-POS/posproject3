@@ -249,6 +249,46 @@ namespace Programs_Server.Controllers
             //    return NotFound();
         }
 
+
+        public List<PosSerialSend> GetBypackageUserId(int packageUserId)
+        {
+
+
+ List<PosSerialSend> List= new List<PosSerialSend>();
+                try
+                {
+               
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                    List = entity.posSerials
+                       .Where(u => u.packageUserId == packageUserId && u.isActive==1)
+                       .Select(S => new PosSerialSend
+                       {
+                         
+                           serial = S.serial,
+                           posDeviceCode = S.posDeviceCode,
+                        
+                           isBooked = S.isBooked,
+                           isActive = S.isActive,
+            
+
+                       }).ToList();
+
+
+                        return List;
+                    }
+                }
+                catch
+                {
+                return List;
+            }
+            
+
+
+     
+        }
+
+
         // add or update location
         [HttpPost]
         [Route("Save")]

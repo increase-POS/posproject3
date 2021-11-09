@@ -36,4 +36,18 @@ namespace Programs_Server.Models
         public string hashCode { get; set; }
 
     }
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
 }

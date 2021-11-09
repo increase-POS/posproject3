@@ -17,6 +17,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+
+
 namespace AdministratorApp.ApiClasses
 {
 
@@ -399,6 +401,7 @@ namespace AdministratorApp.ApiClasses
             //string str = Encoding.Unicode.GetString(bytes1);
             return( Decrypt(text));
         }
+
     }
 
 }

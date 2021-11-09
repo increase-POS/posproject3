@@ -21,5 +21,7 @@ namespace Programs_Server.Models
         public bool canDelete { get; set; }
         public string notes { get; set; }
 
+
+
     }
 }

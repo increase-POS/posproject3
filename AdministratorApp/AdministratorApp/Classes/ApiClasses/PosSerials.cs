@@ -53,7 +53,8 @@ namespace AdministratorApp.ApiClasses
             {
                 if (c.Type == "scopes")
                 {
-                    list.Add(JsonConvert.DeserializeObject<PosSerials>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                  
+                     list.Add(JsonConvert.DeserializeObject<PosSerials>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
             return list;

@@ -505,3 +505,6 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Threadi
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.CodeDom.xml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Antlr3.Runtime.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\WebGrease.dll
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Antlr3.Runtime.pdb

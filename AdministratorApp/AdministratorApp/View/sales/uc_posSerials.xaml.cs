@@ -126,36 +126,46 @@ namespace AdministratorApp.View.sales
             //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
 
         }
+
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {
             //add
             try
             {
-                HelpClass.StartAwait(grid_main);
-                posSerial = new PosSerials();
-                if (HelpClass.validate(requiredControlList, this))
-                {
-                    posSerial.serial = tb_serial.Text;
-                    posSerial.posDeviceCode = tb_posDeviceCode.Text;
-                    posSerial.apikey = tb_apikey.Text;
-                    posSerial.isBooked = (bool)tgl_isBooked.IsChecked;
-                    posSerial.notes = tb_notes.Text;
-                    posSerial.isActive = 1;
-                    posSerial.createUserId = MainWindow.userLogin.userId;
-                    posSerial.updateUserId = MainWindow.userLogin.userId;
+                PackageUser pmodel = new PackageUser();
+                string  packageSaleCode= "3gioIYKanfl1EznA";
+                string customerServerCode="asus";
+                SendDetail item = new SendDetail();
+                item = await pmodel.Activateserver(packageSaleCode, customerServerCode);
 
-                    int s = await posSerial.Save(posSerial);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                        Clear();
-                        await RefreshPosSerialsList();
-                        await Search();
-                    }
-                }
-                HelpClass.EndAwait(grid_main);
+                string mes = item.ToString();
+
+
+                //HelpClass.StartAwait(grid_main);
+                //posSerial = new PosSerials();
+                //if (HelpClass.validate(requiredControlList, this))
+                //{
+                //    posSerial.serial = tb_serial.Text;
+                //    posSerial.posDeviceCode = tb_posDeviceCode.Text;
+                //    posSerial.apikey = tb_apikey.Text;
+                //    posSerial.isBooked = (bool)tgl_isBooked.IsChecked;
+                //    posSerial.notes = tb_notes.Text;
+                //    posSerial.isActive = 1;
+                //    posSerial.createUserId = MainWindow.userLogin.userId;
+                //    posSerial.updateUserId = MainWindow.userLogin.userId;
+
+                //    int s = await posSerial.Save(posSerial);
+                //    if (s <= 0)
+                //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                //    else
+                //    {
+                //        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                //        Clear();
+                //        await RefreshPosSerialsList();
+                //        await Search();
+                //    }
+                //}
+                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {

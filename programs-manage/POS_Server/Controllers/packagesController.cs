@@ -311,6 +311,62 @@ namespace Programs_Server.Controllers
             //    return NotFound();
         }
 
+
+        public packagesSend GetByID(int packageId)
+        {
+
+            packagesSend row = new packagesSend();
+
+            try
+            {
+
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    row = entity.packages 
+                       .Where(u => u.packageId == packageId && u.isActive == 1)
+                       .Select(S => new packagesSend
+                       {
+
+                           //  packageId = S.packageId,
+                           packageName = S.packageName,
+                           // details = S.details,
+                           branchCount = S.branchCount,
+                           posCount = S.posCount,
+                           userCount = S.userCount,
+                           vendorCount = S.vendorCount,
+                           customerCount = S.customerCount,
+                           itemCount = S.itemCount,
+                           salesInvCount = S.salesInvCount,
+                           // programId = S.programId,
+                           programName = S.programs.name,
+                           //verId = S.verId,
+                           verName = S.versions.name,
+                           //  price = S.price,
+                           //   isActive = S.isActive,
+                           //   createDate = S.createDate,
+                           //   updateDate = S.updateDate,
+                           //   packageCode = S.packageCode,
+                           storeCount = S.storeCount,
+                           endDate = S.endDate,
+                           islimitDate = S.islimitDate,
+                           //    createUserId = S.createUserId,
+                           //  updateUserId = S.updateUserId,
+                           // notes = S.notes,
+
+                       }).FirstOrDefault();
+
+                    return row;
+                }
+
+            }
+            catch
+            {
+                return row;
+            }
+
+        }
+
+
         // add or update location
         [HttpPost]
         [Route("Save")]
@@ -593,9 +649,9 @@ namespace Programs_Server.Controllers
                             entity.packages.Remove(objectDelete);
                             message = entity.SaveChanges().ToString();
                             return TokenManager.GenerateToken(message);
-                          
+
                         }
-                    
+
                     }
 
                     catch
@@ -616,7 +672,7 @@ namespace Programs_Server.Controllers
                             objectDelete.updateDate = DateTime.Now;
                             message = entity.SaveChanges().ToString();
 
-                          
+
 
                             return TokenManager.GenerateToken(message);
                         }
@@ -699,7 +755,7 @@ namespace Programs_Server.Controllers
             }
             else
             {
-                string  packageCode = "";
+                string packageCode = "";
 
 
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
@@ -735,7 +791,7 @@ namespace Programs_Server.Controllers
                         }
 
                         return TokenManager.GenerateToken(result);
-                    
+
                     }
 
                 }
@@ -789,6 +845,5 @@ namespace Programs_Server.Controllers
             //    return NotFound();
         }
 
-
-    }
+    }   
 }

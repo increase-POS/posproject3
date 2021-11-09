@@ -153,7 +153,7 @@ namespace AdministratorApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                packageUser = new PackageUser();
+              //  packageUser = new PackageUser();
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     packageUser.packageSaleCode = tb_packageSaleCode.Text;
