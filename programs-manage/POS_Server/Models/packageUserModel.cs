@@ -58,14 +58,15 @@ namespace Programs_Server.Models
         public string verName { get; set; }
      
         public int isActive { get; set; }
- 
+        
         public string packageCode { get; set; }
+
         public int storeCount { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
         public bool islimitDate { get; set; }
-
-  
-
+        public Nullable<bool> isOnlineServer { get; set; }
+        public string customerServerCode { get; set; }
+        public string packageSaleCode { get; set; }
 
     }
     public class SendDetail
