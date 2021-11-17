@@ -22,6 +22,7 @@ using AdministratorApp.ApiClasses;
 using System.Threading;
 using AdministratorApp.View.sectionData;
 using AdministratorApp.View.sales;
+using AdministratorApp.View.settings;
 
 namespace AdministratorApp
 {
@@ -40,8 +41,10 @@ namespace AdministratorApp
         internal static int? userLogInID;
         public static Boolean go_out = false;
 
-
-
+        internal static string dateFormat;
+        internal static string accuracy;
+        static public GroupObject groupObject = new GroupObject();
+        static public List<GroupObject> groupObjects = new List<GroupObject>();
 
         public MainWindow()
         {
@@ -72,8 +75,351 @@ namespace AdministratorApp
         }
 
        public static List<string> menuList;
+        #region loading
+        List<keyValueBool> loadingList;
+        //loadingThread[] loadingList = new loadingThread[25];
+        /*
+        async void loading_getUserPath()
+        {
+            #region get user path
+            try
+            {
+                UserSetValues uSetValueModel = new UserSetValues();
+                List<UserSetValues> lst = await uSetValueModel.GetAll();
 
-        private   void Window_Loaded(object sender, RoutedEventArgs e)
+                SetValues setValueModel = new SetValues();
+
+                List<SetValues> setVLst = await setValueModel.GetBySetName("user_path");
+                if (setVLst.Count > 0)
+                {
+                    int firstId = setVLst[0].valId;
+                    int secondId = setVLst[1].valId;
+                    firstPath = lst.Where(u => u.valId == firstId && u.userId == userID).FirstOrDefault().note;
+                    secondPath = lst.Where(u => u.valId == secondId && u.userId == userID).FirstOrDefault().note;
+                }
+                else
+                {
+                    firstPath = "";
+                    secondPath = "";
+                }
+            }
+            catch
+            {
+                firstPath = "";
+                secondPath = "";
+            }
+            #endregion
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getUserPath"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getDateForm()
+        {
+            //get dateform
+            try
+            {
+                dateFormat = await getDefaultDateForm();
+            }
+            catch
+            {
+                dateFormat = "ShortDatePattern";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getDateForm"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getRegionAndCurrency()
+        {
+            //get region and currency
+            try
+            {
+                CountryCode c = await getDefaultRegion();
+                Region = c;
+                Currency = c.currency;
+                CurrencyId = c.currencyId;
+                txt_cashSympol.Text = MainWindow.Currency;
+
+            }
+            catch
+            {
+
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getRegionAndCurrency"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getAccurac()
+        {
+            //get accuracy
+            try
+            {
+                accuracy = await getDefaultAccuracy();
+            }
+            catch
+            {
+                accuracy = "1";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getAccurac"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getUserPersonalInfo()
+        {
+            #region user personal info
+            txt_userName.Text = userLogin.name;
+            txt_userJob.Text = userLogin.job;
+            try
+            {
+                if (!string.IsNullOrEmpty(userLogin.image))
+                {
+                    byte[] imageBuffer = await userModel.downloadImage(userLogin.image); // read this as BLOB from your DB
+
+                    var bitmapImage = new BitmapImage();
+
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+
+                    img_userLogin.Fill = new ImageBrush(bitmapImage);
+                }
+                else
+                {
+                    clearImg();
+                }
+            }
+            catch
+            {
+                clearImg();
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getUserPersonalInfo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+            #endregion
+        }
+        async void loading_getDefaultSystemInfo()
+        {
+            try
+            {
+                List<SettingCls> settingsCls = await setModel.GetAll();
+                List<SetValues> settingsValues = await valueModel.GetAll();
+                SettingCls set = new SettingCls();
+                SetValues setV = new SetValues();
+                List<char> charsToRemove = new List<char>() { '@', '_', ',', '.', '-' };
+                #region get company name
+                Thread t1 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company name
+                        set = settingsCls.Where(s => s.name == "com_name").FirstOrDefault<SettingCls>();
+                        nameId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == nameId).FirstOrDefault();
+                        if (setV != null)
+                            companyName = setV.value;
+
+                    });
+                });
+                t1.Start();
+                #endregion
+
+                #region  get company address
+                Thread t2 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company address
+                        set = settingsCls.Where(s => s.name == "com_address").FirstOrDefault<SettingCls>();
+                        addressId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == addressId).FirstOrDefault();
+                        if (setV != null)
+                            Address = setV.value;
+                    });
+                });
+                t2.Start();
+                #endregion
+
+                #region  get company email
+                Thread t3 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company email
+                        set = settingsCls.Where(s => s.name == "com_email").FirstOrDefault<SettingCls>();
+                        emailId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == emailId).FirstOrDefault();
+                        if (setV != null)
+                            Email = setV.value;
+                    });
+                });
+                t3.Start();
+                #endregion
+
+                #region  get company mobile
+                Thread t4 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company mobile
+                        set = settingsCls.Where(s => s.name == "com_mobile").FirstOrDefault<SettingCls>();
+                        mobileId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == mobileId).FirstOrDefault();
+                        if (setV != null)
+                        {
+                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                            Mobile = setV.value;
+                        }
+                    });
+                });
+                t4.Start();
+                #endregion
+
+                #region  get company phone
+                Thread t5 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company phone
+                        set = settingsCls.Where(s => s.name == "com_phone").FirstOrDefault<SettingCls>();
+                        phoneId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == phoneId).FirstOrDefault();
+                        if (setV != null)
+                        {
+                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                            Phone = setV.value;
+                        }
+                    });
+                });
+                t5.Start();
+                #endregion
+
+                #region  get company fax
+                Thread t6 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company fax
+                        set = settingsCls.Where(s => s.name == "com_fax").FirstOrDefault<SettingCls>();
+                        faxId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == faxId).FirstOrDefault();
+                        if (setV != null)
+                        {
+                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                            Fax = setV.value;
+                        }
+                    });
+                });
+                t6.Start();
+                #endregion
+
+                #region   get company logo
+                //get company logo
+                set = settingsCls.Where(s => s.name == "com_logo").FirstOrDefault<SettingCls>();
+                logoId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == logoId).FirstOrDefault();
+                if (setV != null)
+                {
+                    logoImage = setV.value;
+                    await setV.getImg(logoImage);
+                }
+                #endregion
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getDefaultSystemInfo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+
+        }
+        async void loading_getprintSitting()
+        {
+            try
+            {
+                await getprintSitting();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getprintSitting"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_POSList()
+        {
+            try
+            {
+                posList = await posLogIn.Get();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_POSList"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        */
+        async void loading_getGroupObjects()
+        {
+            try
+            {
+                groupObjects = await groupObject.GetUserpermission(userLogin.userId);
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getGroupObjects"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+        #endregion
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -83,6 +429,69 @@ namespace AdministratorApp
                 menuList = new List<string> { "applications", "sales", "reports",
                    "sectionData","settings"};
                 userLogin.userId = 1;
+
+                #region loading
+                loadingList = new List<keyValueBool>();
+                bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getDateForm", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getRegionAndCurrency", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getStorageCost", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getAccurac", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getItemUnitsUsers", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_GlobalItemUnitsList", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
+
+
+                loading_getGroupObjects();
+                //loading_getUserPath();
+                //loading_getTax();
+                //loading_getDateForm();
+                //loading_getRegionAndCurrency();
+                //loading_getStorageCost();
+                //loading_getAccurac();
+                //loading_getItemUnitsUsers();
+                //loading_getUserPersonalInfo();
+                //loading_getDefaultSystemInfo();
+                //loading_getprintSitting();
+                //loading_GlobalItemUnitsList();
+                //loading_GlobalUnitsList();
+                //loading_POSList();
+
+                do
+                {
+                    isDone = true;
+                    foreach (var item in loadingList)
+                    {
+                        if (item.value == false)
+                        {
+                            isDone = false;
+                            break;
+                        }
+                    }
+                    if (!isDone)
+                    {
+                        //MessageBox.Show("not done");
+                        //string s = "";
+                        //foreach (var item in loadingList)
+                        //{
+                        //    s += item.name + " - " + item.value + "\n";
+                        //}
+                        //MessageBox.Show(s);
+                        await Task.Delay(0500);
+                        //MessageBox.Show("do");
+                    }
+                }
+                while (!isDone);
+                #endregion
+
+
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -265,7 +674,7 @@ namespace AdministratorApp
                 ColorIconRefreash(button.Tag.ToString());
                 openVisible(button.Tag.ToString());
                 grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_home.Instance);
+                grid_main.Children.Add(uc_settings.Instance);
             }
             catch (Exception ex)
             {

@@ -442,13 +442,19 @@ namespace AdministratorApp.Classes
             });
             itemsViewOriginal.Refresh();
         }
-       
 
+        static public bool isAdminPermision()
+        {
+            //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)
+            if (MainWindow.userLogin.isAdmin == true)
+                return true;
+            return false;
+        }
         /// <summary>
         /// لمنع  الصفر بالبداية
         /// </summary>
         /// <param name="txb"></param>
-        static public void InputJustNumber(TextBox txb)
+        static public void InputJustNumber(ref TextBox txb)
         {
             if (txb.Text.Count() == 2 && txb.Text == "00")
             {
@@ -482,6 +488,7 @@ namespace AdministratorApp.Classes
 
             }
         }
+
         static public void StartAwait(Grid grid)
         {
             grid.IsEnabled = false;

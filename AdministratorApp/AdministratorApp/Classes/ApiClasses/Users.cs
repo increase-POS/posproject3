@@ -23,6 +23,8 @@ namespace AdministratorApp.ApiClasses
         public string code { get; set; }
         public string name { get; set; }
         public string lastName { get; set; }
+        public string fullName { get; set; }
+
         public string accountName { get; set; }
         public string password { get; set; }
         public string email { get; set; }
@@ -43,6 +45,7 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> isActive { get; set; }
         public bool canDelete { get; set; }
         private string urimainpath = "users/";
+        public bool? isAdmin { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -89,7 +92,22 @@ namespace AdministratorApp.ApiClasses
             //}
 
         }
-        public async Task<int> Save(Users obj)
+        public async Task<List<Users>> GetUsersActive()
+        {
+            List<Users> list = new List<Users>();
+
+            //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAll");
+
+            //foreach (Claim c in claims)
+            //{
+            //    if (c.Type == "scopes")
+            //    {
+            //        list.Add(JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+            //    }
+            //}
+            return list;
+        }
+            public async Task<int> Save(Users obj)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

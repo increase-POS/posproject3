@@ -165,10 +165,20 @@
     <Compile Include="Classes\ApiClasses\Users.cs" />
     <Compile Include="Classes\ApiClasses\UsersLogs.cs" />
     <Compile Include="Classes\ApiClasses\versions.cs" />
+    <Compile Include="Classes\APIResult.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
     <Compile Include="Classes\FillCombo.cs" />
+    <Compile Include="Classes\Group.cs" />
+    <Compile Include="Classes\GroupObject.cs" />
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
+    <Compile Include="Classes\KeyValue.cs" />
+    <Compile Include="Classes\Object.cs" />
+    <Compile Include="converters\accuracyConverter.cs" />
+    <Compile Include="converters\BooleanReverseConverter.cs" />
+    <Compile Include="converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="converters\dateFrameConverter.cs" />
+    <Compile Include="converters\permissionsNameConverter.cs" />
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
@@ -205,8 +215,17 @@
     <Compile Include="View\sectionData\uc_users.xaml.cs">
       <DependentUpon>uc_users.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\settings\uc_permissions.xaml.cs">
+      <DependentUpon>uc_permissions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\uc_settings.xaml.cs">
+      <DependentUpon>uc_settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_usersList.xaml.cs">
+      <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -279,7 +298,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\settings\uc_permissions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\settings\uc_settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_usersList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -325,7 +356,6 @@
     <Folder Include="Thumb\customers\" />
     <Folder Include="Thumb\users\" />
     <Folder Include="View\reports\" />
-    <Folder Include="View\settings\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\increase-login-bg-rtl.png" />

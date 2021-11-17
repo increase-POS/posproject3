@@ -323,7 +323,7 @@ namespace AdministratorApp.View.sales
             {
                 //only  digits
                 TextBox textBox = sender as TextBox;
-                HelpClass.InputJustNumber(textBox);
+                HelpClass.InputJustNumber(ref textBox);
                 Regex regex = new Regex("[^0-9]+");
                 e.Handled = regex.IsMatch(e.Text);
             }
