@@ -20,7 +20,6 @@ namespace Programs_Server.Models
         public string agentLevel { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string code { get; set; }
         public string password { get; set; }
         public string type { get; set; }
         public string image { get; set; }
@@ -29,8 +28,15 @@ namespace Programs_Server.Models
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
-        public bool canDelete { get; set; }
+        public string code { get; set; }
         public string hashCode { get; set; }
+        public Nullable<bool> isAdmin { get; set; }
+        public Nullable<int> groupId { get; set; }
+        public Nullable<byte> balanceType { get; set; }
+        public string job { get; set; }
+        public Nullable<byte> isOnline { get; set; }
+        public bool canDelete { get; set; }
+      
 
     }
 }

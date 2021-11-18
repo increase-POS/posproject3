@@ -20,8 +20,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Group = POS.Classes.Group;
-using Object = POS.Classes.Object;
+using Group = AdministratorApp.ApiClasses.Group;
+using Object = AdministratorApp.ApiClasses.Object;
+using AdministratorApp.ApiClasses;
 
 namespace AdministratorApp.View.settings
 {

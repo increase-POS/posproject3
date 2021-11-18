@@ -36,6 +36,18 @@
         <EntityTypeShape EntityType="incprogramsdbModel.cities" Width="1.5" PointX="5.625" PointY="1.125" />
         <EntityTypeShape EntityType="incprogramsdbModel.countriesCodes" Width="1.5" PointX="3.375" PointY="0.875" />
         <AssociationConnector Association="incprogramsdbModel.FK_cities_countriesCodes" />
+        <EntityTypeShape EntityType="incprogramsdbModel.groupObject" Width="1.5" PointX="8.25" PointY="21" />
+        <EntityTypeShape EntityType="incprogramsdbModel.groups" Width="1.5" PointX="3" PointY="27.125" />
+        <EntityTypeShape EntityType="incprogramsdbModel.objects" Width="1.5" PointX="3" PointY="15.125" />
+        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_groups" />
+        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_objects" />
+        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_users" />
+        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_users1" />
+        <AssociationConnector Association="incprogramsdbModel.FK_groups_users1" />
+        <AssociationConnector Association="incprogramsdbModel.FK_groups_users2" />
+        <AssociationConnector Association="incprogramsdbModel.FK_objects_objects" />
+        <AssociationConnector Association="incprogramsdbModel.FK_objects_users" />
+        <AssociationConnector Association="incprogramsdbModel.FK_objects_users1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

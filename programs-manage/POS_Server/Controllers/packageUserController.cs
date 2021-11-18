@@ -906,7 +906,11 @@ namespace Programs_Server.Controllers
 
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
+                        // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
+                      
+                      List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
+                        list= list.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
+                       
                         if (list != null && list.Count>0)
                         {
                             row = list

@@ -131,6 +131,11 @@
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="incprogramsdbModel.users">
         <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="isOnline" ColumnName="isOnline" />
+          <ScalarProperty Name="job" ColumnName="job" />
+          <ScalarProperty Name="balanceType" ColumnName="balanceType" />
+          <ScalarProperty Name="groupId" ColumnName="groupId" />
+          <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
           <ScalarProperty Name="hashCode" ColumnName="hashCode" />
           <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="name" ColumnName="name" />
@@ -192,6 +197,57 @@
           <ScalarProperty Name="currency" ColumnName="currency" />
           <ScalarProperty Name="code" ColumnName="code" />
           <ScalarProperty Name="countryId" ColumnName="countryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="groupObject">
+      <EntityTypeMapping TypeName="incprogramsdbModel.groupObject">
+        <MappingFragment StoreEntitySet="groupObject">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+          <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="levelOb" ColumnName="levelOb" />
+          <ScalarProperty Name="reportOb" ColumnName="reportOb" />
+          <ScalarProperty Name="showOb" ColumnName="showOb" />
+          <ScalarProperty Name="deleteOb" ColumnName="deleteOb" />
+          <ScalarProperty Name="updateOb" ColumnName="updateOb" />
+          <ScalarProperty Name="addOb" ColumnName="addOb" />
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="objectId" ColumnName="objectId" />
+          <ScalarProperty Name="groupId" ColumnName="groupId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="groups">
+      <EntityTypeMapping TypeName="incprogramsdbModel.groups">
+        <MappingFragment StoreEntitySet="groups">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+          <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="groupId" ColumnName="groupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="objects">
+      <EntityTypeMapping TypeName="incprogramsdbModel.objects">
+        <MappingFragment StoreEntitySet="objects">
+          <ScalarProperty Name="objectType" ColumnName="objectType" />
+          <ScalarProperty Name="parentObjectId" ColumnName="parentObjectId" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+          <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="objectId" ColumnName="objectId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

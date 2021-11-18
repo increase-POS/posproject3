@@ -157,6 +157,9 @@
     <Compile Include="Classes\ApiClasses\City.cs" />
     <Compile Include="Classes\ApiClasses\Country.cs" />
     <Compile Include="Classes\ApiClasses\Customers.cs" />
+    <Compile Include="Classes\ApiClasses\Group.cs" />
+    <Compile Include="Classes\ApiClasses\GroupObject.cs" />
+    <Compile Include="Classes\ApiClasses\Object.cs" />
     <Compile Include="Classes\ApiClasses\Packages.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
     <Compile Include="Classes\ApiClasses\PackageUser.cs" />
@@ -168,12 +171,9 @@
     <Compile Include="Classes\APIResult.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
     <Compile Include="Classes\FillCombo.cs" />
-    <Compile Include="Classes\Group.cs" />
-    <Compile Include="Classes\GroupObject.cs" />
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
     <Compile Include="Classes\KeyValue.cs" />
-    <Compile Include="Classes\Object.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\BooleanReverseConverter.cs" />
     <Compile Include="converters\BooleanToVisibilityConverter.cs" />

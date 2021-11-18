@@ -44,8 +44,16 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
         public bool canDelete { get; set; }
+        public Nullable<bool> isAdmin { get; set; }
+        public Nullable<int> groupId { get; set; }
+        public Nullable<byte> balanceType { get; set; }
+        public string job { get; set; }
+        public Nullable<byte> isOnline { get; set; }
+
+
+
         private string urimainpath = "users/";
-        public bool? isAdmin { get; set; }
+   
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -67,47 +75,44 @@ namespace AdministratorApp.ApiClasses
             }
             return list;
 
-            //List<Users> memberships = null;
-
-            //HttpResponseMessage response = new HttpResponseMessage();
-            //using (var client = new HttpClient())
-            //{
-            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetAll");
-            //    response = await ApiConnect.ApiGetConnect(uri);
-
-            //    response = await ApiConnect.ApiGetConnect(uri);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-
-            //        memberships = JsonConvert.DeserializeObject<List<Users>>(jsonString);
-
-            //        return memberships;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        memberships = new List<Users>();
-            //    }
-            //    return memberships;
-            //}
 
         }
         public async Task<List<Users>> GetUsersActive()
         {
-            List<Users> list = new List<Users>();
-
-            //IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetAll");
-
-            //foreach (Claim c in claims)
-            //{
-            //    if (c.Type == "scopes")
-            //    {
-            //        list.Add(JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-            //    }
-            //}
-            return list;
+            List<Users> items = new List<Users>();
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetActive");
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
         }
-            public async Task<int> Save(Users obj)
+        public async Task<Users> Getloginuser(string userName, string password)
+        {
+            Users user = new Users();
+
+            //########### to pass parameters (optional)
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("userName", userName);
+            parameters.Add("password", password);
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "Getloginuser", parameters);
+            //#################
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    user = JsonConvert.DeserializeObject<Users>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return user;
+        }
+
+        public async Task<int> Save(Users obj)
         {
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -118,22 +123,6 @@ namespace AdministratorApp.ApiClasses
             return await APIResult.post(method, parameters);
 
 
-            //var myContent = JsonConvert.SerializeObject(obj);
-            //myContent = HttpUtility.UrlEncode(myContent);
-            //Uri uri = new Uri(Global.APIUri + urimainpath + "Save?Object=" + myContent);
-
-            //HttpResponseMessage response = new HttpResponseMessage();
-            //response = await ApiConnect.ApiPostConnect(uri);
-            //using (var client = new HttpClient())
-            //{
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //        return message;
-            //    }
-            //    return "";
-            //}
         }
         public async Task<Users> GetByID(int userId)
         {
@@ -158,24 +147,7 @@ namespace AdministratorApp.ApiClasses
             return item;
 
 
-            //Users obj = new Users();
 
-            //HttpResponseMessage response = new HttpResponseMessage();
-            //using (var client = new HttpClient())
-            //{
-
-            //    Uri uri = new Uri(Global.APIUri + urimainpath + "GetByID?userId=" + userId);
-
-            //    response = await ApiConnect.ApiGetConnect(uri);
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //       var jsonString = await response.Content.ReadAsStringAsync();
-            //        obj = JsonConvert.DeserializeObject<Users>(jsonString);
-            //        return obj;
-            //    }
-
-            //    return obj;
-            //}
         }
         public async Task<int> Delete(int userId, int signuserId, bool final)
         {

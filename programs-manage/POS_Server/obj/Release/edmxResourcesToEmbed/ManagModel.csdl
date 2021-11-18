@@ -164,7 +164,7 @@
     <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="balance" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="balance" Type="Decimal" Precision="20" Scale="3" Nullable="false" />
     <Property Name="createUserId" Type="Int32" />
     <Property Name="updateUserId" Type="Int32" />
     <Property Name="isActive" Type="Int32" />
@@ -184,6 +184,17 @@
     <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
     <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
     <Property Name="hashCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="isAdmin" Type="Boolean" />
+    <NavigationProperty Name="groupObject" Relationship="incprogramsdbModel.FK_groupObject_users" FromRole="users" ToRole="groupObject" />
+    <NavigationProperty Name="groupObject1" Relationship="incprogramsdbModel.FK_groupObject_users1" FromRole="users" ToRole="groupObject" />
+    <NavigationProperty Name="groups" Relationship="incprogramsdbModel.FK_groups_users1" FromRole="users" ToRole="groups" />
+    <NavigationProperty Name="groups1" Relationship="incprogramsdbModel.FK_groups_users2" FromRole="users" ToRole="groups" />
+    <NavigationProperty Name="objects" Relationship="incprogramsdbModel.FK_objects_users" FromRole="users" ToRole="objects" />
+    <NavigationProperty Name="objects1" Relationship="incprogramsdbModel.FK_objects_users1" FromRole="users" ToRole="objects" />
+    <Property Name="groupId" Type="Int32" />
+    <Property Name="balanceType" Type="Byte" />
+    <Property Name="job" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="isOnline" Type="Byte" />
   </EntityType>
   <EntityType Name="versions">
     <Key>
@@ -541,6 +552,45 @@
       <End Role="countriesCodes" EntitySet="countriesCodes" />
       <End Role="cities" EntitySet="cities" />
     </AssociationSet>
+    <EntitySet Name="groupObject" EntityType="incprogramsdbModel.groupObject" />
+    <EntitySet Name="groups" EntityType="incprogramsdbModel.groups" />
+    <EntitySet Name="objects" EntityType="incprogramsdbModel.objects" />
+    <AssociationSet Name="FK_groupObject_groups" Association="incprogramsdbModel.FK_groupObject_groups">
+      <End Role="groups" EntitySet="groups" />
+      <End Role="groupObject" EntitySet="groupObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groupObject_objects" Association="incprogramsdbModel.FK_groupObject_objects">
+      <End Role="objects" EntitySet="objects" />
+      <End Role="groupObject" EntitySet="groupObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groupObject_users" Association="incprogramsdbModel.FK_groupObject_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="groupObject" EntitySet="groupObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groupObject_users1" Association="incprogramsdbModel.FK_groupObject_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="groupObject" EntitySet="groupObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groups_users1" Association="incprogramsdbModel.FK_groups_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groups_users2" Association="incprogramsdbModel.FK_groups_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_objects_objects" Association="incprogramsdbModel.FK_objects_objects">
+      <End Role="objects" EntitySet="objects" />
+      <End Role="objects1" EntitySet="objects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_objects_users" Association="incprogramsdbModel.FK_objects_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="objects" EntitySet="objects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_objects_users1" Association="incprogramsdbModel.FK_objects_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="objects" EntitySet="objects" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="cities">
     <Key>
@@ -571,6 +621,174 @@
       </Principal>
       <Dependent Role="cities">
         <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="groupObject">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="groupId" Type="Int32" />
+    <Property Name="objectId" Type="Int32" />
+    <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="addOb" Type="Byte" Nullable="false" />
+    <Property Name="updateOb" Type="Byte" Nullable="false" />
+    <Property Name="deleteOb" Type="Byte" Nullable="false" />
+    <Property Name="showOb" Type="Byte" Nullable="false" />
+    <Property Name="reportOb" Type="Byte" Nullable="false" />
+    <Property Name="levelOb" Type="Byte" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="isActive" Type="Int32" />
+    <NavigationProperty Name="groups" Relationship="incprogramsdbModel.FK_groupObject_groups" FromRole="groupObject" ToRole="groups" />
+    <NavigationProperty Name="objects" Relationship="incprogramsdbModel.FK_groupObject_objects" FromRole="groupObject" ToRole="objects" />
+    <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_groupObject_users" FromRole="groupObject" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_groupObject_users1" FromRole="groupObject" ToRole="users" />
+  </EntityType>
+  <EntityType Name="groups">
+    <Key>
+      <PropertyRef Name="groupId" />
+    </Key>
+    <Property Name="groupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="isActive" Type="Int32" />
+    <NavigationProperty Name="groupObject" Relationship="incprogramsdbModel.FK_groupObject_groups" FromRole="groups" ToRole="groupObject" />
+    <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_groups_users1" FromRole="groups" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_groups_users2" FromRole="groups" ToRole="users" />
+  </EntityType>
+  <EntityType Name="objects">
+    <Key>
+      <PropertyRef Name="objectId" />
+    </Key>
+    <Property Name="objectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="isActive" Type="Int32" />
+    <Property Name="parentObjectId" Type="Int32" />
+    <Property Name="objectType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="groupObject" Relationship="incprogramsdbModel.FK_groupObject_objects" FromRole="objects" ToRole="groupObject" />
+    <NavigationProperty Name="objects1" Relationship="incprogramsdbModel.FK_objects_objects" FromRole="objects" ToRole="objects1" />
+    <NavigationProperty Name="objects2" Relationship="incprogramsdbModel.FK_objects_objects" FromRole="objects1" ToRole="objects" />
+    <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_objects_users" FromRole="objects" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_objects_users1" FromRole="objects" ToRole="users" />
+  </EntityType>
+  <Association Name="FK_groupObject_groups">
+    <End Type="incprogramsdbModel.groups" Role="groups" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.groupObject" Role="groupObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="groups">
+        <PropertyRef Name="groupId" />
+      </Principal>
+      <Dependent Role="groupObject">
+        <PropertyRef Name="groupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groupObject_objects">
+    <End Type="incprogramsdbModel.objects" Role="objects" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.groupObject" Role="groupObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="objects">
+        <PropertyRef Name="objectId" />
+      </Principal>
+      <Dependent Role="groupObject">
+        <PropertyRef Name="objectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groupObject_users">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.groupObject" Role="groupObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="groupObject">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groupObject_users1">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.groupObject" Role="groupObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="groupObject">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groups_users1">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.groups" Role="groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groups_users2">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.groups" Role="groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_objects_objects">
+    <End Type="incprogramsdbModel.objects" Role="objects" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.objects" Role="objects1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="objects">
+        <PropertyRef Name="objectId" />
+      </Principal>
+      <Dependent Role="objects1">
+        <PropertyRef Name="parentObjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_objects_users">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.objects" Role="objects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="objects">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_objects_users1">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.objects" Role="objects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="objects">
+        <PropertyRef Name="updateUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

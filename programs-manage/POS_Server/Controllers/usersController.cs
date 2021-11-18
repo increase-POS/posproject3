@@ -70,7 +70,11 @@ namespace Programs_Server.Controllers
                                         createUserId = S.createUserId,
                                         updateUserId = S.updateUserId,
                                         isActive = S.isActive,
-
+                                        isAdmin = S.isAdmin,
+                                        groupId = S.groupId,
+                                        balanceType = S.balanceType,
+                                        job = S.job,
+                                        isOnline = S.isOnline,
 
 
 
@@ -94,91 +98,187 @@ namespace Programs_Server.Controllers
                         }
                         return TokenManager.GenerateToken(List);
                     }
-                        
-                    }
+
+                }
                 catch
                 {
                     return TokenManager.GenerateToken("0");
                 }
             }
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //bool canDelete = false;
 
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //if (valid) // APIKey is valid
-            //{
-            //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //    {
-            //        var List = (from S in entity.users
-            //                    select new usersModel()
-            //                    {
-            //                        userId = S.userId,
-            //                        name = S.name,
-            //                        AccountName = S.AccountName,
-            //                        lastName = S.lastName,
-            //                        company = S.company,
-            //                        email = S.email,
-            //                        phone = S.phone,
-            //                        mobile = S.mobile,
-            //                        fax = S.fax,
-            //                        address = S.address,
-            //                        agentLevel = S.agentLevel,
-            //                        createDate = S.createDate,
-            //                        updateDate = S.updateDate,
-            //                        code = S.code,
-            //                        password = S.password,
-            //                        type = S.type,
-            //                        image = S.image,
-            //                        notes = S.notes,
-            //                        balance = S.balance,
-            //                        createUserId = S.createUserId,
-            //                        updateUserId = S.updateUserId,
-            //                        isActive = S.isActive,
-
-
-
-
-
-            //                    }).ToList();
-            //        /*
-
-
-            //        */
-
-            //        if (List.Count > 0)
-            //        {
-            //            for (int i = 0; i < List.Count; i++)
-            //            {
-            //                if (List[i].isActive == 1)
-            //                {
-            //                    int userId = (int)List[i].userId;
-            //                    var itemsI = entity.packageUser.Where(x => x.userId == userId).Select(b => new { b.userId }).FirstOrDefault();
-
-            //                    if ((itemsI is null))
-            //                        canDelete = true;
-            //                }
-            //                List[i].canDelete = canDelete;
-            //            }
-            //        }
-
-            //        if (List == null)
-            //            return NotFound();
-            //        else
-            //            return Ok(List);
-            //    }
-            //}
-            ////else
-            //return NotFound();
         }
+
+        //get active users
+        [HttpPost]
+        [Route("GetActive")]
+        public string GetActive(string token)
+        {
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            string type = "";
+            Boolean canDelete = false;
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var usersList = entity.users.Where(S => S.isActive == 1 && S.userId != 1)
+                    .Select(S => new usersModel
+                    {
+                        userId = S.userId,
+                        name = S.name,
+                        AccountName = S.AccountName,
+                        lastName = S.lastName,
+                        company = S.company,
+                        email = S.email,
+                        phone = S.phone,
+                        mobile = S.mobile,
+                        fax = S.fax,
+                        address = S.address,
+                        agentLevel = S.agentLevel,
+                        createDate = S.createDate,
+                        updateDate = S.updateDate,
+                        code = S.code,
+                        password = S.password,
+                        type = S.type,
+                        image = S.image,
+                        notes = S.notes,
+                        balance = S.balance,
+                        createUserId = S.createUserId,
+                        updateUserId = S.updateUserId,
+                        isActive = S.isActive,
+                        isAdmin = S.isAdmin,
+                        groupId = S.groupId,
+                        balanceType = S.balanceType,
+                        job = S.job,
+                        isOnline = S.isOnline,
+
+
+
+                    })
+                    .ToList();
+
+                    return TokenManager.GenerateToken(usersList);
+                }
+            }
+        }
+
+        [HttpPost]
+        [Route("Getloginuser")]
+        public string Getloginuser(string token)
+        {
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            List<usersModel> usersList = new List<usersModel>();
+            usersModel user = new usersModel();
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                string userName = "";
+                string password = "";
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "userName")
+                    {
+                        userName = c.Value;
+                    }
+                    else if (c.Type == "password")
+                    {
+                        password = c.Value;
+                    }
+                }
+
+                usersModel emptyuser = new usersModel();
+
+                emptyuser.createDate = DateTime.Now;
+                emptyuser.updateDate = DateTime.Now;
+                //emptyuser.username = userName;
+                emptyuser.createUserId = 0;
+                emptyuser.updateUserId = 0;
+                emptyuser.userId = 0;
+                emptyuser.isActive = 0;
+                emptyuser.isOnline = 0;
+                emptyuser.canDelete = false;
+                emptyuser.balance = 0;
+                emptyuser.balanceType = 0;
+                try
+                {
+
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        usersList = entity.users.Where(S => S.isActive == 1 && S.AccountName == userName)
+                        .Select(S => new usersModel
+                        {
+                            userId = S.userId,
+                            name = S.name,
+                            AccountName = S.AccountName,
+                            lastName = S.lastName,
+                            company = S.company,
+                            email = S.email,
+                            phone = S.phone,
+                            mobile = S.mobile,
+                            fax = S.fax,
+                            address = S.address,
+                            agentLevel = S.agentLevel,
+                            createDate = S.createDate,
+                            updateDate = S.updateDate,
+                            code = S.code,
+                            password = S.password,
+                            type = S.type,
+                            image = S.image,
+                            notes = S.notes,
+                            balance = S.balance,
+                            createUserId = S.createUserId,
+                            updateUserId = S.updateUserId,
+                            isActive = S.isActive,
+                            isAdmin = S.isAdmin,
+                            groupId = S.groupId,
+                            balanceType = S.balanceType,
+                            job = S.job,
+                            isOnline = S.isOnline,
+                        })
+                        .ToList();
+
+                        if (usersList == null || usersList.Count <= 0)
+                        {
+                            user = emptyuser;
+                            // rong user
+                            return TokenManager.GenerateToken(user);
+                        }
+                        else
+                        {
+                            user = usersList.Where(i => i.AccountName == userName).FirstOrDefault();
+                            if (user.password.Equals(password))
+                            {
+                                // correct username and pasword
+                                return TokenManager.GenerateToken(user);
+                            }
+                            else
+                            {
+                                // rong pass return just username
+                                user = emptyuser;
+                                user.AccountName = userName;
+                                return TokenManager.GenerateToken(user);
+
+                            }
+                        }
+                    }
+
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken(emptyuser);
+                }
+            }
+        }
+
 
         // GET api/<controller>
         [HttpPost]
@@ -238,7 +338,11 @@ namespace Programs_Server.Controllers
                            S.createUserId,
                            S.updateUserId,
                            S.isActive,
-
+                           S.isAdmin,
+                           S.groupId,
+                           S.balanceType,
+                           S.job,
+                           S.isOnline,
 
                        })
                                    .FirstOrDefault();
@@ -253,59 +357,7 @@ namespace Programs_Server.Controllers
             }
 
 
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //if (valid)
-            //{
-            //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //    {
-            //        var row = entity.users
-            //       .Where(u => u.userId == userId)
-            //       .Select(S => new
-            //       {
-            //           S.userId,
-            //           S.name,
-            //           S.AccountName,
-            //           S.lastName,
-            //           S.company,
-            //           S.email,
-            //           S.phone,
-            //           S.mobile,
-            //           S.fax,
-            //           S.address,
-            //           S.agentLevel,
-            //           S.createDate,
-            //           S.updateDate,
-            //           S.code,
-            //           S.password,
-            //           S.type,
-            //           S.image,
-            //           S.notes,
-            //           S.balance,
-            //           S.createUserId,
-            //           S.updateUserId,
-            //           S.isActive,
-
-
-            //       })
-            //       .FirstOrDefault();
-
-            //        if (row == null)
-            //            return NotFound();
-            //        else
-            //            return Ok(row);
-            //    }
-            //}
-            //else
-            //    return NotFound();
+          
         }
 
         // add or update location
@@ -554,7 +606,7 @@ namespace Programs_Server.Controllers
                             entity.users.Remove(objectDelete);
                             message = entity.SaveChanges().ToString();
                             return TokenManager.GenerateToken(message);
-                  
+
                         }
                     }
                     catch
@@ -735,7 +787,7 @@ namespace Programs_Server.Controllers
         }
         [HttpPost]
         [Route("UpdateImage")]
-        public string  UpdateImage(string token)//string userObject//
+        public string UpdateImage(string token)//string userObject//
         {
 
             string message = "";
@@ -900,7 +952,7 @@ namespace Programs_Server.Controllers
                             lastNum = int.Parse(numberList[numberList.Count - 1]);
                         }
                     }
-                 
+
                     return TokenManager.GenerateToken(lastNum);
                 }
                 catch

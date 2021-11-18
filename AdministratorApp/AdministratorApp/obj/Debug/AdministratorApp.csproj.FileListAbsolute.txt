@@ -534,3 +534,10 @@ E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_usersList.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_permissions.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_usersList.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_permissions.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_usersList.baml
