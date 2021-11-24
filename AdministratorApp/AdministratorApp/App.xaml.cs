@@ -1,4 +1,5 @@
 ﻿using AdministratorApp.Classes;
+using AdministratorApp.View.windows;
 using POS.View.windows;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ namespace AdministratorApp
     /// </summary>
     public partial class App : Application
     {
-        /*
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             try
@@ -25,21 +25,8 @@ namespace AdministratorApp
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-                //POS.Properties.Settings.Default.posId = "0";
-                //if (POS.Properties.Settings.Default.posId == "0")
-                //{
-                //    //wd_setupOtherPos logIn = new wd_setupOtherPos();
-                //    //logIn.Show();
-                //    wd_setupFirstPos logIn = new wd_setupFirstPos();
-                //    logIn.Show();
-                //}
-                //else
-                //{
-                //    winLogIn logIn = new winLogIn();
-                //    logIn.Show();
-                //}
-
-                winLogIn logIn = new winLogIn();
+                wd_logIn logIn = new wd_logIn();
+                //MainWindow logIn = new MainWindow();
                 logIn.Show();
 
             }
@@ -48,6 +35,6 @@ namespace AdministratorApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        */
+
     }
 }
