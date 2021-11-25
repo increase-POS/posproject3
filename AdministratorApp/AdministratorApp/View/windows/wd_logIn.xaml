@@ -16,7 +16,7 @@
         BorderThickness="0"
         AllowsTransparency="True"
         Background="Transparent"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" Closing="Window_Closing">
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">
             <BeginStoryboard>
@@ -57,6 +57,7 @@
                     <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Account" Height="25" Width="25" Foreground="Gray" ></materialDesign:PackIcon>
                     </TextBlock>
+                    <Grid>
                     <TextBox x:Name="txtUserName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0,0,0"  materialDesign:HintAssist.Hint="User Name" materialDesign:HintAssist.Foreground="#FF2196F3" VerticalAlignment="Top" Width="160" LostFocus="validateEmpty" TextChanged="validateTextChanged" ></TextBox>
                     <Path Fill="#E81123" x:Name="p_errorUserName" Stretch="Fill" Margin="5,5,5,5"
                           HorizontalAlignment="Right" Grid.Row="2"  Visibility="Collapsed"   
@@ -65,6 +66,11 @@
                         <Path.ToolTip>
                             <ToolTip x:Name="tt_errorUserName" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
                         </Path.ToolTip>
+                    </Path>
+                    </Grid>
+                    <Path Fill="#7e7e7e" Grid.Row="2" Stretch="Fill" Margin="5,5,5,5"
+                              HorizontalAlignment="Right"  Grid.Column="2"  Visibility="Visible" 
+                         VerticalAlignment="Center" Width="20"  Height="15">
                     </Path>
                 </DockPanel>
                 <DockPanel Grid.Row="2" Margin="0,10,15,0">

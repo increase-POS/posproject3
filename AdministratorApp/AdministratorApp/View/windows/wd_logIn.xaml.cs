@@ -25,7 +25,7 @@ namespace AdministratorApp.View.windows
     /// </summary>
     public partial class wd_logIn : Window
     {
-        public static ResourceManager resourcemanager;
+        BrushConverter brushConverter = new BrushConverter();
         public static string lang = "en";
         bool logInProcessing = false;
         Users userModel = new Users();
@@ -73,19 +73,18 @@ namespace AdministratorApp.View.windows
                 #region translate
                 if (lang.Equals("en"))
                 {
-                    resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                     bdr_imageAr.Visibility = Visibility.Hidden;
                     bdr_image.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                     bdr_imageAr.Visibility = Visibility.Visible;
                     bdr_image.Visibility = Visibility.Hidden;
                 }
-
                 translate();
                 #endregion
 
@@ -101,6 +100,8 @@ namespace AdministratorApp.View.windows
                     Keyboard.Focus(txtUserName);
                 else if (txtPassword.Password.Equals(""))
                     Keyboard.Focus(txtPassword);
+
+              
             }
             catch (Exception ex)
             {
@@ -111,6 +112,11 @@ namespace AdministratorApp.View.windows
 
         private void translate()
         {
+            cbxRemmemberMe.Content = MainWindow.resourcemanager.GetString("trRememberMe");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtUserName, MainWindow.resourcemanager.GetString("trUserName"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtPassword, MainWindow.resourcemanager.GetString("trPassword"));
+            txt_logIn.Text = MainWindow.resourcemanager.GetString("trLogIn");
+            txt_close.Text = MainWindow.resourcemanager.GetString("trClose");
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -143,15 +149,15 @@ namespace AdministratorApp.View.windows
             try
             {
                 if (sender.GetType().Name == "TextBox")
-            {
-                if (txtUserName.Text.Equals(""))
-                    showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trEmptyUserNameToolTip");
-            }
-            else if (sender.GetType().Name == "PasswordBox")
-            {
-                if (txtPassword.Password.Equals(""))
-                    showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trEmptyPasswordToolTip");
-            }
+                {
+                    if (txtUserName.Text.Equals(""))
+                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trEmptyUserNameToolTip");
+                }
+                else if (sender.GetType().Name == "PasswordBox")
+                {
+                    if (txtPassword.Password.Equals(""))
+                        HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trEmptyPasswordToolTip");
+                }
             }
             catch (Exception ex)
             {
@@ -228,14 +234,14 @@ namespace AdministratorApp.View.windows
                     if (user.accountName == null)
                     {
                         //user does not exist
-                        showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trUserNotFound");
+                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trUserNotFound");
                     }
                     else
                     {
                         if (user.userId == 0)
                         {
                             //wrong password
-                            showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trWrongPassword");
+                            HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trWrongPassword");
                         }
                         else
                         {
@@ -301,7 +307,6 @@ namespace AdministratorApp.View.windows
                             main.Show();
                             this.Close();
                         }
-
                     }
 
                     HelpClass.EndAwait(grid_main);
@@ -318,7 +323,7 @@ namespace AdministratorApp.View.windows
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
+        {//close
             try
             {
                 Application.Current.Shutdown();
@@ -328,25 +333,6 @@ namespace AdministratorApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        #region show validate
-        BrushConverter brushConverter = new BrushConverter();
-        private void showTextBoxValidate(TextBox tb, Path p_error, ToolTip tt_error, string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            //tt_error.Content = resourcemanager.GetString(tr);
-            tt_error.Content = "";
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-        private void showPasswordValidate(PasswordBox tb, Path p_error, ToolTip tt_error, string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            //tt_error.Content = resourcemanager.GetString(tr);
-            tt_error.Content = "";
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-       
-        #endregion
 
         #region get language from database
         /*
@@ -391,6 +377,15 @@ namespace AdministratorApp.View.windows
         */
         #endregion
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //MessageBox.Show("Memory used before collection: " +
+            //                 GC.GetTotalMemory(false).ToString());
+            // Collect all generations of memory.
+            GC.Collect();
+            //MessageBox.Show("Memory used after full collection: " +
+            //                 GC.GetTotalMemory(true).ToString());
 
+        }
     }
 }

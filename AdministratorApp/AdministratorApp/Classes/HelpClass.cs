@@ -53,8 +53,8 @@ namespace AdministratorApp.Classes
             }
             return isValid;
         }
-
         
+       
         public static void clearValidate( Path p_error)
         {
             p_error.Visibility = Visibility.Collapsed;
@@ -171,17 +171,19 @@ namespace AdministratorApp.Classes
         */
         #endregion
         #region clearValidate
-        /*
-            public static void clearValidate(TextBox tb , Path p_error)
+        
+        public static void clearTextBoxValidate(TextBox tb , Path p_error)
         {
             tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
             p_error.Visibility = Visibility.Collapsed;
         }
+        
         public static void clearPasswordValidate(PasswordBox pb, Path p_error)
         {
             pb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
             p_error.Visibility = Visibility.Collapsed;
         }
+        /*
         public static void clearComboBoxValidate(ComboBox cb, Path p_error)
         {
             cb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
