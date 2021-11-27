@@ -248,10 +248,10 @@
                                 </MenuItem.Header>
                                 <MenuItem x:Name="mi_changePassword"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
                               Header="Change Password"  
-                              Icon="{materialDesign:PackIcon Kind=Password}"></MenuItem>
+                              Icon="{materialDesign:PackIcon Kind=Password}" Click="Mi_changePassword_Click"></MenuItem>
                                 <Separator />
                                 <MenuItem Header="Logout"  Foreground="{StaticResource SecondColor}"  x:Name="BTN_logOut"  
-                         Icon="{materialDesign:PackIcon Kind=ExitToApp}" />
+                         Icon="{materialDesign:PackIcon Kind=ExitToApp}" Click="BTN_logOut_Click" />
                             </MenuItem>
                         </Menu>
                     </StackPanel>

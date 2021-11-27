@@ -23,6 +23,8 @@ using System.Threading;
 using AdministratorApp.View.sectionData;
 using AdministratorApp.View.sales;
 using AdministratorApp.View.settings;
+using System.Windows.Resources;
+using AdministratorApp.View.windows;
 
 namespace AdministratorApp
 {
@@ -45,6 +47,8 @@ namespace AdministratorApp
         internal static string accuracy;
         static public GroupObject groupObject = new GroupObject();
         static public List<GroupObject> groupObjects = new List<GroupObject>();
+        Users userModel = new Users();
+        ImageBrush myBrush = new ImageBrush();
 
         public MainWindow()
         {
@@ -75,6 +79,7 @@ namespace AdministratorApp
         }
 
        public static List<string> menuList;
+
         #region loading
         List<keyValueBool> loadingList;
         //loadingThread[] loadingList = new loadingThread[25];
@@ -183,11 +188,19 @@ namespace AdministratorApp
                 }
             }
         }
+        */
         async void loading_getUserPersonalInfo()
         {
             #region user personal info
             txt_userName.Text = userLogin.name;
-            txt_userJob.Text = userLogin.job;
+            string job = "";
+            switch(userLogin.type)
+            {
+                case "u":     job = "Employee"; break;
+                case "ad":    job = "Admin";    break;
+                case "agent": job = "Agent";    break;
+            }
+            txt_userJob.Text = job;
             try
             {
                 if (!string.IsNullOrEmpty(userLogin.image))
@@ -225,6 +238,7 @@ namespace AdministratorApp
             }
             #endregion
         }
+        /*
         async void loading_getDefaultSystemInfo()
         {
             try
@@ -428,7 +442,6 @@ namespace AdministratorApp
                 //windowFlowDirection();
                 menuList = new List<string> { "applications", "sales", "reports",
                    "sectionData","settings"};
-                userLogin.userId = 1;
 
                 #region loading
                 loadingList = new List<keyValueBool>();
@@ -440,7 +453,7 @@ namespace AdministratorApp
                 //loadingList.Add(new keyValueBool { key = "loading_getRegionAndCurrency", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getStorageCost", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getAccurac", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemUnitsUsers", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
@@ -457,7 +470,7 @@ namespace AdministratorApp
                 //loading_getStorageCost();
                 //loading_getAccurac();
                 //loading_getItemUnitsUsers();
-                //loading_getUserPersonalInfo();
+                loading_getUserPersonalInfo();
                 //loading_getDefaultSystemInfo();
                 //loading_getprintSitting();
                 //loading_GlobalItemUnitsList();
@@ -490,8 +503,6 @@ namespace AdministratorApp
                 }
                 while (!isDone);
                 #endregion
-
-
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -599,8 +610,6 @@ namespace AdministratorApp
         {
             try
             {
-           
-
                 Button button = sender as Button;
                 colorTextRefreash(button.Tag.ToString());
                 ColorIconRefreash(button.Tag.ToString());
@@ -630,7 +639,6 @@ namespace AdministratorApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
 
         private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
         {
@@ -681,6 +689,62 @@ namespace AdministratorApp
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
+
+        private void clearImg()
+        {
+            Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);
+            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+            myBrush.ImageSource = temp;
+            img_userLogin.Fill = myBrush;
+
+        }
+
+        private async void BTN_logOut_Click(object sender, RoutedEventArgs e)
+        {//log out
+            try
+            {
+                await close();
+
+                Application.Current.Shutdown();
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+        async Task close()
+        {
+            //log out
+            userLogin.isOnline = 0;
+            await userModel.Save(userLogin);
+            //close
+            wd_logIn logIn = new wd_logIn();
+            logIn.Show();
+            this.Close();
+
+        }
+
+        private async void Mi_changePassword_Click(object sender, RoutedEventArgs e)
+        {//change password
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_changePassword w = new wd_changePassword();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+                userLogin = await userModel.GetByID(userLogin.userId);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }
