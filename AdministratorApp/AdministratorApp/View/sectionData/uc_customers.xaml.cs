@@ -63,6 +63,8 @@ namespace AdministratorApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "custname", "lastName",  "mobile" };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -74,6 +76,7 @@ namespace AdministratorApp.View.sectionData
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
 
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
@@ -81,63 +84,53 @@ namespace AdministratorApp.View.sectionData
                 FillCombo.fillAgentLevel(cb_custlevel);
 
                 Keyboard.Focus(tb_custCode);
-                await RefreshCustomersList();
+                
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translate()
         {
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_userHeader.Text = MainWindow.resourcemanager.GetString("trUsers");
-            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            //txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
 
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
-            //TextBox tbStart = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbStart, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            //TextBox tbEnd = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbEnd, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custCode, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_custname, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company, MainWindow.resourcemanager.GetString("trCompanyHint"));
+            txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
 
-            //txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            //txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            //txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            //tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_custlevel, MainWindow.resourcemanager.GetString("trLevelHint"));
+            txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
 
-            //dg_user.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_user.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_user.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            //dg_user.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            //dg_user.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
+            dg_customer.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_customer.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_customer.Columns[2].Header = MainWindow.resourcemanager.GetString("trMobile");
 
-            //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
-            //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
+            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
+            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -147,11 +140,10 @@ namespace AdministratorApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
                 customer = new Customers();
-                if (HelpClass.validate(requiredControlList, this))
+                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    tb_custCode.Text = await customer.generateCodeNumber("c");
+                    tb_custCode.Text = await customer.generateCodeNumber("cu");
                     customer.custCode = tb_custCode.Text;
-                  //  customer.custCode = "Cu-000001";
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
                     customer.email = tb_email.Text;
@@ -204,9 +196,8 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this))
+                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    customer.custCode = "Us-000001";
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
                     customer.email = tb_email.Text;
@@ -220,7 +211,6 @@ namespace AdministratorApp.View.sectionData
                     customer.company = tb_company.Text;
                     customer.address = tb_address.Text;
                     customer.notes = tb_notes.Text;
-                    customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
 
@@ -408,6 +398,7 @@ namespace AdministratorApp.View.sectionData
                     this.DataContext = customer;
                     if (customer != null)
                     {
+                        tb_custCode.Text = customer.custCode;
                         await getImg();
                         #region delete
                         if (customer.canDelete)
@@ -426,6 +417,8 @@ namespace AdministratorApp.View.sectionData
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
+                p_error_email.Visibility = Visibility.Collapsed;
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -480,17 +473,33 @@ namespace AdministratorApp.View.sectionData
         void Clear()
         {
             this.DataContext = new Customers();
-            #region Phone
+
+            #region code
+            tb_custCode.Text = "";
+            #endregion
+
+            #region mobile-Phone-fax-email
+            //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
+            //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
+            //cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+            cb_areaMobile.SelectedIndex = -1;
+            cb_areaPhone.SelectedIndex = -1;
+            cb_areaFax.SelectedIndex = -1;
+            cb_areaPhoneLocal.SelectedIndex = -1;
+            cb_areaFaxLocal.SelectedIndex = -1;
             tb_mobile.Clear();
+            tb_phone.Clear();
+            tb_fax.Clear();
             tb_email.Clear();
             #endregion
+
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
 
-
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+            p_error_email.Visibility = Visibility.Collapsed;
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -666,5 +675,11 @@ namespace AdministratorApp.View.sectionData
             }
         }
         #endregion
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
+        }
     }
 }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AdministratorApp.View.sectionData"
              mc:Ignorable="d"   Loaded="UserControl_Loaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="800" d:DesignWidth="950">
+             d:DesignHeight="800" d:DesignWidth="950" Unloaded="UserControl_Unloaded">
     <Grid x:Name="grid_main" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -358,11 +358,12 @@
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
                             <ComboBox   x:Name="cb_custlevel" Padding="10,5,5,5"      IsEditable="True"
-                                          TextBlock.Foreground="#4E4E4E"   Margin="4,0"
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                      materialDesign:HintAssist.Hint="Level..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
+                                        TextBlock.Foreground="#4E4E4E"   Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="Level..."    
+                                        VerticalAlignment="Center" BorderThickness="0"
+                                        Height="40" 
+                                        SelectedValue="{Binding custlevel, Mode=OneWay}"/>
                         </Grid>
                     </Border>
                     <DockPanel LastChildFill="True" Grid.Row="0">

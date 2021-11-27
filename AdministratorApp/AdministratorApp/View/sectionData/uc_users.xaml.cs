@@ -62,6 +62,8 @@ namespace AdministratorApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "lastName", "accountName",  "type", "mobile" };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -73,18 +75,15 @@ namespace AdministratorApp.View.sectionData
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                #endregion
 
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
                 FillCombo.fillUserType(cb_type);
 
-
-
                 Keyboard.Focus(tb_code);
 
-                await RefreshUsersList();
                 await Search();
                 Clear();
 
@@ -92,56 +91,46 @@ namespace AdministratorApp.View.sectionData
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translate()
         {
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_userHeader.Text = MainWindow.resourcemanager.GetString("trUsers");
-            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            //txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_passwordMirror, MainWindow.resourcemanager.GetString("trPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
+            txt_workInformation.Text = MainWindow.resourcemanager.GetString("trWorkInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_type, MainWindow.resourcemanager.GetString("trJobHint"));
+            txt_loginInformation.Text = MainWindow.resourcemanager.GetString("trLoginInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_accountName, MainWindow.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
 
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
-            //TextBox tbStart = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbStart, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            //TextBox tbEnd = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbEnd, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            dg_user.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_user.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_user.Columns[2].Header = MainWindow.resourcemanager.GetString("trMobile");
 
-            //txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            //txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            //txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            //tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
-            //dg_user.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_user.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_user.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            //dg_user.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            //dg_user.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
-
-            //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
-            //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
+            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
+            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -151,23 +140,21 @@ namespace AdministratorApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
 
-
                 //chk duplicate userName
                 bool duplicateUserName = false;
                 duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, 0);
                 //chk password length
                 bool passLength = false;
                 passLength = chkPasswordLength(pb_password.Password);
-
-
+               
                 user = new Users();
-                if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength)
+                if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength && HelpClass.IsValidEmail(this))
                 {
                     if (cb_type.SelectedValue != null)
                     { 
-                    tb_code.Text = await user.generateCodeNumber(cb_type.SelectedValue.ToString());
-                    user.code = tb_code.Text;
-                }
+                        tb_code.Text = await user.generateCodeNumber(cb_type.SelectedValue.ToString());
+                        user.code = tb_code.Text;
+                    }
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
                     user.accountName = tb_accountName.Text;
@@ -179,7 +166,7 @@ namespace AdministratorApp.View.sectionData
                     if (!tb_fax.Text.Equals(""))
                         user.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
                     if (cb_type.SelectedValue != null)
-                    user.type = cb_type.SelectedValue.ToString();
+                        user.type = cb_type.SelectedValue.ToString();
                     user.address = tb_address.Text;
                     user.notes = tb_notes.Text;
                     user.isActive = 1;
@@ -222,9 +209,14 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this))
+
+                //chk duplicate userName
+                bool duplicateUserName = false;
+                duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, user.userId);
+
+                if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
                 {
-                    user.code = "Us-000001";
+                    //user.code = user.code;
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
                     user.accountName = tb_accountName.Text;
@@ -239,7 +231,7 @@ namespace AdministratorApp.View.sectionData
                         user.type = cb_type.SelectedValue.ToString();
                     user.address = tb_address.Text;
                     user.notes = tb_notes.Text;
-                    user.isActive = 1;
+                    //user.isActive = 1;
                     user.createUserId = MainWindow.userLogin.userId;
                     user.updateUserId = MainWindow.userLogin.userId;
 
@@ -249,7 +241,6 @@ namespace AdministratorApp.View.sectionData
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshUsersList();
                         await Search();
                         if (isImgPressed)
                         {
@@ -277,10 +268,9 @@ namespace AdministratorApp.View.sectionData
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
-            {//delete
-
+            {
                 HelpClass.StartAwait(grid_main);
                 if (user.userId != 0)
                 {
@@ -293,6 +283,7 @@ namespace AdministratorApp.View.sectionData
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
+
                         if (w.isOk)
                             await activate();
                     }
@@ -308,6 +299,7 @@ namespace AdministratorApp.View.sectionData
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
+
                         if (w.isOk)
                         {
                             string popupContent = "";
@@ -350,6 +342,7 @@ namespace AdministratorApp.View.sectionData
             }
         }
         #endregion
+
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -401,38 +394,39 @@ namespace AdministratorApp.View.sectionData
             }
         }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
-        {
+        {//clear
             try
             {
                 HelpClass.StartAwait(grid_main);
 
                 Clear();
                 p_error_password.Visibility = Visibility.Collapsed;
-
-
+                p_error_email.Visibility = Visibility.Collapsed;
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {//selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
+                
                 if (dg_user.SelectedIndex != -1)
                 {
                     user = dg_user.SelectedItem as Users;
                     this.DataContext = user;
                     if (user != null)
                     {
-                       await getImg();
+                        tb_code.Text = user.code;
+                        this.DataContext = user;
+                        await getImg();
                         #region delete
                         if (user.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -450,6 +444,8 @@ namespace AdministratorApp.View.sectionData
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
+                p_error_email.Visibility = Visibility.Collapsed;
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -459,10 +455,9 @@ namespace AdministratorApp.View.sectionData
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-
+            {
                 HelpClass.StartAwait(grid_main);
                 await RefreshUsersList();
                 await Search();
@@ -470,12 +465,12 @@ namespace AdministratorApp.View.sectionData
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         #endregion
+
         #region Refresh & Search
         async Task Search()
         {
@@ -501,28 +496,40 @@ namespace AdministratorApp.View.sectionData
             txt_count.Text = usersQuery.Count().ToString();
         }
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
             this.DataContext = new Users();
 
-            #region password
+            #region password-code
             pb_password.Clear();
+            tb_passwordMirror.Clear();
+            tb_code.Text = "";
             #endregion
-            #region Phone
+            #region mobile-Phone-fax
             //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
             //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
+            //cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+            cb_areaMobile.SelectedIndex = -1;
+            cb_areaPhone.SelectedIndex = -1;
+            cb_areaFax.SelectedIndex = -1;
+            cb_areaPhoneLocal.SelectedIndex = -1;
+            cb_areaFaxLocal.SelectedIndex = -1;
             tb_mobile.Clear();
+            tb_phone.Clear();
+            tb_fax.Clear();
             tb_email.Clear();
             #endregion
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
 
-
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+            p_error_email.Visibility = Visibility.Collapsed;
         }
+
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
@@ -594,12 +601,13 @@ namespace AdministratorApp.View.sectionData
             bool isValid = true;
             if (users == null)
                await RefreshUsersList();
-            if (users.Any(i => i.name == username && i.userId != uId && i.type != "agent"))
+            if (users.Any(i => i.name == username && i.userId != uId && i.type != "ag"))
                 isValid = false;
             if (!isValid)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateUserNameToolTip"), animation: ToasterAnimation.FadeIn);
             return isValid;
         }
+
         #region Password
         private void ValidateEmpty_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -655,6 +663,7 @@ namespace AdministratorApp.View.sectionData
             return isValid;
         }
         #endregion
+
         #region Phone
         int? countryid;
         private async void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -663,7 +672,7 @@ namespace AdministratorApp.View.sectionData
             {
                 HelpClass.StartAwait(grid_main);
                     if (cb_areaPhone.SelectedValue != null)
-                {
+                    {
                         if (cb_areaPhone.SelectedIndex >= 0)
                         {
                             countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
@@ -701,6 +710,7 @@ namespace AdministratorApp.View.sectionData
         }
        
         #endregion
+
         #region Image
         string imgFileName = "pic/no-image-icon-125x125.png";
         bool isImgPressed = false;
@@ -763,5 +773,11 @@ namespace AdministratorApp.View.sectionData
             }
         }
         #endregion
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
+        }
     }
 }

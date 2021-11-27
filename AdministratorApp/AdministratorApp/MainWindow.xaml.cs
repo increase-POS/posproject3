@@ -36,10 +36,10 @@ namespace AdministratorApp
         public static ResourceManager resourcemanager;
         public static ResourceManager resourcemanagerreport;
         static public MainWindow mainWindow;
-        public static string lang = "en";
+        public static string lang = "ar";
         internal static Users userLogin = new Users();
         public static int userID=1;
-
+        //public static CountryCode Region;
         internal static int? userLogInID;
         public static Boolean go_out = false;
 
@@ -196,9 +196,9 @@ namespace AdministratorApp
             string job = "";
             switch(userLogin.type)
             {
-                case "u":     job = "Employee"; break;
+                case "us":    job = "Employee"; break;
                 case "ad":    job = "Admin";    break;
-                case "agent": job = "Agent";    break;
+                case "ag":    job = "Agent";    break;
             }
             txt_userJob.Text = job;
             try

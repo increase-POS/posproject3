@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AdministratorApp.View.sectionData"
              mc:Ignorable="d"  Loaded="UserControl_Loaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="800" d:DesignWidth="950">
+             d:DesignHeight="800" d:DesignWidth="950" Unloaded="UserControl_Unloaded">
     <Grid x:Name="grid_main" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -415,14 +415,14 @@
                         <Grid   >
                             <ComboBox   x:Name="cb_type" Padding="10,0,5,0"    IsEditable="True" 
                                         SelectedValue="{Binding type, Mode=OneWay}"
-                                          TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                      materialDesign:HintAssist.Hint="Job..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40" LostFocus="validateEmpty_LostFocus"  />
+                                        TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="Job..."    
+                                        VerticalAlignment="Center" BorderThickness="0"
+                                        Height="40" LostFocus="validateEmpty_LostFocus"  />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_type"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                             </Path>
                         </Grid>
@@ -448,9 +448,9 @@
                             <Grid   >
                                 <ComboBox   x:Name="cb_areaMobile" Padding="10,0,5,0" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
-                                          TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40" Width="60"    />
+                                            TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
+                                            VerticalAlignment="Center" BorderThickness="0"
+                                            Height="40" Width="60"    />
                             </Grid>
                         </Border>
 
@@ -482,10 +482,9 @@
                                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid   >
                                 <ComboBox x:Name="cb_areaPhone" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
-                                      
-                       Height="40" Margin="4,0"   Width="60"   BorderThickness="0" 
-                                      SelectionChanged="Cb_areaPhone_SelectionChanged"/>
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
+                                          Height="40" Margin="4,0"   Width="60"   BorderThickness="0" 
+                                          SelectionChanged="Cb_areaPhone_SelectionChanged"/>
                             </Grid>
                         </Border>
 
@@ -566,14 +565,14 @@
                             <TextBox x:Name="tb_email"  Text="{Binding email, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="email..."  
-                                     Foreground="#4E4E4E"  
+                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"  Margin="4,0" 
-                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                      Height="40"  Margin="4,0" 
+                                      LostFocus="validateEmpty_LostFocus" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_email" 
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                             </Path>
                         </Grid>
