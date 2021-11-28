@@ -368,5 +368,11 @@ namespace AdministratorApp.View.windows
             return b;
         }
         #endregion
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
+        }
     }
 }

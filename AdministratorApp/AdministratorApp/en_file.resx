@@ -2401,4 +2401,16 @@ Please add Email in setting</value>
   <data name="trVip" xml:space="preserve">
     <value>Vip</value>
   </data>
+  <data name="trAgents" xml:space="preserve">
+    <value>Agents</value>
+  </data>
+  <data name="trApplications" xml:space="preserve">
+    <value>Applications</value>
+  </data>
+  <data name="trSerials" xml:space="preserve">
+    <value>Serials</value>
+  </data>
+  <data name="trUserPackage" xml:space="preserve">
+    <value>User Package</value>
+  </data>
 </root>

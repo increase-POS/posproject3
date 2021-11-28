@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,29 +39,41 @@ namespace AdministratorApp.View.sectionData
         }
         public static List<string> menuList;
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        {//load
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_mainGrid);
-
-
+                HelpClass.StartAwait(grid_mainGrid);
 
                 menuList = new List<string> { "users", "agents", "customers" };
 
+                #region translate
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+                #endregion
 
-
-
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.EndAwait(grid_mainGrid);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void translate()
+        {
+            btn_users.Content = MainWindow.resourcemanager.GetString("trUsers");
+            btn_agents.Content = MainWindow.resourcemanager.GetString("trAgents");
+            btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
 
         void colorButtonRefreash(string str)
@@ -126,6 +140,16 @@ namespace AdministratorApp.View.sectionData
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Memory used before collection: " +
+                             GC.GetTotalMemory(false).ToString());
+            // Collect all generations of memory.
+            GC.Collect();
+            MessageBox.Show("Memory used after full collection: " +
+                             GC.GetTotalMemory(true).ToString());
         }
     }
 }

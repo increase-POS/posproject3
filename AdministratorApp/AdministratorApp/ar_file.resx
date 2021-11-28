@@ -2383,4 +2383,16 @@
   <data name="trVip" xml:space="preserve">
     <value>Vip</value>
   </data>
+  <data name="trAgents" xml:space="preserve">
+    <value>الوكلاء</value>
+  </data>
+  <data name="trApplications" xml:space="preserve">
+    <value>التطبيقات</value>
+  </data>
+  <data name="trSerials" xml:space="preserve">
+    <value>الأرقام التسلسلية</value>
+  </data>
+  <data name="trUserPackage" xml:space="preserve">
+    <value>حزمة المستخدم</value>
+  </data>
 </root>

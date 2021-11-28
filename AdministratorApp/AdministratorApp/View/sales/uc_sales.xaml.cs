@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,30 +39,42 @@ namespace AdministratorApp.View.sales
         }
         public static List<string> menuList;
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        {//load
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_mainGrid);
-
+                HelpClass.StartAwait(grid_mainGrid);
 
                 menuList = new List<string> { "sale", "packageUser", "posSerials" };
 
+                #region translate
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+                #endregion
 
-
-
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_mainGrid);
+                HelpClass.EndAwait(grid_mainGrid);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
+        private void translate()
+        {
+            btn_sale.Content = MainWindow.resourcemanager.GetString("trSales");
+            btn_packageUser.Content = MainWindow.resourcemanager.GetString("trUserPackage");
+            btn_posSerials.Content = MainWindow.resourcemanager.GetString("trSerials");
+        }
         void colorButtonRefreash(string str)
         {
             foreach (Button button in FindControls.FindVisualChildren<Button>(this))
@@ -126,6 +140,10 @@ namespace AdministratorApp.View.sales
             }
         }
 
-       
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
+        }
     }
 }

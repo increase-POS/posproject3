@@ -56,6 +56,7 @@ namespace AdministratorApp
             {
                 InitializeComponent();
                 mainWindow = this;
+                windowFlowDirection();
             }
             catch (Exception ex)
             {
@@ -64,7 +65,7 @@ namespace AdministratorApp
         }
         void windowFlowDirection()
         {
-            #region translate
+            #region
             if (lang.Equals("en"))
             {
                 resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -78,7 +79,23 @@ namespace AdministratorApp
             #endregion
         }
 
-       public static List<string> menuList;
+        private void translate()
+        {
+            txt_applications.Text = resourcemanager.GetString("trApplications");
+            txt_sales.Text = resourcemanager.GetString("trSales");
+            txt_reports.Text = resourcemanager.GetString("trReports");
+            txt_sectionData.Text = resourcemanager.GetString("trSectionData");
+            txt_settings.Text = resourcemanager.GetString("trSettings");
+
+            mi_changePassword.Header = resourcemanager.GetString("trChangePassword");
+            BTN_logOut.Header = resourcemanager.GetString("trLogOut");
+
+            //txt_notifications.Text = resourcemanager.GetString("trNotifications");
+            //txt_noNoti.Text = resourcemanager.GetString("trNoNotifications");
+            //btn_showAll.Content = resourcemanager.GetString("trShowAll");
+        }
+
+        public static List<string> menuList;
 
         #region loading
         List<keyValueBool> loadingList;
@@ -434,7 +451,7 @@ namespace AdministratorApp
         #endregion
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        {//load
             try
             {
                 if (sender != null)
@@ -442,6 +459,8 @@ namespace AdministratorApp
                 //windowFlowDirection();
                 menuList = new List<string> { "applications", "sales", "reports",
                    "sectionData","settings"};
+
+                translate();
 
                 #region loading
                 loadingList = new List<keyValueBool>();
