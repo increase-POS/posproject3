@@ -109,3 +109,11 @@ C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_S
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.csproj.CopyComplete
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.dll
 C:\Users\Administrator\Documents\programs-manage\POS_Server\obj\Debug\Programs_Server.pdb
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Logging.xml
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\Administrator\Documents\programs-manage\POS_Server\bin\System.IdentityModel.Tokens.Jwt.xml

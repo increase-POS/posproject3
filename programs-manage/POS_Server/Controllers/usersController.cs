@@ -446,6 +446,7 @@ namespace Programs_Server.Controllers
                                 //   tmpObject.createUserId = newObject.createUserId;
                                 tmpObject.updateUserId = newObject.updateUserId;
                                 tmpObject.isActive = newObject.isActive;
+                                tmpObject.isOnline = newObject.isOnline;
 
 
 
