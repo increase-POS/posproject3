@@ -60,6 +60,8 @@ namespace AdministratorApp.View.sectionData
                 translate();
                 #endregion
 
+                Btn_users_Click(btn_users , null);
+
                 HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
@@ -144,12 +146,8 @@ namespace AdministratorApp.View.sectionData
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Memory used before collection: " +
-                             GC.GetTotalMemory(false).ToString());
             // Collect all generations of memory.
             GC.Collect();
-            MessageBox.Show("Memory used after full collection: " +
-                             GC.GetTotalMemory(true).ToString());
         }
     }
 }

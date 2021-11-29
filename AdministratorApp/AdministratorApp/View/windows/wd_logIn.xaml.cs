@@ -26,7 +26,7 @@ namespace AdministratorApp.View.windows
     public partial class wd_logIn : Window
     {
         BrushConverter brushConverter = new BrushConverter();
-        public static string lang = "en";
+        //public static string lang = "en";
         bool logInProcessing = false;
         Users userModel = new Users();
         Users user = new Users();
@@ -55,7 +55,7 @@ namespace AdministratorApp.View.windows
                 {
                     txtUserName.Text = Properties.Settings.Default.userName;
                     txtPassword.Password = Properties.Settings.Default.password;
-                    lang = Properties.Settings.Default.Lang;
+                    MainWindow.lang = Properties.Settings.Default.Lang;
                     //menuIsOpen = Properties.Settings.Default.menuIsOpen;
                     cbxRemmemberMe.IsChecked = true;
 
@@ -64,14 +64,14 @@ namespace AdministratorApp.View.windows
                 {
                     txtUserName.Clear();
                     txtPassword.Clear();
-                    lang = "en";
+                    MainWindow.lang = "en";
                     //menuIsOpen = "close";
                     cbxRemmemberMe.IsChecked = false;
                 }
                 #endregion
 
                 #region translate
-                if (lang.Equals("en"))
+                if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -100,7 +100,6 @@ namespace AdministratorApp.View.windows
                     Keyboard.Focus(txtUserName);
                 else if (txtPassword.Password.Equals(""))
                     Keyboard.Focus(txtPassword);
-
               
             }
             catch (Exception ex)
@@ -108,15 +107,6 @@ namespace AdministratorApp.View.windows
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-
-        private void translate()
-        {
-            cbxRemmemberMe.Content = MainWindow.resourcemanager.GetString("trRememberMe");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtUserName, MainWindow.resourcemanager.GetString("trUserName"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtPassword, MainWindow.resourcemanager.GetString("trPassword"));
-            txt_logIn.Text = MainWindow.resourcemanager.GetString("trLogIn");
-            txt_close.Text = MainWindow.resourcemanager.GetString("trClose");
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -144,75 +134,7 @@ namespace AdministratorApp.View.windows
             { }
         }
 
-        private void validateEmpty(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender.GetType().Name == "TextBox")
-                {
-                    if (txtUserName.Text.Equals(""))
-                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trEmptyUserNameToolTip");
-                }
-                else if (sender.GetType().Name == "PasswordBox")
-                {
-                    if (txtPassword.Password.Equals(""))
-                        HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trEmptyPasswordToolTip");
-                }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void validateTextChanged(object sender, TextChangedEventArgs e)
-        {
-            clearValidate(p_errorUserName);
-            txtUserName.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-        }
-        private void validatePasswordChanged(object sender, RoutedEventArgs e)
-        {
-            clearValidate(p_errorPassword);
-            txtPassword.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-        }
-
-        private void clearValidate(Path p)
-        {
-            try
-            {
-                HelpClass.clearValidate(p);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                txtShowPassword.Text = txtPassword.Password;
-                txtShowPassword.Visibility = Visibility.Visible;
-                txtPassword.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void P_showPassword_MouseLeave(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                txtShowPassword.Visibility = Visibility.Collapsed;
-                txtPassword.Visibility = Visibility.Visible;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
+       
         private async void btnLogIn_Click(object sender, RoutedEventArgs e)
         {//log in
             try
@@ -250,19 +172,6 @@ namespace AdministratorApp.View.windows
                             MainWindow.userID = user.userId;
                             MainWindow.userLogin = user;
 
-                            #region send language to main window
-                            try
-                            {
-                                //MainWindow.lang = await getUserLanguage(user.userId);
-                                lang = MainWindow.lang;
-                            }
-                            catch
-                            {
-                                MainWindow.lang = "en";
-                                lang = MainWindow.lang;
-                            }
-                            #endregion
-
                             #region check if menu is open
                             //try
                             //{
@@ -290,7 +199,7 @@ namespace AdministratorApp.View.windows
                             {
                                 Properties.Settings.Default.userName = txtUserName.Text;
                                 Properties.Settings.Default.password = txtPassword.Password;
-                                Properties.Settings.Default.Lang = lang;
+                                Properties.Settings.Default.Lang = MainWindow.lang;
                                 //Properties.Settings.Default.menuIsOpen = menuIsOpen;
                             }
                             else
@@ -327,6 +236,96 @@ namespace AdministratorApp.View.windows
             try
             {
                 Application.Current.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+      
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Collect all generations of memory.
+            GC.Collect();
+
+        }
+
+        #region validate
+        private void validateEmpty(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender.GetType().Name == "TextBox")
+                {
+                    if (txtUserName.Text.Equals(""))
+                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trEmptyUserNameToolTip");
+                }
+                else if (sender.GetType().Name == "PasswordBox")
+                {
+                    if (txtPassword.Password.Equals(""))
+                        HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trEmptyPasswordToolTip");
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void validateTextChanged(object sender, TextChangedEventArgs e)
+        {
+            clearValidate(p_errorUserName);
+            txtUserName.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
+        }
+        private void validatePasswordChanged(object sender, RoutedEventArgs e)
+        {
+            clearValidate(p_errorPassword);
+            txtPassword.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
+        }
+
+
+        private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                txtShowPassword.Text = txtPassword.Password;
+                txtShowPassword.Visibility = Visibility.Visible;
+                txtPassword.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void P_showPassword_MouseLeave(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                txtShowPassword.Visibility = Visibility.Collapsed;
+                txtPassword.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
+
+        #region methods
+        private void translate()
+        {
+            cbxRemmemberMe.Content = MainWindow.resourcemanager.GetString("trRememberMe");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtUserName, MainWindow.resourcemanager.GetString("trUserName"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtPassword, MainWindow.resourcemanager.GetString("trPassword"));
+            txt_logIn.Text = MainWindow.resourcemanager.GetString("trLogIn");
+            txt_close.Text = MainWindow.resourcemanager.GetString("trClose");
+        }
+        private void clearValidate(Path p)
+        {
+            try
+            {
+                HelpClass.clearValidate(p);
             }
             catch (Exception ex)
             {
@@ -377,15 +376,9 @@ namespace AdministratorApp.View.windows
         */
         #endregion
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //MessageBox.Show("Memory used before collection: " +
-            //                 GC.GetTotalMemory(false).ToString());
-            // Collect all generations of memory.
-            GC.Collect();
-            //MessageBox.Show("Memory used after full collection: " +
-            //                 GC.GetTotalMemory(true).ToString());
+        #endregion
 
-        }
+
+
     }
 }

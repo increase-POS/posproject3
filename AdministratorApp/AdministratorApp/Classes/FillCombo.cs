@@ -61,17 +61,11 @@ namespace AdministratorApp.Classes
         /// </summary>
         static Users user = new Users();
         static IEnumerable<Users> users;
-        static public async Task fillUser(ComboBox combo)
-        {
-            users = await user.GetAll();
-            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type != "agent");
-            combo.SelectedValuePath = "userId";
-            combo.DisplayMemberPath = "name";
-        }
+      
         static public async Task fillAgent(ComboBox combo)
         {
             users = await user.GetAll();
-            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "agent");
+            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag");
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }
@@ -134,9 +128,7 @@ namespace AdministratorApp.Classes
                 border.Visibility = Visibility.Collapsed;
         }
         #endregion
-        /// <summary>
-        /// fill user type
-        /// </summary>
+
         #region fill user type
         static public void fillUserType(ComboBox combo)
         {

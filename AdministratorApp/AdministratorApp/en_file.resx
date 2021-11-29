@@ -2413,4 +2413,55 @@ Please add Email in setting</value>
   <data name="trUserPackage" xml:space="preserve">
     <value>User Package</value>
   </data>
+  <data name="trAgentHint" xml:space="preserve">
+    <value>Agent ...</value>
+  </data>
+  <data name="trBranchCount" xml:space="preserve">
+    <value>Branches Count</value>
+  </data>
+  <data name="trCustomerCount" xml:space="preserve">
+    <value>Customers Count</value>
+  </data>
+  <data name="trInvoiceCount" xml:space="preserve">
+    <value>Invoices Count</value>
+  </data>
+  <data name="trItemCount" xml:space="preserve">
+    <value>Items Count</value>
+  </data>
+  <data name="trPackageDetails" xml:space="preserve">
+    <value>Package Details</value>
+  </data>
+  <data name="trPackageHint" xml:space="preserve">
+    <value>Package ...</value>
+  </data>
+  <data name="trPackageLimits" xml:space="preserve">
+    <value>Package Limits</value>
+  </data>
+  <data name="trPOSCount" xml:space="preserve">
+    <value>POS Count</value>
+  </data>
+  <data name="trProgram" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="trProgramDetails" xml:space="preserve">
+    <value>Program Details</value>
+  </data>
+  <data name="trSale" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="trSaleDetails" xml:space="preserve">
+    <value>Sale Details</value>
+  </data>
+  <data name="trStoreCount" xml:space="preserve">
+    <value>Stores Count</value>
+  </data>
+  <data name="trUserCount" xml:space="preserve">
+    <value>Users Count</value>
+  </data>
+  <data name="trVendorCount" xml:space="preserve">
+    <value>Vendors Count</value>
+  </data>
+  <data name="trVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
 </root>

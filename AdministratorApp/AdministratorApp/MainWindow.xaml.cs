@@ -523,6 +523,7 @@ namespace AdministratorApp
                 while (!isDone);
                 #endregion
 
+                Btn_applications_Click(btn_applications , null);
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
             }

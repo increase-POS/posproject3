@@ -35,7 +35,14 @@ namespace AdministratorApp.View.sales
         }
         public uc_sales()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch(Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex ,this );
+            }
         }
         public static List<string> menuList;
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,6 +66,8 @@ namespace AdministratorApp.View.sales
                 }
                 translate();
                 #endregion
+
+                Btn_sale_Click(btn_sale , null);
 
                 HelpClass.EndAwait(grid_mainGrid);
             }

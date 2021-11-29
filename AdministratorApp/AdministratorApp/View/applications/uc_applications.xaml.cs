@@ -53,9 +53,7 @@ namespace AdministratorApp.View.applications
 
                 menuList = new List<string> { "programs", "versions", "packages" };
 
-
-
-
+                Btn_programs_Click(btn_programs , null);
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -131,6 +129,11 @@ namespace AdministratorApp.View.applications
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
         }
     }
 }
