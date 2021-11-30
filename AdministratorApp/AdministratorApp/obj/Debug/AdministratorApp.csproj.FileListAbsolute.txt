@@ -285,7 +285,6 @@ E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.Repo
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.ReportViewer.WinForms.dll
-E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.SqlServer.Types.dll
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.Xaml.Behaviors.dll
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\netoaster.dll
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Newtonsoft.Json.dll
@@ -541,3 +540,7 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\GeneratedInter
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_permissions.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_usersList.baml
+E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_changePassword.g.cs
+E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_logIn.g.cs
+E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_changePassword.baml
+E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_logIn.baml

@@ -16,5 +16,7 @@ FE:\github\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_use
 FE:\github\posproject3\AdministratorApp\AdministratorApp\View\settings\uc_permissions.xaml;;
 FE:\github\posproject3\AdministratorApp\AdministratorApp\View\settings\uc_settings.xaml;;
 FE:\github\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_acceptCancelPopup.xaml;;
+FE:\github\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_changePassword.xaml;;
+FE:\github\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_logIn.xaml;;
 FE:\github\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_usersList.xaml;;
 

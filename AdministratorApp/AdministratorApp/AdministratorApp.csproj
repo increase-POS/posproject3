@@ -224,6 +224,12 @@
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_changePassword.xaml.cs">
+      <DependentUpon>wd_changePassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_logIn.xaml.cs">
+      <DependentUpon>wd_logIn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
@@ -307,6 +313,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_changePassword.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_logIn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
