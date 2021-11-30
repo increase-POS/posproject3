@@ -123,7 +123,13 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Agent" Binding="{Binding Path=userName}">
+                            <DataGridTextColumn Width="*"  Header="Agent" >
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="userName"></Binding>
+                                        <Binding Path="userLastName"></Binding>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -134,7 +140,13 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Customer" Binding="{Binding Path=customerName}">
+                            <DataGridTextColumn Width="*"  Header="Customer" >
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="customerName"></Binding>
+                                        <Binding Path="customerLastName"></Binding>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -275,10 +287,10 @@
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <TextBox x:Name="tb_packageSaleCode"  Text="{Binding packageSaleCode, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="Package Sale Code..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Package Sale Code..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
@@ -291,7 +303,7 @@
 
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5" SelectedValue="{Binding userId, Mode=OneWay}"     IsEditable="True"
+                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5" SelectedValue="{Binding userId, Mode=OneWay}"    
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Agent..."    
@@ -301,7 +313,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5" SelectedValue="{Binding customerId, Mode=OneWay}"     IsEditable="True" 
+                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5" SelectedValue="{Binding customerId, Mode=OneWay}"    
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Customer..."    
@@ -311,19 +323,18 @@
                     </Border>
                     <Border   CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <TextBox x:Name="tb_packageNumber"  Text="{Binding packageNumber, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"
-                                      materialDesign:HintAssist.Hint="Package Number..."  
-                                     Foreground="#4E4E4E"    KeyboardNavigation.IsTabStop="False"
-                                      MaxLength="50" BorderThickness="0" 
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" />
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:HintAssist.Hint="Package Number..."  
+                                 Foreground="#4E4E4E"    KeyboardNavigation.IsTabStop="False"
+                                 MaxLength="50" BorderThickness="0" IsReadOnly="True"
+                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                 Height="40"   Margin="4,0" />
                     </Border>
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <TextBox x:Name="tb_customerServerCode"  Text="{Binding customerServerCode, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Server Code..."  
-                                     Foreground="#4E4E4E"  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" />
@@ -351,12 +362,12 @@
                         <Border Grid.Column="2" CornerRadius="10" Margin="10,5,10,5" 
                                 IsEnabled="{Binding Path=IsChecked, ElementName=tgl_islimitDate}" BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid>
-                                <DatePicker   x:Name="dp_bookDate"  SelectedDate="{Binding bookDate, Mode=OneWay}" Padding="10,5,5,5"    
-                                          TextBlock.Foreground="#4E4E4E"    Margin="4,0" 
-                                   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
-                                      materialDesign:HintAssist.Hint="Book Date..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
+                                <DatePicker x:Name="dp_bookDate"  SelectedDate="{Binding bookDate, Mode=OneWay}" Padding="10,5,5,5"    
+                                            TextBlock.Foreground="#4E4E4E"    Margin="4,0" 
+                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                                            materialDesign:HintAssist.Hint="Book Date..."    
+                                            VerticalAlignment="Center" BorderThickness="0"
+                                            Height="40"  IsEnabled="False" />
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"

@@ -38,9 +38,17 @@ namespace AdministratorApp.View.sales
         }
         public uc_packageUser()
         {
-            InitializeComponent();
-            HelpClass.defaultDatePickerStyle(dp_bookDate);
-            HelpClass.defaultDatePickerStyle(dp_expireDate);
+            try
+            {
+                InitializeComponent();
+                HelpClass.defaultDatePickerStyle(dp_bookDate);
+                HelpClass.defaultDatePickerStyle(dp_expireDate);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         IEnumerable<PackageUser> packageUsersQuery;
@@ -71,7 +79,6 @@ namespace AdministratorApp.View.sales
                 await FillCombo.fillCustomer(cb_customer);
 
                 //Keyboard.Focus(tb_code);
-                await RefreshPackageUserList();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -315,12 +322,14 @@ namespace AdministratorApp.View.sales
             //search
             if (packageUsers is null)
                 await RefreshPackageUserList();
+
             searchText = tb_search.Text.ToLower();
             packageUsersQuery = packageUsers.Where(s => (s.packageSaleCode.ToLower().Contains(searchText) 
             || s.userName.ToLower().Contains(searchText) 
             || s.customerName.ToLower().Contains(searchText)
             || s.packageNumber.ToLower().Contains(searchText)
             ) && s.isActive == tgl_packageUserState);
+
             RefreshPackageUserView();
         }
         async Task<IEnumerable<PackageUser>> RefreshPackageUserList()

@@ -26,6 +26,14 @@ namespace AdministratorApp.View.sales
     /// </summary>
     public partial class uc_posSerials : UserControl
     {
+
+        IEnumerable<PosSerials> posSerialsQuery;
+        IEnumerable<PosSerials> posSerials;
+        PosSerials posSerial = new PosSerials();
+        string searchText = "";
+        public static List<string> requiredControlList;
+        PackageUser pmodel = new PackageUser();
+
         private static uc_posSerials _instance;
         public static uc_posSerials Instance
         {
@@ -38,22 +46,26 @@ namespace AdministratorApp.View.sales
         }
         public uc_posSerials()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
 
-        IEnumerable<PosSerials> posSerialsQuery;
-        IEnumerable<PosSerials> posSerials;
-        PosSerials posSerial = new PosSerials();
-        byte tgl_posSerialState;
-        string searchText = "";
-        public static List<string> requiredControlList;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
+
                 requiredControlList = new List<string> { "" };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -65,11 +77,16 @@ namespace AdministratorApp.View.sales
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
 
-                //Keyboard.Focus(tb_code);
-                await RefreshPosSerialsList();
+                await FillCombo.fillPackageUser(cb_package);
+                FillCombo.fillBooked(cb_booked);
+                chk_allPackages.IsChecked = true;
+
                 await Search();
+
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -128,19 +145,19 @@ namespace AdministratorApp.View.sales
         }
 
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        {
-            //add
+        {//add
             try
             {
-                PackageUser pmodel = new PackageUser();
-                string  packageSaleCode= "3gioIYKanfl1EznA";
-                string customerServerCode="asus";
-                SendDetail item = new SendDetail();
-                item = await pmodel.Activateserver(packageSaleCode, customerServerCode);
+                HelpClass.StartAwait(grid_main);
+                //string packageSaleCode = "3gioIYKanfl1EznA";
+                //string customerServerCode = "asus";
+                //SendDetail item = new SendDetail();
 
-                string mes = item.ToString();
+                //item = await pmodel.Activateserver(packageSaleCode, customerServerCode);
 
+                //string mes = item.ToString();
 
+                #region
                 //HelpClass.StartAwait(grid_main);
                 //posSerial = new PosSerials();
                 //if (HelpClass.validate(requiredControlList, this))
@@ -165,7 +182,9 @@ namespace AdministratorApp.View.sales
                 //        await Search();
                 //    }
                 //}
-                //HelpClass.EndAwait(grid_main);
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -207,41 +226,41 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (posSerials is null)
-                    await RefreshPosSerialsList();
-                tgl_posSerialState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (posSerials is null)
-                    await RefreshPosSerialsList();
-                tgl_posSerialState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+        //private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+        //        if (posSerials is null)
+        //            await RefreshPosSerialsList();
+        //        tgl_posSerialState = 1;
+        //        await Search();
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+        //private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+        //        if (posSerials is null)
+        //            await RefreshPosSerialsList();
+        //        tgl_posSerialState = 0;
+        //        await Search();
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -260,12 +279,11 @@ namespace AdministratorApp.View.sales
             }
         }
         private void Dg_posSerial_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {//selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
-
+                
                 if (dg_posSerial.SelectedIndex != -1)
                 {
                     posSerial = dg_posSerial.SelectedItem as PosSerials;
@@ -294,10 +312,17 @@ namespace AdministratorApp.View.sales
             //search
             if (posSerials is null)
                 await RefreshPosSerialsList();
+
             searchText = tb_search.Text.ToLower();
             posSerialsQuery = posSerials.Where(s => (s.serial.ToLower().Contains(searchText)
             || s.apikey.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_posSerialState);
+            ) 
+            && (cb_booked.SelectedIndex != -1   ? cb_booked.SelectedValue.ToString() == "2" ? true :
+                                                  s.isBooked = Convert.ToBoolean(cb_booked.SelectedValue)
+                                               : true)
+            && (cb_package.SelectedIndex != -1  ? s.packageUserId == Convert.ToInt32(cb_package.SelectedValue) : true)
+            );
+
             RefreshPosSerialsView();
         }
         async Task<IEnumerable<PosSerials>> RefreshPosSerialsList()
@@ -429,5 +454,76 @@ namespace AdministratorApp.View.sales
         }
         #endregion
 
+        private async void Cb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.EndAwait(grid_main);
+
+                await Search();
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chk_allPackages_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cb_package.SelectedItem = null;
+                cb_package.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chk_allPackages_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cb_package.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Dg_posSerial_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {//selection
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (dg_posSerial.SelectedIndex != -1)
+                {
+                    posSerial = dg_posSerial.SelectedItem as PosSerials;
+                    this.DataContext = posSerial;
+                    if (posSerial != null)
+                    {
+                    }
+                }
+              
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+        }
     }
 }

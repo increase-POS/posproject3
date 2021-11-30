@@ -15,6 +15,17 @@ namespace AdministratorApp.Classes
         /// </summary>
         static Packages package = new Packages();
         static IEnumerable<Packages> packages;
+
+        static PackageUser packageUser = new PackageUser();
+        static IEnumerable<PackageUser> packageUsers;
+        static public async Task fillPackageUser(ComboBox combo)
+        {
+            packageUsers = await packageUser.GetAll();
+            combo.ItemsSource = packageUsers.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "packageUserId";
+            combo.DisplayMemberPath = "packageSaleCode";
+        }
+
         static public async Task fillPackage(ComboBox combo)
         {
             packages = await package.GetAll();
@@ -156,6 +167,22 @@ namespace AdministratorApp.Classes
             combo.ItemsSource = typelist;
 
         }
+        #endregion
+
+        #region fill booked
+        static public void fillBooked(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trAll")      , Value = "2" },
+                new { Text = MainWindow.resourcemanager.GetString("trBooked")   , Value = "false" },
+                new { Text = MainWindow.resourcemanager.GetString("trUnBooked") , Value = "true" },
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+
         #endregion
 
     }

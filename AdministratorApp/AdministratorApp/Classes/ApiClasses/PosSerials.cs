@@ -31,6 +31,7 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
         public string notes { get; set; }
+        public string packageSaleCode { get; set; }
 
         private string urimainpath = "posSerials/";
         /// <summary>

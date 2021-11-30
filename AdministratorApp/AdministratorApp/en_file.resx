@@ -2464,4 +2464,10 @@ Please add Email in setting</value>
   <data name="trVersion" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="trBooked" xml:space="preserve">
+    <value>Booked</value>
+  </data>
+  <data name="trUnBooked" xml:space="preserve">
+    <value>Un Booked</value>
+  </data>
 </root>

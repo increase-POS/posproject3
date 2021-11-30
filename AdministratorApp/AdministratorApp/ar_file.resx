@@ -1879,17 +1879,11 @@
   <data name="trShortage" xml:space="preserve">
     <value>نقص</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="trCredit" xml:space="preserve">
     <value>رصيد</value>
   </data>
   <data name="trDepositor" xml:space="preserve">
     <value>المودع</value>
-  </data>
-  <data name="String2" xml:space="preserve">
-    <value />
   </data>
   <data name="trPurchaceOrder" xml:space="preserve">
     <value>طلبية شراء</value>
@@ -2123,7 +2117,7 @@
     <value>شركة الشحن ...</value>
   </data>
   <data name="trVendorCustomerUserHint" xml:space="preserve">
-    <value>مورد,زبون,مستخدم ...</value>
+    <value>مورد,زبون,مستخدم...</value>
   </data>
   <data name="trWorthy" xml:space="preserve">
     <value>المستحق</value>
@@ -2216,7 +2210,7 @@
     <value>رسوم الاشتراك</value>
   </data>
   <data name="trToUnitHint" xml:space="preserve">
-    <value>إلى الوحدة ...</value>
+    <value>إلى الوحدة...</value>
   </data>
   <data name="trUnitConversion" xml:space="preserve">
     <value>تحويل الوحدات</value>
@@ -2445,5 +2439,11 @@
   </data>
   <data name="trVersion" xml:space="preserve">
     <value>الإصدار</value>
+  </data>
+  <data name="trBooked" xml:space="preserve">
+    <value>محجوز</value>
+  </data>
+  <data name="trUnBooked" xml:space="preserve">
+    <value>غير محجوز</value>
   </data>
 </root>
