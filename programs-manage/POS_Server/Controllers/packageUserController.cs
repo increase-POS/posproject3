@@ -43,14 +43,20 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         var List = (from S in entity.packageUser
+                                    join A in entity.users on S.userId equals A.userId
+                                    join C in entity.customers on S.customerId equals C.custId
                                     select new packageUserModel()
                                     {
                                         packageUserId = S.packageUserId,
                                         packageId = S.packageId,
                                         userId = S.userId,
+                                        userName = A.name ,
+                                        userLastName = A.lastName,
                                         packageSaleCode = S.packageSaleCode,
                                         packageNumber = S.packageNumber,
                                         customerId = S.customerId,
+                                        customerName = C.custname ,
+                                        customerLastName = C.lastName,
                                         customerServerCode = S.customerServerCode,
                                         isBooked = S.isBooked,
                                         notes = S.notes,
@@ -62,8 +68,6 @@ namespace Programs_Server.Controllers
                                         isActive = S.isActive,
                                         expireDate = S.expireDate,
                                         isOnlineServer = S.isOnlineServer,
-
-
 
                                     }).ToList();
                         /*

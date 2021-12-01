@@ -25,7 +25,10 @@ namespace Programs_Server.Models
         public Nullable<System.DateTime> expireDate { get; set; }
         public Nullable<bool> isOnlineServer { get; set; }
         public bool canDelete { get; set; }
-      
+        public string userName { get; set; }
+        public string userLastName { get; set; }
+        public string customerName { get; set; }
+        public string customerLastName { get; set; }
     }
 
 

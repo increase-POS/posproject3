@@ -43,6 +43,7 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         var List = (from S in entity.posSerials
+                                    join P in entity.packageUser on S.packageUserId equals P.packageUserId
                                     select new posSerialsModel()
                                     {
                                         serialId = S.serialId,
@@ -58,6 +59,7 @@ namespace Programs_Server.Controllers
                                         updateUserId = S.updateUserId,
                                         canDelete = true,
                                         notes = S.notes,
+                                        packageSaleCode = P.packageSaleCode
 
 
                                     }).ToList();
