@@ -2470,4 +2470,19 @@ Please add Email in setting</value>
   <data name="trUnBooked" xml:space="preserve">
     <value>Un Booked</value>
   </data>
+  <data name="trBookHint" xml:space="preserve">
+    <value>Booked...</value>
+  </data>
+  <data name="trPackageCode" xml:space="preserve">
+    <value>Package Code</value>
+  </data>
+  <data name="trPackageCodeHint" xml:space="preserve">
+    <value>Package Code...</value>
+  </data>
+  <data name="trPosDeviceCodeHint" xml:space="preserve">
+    <value>POS Device Code...</value>
+  </data>
+  <data name="trPosSerial" xml:space="preserve">
+    <value>Pos Serials</value>
+  </data>
 </root>

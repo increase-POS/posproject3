@@ -2446,4 +2446,19 @@
   <data name="trUnBooked" xml:space="preserve">
     <value>غير محجوز</value>
   </data>
+  <data name="trBookHint" xml:space="preserve">
+    <value>محجوز...</value>
+  </data>
+  <data name="trPackageCode" xml:space="preserve">
+    <value>كود الحزمة</value>
+  </data>
+  <data name="trPackageCodeHint" xml:space="preserve">
+    <value>كود الحزمة...</value>
+  </data>
+  <data name="trPosDeviceCodeHint" xml:space="preserve">
+    <value>كود POS...</value>
+  </data>
+  <data name="trPosSerial" xml:space="preserve">
+    <value>الأرقام التسلسلية</value>
+  </data>
 </root>

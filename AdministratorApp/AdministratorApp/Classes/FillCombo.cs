@@ -173,9 +173,9 @@ namespace AdministratorApp.Classes
         static public void fillBooked(ComboBox combo)
         {
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trAll")      , Value = "2" },
-                new { Text = MainWindow.resourcemanager.GetString("trBooked")   , Value = "false" },
-                new { Text = MainWindow.resourcemanager.GetString("trUnBooked") , Value = "true" },
+                new { Text = MainWindow.resourcemanager.GetString("trAll")      , Value = "all" },
+                new { Text = MainWindow.resourcemanager.GetString("trBooked")   , Value = "true" },
+                new { Text = MainWindow.resourcemanager.GetString("trUnBooked") , Value = "false" },
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";

@@ -98,122 +98,56 @@ namespace AdministratorApp.View.sales
         }
         private void translate()
         {
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_posSerialHeader.Text = MainWindow.resourcemanager.GetString("trPosSerials");
-            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            //txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            chk_allPackages.Content = MainWindow.resourcemanager.GetString("trAll");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_package, MainWindow.resourcemanager.GetString("trPackageHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_booked, MainWindow.resourcemanager.GetString("trBookHint"));
+            txt_title.Text = MainWindow.resourcemanager.GetString("trPosSerial");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_packageNum, MainWindow.resourcemanager.GetString("trPackageCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_serial, MainWindow.resourcemanager.GetString("trSerialNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_posDeviceCode, MainWindow.resourcemanager.GetString("trPosDeviceCodeHint"));
+            txt_isBooked.Text = MainWindow.resourcemanager.GetString("trBooked");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
-            //TextBox tbStart = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbStart, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            //TextBox tbEnd = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbEnd, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            dg_posSerial.Columns[0].Header = MainWindow.resourcemanager.GetString("trPackageCode");
+            dg_posSerial.Columns[1].Header = MainWindow.resourcemanager.GetString("trSerialNum");
+            dg_posSerial.Columns[2].Header = MainWindow.resourcemanager.GetString("trBooked");
 
-            //txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            //txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            //txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            //tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
-            //dg_posSerial.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_posSerial.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_posSerial.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            //dg_posSerial.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            //dg_posSerial.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
-
-            //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
-            //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
+            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
 
         }
 
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //string packageSaleCode = "3gioIYKanfl1EznA";
-                //string customerServerCode = "asus";
-                //SendDetail item = new SendDetail();
-
-                //item = await pmodel.Activateserver(packageSaleCode, customerServerCode);
-
-                //string mes = item.ToString();
-
-                #region
-                //HelpClass.StartAwait(grid_main);
-                //posSerial = new PosSerials();
-                //if (HelpClass.validate(requiredControlList, this))
-                //{
-                //    posSerial.serial = tb_serial.Text;
-                //    posSerial.posDeviceCode = tb_posDeviceCode.Text;
-                //    posSerial.apikey = tb_apikey.Text;
-                //    posSerial.isBooked = (bool)tgl_isBooked.IsChecked;
-                //    posSerial.notes = tb_notes.Text;
-                //    posSerial.isActive = 1;
-                //    posSerial.createUserId = MainWindow.userLogin.userId;
-                //    posSerial.updateUserId = MainWindow.userLogin.userId;
-
-                //    int s = await posSerial.Save(posSerial);
-                //    if (s <= 0)
-                //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                //    else
-                //    {
-                //        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                //        Clear();
-                //        await RefreshPosSerialsList();
-                //        await Search();
-                //    }
-                //}
-                #endregion
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
 
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-
+            {
                 HelpClass.StartAwait(grid_main);
-                await RefreshPosSerialsList();
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        {//search
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -226,43 +160,8 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        HelpClass.StartAwait(grid_main);
-        //        if (posSerials is null)
-        //            await RefreshPosSerialsList();
-        //        tgl_posSerialState = 1;
-        //        await Search();
-        //        HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
-        //private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        HelpClass.StartAwait(grid_main);
-        //        if (posSerials is null)
-        //            await RefreshPosSerialsList();
-        //        tgl_posSerialState = 0;
-        //        await Search();
-        //        HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
-        {
+        {//clear
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -278,6 +177,7 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void Dg_posSerial_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
             try
@@ -291,7 +191,6 @@ namespace AdministratorApp.View.sales
 
                     if (posSerial != null)
                     {
-
 
                     }
                 }
@@ -309,17 +208,19 @@ namespace AdministratorApp.View.sales
         #region Refresh & Search
         async Task Search()
         {
-            //search
             if (posSerials is null)
                 await RefreshPosSerialsList();
 
             searchText = tb_search.Text.ToLower();
-            posSerialsQuery = posSerials.Where(s => (s.serial.ToLower().Contains(searchText)
-            || s.apikey.ToLower().Contains(searchText)
+            posSerialsQuery = posSerials.Where(s => 
+            (  
+            s.serial.ToLower().Contains(searchText)
+            ||
+            s.packageSaleCode.ToLower().Contains(searchText)
             ) 
-            && (cb_booked.SelectedIndex != -1   ? cb_booked.SelectedValue.ToString() == "2" ? true :
-                                                  s.isBooked = Convert.ToBoolean(cb_booked.SelectedValue)
-                                               : true)
+            && (cb_booked.SelectedIndex != -1   ? cb_booked.SelectedValue.ToString() == "all" ? true :
+                                                  s.isBooked == Convert.ToBoolean(cb_booked.SelectedValue)
+                                                : true)
             && (cb_package.SelectedIndex != -1  ? s.packageUserId == Convert.ToInt32(cb_package.SelectedValue) : true)
             );
 
