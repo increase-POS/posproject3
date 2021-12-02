@@ -544,3 +544,7 @@ E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\w
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_logIn.g.cs
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_changePassword.baml
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_logIn.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_changePassword.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_logIn.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_changePassword.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_logIn.baml

@@ -17,6 +17,8 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public packages()
         {
+            this.agentPackage = new HashSet<agentPackage>();
+            this.countryPackageDate = new HashSet<countryPackageDate>();
             this.packageUser = new HashSet<packageUser>();
         }
     
@@ -32,19 +34,19 @@ namespace Programs_Server
         public int salesInvCount { get; set; }
         public Nullable<int> programId { get; set; }
         public Nullable<int> verId { get; set; }
-        public Nullable<decimal> price { get; set; }
         public int isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public string packageCode { get; set; }
         public int storeCount { get; set; }
-        public bool islimitDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
-        public string hashCode { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentPackage> agentPackage { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<countryPackageDate> countryPackageDate { get; set; }
         public virtual programs programs { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }

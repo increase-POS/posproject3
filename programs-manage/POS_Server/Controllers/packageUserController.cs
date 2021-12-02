@@ -50,12 +50,12 @@ namespace Programs_Server.Controllers
                                         packageUserId = S.packageUserId,
                                         packageId = S.packageId,
                                         userId = S.userId,
-                                        userName = A.name ,
+                                        userName = A.name,
                                         userLastName = A.lastName,
                                         packageSaleCode = S.packageSaleCode,
                                         packageNumber = S.packageNumber,
                                         customerId = S.customerId,
-                                        customerName = C.custname ,
+                                        customerName = C.custname,
                                         customerLastName = C.lastName,
                                         customerServerCode = S.customerServerCode,
                                         isBooked = S.isBooked,
@@ -68,7 +68,8 @@ namespace Programs_Server.Controllers
                                         isActive = S.isActive,
                                         expireDate = S.expireDate,
                                         isOnlineServer = S.isOnlineServer,
-
+                                        countryPackageId = S.countryPackageId,
+                                        canRenew = S.canRenew,
                                     }).ToList();
                         /*
 
@@ -99,75 +100,7 @@ namespace Programs_Server.Controllers
                 }
             }
 
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //bool canDelete = false;
 
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //if (valid) // APIKey is valid
-            //{
-            //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //    {
-            //        var List = (from S in entity.packageUser
-            //                    select new packageUserModel()
-            //                    {
-            //                        packageUserId = S.packageUserId,
-            //                        packageId = S.packageId,
-            //                        userId = S.userId,
-            //                        packageSaleCode = S.packageSaleCode,
-            //                        packageNumber = S.packageNumber,
-            //                        customerId = S.customerId,
-            //                        customerServerCode = S.customerServerCode,
-            //                        isBooked = S.isBooked,
-            //                        notes = S.notes,
-            //                        createDate = S.createDate,
-            //                        updateDate = S.updateDate,
-            //                        createUserId = S.createUserId,
-            //                        updateUserId = S.updateUserId,
-            //                        bookDate = S.bookDate,
-            //                        isActive = S.isActive,
-            //                        expireDate = S.expireDate,
-
-
-
-
-            //                    }).ToList();
-            //        /*
-
-            //        */
-
-            //        if (List.Count > 0)
-            //        {
-            //            for (int i = 0; i < List.Count; i++)
-            //            {
-            //                if (List[i].isActive == 1)
-            //                {
-            //                    int packageUserId = (int)List[i].packageUserId;
-            //                    var itemsI = entity.posSerials.Where(x => x.packageUserId == packageUserId).Select(b => new { b.packageUserId }).FirstOrDefault();
-
-            //                    if ((itemsI is null))
-            //                        canDelete = true;
-            //                }
-            //                List[i].canDelete = canDelete;
-            //            }
-            //        }
-
-            //        if (List == null)
-            //            return NotFound();
-            //        else
-            //            return Ok(List);
-            //    }
-            //}
-            ////else
-            //return NotFound();
         }
 
         // GET api/<controller>
@@ -227,6 +160,9 @@ namespace Programs_Server.Controllers
                            S.isActive,
                            S.expireDate,
                            S.isOnlineServer,
+                           S.countryPackageId,
+                           S.canRenew,
+
                        })
                        .FirstOrDefault();
 
@@ -305,7 +241,11 @@ namespace Programs_Server.Controllers
                         newObject.customerId = id;
                     }
 
-
+                    if (newObject.countryPackageId == 0 || newObject.countryPackageId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.countryPackageId = id;
+                    }
 
                     try
                     {
@@ -372,6 +312,8 @@ namespace Programs_Server.Controllers
                                 tmpObject.isActive = newObject.isActive;
                                 tmpObject.expireDate = newObject.expireDate;
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
+                                tmpObject.countryPackageId = newObject.countryPackageId;
+                                tmpObject.canRenew = newObject.canRenew;
 
 
                                 entity.SaveChanges();
@@ -440,7 +382,11 @@ namespace Programs_Server.Controllers
                     newObject.customerId = id;
                 }
 
-
+                if (newObject.countryPackageId == 0 || newObject.countryPackageId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.countryPackageId = id;
+                }
 
                 try
                 {
@@ -510,7 +456,8 @@ namespace Programs_Server.Controllers
                             tmpObject.expireDate = newObject.expireDate;
                             tmpObject.isOnlineServer = newObject.isOnlineServer;
 
-
+                            tmpObject.countryPackageId = newObject.countryPackageId;
+                            tmpObject.canRenew = newObject.canRenew;
                             entity.SaveChanges();
 
                             message = tmpObject.packageUserId;
@@ -607,6 +554,11 @@ namespace Programs_Server.Controllers
                     {
                         Nullable<int> id = null;
                         newObject.customerId = id;
+                    }
+                    if (newObject.countryPackageId == 0 || newObject.countryPackageId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.countryPackageId = id;
                     }
                     //
                     try
@@ -911,11 +863,11 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
-                      
-                      List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
-                        list= list.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
-                       
-                        if (list != null && list.Count>0)
+
+                        List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
+                        list = list.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
+
+                        if (list != null && list.Count > 0)
                         {
                             row = list
                                         .Select(S => new packageUser
@@ -938,11 +890,13 @@ namespace Programs_Server.Controllers
                                             isActive = S.isActive,
                                             expireDate = S.expireDate,
                                             isOnlineServer = S.isOnlineServer,
+                                            countryPackageId = S.countryPackageId,
+                                            canRenew = S.canRenew,
 
                                         }).FirstOrDefault();
 
 
-                   
+
                             // return TokenManager.GenerateToken(row.packageUserId);
 
                             if (row.isBooked == false && row.isActive == 1) //&&  row.expireDate==null 
@@ -996,13 +950,13 @@ namespace Programs_Server.Controllers
                         else
                         {
                             //serial not found
-                         
+
                             SendDetail senditem = new SendDetail();
                             packagesSend ps = new packagesSend();
                             ps.posCount = -3;
                             senditem.packageSend = ps;
 
-                           // senditem.packageSend.posCount = -3;
+                            // senditem.packageSend.posCount = -3;
                             return TokenManager.GenerateToken(senditem);
                         }
 
@@ -1010,7 +964,7 @@ namespace Programs_Server.Controllers
                     }
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //error
                     return TokenManager.GenerateToken("0");

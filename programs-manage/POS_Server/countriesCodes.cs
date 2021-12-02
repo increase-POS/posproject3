@@ -18,6 +18,9 @@ namespace Programs_Server
         public countriesCodes()
         {
             this.cities = new HashSet<cities>();
+            this.countryPackageDate = new HashSet<countryPackageDate>();
+            this.customers = new HashSet<customers>();
+            this.users = new HashSet<users>();
         }
     
         public int countryId { get; set; }
@@ -28,5 +31,11 @@ namespace Programs_Server
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cities> cities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<countryPackageDate> countryPackageDate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<customers> customers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<users> users { get; set; }
     }
 }

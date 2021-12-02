@@ -60,14 +60,13 @@ namespace Programs_Server.Controllers
                                         programName = S.programs.name,
                                         verId = S.verId,
                                         verName = S.versions.name,
-                                        price = S.price,
+                                        
                                         isActive = S.isActive,
                                         createDate = S.createDate,
                                         updateDate = S.updateDate,
                                         packageCode = S.packageCode,
                                         storeCount = S.storeCount,
-                                        endDate = S.endDate,
-                                        islimitDate = S.islimitDate,
+                                      
                                         createUserId = S.createUserId,
                                         updateUserId = S.updateUserId,
                                         notes = S.notes,
@@ -231,14 +230,13 @@ namespace Programs_Server.Controllers
                            programName = S.programs.name,
                            S.verId,
                            verName = S.versions.name,
-                           S.price,
+                          
                            S.isActive,
                            S.createDate,
                            S.updateDate,
                            S.packageCode,
                            S.storeCount,
-                           S.endDate,
-                           S.islimitDate,
+                           
                            S.createUserId,
                            S.updateUserId,
                            S.notes,
@@ -348,8 +346,7 @@ namespace Programs_Server.Controllers
                            //   updateDate = S.updateDate,
                            //   packageCode = S.packageCode,
                            storeCount = S.storeCount,
-                           endDate = S.endDate,
-                           islimitDate = S.islimitDate,
+                       
                            //    createUserId = S.createUserId,
                            //  updateUserId = S.updateUserId,
                            // notes = S.notes,
@@ -457,14 +454,13 @@ namespace Programs_Server.Controllers
                                 tmpObject.salesInvCount = newObject.salesInvCount;
                                 tmpObject.programId = newObject.programId;
                                 tmpObject.verId = newObject.verId;
-                                tmpObject.price = newObject.price;
+                           
                                 tmpObject.isActive = newObject.isActive;
                                 // tmpObject. createDate = newObject.createDate;
 
                                 tmpObject.packageCode = newObject.packageCode;
                                 tmpObject.storeCount = newObject.storeCount;
-                                tmpObject.endDate = newObject.endDate;
-                                tmpObject.islimitDate = newObject.islimitDate;
+                           
                                 // tmpObject. createUserId = newObject.createUserId;
                                 tmpObject.notes = newObject.notes;
 

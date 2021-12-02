@@ -21,19 +21,19 @@ namespace Programs_Server.Models
         public string programName { get; set; }
         public Nullable<int> verId { get; set; }
         public string verName { get; set; }
-        public Nullable<decimal> price { get; set; }
+
         public int isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public string packageCode { get; set; }
         public int storeCount { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
-        public bool islimitDate { get; set; }
+       
+
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
         public string notes { get; set; }
-        public string hashCode { get; set; }
+
 
     }
 

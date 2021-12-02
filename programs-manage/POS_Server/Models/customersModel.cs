@@ -30,6 +30,7 @@ namespace Programs_Server.Models
 
         public bool canDelete { get; set; }
         public Nullable<int> isActive { get; set; }
-        public string hashCode { get; set; }
+   
+        public Nullable<int> countryId { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace AdministratorApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("en")]
         public string Lang {
             get {
                 return ((string)(this["Lang"]));

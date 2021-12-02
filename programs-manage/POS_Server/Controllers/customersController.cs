@@ -69,7 +69,7 @@ namespace Programs_Server.Controllers
                                     updateUserId = S.updateUserId,
 
                                     isActive = S.isActive,
-
+                                    countryId=S.countryId,
 
                                 }).ToList();
                     /*
@@ -162,7 +162,7 @@ namespace Programs_Server.Controllers
                        S.balance,
                        S.createUserId,
                        S.updateUserId,
-
+                       S.countryId,
                        S.isActive,
                    })
                    .FirstOrDefault();
@@ -265,6 +265,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.updateUserId = newObject.updateUserId;
 
                                 tmpObject.isActive = newObject.isActive;
+                                tmpObject.countryId = newObject.countryId;
 
                                 entity.SaveChanges();
 
@@ -591,52 +592,7 @@ namespace Programs_Server.Controllers
 
 
 
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-                //customerObject = customerObject.Replace("\\", string.Empty);
-                //customerObject = customerObject.Trim('"');
-
-                //customers customerObj = JsonConvert.DeserializeObject<customers>(customerObject, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-                //if (customerObj.updateUserId == 0 || customerObj.updateUserId == null)
-                //{
-                //    Nullable<int> id = null;
-                //    customerObj.updateUserId = id;
-                //}
-                //if (customerObj.createUserId == 0 || customerObj.createUserId == null)
-                //{
-                //    Nullable<int> id = null;
-                //    customerObj.createUserId = id;
-                //}
-                //if (valid)
-                //{
-                //    try
-                //    {
-                //        customers customer;
-                //        using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                //        {
-                //            var customerEntity = entity.Set<customers>();
-                //            customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
-                //            customer.image = customerObj.image;
-                //            entity.SaveChanges();
-                //        }
-                //        return customer.custId;
-                //    }
-
-                //    catch
-                //    {
-                //        return 0;
-                //    }
-                //}
-                //else
-                //    return 0;
+          
             }
 
 

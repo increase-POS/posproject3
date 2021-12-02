@@ -76,7 +76,7 @@ namespace Programs_Server.Controllers
                                         job = S.job,
                                         isOnline = S.isOnline,
 
-
+                                        countryId=S.countryId,
 
 
                                     }).ToList();
@@ -155,7 +155,7 @@ namespace Programs_Server.Controllers
                         balanceType = S.balanceType,
                         job = S.job,
                         isOnline = S.isOnline,
-
+                        countryId = S.countryId,
 
 
                     })
@@ -243,6 +243,7 @@ namespace Programs_Server.Controllers
                             balanceType = S.balanceType,
                             job = S.job,
                             isOnline = S.isOnline,
+                            countryId = S.countryId,
                         })
                         .ToList();
 
@@ -343,6 +344,7 @@ namespace Programs_Server.Controllers
                            S.balanceType,
                            S.job,
                            S.isOnline,
+                            S.countryId,
 
                        })
                                    .FirstOrDefault();
@@ -447,7 +449,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.updateUserId = newObject.updateUserId;
                                 tmpObject.isActive = newObject.isActive;
                                 tmpObject.isOnline = newObject.isOnline;
-
+                                tmpObject.countryId = newObject.countryId;
 
 
                                 entity.SaveChanges();
@@ -471,93 +473,6 @@ namespace Programs_Server.Controllers
             }
 
 
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //string message = "";
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //if (valid)
-            //{
-            //    Object = Object.Replace("\\", string.Empty);
-            //    Object = Object.Trim('"');
-            //    users newObject = JsonConvert.DeserializeObject<users>(Object, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-            //    if (newObject.updateUserId == 0 || newObject.updateUserId == null)
-            //    {
-            //        Nullable<int> id = null;
-            //        newObject.updateUserId = id;
-            //    }
-            //    if (newObject.createUserId == 0 || newObject.createUserId == null)
-            //    {
-            //        Nullable<int> id = null;
-            //        newObject.createUserId = id;
-            //    }
-
-
-            //    try
-            //    {
-            //        using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //        {
-            //            var locationEntity = entity.Set<users>();
-            //            if (newObject.userId == 0)
-            //            {
-            //                newObject.createDate = DateTime.Now;
-            //                newObject.updateDate = DateTime.Now;
-            //                newObject.updateUserId = newObject.createUserId;
-
-
-            //                locationEntity.Add(newObject);
-            //                entity.SaveChanges();
-            //                message = newObject.userId.ToString();
-            //            }
-            //            else
-            //            {
-            //                var tmpObject = entity.users.Where(p => p.userId == newObject.userId).FirstOrDefault();
-
-            //                tmpObject.updateDate = DateTime.Now;
-            //                tmpObject.userId = newObject.userId;
-            //                tmpObject.name = newObject.name;
-            //                tmpObject.AccountName = newObject.AccountName;
-            //                tmpObject.lastName = newObject.lastName;
-            //                tmpObject.company = newObject.company;
-            //                tmpObject.email = newObject.email;
-            //                tmpObject.phone = newObject.phone;
-            //                tmpObject.mobile = newObject.mobile;
-            //                tmpObject.fax = newObject.fax;
-            //                tmpObject.address = newObject.address;
-            //                tmpObject.agentLevel = newObject.agentLevel;
-            //              //  tmpObject.createDate = newObject.createDate;
-
-            //                tmpObject.code = newObject.code;
-            //                tmpObject.password = newObject.password;
-            //                tmpObject.type = newObject.type;
-            //                tmpObject.image = newObject.image;
-            //                tmpObject.notes = newObject.notes;
-            //                tmpObject.balance = newObject.balance;
-            //             //   tmpObject.createUserId = newObject.createUserId;
-            //                tmpObject.updateUserId = newObject.updateUserId;
-            //                tmpObject.isActive = newObject.isActive;
-
-
-
-            //                entity.SaveChanges();
-
-            //                message = tmpObject.userId.ToString();
-            //            }
-            //            //  entity.SaveChanges();
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        message = "-1";
-            //    }
-            //}
-            //return message;
         }
 
         [HttpPost]
@@ -639,63 +554,7 @@ namespace Programs_Server.Controllers
                 }
 
             }
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //int message = 0;
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-            //if (valid)
-            //{
-            //    if (final)
-            //    {
-            //        try
-            //        {
-            //            using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //            {
-            //                users objectDelete = entity.users.Find(userId);
-
-            //                entity.users.Remove(objectDelete);
-            //                message = entity.SaveChanges();
-
-            //                return message.ToString();
-            //            }
-            //        }
-            //        catch
-            //        {
-            //            return "-1";
-            //        }
-            //    }
-            //    else
-            //    {
-            //        try
-            //        {
-            //            using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //            {
-            //                users objectDelete = entity.users.Find(userId);
-
-            //                objectDelete.isActive = 0;
-            //                objectDelete.updateUserId = signuserId;
-            //                objectDelete.updateDate = DateTime.Now;
-            //                message = entity.SaveChanges();
-
-            //                return message.ToString(); ;
-            //            }
-            //        }
-            //        catch
-            //        {
-            //            return "-2";
-            //        }
-            //    }
-            //}
-            //else
-            //    return "-3";
-        }
+            }
 
         [Route("PostUserImage")]
         public IHttpActionResult PostUserImage()
@@ -857,52 +716,7 @@ namespace Programs_Server.Controllers
                 }
             }
 
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //userObject = userObject.Replace("\\", string.Empty);
-            //userObject = userObject.Trim('"');
-
-            //users userObj = JsonConvert.DeserializeObject<users>(userObject, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-            //if (userObj.updateUserId == 0 || userObj.updateUserId == null)
-            //{
-            //    Nullable<int> id = null;
-            //    userObj.updateUserId = id;
-            //}
-            //if (userObj.createUserId == 0 || userObj.createUserId == null)
-            //{
-            //    Nullable<int> id = null;
-            //    userObj.createUserId = id;
-            //}
-            //if (valid)
-            //{
-            //    try
-            //    {
-            //        users user;
-            //        using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //        {
-            //            var userEntity = entity.Set<users>();
-            //            user = entity.users.Where(p => p.userId == userObj.userId).First();
-            //            user.image = userObj.image;
-            //            entity.SaveChanges();
-            //        }
-            //        return user.userId;
-            //    }
-
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
-            //else
-            //    return 0;
+          
         }
 
         [HttpPost]
@@ -962,39 +776,7 @@ namespace Programs_Server.Controllers
                 }
             }
 
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //if (valid) // APIKey is valid
-            //{
-            //    List<string> numberList;
-            //    int lastNum = 0;
-            //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //    {
-            //        numberList = entity.users.Where(b => b.code.Contains(type + "-")).Select(b => b.code).ToList();
-
-            //        for (int i = 0; i < numberList.Count; i++)
-            //        {
-            //            string code = numberList[i];
-            //            string s = code.Substring(code.LastIndexOf("-") + 1);
-            //            numberList[i] = s;
-            //        }
-            //        if (numberList.Count > 0)
-            //        {
-            //            numberList.Sort();
-            //            lastNum = int.Parse(numberList[numberList.Count - 1]);
-            //        }
-            //    }
-            //    return Ok(lastNum);
-            //}
-            //return NotFound();
+           
         }
 
 

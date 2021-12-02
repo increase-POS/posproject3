@@ -17,9 +17,20 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public users()
         {
+            this.agentPackage = new HashSet<agentPackage>();
+            this.agentPackage1 = new HashSet<agentPackage>();
+            this.agentPackage2 = new HashSet<agentPackage>();
+            this.countryPackageDate = new HashSet<countryPackageDate>();
+            this.countryPackageDate1 = new HashSet<countryPackageDate>();
             this.customers = new HashSet<customers>();
             this.customers1 = new HashSet<customers>();
             this.error = new HashSet<error>();
+            this.groupObject = new HashSet<groupObject>();
+            this.groupObject1 = new HashSet<groupObject>();
+            this.groups = new HashSet<groups>();
+            this.groups1 = new HashSet<groups>();
+            this.objects = new HashSet<objects>();
+            this.objects1 = new HashSet<objects>();
             this.packages = new HashSet<packages>();
             this.packages1 = new HashSet<packages>();
             this.packageUser = new HashSet<packageUser>();
@@ -31,12 +42,6 @@ namespace Programs_Server
             this.programs1 = new HashSet<programs>();
             this.versions = new HashSet<versions>();
             this.versions1 = new HashSet<versions>();
-            this.groupObject = new HashSet<groupObject>();
-            this.groupObject1 = new HashSet<groupObject>();
-            this.groups = new HashSet<groups>();
-            this.groups1 = new HashSet<groups>();
-            this.objects = new HashSet<objects>();
-            this.objects1 = new HashSet<objects>();
         }
     
         public int userId { get; set; }
@@ -61,19 +66,42 @@ namespace Programs_Server
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
         public string code { get; set; }
-        public string hashCode { get; set; }
         public Nullable<bool> isAdmin { get; set; }
         public Nullable<int> groupId { get; set; }
         public Nullable<byte> balanceType { get; set; }
         public string job { get; set; }
         public Nullable<byte> isOnline { get; set; }
+        public Nullable<int> countryId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentPackage> agentPackage { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentPackage> agentPackage1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentPackage> agentPackage2 { get; set; }
+        public virtual countriesCodes countriesCodes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<countryPackageDate> countryPackageDate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<countryPackageDate> countryPackageDate1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customers> customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customers> customers1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<error> error { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<groupObject> groupObject { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<groupObject> groupObject1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<groups> groups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<groups> groups1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<objects> objects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<objects> objects1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packages> packages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -96,17 +124,5 @@ namespace Programs_Server
         public virtual ICollection<versions> versions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<versions> versions1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<groupObject> groupObject { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<groupObject> groupObject1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<groups> groups { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<groups> groups1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<objects> objects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<objects> objects1 { get; set; }
     }
 }

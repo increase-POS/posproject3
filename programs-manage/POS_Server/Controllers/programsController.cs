@@ -53,7 +53,7 @@ namespace Programs_Server.Controllers
                                         programCode = S.programCode,
                                         createUserId = S.createUserId,
                                         updateUserId = S.updateUserId,
-                                        hashCode = S.hashCode,
+                                     
 
 
 
@@ -199,7 +199,7 @@ namespace Programs_Server.Controllers
                            S.programCode,
                            S.createUserId,
                            S.updateUserId,
-                           S.hashCode,
+                       
                        })
                        .FirstOrDefault();
 
@@ -310,46 +310,6 @@ namespace Programs_Server.Controllers
                 }
             }
 
-            //string result = "";
-            //var re = Request;
-            //var headers = re.Headers;
-            //string token = "";
-            //if (headers.Contains("APIKey"))
-            //{
-            //    token = headers.GetValues("APIKey").First();
-            //}
-            //Validation validation = new Validation();
-            //bool valid = validation.CheckApiKey(token);
-
-            //if (valid)
-            //{
-            //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-            //    {
-            //        var List = entity.programs
-            //       .Where(u => u.programCode == programCode)
-            //       .Select(S => new
-            //       {
-
-            //           S.programCode,
-
-            //       })
-            //       .ToList();
-            //        if (List.Count > 0)
-            //        {
-            //            result = "1";
-            //        }
-            //        else
-            //        {
-            //            result = "0";
-            //        }
-            //        if (List == null)
-            //            return NotFound();
-            //        else
-            //            return Ok(result);
-            //    }
-            //}
-            //else
-            //    return NotFound();
         }
 
         // add or update location
@@ -411,7 +371,7 @@ namespace Programs_Server.Controllers
                                 int newId = newObject.programId;
                                 //  message = newObject.programId.ToString();
                                 var tmpnewObject = entity.programs.Where(p => p.programId == newObject.programId).FirstOrDefault();
-                                newObject.hashCode = Classes.Md5Encription.MD5Hash(newObject.programCode + newObject.programId);
+                               // newObject.hashCode = Classes.Md5Encription.MD5Hash(newObject.programCode + newObject.programId);
                                 entity.SaveChanges();
                                 message = newObject.programId.ToString();
                             }

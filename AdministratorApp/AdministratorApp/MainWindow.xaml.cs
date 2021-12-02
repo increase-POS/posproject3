@@ -36,7 +36,7 @@ namespace AdministratorApp
         public static ResourceManager resourcemanager;
         public static ResourceManager resourcemanagerreport;
         static public MainWindow mainWindow;
-        public static string lang = "ar";
+        public static string lang = "en";
         internal static Users userLogin = new Users();
         public static int userID=1;
         //public static CountryCode Region;

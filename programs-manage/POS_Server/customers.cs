@@ -39,8 +39,9 @@ namespace Programs_Server
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
-        public string hashCode { get; set; }
+        public Nullable<int> countryId { get; set; }
     
+        public virtual countriesCodes countriesCodes { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

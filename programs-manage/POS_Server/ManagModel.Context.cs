@@ -25,18 +25,20 @@ namespace Programs_Server
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<agentPackage> agentPackage { get; set; }
+        public virtual DbSet<cities> cities { get; set; }
+        public virtual DbSet<countriesCodes> countriesCodes { get; set; }
+        public virtual DbSet<countryPackageDate> countryPackageDate { get; set; }
         public virtual DbSet<customers> customers { get; set; }
         public virtual DbSet<error> error { get; set; }
+        public virtual DbSet<groupObject> groupObject { get; set; }
+        public virtual DbSet<groups> groups { get; set; }
+        public virtual DbSet<objects> objects { get; set; }
         public virtual DbSet<packages> packages { get; set; }
         public virtual DbSet<packageUser> packageUser { get; set; }
         public virtual DbSet<posSerials> posSerials { get; set; }
         public virtual DbSet<programs> programs { get; set; }
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<versions> versions { get; set; }
-        public virtual DbSet<cities> cities { get; set; }
-        public virtual DbSet<countriesCodes> countriesCodes { get; set; }
-        public virtual DbSet<groupObject> groupObject { get; set; }
-        public virtual DbSet<groups> groups { get; set; }
-        public virtual DbSet<objects> objects { get; set; }
     }
 }

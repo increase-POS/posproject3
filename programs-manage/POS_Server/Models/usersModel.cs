@@ -36,7 +36,7 @@ namespace Programs_Server.Models
         public string job { get; set; }
         public Nullable<byte> isOnline { get; set; }
         public bool canDelete { get; set; }
-      
+        public Nullable<int> countryId { get; set; }
 
     }
 }

@@ -182,6 +182,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="agentPackage.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -227,12 +230,17 @@
     <Compile Include="Controllers\GroupObjectController.cs" />
     <Compile Include="Controllers\ObjectsController.cs" />
     <Compile Include="Controllers\packagesController.cs" />
+    <Compile Include="Controllers\agentPackageController.cs" />
+    <Compile Include="Controllers\countryPackageDateController.cs" />
     <Compile Include="Controllers\packageUserController.cs" />
     <Compile Include="Controllers\posSerialsController.cs" />
     <Compile Include="Controllers\programsController.cs" />
     <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Controllers\versionsController.cs" />
     <Compile Include="countriesCodes.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="countryPackageDate.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
     <Compile Include="customers.cs">
@@ -265,6 +273,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ManagModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\countryPackageDateModel.cs" />
+    <Compile Include="Models\agentPackageModel.cs" />
     <Compile Include="Models\customersModel.cs" />
     <Compile Include="Models\errorModel.cs" />
     <Compile Include="Models\GroupModel.cs" />

@@ -29,6 +29,8 @@ namespace Programs_Server.Models
         public string userLastName { get; set; }
         public string customerName { get; set; }
         public string customerLastName { get; set; }
+        public Nullable<int> countryPackageId { get; set; }
+        public bool canRenew { get; set; }
     }
 
 

@@ -12,10 +12,10 @@ namespace Programs_Server.Models
         public string posDeviceCode { get; set; }
         public Nullable<int> packageUserId { get; set; }
         public bool isBooked { get; set; }
-        public int isActive { get; set; }
+        public Nullable<int> isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public string apikey { get; set; }
+
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
