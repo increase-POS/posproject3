@@ -76,15 +76,15 @@ namespace AdministratorApp.View.windows
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-                    bdr_imageAr.Visibility = Visibility.Hidden;
-                    bdr_image.Visibility = Visibility.Visible;
+                    //bdr_imageAr.Visibility = Visibility.Hidden;
+                    //bdr_image.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                    bdr_imageAr.Visibility = Visibility.Visible;
-                    bdr_image.Visibility = Visibility.Hidden;
+                    //bdr_imageAr.Visibility = Visibility.Visible;
+                    //bdr_image.Visibility = Visibility.Hidden;
                 }
                 translate();
                 #endregion
