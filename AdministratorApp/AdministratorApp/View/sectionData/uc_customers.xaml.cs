@@ -160,7 +160,7 @@ namespace AdministratorApp.View.sectionData
                     customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
-
+                 //   customer.countryId = ; new 
                     int s =await customer.Save(customer);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -213,7 +213,7 @@ namespace AdministratorApp.View.sectionData
                     customer.notes = tb_notes.Text;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
-
+                    //   customer.countryId = ; new 
                     int s = await customer.Save(customer);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

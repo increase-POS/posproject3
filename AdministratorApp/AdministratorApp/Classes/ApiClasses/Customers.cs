@@ -40,6 +40,7 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
         public Nullable<int> isActive { get; set; }
+        public Nullable<int> countryId { get; set; }
 
         private string urimainpath = "customers/";
         /// <summary>

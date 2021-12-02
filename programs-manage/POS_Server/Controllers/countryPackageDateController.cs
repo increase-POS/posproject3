@@ -18,7 +18,7 @@ namespace Programs_Server.Controllers
 {
 
 
-    [RoutePrefix("api/packageUser")]
+    [RoutePrefix("api/countryPackageDate")]
 
     public class countryPackageDateController : ApiController
 
@@ -119,7 +119,7 @@ namespace Programs_Server.Controllers
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
-                    if (c.Type == "id")
+                    if (c.Type == "Id")
                     {
                         Id = int.Parse(c.Value);
                     }
@@ -367,7 +367,6 @@ namespace Programs_Server.Controllers
                             objectDelete.updateUserId = userId;
                             objectDelete.updateDate = DateTime.Now;
                             message = entity.SaveChanges().ToString();
-
 
                             return TokenManager.GenerateToken(message);
                         }

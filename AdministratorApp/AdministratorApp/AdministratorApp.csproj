@@ -152,6 +152,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ApiClasses\CountryPackageDate.cs" />
     <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
     <Compile Include="Classes\ApiClasses\City.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Classes\ApiClasses\Object.cs" />
     <Compile Include="Classes\ApiClasses\Packages.cs" />
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
+    <Compile Include="Classes\ApiClasses\AgentPackage.cs" />
     <Compile Include="Classes\ApiClasses\PackageUser.cs" />
     <Compile Include="Classes\ApiClasses\PosSerials.cs" />
     <Compile Include="Classes\ApiClasses\Programs.cs" />

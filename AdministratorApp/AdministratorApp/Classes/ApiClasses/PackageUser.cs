@@ -86,6 +86,8 @@ namespace AdministratorApp.ApiClasses
         public string customerLastName { get; set; }
 
         public bool canDelete { get; set; }
+        public Nullable<int> countryPackageId { get; set; }
+    public bool canRenew { get; set; }
 
         private string urimainpath = "packageUser/";
         /// <summary>

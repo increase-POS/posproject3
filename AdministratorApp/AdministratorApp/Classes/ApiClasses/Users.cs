@@ -49,7 +49,7 @@ namespace AdministratorApp.ApiClasses
         public Nullable<byte> balanceType { get; set; }
         public string job { get; set; }
         public Nullable<byte> isOnline { get; set; }
-
+        public Nullable<int> countryId { get; set; }
 
 
         private string urimainpath = "users/";

@@ -181,6 +181,8 @@ namespace AdministratorApp.View.sales
                     packageUser.isActive = 1;
                     packageUser.createUserId = MainWindow.userLogin.userId;
                     packageUser.updateUserId = MainWindow.userLogin.userId;
+                  // packageUser.countryPackageId  = ; //new
+                  //  packageUser.canRenew =;//new
 
                     int s = await packageUser.Save(packageUser);
                     if (s <= 0)

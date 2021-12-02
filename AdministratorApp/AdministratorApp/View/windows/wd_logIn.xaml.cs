@@ -55,7 +55,8 @@ namespace AdministratorApp.View.windows
                 {
                     txtUserName.Text = Properties.Settings.Default.userName;
                     txtPassword.Password = Properties.Settings.Default.password;
-                    MainWindow.lang = "en";
+                   // MainWindow.lang = "en";
+                    MainWindow.lang = Properties.Settings.Default.Lang;
                     //menuIsOpen = Properties.Settings.Default.menuIsOpen;
                     cbxRemmemberMe.IsChecked = true;
 

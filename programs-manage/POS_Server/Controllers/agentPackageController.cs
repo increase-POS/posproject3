@@ -18,7 +18,7 @@ namespace Programs_Server.Controllers
 {
 
 
-    [RoutePrefix("api/packageUser")]
+    [RoutePrefix("api/agentPackage")]
 
     public class agentPackageController : ApiController
 
@@ -123,7 +123,7 @@ updateDate
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
-                    if (c.Type == "id")
+                    if (c.Type == "agentPackageId")
                     {
                         agentPackageId = int.Parse(c.Value);
                     }
@@ -309,8 +309,8 @@ updateDate
             else
             {
                 int agentPackageId = 0;
-                int userId = 0;
-                bool final = false;
+                //int userId = 0;
+                //bool final = false;
 
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)

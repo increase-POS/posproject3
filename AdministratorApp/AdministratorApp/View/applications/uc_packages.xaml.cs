@@ -158,7 +158,7 @@ namespace AdministratorApp.View.applications
                         package.details = tb_details.Text;
                         package.programId = (int)cb_program.SelectedValue;
                         package.verId = (int)cb_version.SelectedValue;
-                        package.price = decimal.Parse(tb_price.Text);
+                        //package.price = decimal.Parse(tb_price.Text);
                         package.branchCount = int.Parse(tb_branchCount.Text);
                         package.posCount = int.Parse(tb_posCount.Text);
                         package.userCount = int.Parse(tb_userCount.Text);
@@ -167,10 +167,10 @@ namespace AdministratorApp.View.applications
                         package.itemCount = int.Parse(tb_itemCount.Text);
                         package.salesInvCount = int.Parse(tb_salesInvCount.Text);
                         package.storeCount = int.Parse(tb_storeCount.Text);
-                        package.islimitDate = (bool)tgl_islimitDate.IsChecked;
-                        if (dp_endDate.SelectedDate != null)
-                            package.endDate = dp_endDate.SelectedDate.Value;
-                        else package.endDate = null;
+                        //package.islimitDate = (bool)tgl_islimitDate.IsChecked;
+                        //if (dp_endDate.SelectedDate != null)
+                        //    package.endDate = dp_endDate.SelectedDate.Value;
+                        //else package.endDate = null;
                         package.notes = tb_notes.Text;
                         package.isActive = 1;
                         package.createUserId = MainWindow.userLogin.userId;
@@ -213,7 +213,7 @@ namespace AdministratorApp.View.applications
                     package.details = tb_details.Text;
                     package.programId = (int)cb_program.SelectedValue;
                     package.verId = (int)cb_version.SelectedValue;
-                    package.price = decimal.Parse(tb_price.Text);
+                    //package.price = decimal.Parse(tb_price.Text);
                     package.branchCount = int.Parse(tb_branchCount.Text);
                     package.posCount = int.Parse(tb_posCount.Text);
                     package.userCount = int.Parse(tb_userCount.Text);
@@ -222,10 +222,10 @@ namespace AdministratorApp.View.applications
                     package.itemCount = int.Parse(tb_itemCount.Text);
                     package.salesInvCount = int.Parse(tb_salesInvCount.Text);
                     package.storeCount = int.Parse(tb_storeCount.Text);
-                    package.islimitDate = (bool)tgl_islimitDate.IsChecked;
-                    if (dp_endDate.SelectedDate != null)
-                        package.endDate = dp_endDate.SelectedDate.Value;
-                    else package.endDate = null;
+                    //package.islimitDate = (bool)tgl_islimitDate.IsChecked;
+                    //if (dp_endDate.SelectedDate != null)
+                    //    package.endDate = dp_endDate.SelectedDate.Value;
+                    //else package.endDate = null;
                     package.notes = tb_notes.Text;
                     package.isActive = 1;
                     package.createUserId = MainWindow.userLogin.userId;
