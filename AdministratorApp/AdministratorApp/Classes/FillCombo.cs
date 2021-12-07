@@ -125,6 +125,15 @@ namespace AdministratorApp.Classes
             combo.SelectedValuePath = "countryId";
             combo.DisplayMemberPath = "code";
         }
+        static public async Task fillCountriesNames(ComboBox combo)
+        {
+            if (countrynum is null)
+                await RefreshCountry();
+
+            combo.ItemsSource = countrynum.ToList();
+            combo.SelectedValuePath = "countryId";
+            combo.DisplayMemberPath = "name";
+        }
         static public async Task fillCountriesLocal(ComboBox combo , int countryid,Border border)
         {
             if (citynum is null)

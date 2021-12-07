@@ -61,7 +61,7 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastName", "accountName",   "mobile" };
+                requiredControlList = new List<string> { "name", "lastName", "accountName",   "mobile" , "country" };
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -80,6 +80,7 @@ namespace AdministratorApp.View.sectionData
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
+                await FillCombo.fillCountriesNames(cb_country);
                 FillCombo.fillAgentLevel(cb_agentLevel);
 
                 Keyboard.Focus(tb_code);
@@ -156,6 +157,7 @@ namespace AdministratorApp.View.sectionData
                     user.code = tb_code.Text;
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
+                    user.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     user.accountName = tb_accountName.Text;
                     user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                     user.email = tb_email.Text;
@@ -218,6 +220,7 @@ namespace AdministratorApp.View.sectionData
                 {
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
+                    user.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     user.accountName = tb_accountName.Text;
                     //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                     user.email = tb_email.Text;
@@ -777,6 +780,20 @@ namespace AdministratorApp.View.sectionData
         {
             // Collect all generations of memory.
             GC.Collect();
+        }
+
+        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select country
+            try
+            {
+                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
