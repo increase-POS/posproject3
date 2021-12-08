@@ -91,6 +91,7 @@
     <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+    <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="customers" ToRole="agentCustomer" />
   </EntityType>
   <EntityType Name="error">
     <Key>
@@ -324,6 +325,9 @@
     <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
     <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
     <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+    <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_users" FromRole="users" ToRole="agentCustomer" />
+    <NavigationProperty Name="agentCustomer1" Relationship="incprogramsdbModel.FK_agentCustomer_users1" FromRole="users" ToRole="agentCustomer" />
+    <NavigationProperty Name="agentCustomer2" Relationship="incprogramsdbModel.FK_agentCustomer_users2" FromRole="users" ToRole="agentCustomer" />
   </EntityType>
   <EntityType Name="versions">
     <Key>
@@ -1017,5 +1021,87 @@
       <End Role="users" EntitySet="users" />
       <End Role="versions" EntitySet="versions" />
     </AssociationSet>
+    <EntitySet Name="agentCustomer" EntityType="incprogramsdbModel.agentCustomer" />
+    <AssociationSet Name="FK_agentCustomer_customers" Association="incprogramsdbModel.FK_agentCustomer_customers">
+      <End Role="customers" EntitySet="customers" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users" Association="incprogramsdbModel.FK_agentCustomer_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users1" Association="incprogramsdbModel.FK_agentCustomer_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users2" Association="incprogramsdbModel.FK_agentCustomer_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="agentCustomer">
+    <Key>
+      <PropertyRef Name="agentCustomerId" />
+    </Key>
+    <Property Name="agentCustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="agentId" Type="Int32" />
+    <Property Name="customerId" Type="Int32" />
+    <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="customers" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="agentCustomer" ToRole="customers" />
+    <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_agentCustomer_users" FromRole="agentCustomer" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_agentCustomer_users1" FromRole="agentCustomer" ToRole="users" />
+    <NavigationProperty Name="users2" Relationship="incprogramsdbModel.FK_agentCustomer_users2" FromRole="agentCustomer" ToRole="users" />
+  </EntityType>
+  <Association Name="FK_agentCustomer_customers">
+    <End Type="incprogramsdbModel.customers" Role="customers" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customers">
+        <PropertyRef Name="custId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="agentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users1">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users2">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

@@ -4,7 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="agentCustomer">
+          <Key>
+            <PropertyRef Name="agentCustomerId" />
+          </Key>
+          <Property Name="agentCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="agentId" Type="int" />
+          <Property Name="customerId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+        </EntityType>
         <EntityType Name="agentPackage">
           <Key>
             <PropertyRef Name="agentPackageId" />
@@ -268,6 +281,54 @@
           <Property Name="programId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <Association Name="FK_agentCustomer_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+          <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_agentCustomer_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="agentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_agentCustomer_users1">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_agentCustomer_users2">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_agentPackage_packages">
           <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
           <End Role="agentPackage" Type="Self.agentPackage" Multiplicity="*" />
@@ -761,6 +822,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="incprogramsdbModelStoreContainer">
+          <EntitySet Name="agentCustomer" EntityType="Self.agentCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="agentPackage" EntityType="Self.agentPackage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
@@ -776,6 +838,22 @@
           <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_agentCustomer_users" Association="Self.FK_agentCustomer_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_agentCustomer_users1" Association="Self.FK_agentCustomer_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_agentCustomer_users2" Association="Self.FK_agentCustomer_users2">
+            <End Role="users" EntitySet="users" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
           <AssociationSet Name="FK_agentPackage_packages" Association="Self.FK_agentPackage_packages">
             <End Role="packages" EntitySet="packages" />
             <End Role="agentPackage" EntitySet="agentPackage" />
@@ -941,8 +1019,7 @@
             <End Role="versions" EntitySet="versions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="incprogramsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1037,6 +1114,7 @@
           <NavigationProperty Name="users" Relationship="Self.FK_customers_users" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
+          <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="customers" ToRole="agentCustomer" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -1270,6 +1348,9 @@
           <NavigationProperty Name="programs1" Relationship="Self.FK_programs_users1" FromRole="users" ToRole="programs" />
           <NavigationProperty Name="versions" Relationship="Self.FK_versions_users" FromRole="users" ToRole="versions" />
           <NavigationProperty Name="versions1" Relationship="Self.FK_versions_users1" FromRole="users" ToRole="versions" />
+          <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_users" FromRole="users" ToRole="agentCustomer" />
+          <NavigationProperty Name="agentCustomer1" Relationship="incprogramsdbModel.FK_agentCustomer_users1" FromRole="users" ToRole="agentCustomer" />
+          <NavigationProperty Name="agentCustomer2" Relationship="incprogramsdbModel.FK_agentCustomer_users2" FromRole="users" ToRole="agentCustomer" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -1963,7 +2044,89 @@
             <End Role="users" EntitySet="users" />
             <End Role="versions" EntitySet="versions" />
           </AssociationSet>
+          <EntitySet Name="agentCustomer" EntityType="incprogramsdbModel.agentCustomer" />
+          <AssociationSet Name="FK_agentCustomer_customers" Association="incprogramsdbModel.FK_agentCustomer_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_agentCustomer_users" Association="incprogramsdbModel.FK_agentCustomer_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_agentCustomer_users1" Association="incprogramsdbModel.FK_agentCustomer_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_agentCustomer_users2" Association="incprogramsdbModel.FK_agentCustomer_users2">
+            <End Role="users" EntitySet="users" />
+            <End Role="agentCustomer" EntitySet="agentCustomer" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="agentCustomer">
+          <Key>
+            <PropertyRef Name="agentCustomerId" />
+          </Key>
+          <Property Name="agentCustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="agentId" Type="Int32" />
+          <Property Name="customerId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="customers" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="agentCustomer" ToRole="customers" />
+          <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_agentCustomer_users" FromRole="agentCustomer" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_agentCustomer_users1" FromRole="agentCustomer" ToRole="users" />
+          <NavigationProperty Name="users2" Relationship="incprogramsdbModel.FK_agentCustomer_users2" FromRole="agentCustomer" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_agentCustomer_customers">
+          <End Type="incprogramsdbModel.customers" Role="customers" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_agentCustomer_users">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="agentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_agentCustomer_users1">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_agentCustomer_users2">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.agentCustomer" Role="agentCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="agentCustomer">
+              <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2245,6 +2408,20 @@
                 <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
                 <ScalarProperty Name="programId" ColumnName="programId" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="agentCustomer">
+            <EntityTypeMapping TypeName="incprogramsdbModel.agentCustomer">
+              <MappingFragment StoreEntitySet="agentCustomer">
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="agentId" ColumnName="agentId" />
+                <ScalarProperty Name="agentCustomerId" ColumnName="agentCustomerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

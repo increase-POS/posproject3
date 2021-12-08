@@ -1,5 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="agentCustomer">
+    <Key>
+      <PropertyRef Name="agentCustomerId" />
+    </Key>
+    <Property Name="agentCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="agentId" Type="int" />
+    <Property Name="customerId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="agentPackage">
+    <Key>
+      <PropertyRef Name="agentPackageId" />
+    </Key>
+    <Property Name="agentPackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="agentId" Type="int" />
+    <Property Name="packageId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+  </EntityType>
   <EntityType Name="cities">
     <Key>
       <PropertyRef Name="cityId" />
@@ -17,6 +43,24 @@
     <Property Name="currency" Type="nvarchar" MaxLength="50" />
     <Property Name="name" Type="nvarchar" MaxLength="100" />
     <Property Name="isDefault" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="countryPackageDate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="countryId" Type="int" />
+    <Property Name="packageId" Type="int" />
+    <Property Name="monthCount" Type="int" Nullable="false" />
+    <Property Name="yearCount" Type="int" Nullable="false" />
+    <Property Name="price" Type="decimal" Precision="20" Scale="3" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+    <Property Name="islimitDate" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" />
   </EntityType>
   <EntityType Name="customers">
     <Key>
@@ -37,11 +81,11 @@
     <Property Name="custCode" Type="nvarchar" MaxLength="500" />
     <Property Name="image" Type="ntext" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
-    <Property Name="balance" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="isActive" Type="int" />
-    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
+    <Property Name="countryId" Type="int" />
   </EntityType>
   <EntityType Name="error">
     <Key>
@@ -119,18 +163,14 @@
     <Property Name="salesInvCount" Type="int" Nullable="false" />
     <Property Name="programId" Type="int" />
     <Property Name="verId" Type="int" />
-    <Property Name="price" Type="decimal" Precision="18" Scale="3" />
     <Property Name="isActive" Type="int" Nullable="false" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="packageCode" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="storeCount" Type="int" Nullable="false" />
-    <Property Name="islimitDate" Type="bit" Nullable="false" />
-    <Property Name="endDate" Type="datetime2" Precision="7" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
-    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="packageUser">
     <Key>
@@ -153,6 +193,8 @@
     <Property Name="isActive" Type="int" />
     <Property Name="expireDate" Type="datetime2" Precision="7" />
     <Property Name="isOnlineServer" Type="bit" />
+    <Property Name="countryPackageId" Type="int" />
+    <Property Name="canRenew" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -163,10 +205,9 @@
     <Property Name="posDeviceCode" Type="nvarchar" MaxLength="500" />
     <Property Name="packageUserId" Type="int" />
     <Property Name="isBooked" Type="bit" Nullable="false" />
-    <Property Name="isActive" Type="int" Nullable="false" />
+    <Property Name="isActive" Type="int" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
-    <Property Name="apikey" Type="nvarchar" MaxLength="500" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
@@ -185,7 +226,6 @@
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
-    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="users">
     <Key>
@@ -213,12 +253,12 @@
     <Property Name="updateUserId" Type="int" />
     <Property Name="isActive" Type="int" />
     <Property Name="code" Type="nvarchar" MaxLength="500" />
-    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
     <Property Name="isAdmin" Type="bit" />
     <Property Name="groupId" Type="int" />
     <Property Name="balanceType" Type="tinyint" />
     <Property Name="job" Type="nvarchar" MaxLength="100" />
     <Property Name="isOnline" Type="tinyint" />
+    <Property Name="countryId" Type="int" />
   </EntityType>
   <EntityType Name="versions">
     <Key>
@@ -235,8 +275,103 @@
     <Property Name="updateUserId" Type="int" />
     <Property Name="programId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
-    <Property Name="hashCode" Type="nvarchar" MaxLength="500" />
   </EntityType>
+  <Association Name="FK_agentCustomer_customers">
+    <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customers">
+        <PropertyRef Name="custId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="agentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users2">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentPackage_packages">
+    <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
+    <End Role="agentPackage" Type="Self.agentPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packages">
+        <PropertyRef Name="packageId" />
+      </Principal>
+      <Dependent Role="agentPackage">
+        <PropertyRef Name="packageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentPackage_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentPackage" Type="Self.agentPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentPackage">
+        <PropertyRef Name="agentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentPackage_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentPackage" Type="Self.agentPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentPackage">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentPackage_users2">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentPackage" Type="Self.agentPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentPackage">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_cities_countriesCodes">
     <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
     <End Role="cities" Type="Self.cities" Multiplicity="*" />
@@ -245,6 +380,66 @@
         <PropertyRef Name="countryId" />
       </Principal>
       <Dependent Role="cities">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_countryPackageDate_countriesCodes">
+    <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
+    <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countriesCodes">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="countryPackageDate">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_countryPackageDate_packages">
+    <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
+    <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packages">
+        <PropertyRef Name="packageId" />
+      </Principal>
+      <Dependent Role="countryPackageDate">
+        <PropertyRef Name="packageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_countryPackageDate_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="countryPackageDate">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_countryPackageDate_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="countryPackageDate">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_customers_countriesCodes">
+    <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
+    <End Role="customers" Type="Self.customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countriesCodes">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="customers">
         <PropertyRef Name="countryId" />
       </Dependent>
     </ReferentialConstraint>
@@ -441,6 +636,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_packageUser_countryPackageDate">
+    <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="0..1" />
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countryPackageDate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="packageUser">
+        <PropertyRef Name="countryPackageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_packageUser_customers">
     <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
     <End Role="packageUser" Type="Self.packageUser" Multiplicity="*" />
@@ -561,6 +768,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_users_countriesCodes">
+    <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countriesCodes">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_versions_programs">
     <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
     <End Role="versions" Type="Self.versions" Multiplicity="*" />
@@ -598,8 +817,11 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="incprogramsdbModelStoreContainer">
+    <EntitySet Name="agentCustomer" EntityType="Self.agentCustomer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="agentPackage" EntityType="Self.agentPackage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="countryPackageDate" EntityType="Self.countryPackageDate" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="error" EntityType="Self.error" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="groupObject" EntityType="Self.groupObject" Schema="dbo" store:Type="Tables" />
@@ -611,9 +833,61 @@
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
+      <End Role="customers" EntitySet="customers" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users" Association="Self.FK_agentCustomer_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users1" Association="Self.FK_agentCustomer_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users2" Association="Self.FK_agentCustomer_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentPackage_packages" Association="Self.FK_agentPackage_packages">
+      <End Role="packages" EntitySet="packages" />
+      <End Role="agentPackage" EntitySet="agentPackage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentPackage_users" Association="Self.FK_agentPackage_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentPackage" EntitySet="agentPackage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentPackage_users1" Association="Self.FK_agentPackage_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentPackage" EntitySet="agentPackage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentPackage_users2" Association="Self.FK_agentPackage_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentPackage" EntitySet="agentPackage" />
+    </AssociationSet>
     <AssociationSet Name="FK_cities_countriesCodes" Association="Self.FK_cities_countriesCodes">
       <End Role="countriesCodes" EntitySet="countriesCodes" />
       <End Role="cities" EntitySet="cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_countryPackageDate_countriesCodes" Association="Self.FK_countryPackageDate_countriesCodes">
+      <End Role="countriesCodes" EntitySet="countriesCodes" />
+      <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_countryPackageDate_packages" Association="Self.FK_countryPackageDate_packages">
+      <End Role="packages" EntitySet="packages" />
+      <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_countryPackageDate_users" Association="Self.FK_countryPackageDate_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_countryPackageDate_users1" Association="Self.FK_countryPackageDate_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_customers_countriesCodes" Association="Self.FK_customers_countriesCodes">
+      <End Role="countriesCodes" EntitySet="countriesCodes" />
+      <End Role="customers" EntitySet="customers" />
     </AssociationSet>
     <AssociationSet Name="FK_customers_users" Association="Self.FK_customers_users">
       <End Role="users" EntitySet="users" />
@@ -679,6 +953,10 @@
       <End Role="versions" EntitySet="versions" />
       <End Role="packages" EntitySet="packages" />
     </AssociationSet>
+    <AssociationSet Name="FK_packageUser_countryPackageDate" Association="Self.FK_packageUser_countryPackageDate">
+      <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+      <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
     <AssociationSet Name="FK_packageUser_customers" Association="Self.FK_packageUser_customers">
       <End Role="customers" EntitySet="customers" />
       <End Role="packageUser" EntitySet="packageUser" />
@@ -718,6 +996,10 @@
     <AssociationSet Name="FK_programs_users1" Association="Self.FK_programs_users1">
       <End Role="users" EntitySet="users" />
       <End Role="programs" EntitySet="programs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
+      <End Role="countriesCodes" EntitySet="countriesCodes" />
+      <End Role="users" EntitySet="users" />
     </AssociationSet>
     <AssociationSet Name="FK_versions_programs" Association="Self.FK_versions_programs">
       <End Role="programs" EntitySet="programs" />

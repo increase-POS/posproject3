@@ -42,6 +42,9 @@ namespace Programs_Server
             this.programs1 = new HashSet<programs>();
             this.versions = new HashSet<versions>();
             this.versions1 = new HashSet<versions>();
+            this.agentCustomer = new HashSet<agentCustomer>();
+            this.agentCustomer1 = new HashSet<agentCustomer>();
+            this.agentCustomer2 = new HashSet<agentCustomer>();
         }
     
         public int userId { get; set; }
@@ -124,5 +127,11 @@ namespace Programs_Server
         public virtual ICollection<versions> versions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<versions> versions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer2 { get; set; }
     }
 }

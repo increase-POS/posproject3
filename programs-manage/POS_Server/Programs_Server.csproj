@@ -182,6 +182,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="agentCustomer.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="agentPackage.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>

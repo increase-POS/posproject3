@@ -61,6 +61,11 @@
         <AssociationConnector Association="incprogramsdbModel.FK_versions_programs" ManuallyRouted="false" />
         <AssociationConnector Association="incprogramsdbModel.FK_versions_users" ManuallyRouted="false" />
         <AssociationConnector Association="incprogramsdbModel.FK_versions_users1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="incprogramsdbModel.agentCustomer" Width="1.5" PointX="10.5" PointY="34" />
+        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_customers" />
+        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users" />
+        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users1" />
+        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

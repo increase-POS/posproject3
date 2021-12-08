@@ -1,5 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="incprogramsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="agentCustomer">
+    <Key>
+      <PropertyRef Name="agentCustomerId" />
+    </Key>
+    <Property Name="agentCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="agentId" Type="int" />
+    <Property Name="customerId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+  </EntityType>
   <EntityType Name="agentPackage">
     <Key>
       <PropertyRef Name="agentPackageId" />
@@ -263,6 +276,54 @@
     <Property Name="programId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
   </EntityType>
+  <Association Name="FK_agentCustomer_customers">
+    <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customers">
+        <PropertyRef Name="custId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="agentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_agentCustomer_users2">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="agentCustomer" Type="Self.agentCustomer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="agentCustomer">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_agentPackage_packages">
     <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
     <End Role="agentPackage" Type="Self.agentPackage" Multiplicity="*" />
@@ -756,6 +817,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="incprogramsdbModelStoreContainer">
+    <EntitySet Name="agentCustomer" EntityType="Self.agentCustomer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="agentPackage" EntityType="Self.agentPackage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="countriesCodes" EntityType="Self.countriesCodes" Schema="dbo" store:Type="Tables" />
@@ -771,6 +833,22 @@
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
+      <End Role="customers" EntitySet="customers" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users" Association="Self.FK_agentCustomer_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users1" Association="Self.FK_agentCustomer_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_agentCustomer_users2" Association="Self.FK_agentCustomer_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="agentCustomer" EntitySet="agentCustomer" />
+    </AssociationSet>
     <AssociationSet Name="FK_agentPackage_packages" Association="Self.FK_agentPackage_packages">
       <End Role="packages" EntitySet="packages" />
       <End Role="agentPackage" EntitySet="agentPackage" />
