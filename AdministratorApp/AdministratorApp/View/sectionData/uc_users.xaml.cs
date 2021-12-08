@@ -158,7 +158,7 @@ namespace AdministratorApp.View.sectionData
                     }
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
-                    user.countryId = Convert.ToInt32(cb_country);
+                    user.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     user.accountName = tb_accountName.Text;
                     user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                     user.email = tb_email.Text;
@@ -221,7 +221,7 @@ namespace AdministratorApp.View.sectionData
                     //user.code = user.code;
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;
-                    user.countryId = Convert.ToInt32(cb_country);
+                    user.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     user.accountName = tb_accountName.Text;
                     //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password); ;
                     user.email = tb_email.Text;
@@ -420,7 +420,7 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                
+
                 if (dg_user.SelectedIndex != -1)
                 {
                     user = dg_user.SelectedItem as Users;
@@ -428,6 +428,7 @@ namespace AdministratorApp.View.sectionData
                     if (user != null)
                     {
                         tb_code.Text = user.code;
+                        cb_country.SelectedValue = user.countryId;
                         this.DataContext = user;
                         await getImg();
                         #region delete
@@ -446,6 +447,7 @@ namespace AdministratorApp.View.sectionData
                         HelpClass.getPhone(user.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
+
                 HelpClass.clearValidate(requiredControlList, this);
                 p_error_email.Visibility = Visibility.Collapsed;
 
@@ -490,7 +492,7 @@ namespace AdministratorApp.View.sectionData
         async Task<IEnumerable<Users>> RefreshUsersList()
         {
             users = await user.GetAll();
-            users = users.Where(x => x.type != "agent");
+            users = users.Where(x => x.type != "ag");
             return users;
         }
         void RefreshUsersView()
@@ -501,6 +503,20 @@ namespace AdministratorApp.View.sectionData
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
+        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select country
+            try
+            {
+                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
         void Clear()
         {
             this.DataContext = new Users();
@@ -510,10 +526,11 @@ namespace AdministratorApp.View.sectionData
             tb_passwordMirror.Clear();
             tb_code.Text = "";
             #endregion
-            #region mobile-Phone-fax
+            #region mobile-Phone-fax-country
             //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
             //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
             //cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+            cb_country.SelectedIndex = -1;
             cb_areaMobile.SelectedIndex = -1;
             cb_areaPhone.SelectedIndex = -1;
             cb_areaFax.SelectedIndex = -1;
@@ -783,19 +800,6 @@ namespace AdministratorApp.View.sectionData
             GC.Collect();
         }
 
-        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select country
-            try
-            {
-                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
-                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
-                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
+      
     }
 }

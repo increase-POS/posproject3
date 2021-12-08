@@ -336,7 +336,6 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <!--SelectedValue="{Binding agentLevel, Mode=OneWay}"-->
 
                         <Border Grid.Row="3" Grid.ColumnSpan="2" CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid >
@@ -427,11 +426,11 @@
                         <Grid   >
                             <ComboBox   x:Name="cb_agentLevel" Padding="10,5,5,5"      IsEditable="True"
                                         SelectedValue="{Binding agentLevel, Mode=OneWay}"
-                                          TextBlock.Foreground="#4E4E4E" Margin="4,0"
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                      materialDesign:HintAssist.Hint="Level..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
+                                        TextBlock.Foreground="#4E4E4E" Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="Level..."    
+                                        VerticalAlignment="Center" BorderThickness="0"
+                                        Height="40"   />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_agentLevel"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"

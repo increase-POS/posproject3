@@ -425,6 +425,7 @@ namespace AdministratorApp.View.sectionData
                     if (user != null)
                     {
                         tb_code.Text = user.code;
+                        cb_country.SelectedValue = user.countryId;
                         this.DataContext = user;
                         await getImg();
                         #region delete
@@ -455,9 +456,9 @@ namespace AdministratorApp.View.sectionData
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
+            {
 
                 HelpClass.StartAwait(grid_main);
                 await RefreshUsersList();
@@ -499,7 +500,22 @@ namespace AdministratorApp.View.sectionData
             txt_count.Text = usersQuery.Count().ToString();
         }
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
+
+        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select country
+            try
+            {
+                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         void Clear()
         {
             this.DataContext = new Users();
@@ -509,10 +525,11 @@ namespace AdministratorApp.View.sectionData
             tb_passwordMirror.Clear();
             tb_code.Text = "";
             #endregion
-            #region mobile-Phone-fax
+            #region mobile-Phone-fax-country
             //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
             //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
             //cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+            cb_country.SelectedIndex = -1;
             cb_areaMobile.SelectedIndex = -1;
             cb_areaPhone.SelectedIndex = -1;
             cb_areaFax.SelectedIndex = -1;
@@ -605,7 +622,7 @@ namespace AdministratorApp.View.sectionData
             bool isValid = true;
             if (users == null)
                 await RefreshUsersList();
-            if (users.Any(i => i.name == username && i.userId != uId && i.type == "agent"))
+            if (users.Any(i => i.name == username && i.userId != uId && i.type == "ag"))
                 isValid = false;
             if (!isValid)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateUserNameToolTip"), animation: ToasterAnimation.FadeIn);
@@ -667,6 +684,7 @@ namespace AdministratorApp.View.sectionData
             return isValid;
         }
         #endregion
+
         #region Phone
         int? countryid;
         private async void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -713,6 +731,7 @@ namespace AdministratorApp.View.sectionData
         }
 
         #endregion
+
         #region Image
         string imgFileName = "pic/no-image-icon-125x125.png";
         bool isImgPressed = false;
@@ -782,18 +801,6 @@ namespace AdministratorApp.View.sectionData
             GC.Collect();
         }
 
-        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select country
-            try
-            {
-                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
-                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
-                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+     
     }
 }

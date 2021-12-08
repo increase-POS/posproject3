@@ -336,17 +336,20 @@
                         </Path>
                     </Grid>
                 </Border>
+                        
                         <Border Grid.Row="3" Grid.ColumnSpan="2" CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid >
                                 <ComboBox   x:Name="cb_country"            Padding="10,5,5,5" 
                                             TextBlock.Foreground="#4E4E4E" Margin="4,0"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                             materialDesign:HintAssist.Hint="Country..."    
-                                            VerticalAlignment="Center"     BorderThickness="0"
-                                            Height="40" SelectionChanged="Cb_country_SelectionChanged"  />
+                                            VerticalAlignment="Center"     BorderThickness="0"      Height="40" 
+                                           
+                                            SelectionChanged="Cb_country_SelectionChanged" 
+                                            LostFocus="validateEmpty_LostFocus"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_country"
-                                      HorizontalAlignment="Right" Visibility="Collapsed"   
-                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      HorizontalAlignment="Right"     Visibility="Collapsed"   
+                                      VerticalAlignment="Center"      Width="15"  Height="15"
                                       Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                             </Grid>
@@ -477,7 +480,7 @@
                                          MaxLength="9"  
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
-                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                         LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_mobile" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
                                       Width="15"  Height="15" Margin="5,5,15,5" 

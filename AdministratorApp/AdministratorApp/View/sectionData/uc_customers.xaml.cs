@@ -147,7 +147,7 @@ namespace AdministratorApp.View.sectionData
                     customer.custCode = tb_custCode.Text;
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
-                    customer.countryId = Convert.ToInt32(cb_country);
+                    customer.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     customer.email = tb_email.Text;
                     customer.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; 
                     if (!tb_phone.Text.Equals(""))
@@ -162,7 +162,7 @@ namespace AdministratorApp.View.sectionData
                     customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
-                 //   customer.countryId = ; new 
+
                     int s =await customer.Save(customer);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -202,7 +202,7 @@ namespace AdministratorApp.View.sectionData
                 {
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
-                    customer.countryId = Convert.ToInt32(cb_country);
+                    customer.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     customer.email = tb_email.Text;
                     customer.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
                     if (!tb_phone.Text.Equals(""))
@@ -216,7 +216,7 @@ namespace AdministratorApp.View.sectionData
                     customer.notes = tb_notes.Text;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
-                    //   customer.countryId = ; new 
+                    
                     int s = await customer.Save(customer);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -251,11 +251,11 @@ namespace AdministratorApp.View.sectionData
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
-            {//delete
-
+            {
                 HelpClass.StartAwait(grid_main);
+
                 if (customer.custId != 0)
                 {
                     if ((!customer.canDelete) && (customer.isActive == 0))
@@ -402,6 +402,8 @@ namespace AdministratorApp.View.sectionData
                     if (customer != null)
                     {
                         tb_custCode.Text = customer.custCode;
+                        cb_country.SelectedValue = customer.countryId;
+                        this.DataContext = customer;
                         await getImg();
                         #region delete
                         if (customer.canDelete)
@@ -448,12 +450,14 @@ namespace AdministratorApp.View.sectionData
             }
         }
         #endregion
+
         #region Refresh & Search
         async Task Search()
         {
             //search
             if (customers is null)
                 await RefreshCustomersList();
+
             searchText = tb_search.Text.ToLower();
             customersQuery = customers.Where(s => (s.custCode.ToLower().Contains(searchText) ||
             s.custname.ToLower().Contains(searchText) ||
@@ -472,7 +476,23 @@ namespace AdministratorApp.View.sectionData
             txt_count.Text = customersQuery.Count().ToString();
         }
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
+        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select country
+            try
+            {
+                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
+                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
         void Clear()
         {
             this.DataContext = new Customers();
@@ -481,10 +501,11 @@ namespace AdministratorApp.View.sectionData
             tb_custCode.Text = "";
             #endregion
 
-            #region mobile-Phone-fax-email
+            #region mobile-Phone-fax-email-country
             //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
             //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
             //cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+            cb_country.SelectedIndex = -1;
             cb_areaMobile.SelectedIndex = -1;
             cb_areaPhone.SelectedIndex = -1;
             cb_areaFax.SelectedIndex = -1;
@@ -616,6 +637,7 @@ namespace AdministratorApp.View.sectionData
         }
 
         #endregion
+
         #region Image
         string imgFileName = "pic/no-image-icon-125x125.png";
         bool isImgPressed = false;
@@ -685,19 +707,6 @@ namespace AdministratorApp.View.sectionData
             GC.Collect();
         }
 
-        private void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select country
-            try
-            {
-                cb_areaMobile.SelectedIndex = cb_country.SelectedIndex;
-                cb_areaFax.SelectedIndex = cb_country.SelectedIndex;
-                cb_areaPhone.SelectedIndex = cb_country.SelectedIndex;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
+     
     }
 }

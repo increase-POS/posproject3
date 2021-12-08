@@ -154,7 +154,7 @@ namespace AdministratorApp.Classes
         {
             var typelist = new[] {
                 new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "ad" },
-                new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "u" },
+                new { Text = MainWindow.resourcemanager.GetString("trEmployee")    , Value = "us" },
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";
