@@ -1,5 +1,6 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
+using AdministratorApp.View.windows;
 using netoaster;
 using POS.View.windows;
 using System;
@@ -327,11 +328,10 @@ namespace AdministratorApp.View.applications
         #endregion
         #region events
         private void Dg_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {//selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
 
                 if (dg_package.SelectedIndex != -1)
                 {
@@ -340,6 +340,8 @@ namespace AdministratorApp.View.applications
 
                     if (package != null)
                     {
+                        btn_packagePriceDate.IsEnabled = true;
+
                         #region delete
                         if (package.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -477,6 +479,7 @@ namespace AdministratorApp.View.applications
         void Clear()
         {
             this.DataContext = new Packages();
+            btn_packagePriceDate.IsEnabled = false;
             clearValidate();
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -610,5 +613,26 @@ namespace AdministratorApp.View.applications
             }
         }
 
+        private void Btn_packagePriceDate_Click(object sender, RoutedEventArgs e)
+        {//price-date
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_countryPackageDate w = new wd_countryPackageDate();
+                w.packageID = package.packageId;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+        }
     }
 }

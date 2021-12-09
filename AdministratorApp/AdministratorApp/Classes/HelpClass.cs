@@ -235,6 +235,49 @@ namespace AdministratorApp.Classes
             }
             catch { }
             return isValid;
+
+        }
+
+        public static bool validateWindow(List<string> requiredControlList, Window window)
+        {
+            bool isValid = true;
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(window).Where(x => x.Name == "tb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(window).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (textBox != null && path != null)
+                        if (!HelpClass.validateEmpty(textBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(window).Where(x => x.Name == "cb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(window).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (comboBox != null && path != null)
+                        if (!HelpClass.validateEmpty(comboBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    PasswordBox passwordBox = FindControls.FindVisualChildren<PasswordBox>(window).Where(x => x.Name == "pb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(window).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (passwordBox != null && path != null)
+                        if (!HelpClass.validateEmpty(passwordBox.Password, path))
+                            isValid = false;
+                }
+               
+            }
+            catch { }
+            return isValid;
+
         }
         public static bool IsValidEmail(UserControl userControl)
         {//for email
@@ -280,6 +323,20 @@ namespace AdministratorApp.Classes
                 foreach (var control in requiredControlList)
                 {
                     Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (path != null)
+                        HelpClass.clearValidate(path);
+                }
+            }
+            catch { }
+        }
+        public static void clearValidateWindow(List<string> requiredControlList, Window window)
+        {
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    Path path = FindControls.FindVisualChildren<Path>(window).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     if (path != null)
                         HelpClass.clearValidate(path);

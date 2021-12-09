@@ -2461,4 +2461,19 @@
   <data name="trPosSerial" xml:space="preserve">
     <value>الأرقام التسلسلية</value>
   </data>
+  <data name="trNineMonth" xml:space="preserve">
+    <value>تسعة أشهر</value>
+  </data>
+  <data name="trOneMonth" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="trOneYear" xml:space="preserve">
+    <value>سنة</value>
+  </data>
+  <data name="trSixMonth" xml:space="preserve">
+    <value>ستة أشهر</value>
+  </data>
+  <data name="trThreeMonth" xml:space="preserve">
+    <value>ثلاثة أشهر</value>
+  </data>
 </root>

@@ -2485,4 +2485,19 @@ Please add Email in setting</value>
   <data name="trPosSerial" xml:space="preserve">
     <value>Pos Serials</value>
   </data>
+  <data name="trNineMonth" xml:space="preserve">
+    <value>Nine month</value>
+  </data>
+  <data name="trOneMonth" xml:space="preserve">
+    <value>One month</value>
+  </data>
+  <data name="trOneYear" xml:space="preserve">
+    <value>One year</value>
+  </data>
+  <data name="trSixMonth" xml:space="preserve">
+    <value>Six month</value>
+  </data>
+  <data name="trThreeMonth" xml:space="preserve">
+    <value>Three month</value>
+  </data>
 </root>

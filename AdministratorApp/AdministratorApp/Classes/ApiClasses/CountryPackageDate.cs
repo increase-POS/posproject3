@@ -20,6 +20,7 @@ namespace AdministratorApp.ApiClasses
     {
         public int Id { get; set; }
         public Nullable<int> countryId { get; set; }
+        public string countryName { get; set; }
         public Nullable<int> packageId { get; set; }
         public int monthCount { get; set; }
         public int yearCount { get; set; }
