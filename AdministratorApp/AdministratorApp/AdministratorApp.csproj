@@ -397,5 +397,8 @@
   <ItemGroup>
     <Resource Include="pic\programs-sales-login-bg.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\increase-logo100.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
