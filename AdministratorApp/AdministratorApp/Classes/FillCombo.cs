@@ -163,6 +163,7 @@ namespace AdministratorApp.Classes
         }
 
         #endregion
+
         #region fill package month
         static public void fillPackageMonth(ComboBox combo)
         {
@@ -170,8 +171,8 @@ namespace AdministratorApp.Classes
                 new { Text = MainWindow.resourcemanager.GetString("trOneMonth")    , Value = "1" },
                 new { Text = MainWindow.resourcemanager.GetString("trThreeMonth")  , Value = "3" },
                 new { Text = MainWindow.resourcemanager.GetString("trSixMonth")    , Value = "6" },
-                new { Text = MainWindow.resourcemanager.GetString("trNineMonth")   , Value = "9" },
-                new { Text = MainWindow.resourcemanager.GetString("trOneYear")     , Value = "12" },
+                new { Text = MainWindow.resourcemanager.GetString("trTwelveMonth") , Value = "12" },
+                new { Text = MainWindow.resourcemanager.GetString("trUnLimited")   , Value = "0" },
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";

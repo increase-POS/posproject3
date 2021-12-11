@@ -85,40 +85,27 @@ namespace AdministratorApp.View.windows
         #region methods
         private void translate()
         {
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_lastName, MainWindow.resourcemanager.GetString("trLastNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_passwordMirror, MainWindow.resourcemanager.GetString("trPasswordHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-            //txt_workInformation.Text = MainWindow.resourcemanager.GetString("trWorkInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_type, MainWindow.resourcemanager.GetString("trJobHint"));
-            //txt_loginInformation.Text = MainWindow.resourcemanager.GetString("trLoginInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_accountName, MainWindow.resourcemanager.GetString("trUserNameHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
+            txt_countryPackageDate.Text = MainWindow.resourcemanager.GetString("trPackagePrices");
+            txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
 
-            //dg_user.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_user.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_user.Columns[2].Header = MainWindow.resourcemanager.GetString("trMobile");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_country, MainWindow.resourcemanager.GetString("trCountryHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_month, MainWindow.resourcemanager.GetString("trMonthHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, MainWindow.resourcemanager.GetString("trPriceHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            dg_package.Columns[0].Header = MainWindow.resourcemanager.GetString("trCountry");
+            dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trMonthCount");
+            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trYearCount");
+            dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trPrice");
 
-            //btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+
+            btn_save.Content = MainWindow.resourcemanager.GetString("trAdd");
+            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
 
         }
 
@@ -149,9 +136,10 @@ namespace AdministratorApp.View.windows
         }
         void Clear()
         {
+            countryPackageDate.Id = 0;
             cb_country.SelectedIndex = -1;
             cb_month.SelectedIndex = -1;
-            this.DataContext = new Users();
+            this.DataContext = new CountryPackageDate();
 
             // last 
             HelpClass.clearValidateWindow(requiredControlList, this);
@@ -273,30 +261,6 @@ namespace AdministratorApp.View.windows
             }
         }
 
-        private void Tgl_islimitDate_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                cb_month.IsEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Tgl_islimitDate_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                cb_month.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
         private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             try
@@ -368,6 +332,19 @@ namespace AdministratorApp.View.windows
                     if (countryPackageDate != null)
                     {
                         this.DataContext = countryPackageDate;
+                        if (countryPackageDate.islimitDate)
+                            cb_month.SelectedValue = 0;
+                        else
+                        {
+                            switch (countryPackageDate.monthCount)
+                            {
+                                case 1: cb_month.SelectedValue = 1;  break;
+                                case 3: cb_month.SelectedValue = 3;  break;
+                                case 6: cb_month.SelectedValue = 6;  break;
+                                case 0: cb_month.SelectedValue = 12; break;
+                            }
+                        }
+                        this.DataContext = countryPackageDate;
 
                         #region delete
                         if (countryPackageDate.canDelete)
@@ -429,22 +406,26 @@ namespace AdministratorApp.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 countryPackageDate = new CountryPackageDate();
-                if (cb_month.IsEnabled == true) requiredControlList.Remove("month");
 
                 if (HelpClass.validateWindow(requiredControlList, this))
                 {
                     countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     countryPackageDate.packageId = packageID;
-                    if (cb_month.IsEnabled == true)
-                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
-                    else
-                        countryPackageDate.monthCount = 0;
                     if (Convert.ToInt32(cb_month.SelectedValue) == 12)
+                    {
+                        countryPackageDate.monthCount = 0;
                         countryPackageDate.yearCount = 1;
+                    }
                     else
+                    {
+                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
                         countryPackageDate.yearCount = 0;
-                    countryPackageDate.price = Convert.ToInt32(tb_price.Text);
-                    countryPackageDate.islimitDate = tgl_islimitDate.IsChecked.Value;
+                    }
+                    countryPackageDate.price = decimal.Parse(tb_price.Text);
+                    if (Convert.ToInt32(cb_month.SelectedValue) == 0)
+                        countryPackageDate.islimitDate = true;
+                    else
+                        countryPackageDate.islimitDate = false;
                     countryPackageDate.notes = tb_notes.Text;
                     countryPackageDate.isActive = 1;
                     countryPackageDate.createUserId = MainWindow.userLogin.userId;
@@ -460,7 +441,6 @@ namespace AdministratorApp.View.windows
                         Clear();
                         await RefreshCountryPackageDateList();
                         await Search();
-                        if (!requiredControlList.Contains("month")) requiredControlList.Remove("month");
                     }
                 }
 
@@ -478,22 +458,25 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (cb_month.IsEnabled == true) requiredControlList.Remove("month");
-
-                if (HelpClass.validateWindow(requiredControlList, this))
+                if ((HelpClass.validateWindow(requiredControlList, this)) && (countryPackageDate.Id != 0))
                 {
                     countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
                     countryPackageDate.packageId = packageID;
-                    if (cb_month.IsEnabled == true)
-                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
-                    else
-                        countryPackageDate.monthCount = 0;
                     if (Convert.ToInt32(cb_month.SelectedValue) == 12)
+                    {
+                        countryPackageDate.monthCount = 0;
                         countryPackageDate.yearCount = 1;
+                    }
                     else
+                    {
+                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
                         countryPackageDate.yearCount = 0;
-                    countryPackageDate.price = Convert.ToInt32(tb_price.Text);
-                    countryPackageDate.islimitDate = tgl_islimitDate.IsChecked.Value;
+                    }
+                    countryPackageDate.price = decimal.Parse(tb_price.Text);
+                    if (Convert.ToInt32(cb_month.SelectedValue) == 0)
+                        countryPackageDate.islimitDate = true;
+                    else
+                        countryPackageDate.islimitDate = false;
                     countryPackageDate.notes = tb_notes.Text;
                     countryPackageDate.isActive = 1;
                     countryPackageDate.createUserId = MainWindow.userLogin.userId;
@@ -506,8 +489,8 @@ namespace AdministratorApp.View.windows
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
+                        await RefreshCountryPackageDateList();
                         await Search();
-                        if (!requiredControlList.Contains("month")) requiredControlList.Remove("month");
                     }
                 }
 

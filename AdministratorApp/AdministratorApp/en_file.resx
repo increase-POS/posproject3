@@ -2485,19 +2485,34 @@ Please add Email in setting</value>
   <data name="trPosSerial" xml:space="preserve">
     <value>Pos Serials</value>
   </data>
-  <data name="trNineMonth" xml:space="preserve">
-    <value>Nine month</value>
-  </data>
   <data name="trOneMonth" xml:space="preserve">
     <value>One month</value>
   </data>
-  <data name="trOneYear" xml:space="preserve">
-    <value>One year</value>
+  <data name="trTwelveMonth" xml:space="preserve">
+    <value>12 months</value>
   </data>
   <data name="trSixMonth" xml:space="preserve">
-    <value>Six month</value>
+    <value>6 months</value>
   </data>
   <data name="trThreeMonth" xml:space="preserve">
-    <value>Three month</value>
+    <value>3 months</value>
+  </data>
+  <data name="trCountry" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="trCountryHint" xml:space="preserve">
+    <value>Country...</value>
+  </data>
+  <data name="trMonthHint" xml:space="preserve">
+    <value>Month...</value>
+  </data>
+  <data name="trPackagePrices" xml:space="preserve">
+    <value>Package Prices</value>
+  </data>
+  <data name="trUnLimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="trYearCount" xml:space="preserve">
+    <value>Year count</value>
   </data>
 </root>

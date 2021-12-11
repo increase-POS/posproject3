@@ -2461,19 +2461,34 @@
   <data name="trPosSerial" xml:space="preserve">
     <value>الأرقام التسلسلية</value>
   </data>
-  <data name="trNineMonth" xml:space="preserve">
-    <value>تسعة أشهر</value>
-  </data>
   <data name="trOneMonth" xml:space="preserve">
     <value>شهر</value>
   </data>
-  <data name="trOneYear" xml:space="preserve">
-    <value>سنة</value>
+  <data name="trTwelveMonth" xml:space="preserve">
+    <value>12 شهر</value>
   </data>
   <data name="trSixMonth" xml:space="preserve">
-    <value>ستة أشهر</value>
+    <value>6 أشهر</value>
   </data>
   <data name="trThreeMonth" xml:space="preserve">
-    <value>ثلاثة أشهر</value>
+    <value>3 أشهر</value>
+  </data>
+  <data name="trCountry" xml:space="preserve">
+    <value>الدولة</value>
+  </data>
+  <data name="trCountryHint" xml:space="preserve">
+    <value>الدولة...</value>
+  </data>
+  <data name="trMonthHint" xml:space="preserve">
+    <value>الشهر...</value>
+  </data>
+  <data name="trPackagePrices" xml:space="preserve">
+    <value>أسعار الحزمة</value>
+  </data>
+  <data name="trUnLimited" xml:space="preserve">
+    <value>غير محدود</value>
+  </data>
+  <data name="trYearCount" xml:space="preserve">
+    <value>عدد السنوات</value>
   </data>
 </root>
