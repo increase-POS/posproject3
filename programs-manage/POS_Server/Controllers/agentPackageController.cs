@@ -370,17 +370,17 @@ updateDate
             }
             else
             {
-                int userID = 0;
+                int userId = 0;
                 string Object = "";
                 List<agentPackage> newList = new List<agentPackage>();
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
-                    if (c.Type == "userID")
+                    if (c.Type == "userId")
                     {
-                        userID = int.Parse(c.Value);
+                        userId = int.Parse(c.Value);
                     }
-                    else if (c.Type == "newList")
+                    else if (c.Type == "newlistobject")
                     {
                         Object = c.Value.Replace("\\", string.Empty);
                         Object = Object.Trim('"');
@@ -391,7 +391,7 @@ updateDate
                 {
                     try
                     {
-                        var packages = entity.agentPackage.Where(x => x.agentId == userID).ToList();
+                        var packages = entity.agentPackage.Where(x => x.agentId == userId).ToList();
                         entity.agentPackage.RemoveRange(packages);
                         entity.SaveChanges();
                         foreach (agentPackage package in newList)

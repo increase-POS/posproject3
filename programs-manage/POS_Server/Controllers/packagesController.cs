@@ -847,8 +847,8 @@ namespace Programs_Server.Controllers
         /// 
         //قائمة الباكاج التي يمكن للموزع رؤيتها
         [HttpPost]
-        [Route("getPackagesByAgent")]
-        public string getPackagesByAgent(string token)//string Object
+        [Route("GetPackagesByAgent")]
+        public string GetPackagesByAgent(string token)//string Object
         {
             string message = "";
 
@@ -902,10 +902,12 @@ namespace Programs_Server.Controllers
                                         }).ToList();
                         return TokenManager.GenerateToken(packages);
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         message = "0";
-                        return TokenManager.GenerateToken(message);
+                        //return TokenManager.GenerateToken(message);
+                       
+                        return TokenManager.GenerateToken(ex.ToString());
                     }
                 }
 
@@ -914,8 +916,8 @@ namespace Programs_Server.Controllers
 
         // قائمة الباكجات الموجودة بنفس دولة الموزع
         [HttpPost]
-        [Route("getByAgentCountryId")]
-        public string getByAgentCountryId(string token)//string Object
+        [Route("GetByAgentCountryId")]
+        public string GetByAgentCountryId(string token)//string Object
         {
             string message = "";
             token = TokenManager.readToken(HttpContext.Current.Request);

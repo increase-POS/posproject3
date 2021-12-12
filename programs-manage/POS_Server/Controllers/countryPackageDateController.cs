@@ -320,7 +320,7 @@ namespace Programs_Server.Controllers
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
-                    if (c.Type == " Id ")
+                    if (c.Type == "Id")
                     {
                         Id = int.Parse(c.Value);
                     }
@@ -342,8 +342,9 @@ namespace Programs_Server.Controllers
                     {
                         using (incprogramsdbEntities entity = new incprogramsdbEntities())
                         {
+                        
                             countryPackageDate objectDelete = entity.countryPackageDate.Find(Id);
-
+                          
                             entity.countryPackageDate.Remove(objectDelete);
                             message = entity.SaveChanges().ToString();
                             return TokenManager.GenerateToken(message);
@@ -352,10 +353,12 @@ namespace Programs_Server.Controllers
                     }
 
 
-                    catch
+                    catch(Exception ex)
                     {
-                        return TokenManager.GenerateToken("0");
+                     //   return TokenManager.GenerateToken("0");
+                        return TokenManager.GenerateToken(ex.ToString());
                     }
+
                 }
                 else
                 {

@@ -105,7 +105,31 @@ namespace AdministratorApp.ApiClasses
           
         }
 
+        public async Task<AgentPackage> saveNewList(List<AgentPackage> newList, int agentId)
+        {
+            AgentPackage item = new AgentPackage();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("userId", agentId.ToString());
 
-       
+
+            var list = JsonConvert.SerializeObject(newList);
+            parameters.Add("newlistobject", list);
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "saveNewList", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<AgentPackage>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+
+            return item;
+
+
+        }
+
     }
 }

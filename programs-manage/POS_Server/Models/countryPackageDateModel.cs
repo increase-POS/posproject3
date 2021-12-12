@@ -21,6 +21,8 @@ namespace Programs_Server.Models
         public bool islimitDate { get; set; }
         public Nullable<int> isActive { get; set; }
         public bool canDelete { get; set; }
+        public string countryName { get; set; }
         
+
     }
 }
