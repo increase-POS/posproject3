@@ -70,7 +70,7 @@ namespace Programs_Server.Controllers
                                         createUserId = S.createUserId,
                                         updateUserId = S.updateUserId,
                                         notes = S.notes,
-
+                             
 
                                     }).ToList();
 
@@ -842,5 +842,142 @@ namespace Programs_Server.Controllers
             //    return NotFound();
         }
 
-    }   
+
+        /// //////////////////////////////////////
+        /// 
+        //قائمة الباكاج التي يمكن للموزع رؤيتها
+        [HttpPost]
+        [Route("getPackagesByAgent")]
+        public string getPackagesByAgent(string token)//string Object
+        {
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int userId = 0;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "userId")
+                    {
+                        userId = int.Parse(c.Value);
+                    }
+                }
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    try
+                    {
+                        var packages = (from S in entity.packages
+                                        join ap in entity.agentPackage.Where(x => x.agentId == userId) on S.packageId equals ap.packageId
+                                        select new packages()
+                                        {
+                                            packageId = S.packageId,
+                                            packageName = S.packageName,
+                                            details = S.details,
+                                            branchCount = S.branchCount,
+                                            posCount = S.posCount,
+                                            userCount = S.userCount,
+                                            vendorCount = S.vendorCount,
+                                            customerCount = S.customerCount,
+                                            itemCount = S.itemCount,
+                                            salesInvCount = S.salesInvCount,
+                                            programId = S.programId,
+                                            verId = S.verId,
+
+                                            isActive = S.isActive,
+                                            createDate = S.createDate,
+                                            updateDate = S.updateDate,
+                                            packageCode = S.packageCode,
+                                            storeCount = S.storeCount,
+
+                                            createUserId = S.createUserId,
+                                            updateUserId = S.updateUserId,
+                                            notes = S.notes,
+                                        }).ToList();
+                        return TokenManager.GenerateToken(packages);
+                    }
+                    catch
+                    {
+                        message = "0";
+                        return TokenManager.GenerateToken(message);
+                    }
+                }
+
+            }
+        }
+
+        // قائمة الباكجات الموجودة بنفس دولة الموزع
+        [HttpPost]
+        [Route("getByAgentCountryId")]
+        public string getByAgentCountryId(string token)//string Object
+        {
+            string message = "";
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int userId = 0;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "userId")
+                    {
+                        userId = int.Parse(c.Value);
+                    }
+                }
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    try
+                    {
+                        var packages = (from S in entity.packages
+                                        join cp in entity.countryPackageDate.Where(p => p.countryId == entity.users.Where(x => x.userId == userId && x.countryId == p.countryId).Select(x => x.countryId).FirstOrDefault()) on S.packageId equals cp.packageId
+                                        select new packages()
+                                        {
+                                            packageId = S.packageId,
+                                            packageName = S.packageName,
+                                            details = S.details,
+                                            branchCount = S.branchCount,
+                                            posCount = S.posCount,
+                                            userCount = S.userCount,
+                                            vendorCount = S.vendorCount,
+                                            customerCount = S.customerCount,
+                                            itemCount = S.itemCount,
+                                            salesInvCount = S.salesInvCount,
+                                            programId = S.programId,
+                                            verId = S.verId,
+
+                                            isActive = S.isActive,
+                                            createDate = S.createDate,
+                                            updateDate = S.updateDate,
+                                            packageCode = S.packageCode,
+                                            storeCount = S.storeCount,
+
+                                            createUserId = S.createUserId,
+                                            updateUserId = S.updateUserId,
+                                            notes = S.notes,
+                                        }).ToList();
+                        return TokenManager.GenerateToken(packages);
+                    }
+                    catch
+                    {
+                        message = "0";
+                        return TokenManager.GenerateToken(message);
+                    }
+                }
+            }
+        }
+
+
+
+    }
 }

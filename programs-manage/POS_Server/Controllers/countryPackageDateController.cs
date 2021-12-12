@@ -43,13 +43,16 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         var List = (from S in entity.countryPackageDate
-                                    join C in entity.countriesCodes on S.countryId equals C.countryId
+                                    join C in entity.countriesCodes on S.countryId equals C.countryId into CS
                                     join P in entity.packages on S.packageId equals P.packageId
+
+                                    from CSS in CS.DefaultIfEmpty()
                                     select new countryPackageDateModel()
                                     {
 
                                         Id = S.Id,
                                         countryId = S.countryId,
+                                        countryName = CSS.name,
                                         packageId = S.packageId,
                                         monthCount = S.monthCount,
                                         yearCount = S.yearCount,
@@ -99,9 +102,8 @@ namespace Programs_Server.Controllers
         [HttpPost]
         [Route("GetByID")]
         public string GetByID(string token)//int packageUserId
+
         {
-
-
 
             string message = "";
 
@@ -380,7 +382,6 @@ namespace Programs_Server.Controllers
 
     
         }
-
 
 
 

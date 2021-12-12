@@ -354,10 +354,64 @@ updateDate
  
         }
 
-     
 
-    
 
-    
+        [HttpPost]
+        [Route("saveNewList")]
+        public string saveNewList(string token)//string Object
+        {
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int userID = 0;
+                string Object = "";
+                List<agentPackage> newList = new List<agentPackage>();
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "userID")
+                    {
+                        userID = int.Parse(c.Value);
+                    }
+                    else if (c.Type == "newList")
+                    {
+                        Object = c.Value.Replace("\\", string.Empty);
+                        Object = Object.Trim('"');
+                        newList = JsonConvert.DeserializeObject<List<agentPackage>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    }
+                }
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    try
+                    {
+                        var packages = entity.agentPackage.Where(x => x.agentId == userID).ToList();
+                        entity.agentPackage.RemoveRange(packages);
+                        entity.SaveChanges();
+                        foreach (agentPackage package in newList)
+                        {
+                            package.createDate = DateTime.Now;
+                            package.updateDate = DateTime.Now;
+                            entity.agentPackage.Add(package);
+                        }
+                        entity.SaveChanges();
+                        message = "1";
+                    }
+                    catch
+                    {
+                        message = "0";
+                    }
+                    return TokenManager.GenerateToken(message);
+                }
+            }
+        }
+
+
     }
 }
