@@ -53,7 +53,6 @@ namespace Programs_Server.Controllers
                                         Id = S.Id,
                                         countryId = S.countryId,
                                         countryName = CSS.name,
-                                        currency = CSS.currency,
                                         packageId = S.packageId,
                                         monthCount = S.monthCount,
                                         yearCount = S.yearCount,
@@ -66,6 +65,7 @@ namespace Programs_Server.Controllers
                                         islimitDate = S.islimitDate,
                                         isActive = S.isActive,
                                         canDelete=false,
+                                        currency=CSS.currency,
                                     }).ToList();
                         /*
        

@@ -22,7 +22,8 @@ namespace Programs_Server.Models
         public Nullable<int> isActive { get; set; }
         public bool canDelete { get; set; }
         public string countryName { get; set; }
-        
+        public string currency { get; set; }
+
 
     }
 }

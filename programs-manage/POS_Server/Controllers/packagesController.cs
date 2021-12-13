@@ -41,7 +41,7 @@ namespace Programs_Server.Controllers
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        
+
                         var List = (from S in entity.packages
                                     select new packagesModel()
                                     {
@@ -60,17 +60,17 @@ namespace Programs_Server.Controllers
                                         programName = S.programs.name,
                                         verId = S.verId,
                                         verName = S.versions.name,
-                                        
+
                                         isActive = S.isActive,
                                         createDate = S.createDate,
                                         updateDate = S.updateDate,
                                         packageCode = S.packageCode,
                                         storeCount = S.storeCount,
-                                      
+
                                         createUserId = S.createUserId,
                                         updateUserId = S.updateUserId,
                                         notes = S.notes,
-                             
+
 
                                     }).ToList();
 
@@ -230,13 +230,13 @@ namespace Programs_Server.Controllers
                            programName = S.programs.name,
                            S.verId,
                            verName = S.versions.name,
-                          
+
                            S.isActive,
                            S.createDate,
                            S.updateDate,
                            S.packageCode,
                            S.storeCount,
-                           
+
                            S.createUserId,
                            S.updateUserId,
                            S.notes,
@@ -321,7 +321,7 @@ namespace Programs_Server.Controllers
 
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
-                    row = entity.packages 
+                    row = entity.packages
                        .Where(u => u.packageId == packageId && u.isActive == 1)
                        .Select(S => new packagesSend
                        {
@@ -346,7 +346,7 @@ namespace Programs_Server.Controllers
                            //   updateDate = S.updateDate,
                            //   packageCode = S.packageCode,
                            storeCount = S.storeCount,
-                       
+
                            //    createUserId = S.createUserId,
                            //  updateUserId = S.updateUserId,
                            // notes = S.notes,
@@ -454,13 +454,13 @@ namespace Programs_Server.Controllers
                                 tmpObject.salesInvCount = newObject.salesInvCount;
                                 tmpObject.programId = newObject.programId;
                                 tmpObject.verId = newObject.verId;
-                           
+
                                 tmpObject.isActive = newObject.isActive;
                                 // tmpObject. createDate = newObject.createDate;
 
                                 tmpObject.packageCode = newObject.packageCode;
                                 tmpObject.storeCount = newObject.storeCount;
-                           
+
                                 // tmpObject. createUserId = newObject.createUserId;
                                 tmpObject.notes = newObject.notes;
 
@@ -869,46 +869,61 @@ namespace Programs_Server.Controllers
                         userId = int.Parse(c.Value);
                     }
                 }
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                try
                 {
-                    try
+                    List<packagesModel> List = new List<packagesModel>();
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        var packages = (from S in entity.packages
-                                        join ap in entity.agentPackage.Where(x => x.agentId == userId) on S.packageId equals ap.packageId
-                                        select new packages()
-                                        {
-                                            packageId = S.packageId,
-                                            packageName = S.packageName,
-                                            details = S.details,
-                                            branchCount = S.branchCount,
-                                            posCount = S.posCount,
-                                            userCount = S.userCount,
-                                            vendorCount = S.vendorCount,
-                                            customerCount = S.customerCount,
-                                            itemCount = S.itemCount,
-                                            salesInvCount = S.salesInvCount,
-                                            programId = S.programId,
-                                            verId = S.verId,
 
-                                            isActive = S.isActive,
-                                            createDate = S.createDate,
-                                            updateDate = S.updateDate,
-                                            packageCode = S.packageCode,
-                                            storeCount = S.storeCount,
+                        List = (from S in entity.packages
+                                    join paa in entity.agentPackage on S.packageId equals paa.packageId into ppa
+                                    from pa in ppa.DefaultIfEmpty()
+                                    where pa.agentId == userId
+                                    select new packagesModel()
 
-                                            createUserId = S.createUserId,
-                                            updateUserId = S.updateUserId,
-                                            notes = S.notes,
-                                        }).ToList();
-                        return TokenManager.GenerateToken(packages);
+                                    {
+                                        
+                                        packageId = S.packageId,
+                                        packageName = S.packageName,
+                                        details = S.details,
+                                        branchCount = S.branchCount,
+                                        posCount = S.posCount,
+                                        userCount = S.userCount,
+                                        vendorCount = S.vendorCount,
+                                        customerCount = S.customerCount,
+                                        itemCount = S.itemCount,
+                                        salesInvCount = S.salesInvCount,
+                                        programId = S.programId,
+                                    //    programName = S.programs.name,
+                                        verId = S.verId,
+                                     //   verName = S.versions.name,
+
+                                        isActive = S.isActive,
+                                        createDate = S.createDate,
+                                        updateDate = S.updateDate,
+                                        packageCode = S.packageCode,
+                                        storeCount = S.storeCount,
+
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
+                                        notes = S.notes,
+
+
+                                    }).ToList();
+                        //if (List == null||List.Count==0)
+                        //{
+                        //    List = new List<packagesModel>();
+                        //}
+                        return TokenManager.GenerateToken(List);
                     }
-                    catch (Exception ex)
-                    {
-                        message = "0";
-                        //return TokenManager.GenerateToken(message);
-                       
-                        return TokenManager.GenerateToken(ex.ToString());
-                    }
+                }
+                catch
+                {
+                    message = "0";
+                    return TokenManager.GenerateToken(message);
+
+                   // return TokenManager.GenerateToken(ex.ToString());
+
                 }
 
             }
@@ -937,13 +952,14 @@ namespace Programs_Server.Controllers
                         userId = int.Parse(c.Value);
                     }
                 }
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                try
                 {
-                    try
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
+
                         var packages = (from S in entity.packages
                                         join cp in entity.countryPackageDate.Where(p => p.countryId == entity.users.Where(x => x.userId == userId && x.countryId == p.countryId).Select(x => x.countryId).FirstOrDefault()) on S.packageId equals cp.packageId
-                                        select new packages()
+                                        select new packagesModel()
                                         {
                                             packageId = S.packageId,
                                             packageName = S.packageName,
@@ -970,12 +986,14 @@ namespace Programs_Server.Controllers
                                         }).ToList();
                         return TokenManager.GenerateToken(packages);
                     }
-                    catch
-                    {
-                        message = "0";
-                        return TokenManager.GenerateToken(message);
-                    }
                 }
+                catch (Exception ex)
+                {
+                    message = "0";
+                    // return TokenManager.GenerateToken(message);
+                    return TokenManager.GenerateToken(ex.ToString());
+                }
+                
             }
         }
 

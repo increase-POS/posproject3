@@ -39,7 +39,9 @@ namespace Programs_Server.Controllers
                              {
                                  c.countryId,
                                  c.code,
-                                 c.name
+                                 c.name,
+                                 c.currency,
+                                 c.isDefault,
                              }).ToList();
 
                         return TokenManager.GenerateToken(List);
