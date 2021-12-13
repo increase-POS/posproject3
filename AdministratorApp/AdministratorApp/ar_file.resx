@@ -2497,4 +2497,10 @@
   <data name="trCurrencyHint" xml:space="preserve">
     <value>العملة...</value>
   </data>
+  <data name="trPeriodHint" xml:space="preserve">
+    <value>المدة...</value>
+  </data>
+  <data name="trPopAlreadyExist" xml:space="preserve">
+    <value>موجود مسبقاً</value>
+  </data>
 </root>

@@ -32,12 +32,8 @@ namespace AdministratorApp.View.windows
         IEnumerable<CountryPackageDate> countryPackageDateQuery;
         IEnumerable<CountryPackageDate> countryPackageDates;
 
-        Country countryModel = new Country();
-        IEnumerable<Country> countries;
-
         public int packageID = 0;
         byte tgl_countryPackageDateState;
-        string searchText = "";
 
         public wd_countryPackageDate()
         {
@@ -73,6 +69,7 @@ namespace AdministratorApp.View.windows
                 #endregion
 
                 await FillCombo.fillCountriesNames(cb_country);
+                await FillCombo.fillCountriesNames(cb_country_);
                 FillCombo.fillPackageMonth(cb_month);
 
                 await Search();
@@ -93,11 +90,12 @@ namespace AdministratorApp.View.windows
             txt_countryPackageDate.Text = MainWindow.resourcemanager.GetString("trPackagePrices");
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_currency.Text = MainWindow.resourcemanager.GetString("trCurrency");
+            chk_allCountries.Content = MainWindow.resourcemanager.GetString("trAll");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_country, MainWindow.resourcemanager.GetString("trCountryHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_currency, MainWindow.resourcemanager.GetString("trCurrencyHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_month, MainWindow.resourcemanager.GetString("trMonthHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_country_, MainWindow.resourcemanager.GetString("trCountryHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_month, MainWindow.resourcemanager.GetString("trPeriodHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, MainWindow.resourcemanager.GetString("trPriceHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
@@ -108,6 +106,7 @@ namespace AdministratorApp.View.windows
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
 
             btn_save.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
@@ -120,14 +119,13 @@ namespace AdministratorApp.View.windows
             if (countryPackageDates is null)
                 await RefreshCountryPackageDateList();
 
-            searchText = tb_search.Text.ToLower();
             countryPackageDateQuery = countryPackageDates
-            .Where(s => (s.countryName.ToLower().Contains(searchText)
-            ||
-            s.monthCount.ToString().ToLower().Contains(searchText) ||
-            s.yearCount.ToString().ToLower().Contains(searchText)
-            ) && s.isActive == tgl_countryPackageDateState
-            );
+                .Where(c => 
+                (
+                cb_country_.SelectedIndex != -1 ? c.countryId == Convert.ToInt32(cb_country_.SelectedValue) : true
+                ) 
+                && c.isActive == tgl_countryPackageDateState);
+
             RefreshCountryPackageDateView();
         }
         async Task<IEnumerable<CountryPackageDate>> RefreshCountryPackageDateList()
@@ -176,6 +174,23 @@ namespace AdministratorApp.View.windows
             }
         }
 
+        private bool chkIfExist()
+        {
+            int month = 0, year = 0;
+            switch (cb_month.SelectedValue.ToString())
+            {
+                case "1": month = 1; year = 0; break;
+                case "3": month = 3; year = 0; break;
+                case "6": month = 6; year = 0; break;
+                case "12": month = 0; year = 1; break;
+                case "0": month = 0; year = 0; break;
+                default: break;
+            }
+            if (countryPackageDates.Any(c => c.countryId == Convert.ToInt32(cb_country.SelectedValue) && c.monthCount == month && c.yearCount == year))
+                return true;
+            else
+                return false;
+        }
         #endregion
 
         #region events
@@ -305,6 +320,62 @@ namespace AdministratorApp.View.windows
         {
             validate();
         }
+        private async void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select country
+            try
+            {
+                if (cb_country.SelectedIndex != -1)
+                    txt_currency.Text = FillCombo.countrynum.Where(c => c.countryId == Convert.ToInt32(cb_country.SelectedValue)).FirstOrDefault().currency;
+                else
+                    txt_currency.Text = "";
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chk_allCountries_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cb_country_.IsEnabled = false;
+                cb_country_.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chk_allCountries_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cb_country_.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Cb_country__SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
 
         #region save  update delete  clear  search   select  refresh
@@ -338,7 +409,8 @@ namespace AdministratorApp.View.windows
                     if (countryPackageDate != null)
                     {
                         this.DataContext = countryPackageDate;
-                        if (countryPackageDate.islimitDate)
+
+                    if (countryPackageDate.islimitDate)
                             cb_month.SelectedValue = 0;
                         else
                         {
@@ -350,6 +422,7 @@ namespace AdministratorApp.View.windows
                                 case 0: cb_month.SelectedValue = 12; break;
                             }
                         }
+
                         this.DataContext = countryPackageDate;
 
                         #region delete
@@ -374,21 +447,7 @@ namespace AdministratorApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {//search
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
+      
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {//clear
             try
@@ -412,50 +471,54 @@ namespace AdministratorApp.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 countryPackageDate = new CountryPackageDate();
-
-                if (HelpClass.validateWindow(requiredControlList, this))
+                
+                if (!chkIfExist())
                 {
-                    countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                    countryPackageDate.packageId = packageID;
-                    if (Convert.ToInt32(cb_month.SelectedValue) == 12)
+                    if (HelpClass.validateWindow(requiredControlList, this))
                     {
-                        countryPackageDate.monthCount = 0;
-                        countryPackageDate.yearCount = 1;
-                    }
-                    else
-                    {
-                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
-                        countryPackageDate.yearCount = 0;
-                    }
-                    countryPackageDate.price = decimal.Parse(tb_price.Text);
-                    if (Convert.ToInt32(cb_month.SelectedValue) == 0)
-                        countryPackageDate.islimitDate = true;
-                    else
-                        countryPackageDate.islimitDate = false;
-                    countryPackageDate.notes = tb_notes.Text;
-                    countryPackageDate.isActive = 1;
-                    countryPackageDate.createUserId = MainWindow.userLogin.userId;
-                    countryPackageDate.updateUserId = MainWindow.userLogin.userId;
+                        countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
+                        countryPackageDate.packageId = packageID;
+                        if (Convert.ToInt32(cb_month.SelectedValue) == 12)
+                        {
+                            countryPackageDate.monthCount = 0;
+                            countryPackageDate.yearCount = 1;
+                        }
+                        else
+                        {
+                            countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
+                            countryPackageDate.yearCount = 0;
+                        }
+                        countryPackageDate.price = decimal.Parse(tb_price.Text);
+                        if (Convert.ToInt32(cb_month.SelectedValue) == 0)
+                            countryPackageDate.islimitDate = true;
+                        else
+                            countryPackageDate.islimitDate = false;
+                        countryPackageDate.notes = tb_notes.Text;
+                        countryPackageDate.isActive = 1;
+                        countryPackageDate.createUserId = MainWindow.userLogin.userId;
+                        countryPackageDate.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = await countryPackageDateModel.Save(countryPackageDate);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        int s = await countryPackageDateModel.Save(countryPackageDate);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                        Clear();
-                        await RefreshCountryPackageDateList();
-                        await Search();
+                            Clear();
+                            await RefreshCountryPackageDateList();
+                            await Search();
+                        }
                     }
                 }
-
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAlreadyExist"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
@@ -464,42 +527,46 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                if ((HelpClass.validateWindow(requiredControlList, this)) && (countryPackageDate.Id != 0))
+                if (!chkIfExist())
                 {
-                    countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
-                    countryPackageDate.packageId = packageID;
-                    if (Convert.ToInt32(cb_month.SelectedValue) == 12)
+                    if ((HelpClass.validateWindow(requiredControlList, this)) && (countryPackageDate.Id != 0))
                     {
-                        countryPackageDate.monthCount = 0;
-                        countryPackageDate.yearCount = 1;
-                    }
-                    else
-                    {
-                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
-                        countryPackageDate.yearCount = 0;
-                    }
-                    countryPackageDate.price = decimal.Parse(tb_price.Text);
-                    if (Convert.ToInt32(cb_month.SelectedValue) == 0)
-                        countryPackageDate.islimitDate = true;
-                    else
-                        countryPackageDate.islimitDate = false;
-                    countryPackageDate.notes = tb_notes.Text;
-                    countryPackageDate.isActive = 1;
-                    countryPackageDate.createUserId = MainWindow.userLogin.userId;
-                    countryPackageDate.updateUserId = MainWindow.userLogin.userId;
+                        countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
+                        countryPackageDate.packageId = packageID;
+                        if (Convert.ToInt32(cb_month.SelectedValue) == 12)
+                        {
+                            countryPackageDate.monthCount = 0;
+                            countryPackageDate.yearCount = 1;
+                        }
+                        else
+                        {
+                            countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
+                            countryPackageDate.yearCount = 0;
+                        }
+                        countryPackageDate.price = decimal.Parse(tb_price.Text);
+                        if (Convert.ToInt32(cb_month.SelectedValue) == 0)
+                            countryPackageDate.islimitDate = true;
+                        else
+                            countryPackageDate.islimitDate = false;
+                        countryPackageDate.notes = tb_notes.Text;
+                        countryPackageDate.isActive = 1;
+                        countryPackageDate.createUserId = MainWindow.userLogin.userId;
+                        countryPackageDate.updateUserId = MainWindow.userLogin.userId;
 
-                    int s = await countryPackageDateModel.Save(countryPackageDate);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        int s = await countryPackageDateModel.Save(countryPackageDate);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
-                        await RefreshCountryPackageDateList();
-                        await Search();
+                            await RefreshCountryPackageDateList();
+                            await Search();
+                        }
                     }
                 }
-
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAlreadyExist"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -576,16 +643,6 @@ namespace AdministratorApp.View.windows
 
         #endregion
 
-        private async void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select country
-            try
-            {
-                tb_currency.Text = FillCombo.countrynum.Where(c => c.countryId == Convert.ToInt32(cb_country.SelectedValue)).FirstOrDefault().currency;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
     }
 }

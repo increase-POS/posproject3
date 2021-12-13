@@ -2521,4 +2521,10 @@ Please add Email in setting</value>
   <data name="trCurrencyHint" xml:space="preserve">
     <value>Currency...</value>
   </data>
+  <data name="trPeriodHint" xml:space="preserve">
+    <value>Period...</value>
+  </data>
+  <data name="trPopAlreadyExist" xml:space="preserve">
+    <value>Already Exists</value>
+  </data>
 </root>
