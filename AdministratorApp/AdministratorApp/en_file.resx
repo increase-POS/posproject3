@@ -2486,7 +2486,7 @@ Please add Email in setting</value>
     <value>Pos Serials</value>
   </data>
   <data name="trOneMonth" xml:space="preserve">
-    <value>One month</value>
+    <value>1 month</value>
   </data>
   <data name="trTwelveMonth" xml:space="preserve">
     <value>12 months</value>
@@ -2514,5 +2514,11 @@ Please add Email in setting</value>
   </data>
   <data name="trYearCount" xml:space="preserve">
     <value>Year count</value>
+  </data>
+  <data name="trActivationMonths" xml:space="preserve">
+    <value>Activation Months</value>
+  </data>
+  <data name="trCurrencyHint" xml:space="preserve">
+    <value>Currency...</value>
   </data>
 </root>

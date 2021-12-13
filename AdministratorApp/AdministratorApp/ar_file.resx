@@ -2462,7 +2462,7 @@
     <value>الأرقام التسلسلية</value>
   </data>
   <data name="trOneMonth" xml:space="preserve">
-    <value>شهر</value>
+    <value>1 شهر</value>
   </data>
   <data name="trTwelveMonth" xml:space="preserve">
     <value>12 شهر</value>
@@ -2490,5 +2490,11 @@
   </data>
   <data name="trYearCount" xml:space="preserve">
     <value>عدد السنوات</value>
+  </data>
+  <data name="trActivationMonths" xml:space="preserve">
+    <value>شهور التفعيل</value>
+  </data>
+  <data name="trCurrencyHint" xml:space="preserve">
+    <value>العملة...</value>
   </data>
 </root>

@@ -31,9 +31,14 @@ namespace AdministratorApp.View.windows
         CountryPackageDate countryPackageDateModel = new CountryPackageDate();
         IEnumerable<CountryPackageDate> countryPackageDateQuery;
         IEnumerable<CountryPackageDate> countryPackageDates;
+
+        Country countryModel = new Country();
+        IEnumerable<Country> countries;
+
         public int packageID = 0;
         byte tgl_countryPackageDateState;
         string searchText = "";
+
         public wd_countryPackageDate()
         {
             try
@@ -75,10 +80,10 @@ namespace AdministratorApp.View.windows
 
                 HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -91,13 +96,14 @@ namespace AdministratorApp.View.windows
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_country, MainWindow.resourcemanager.GetString("trCountryHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_currency, MainWindow.resourcemanager.GetString("trCurrencyHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_month, MainWindow.resourcemanager.GetString("trMonthHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, MainWindow.resourcemanager.GetString("trPriceHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             dg_package.Columns[0].Header = MainWindow.resourcemanager.GetString("trCountry");
-            dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trMonthCount");
-            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trYearCount");
+            dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trCurrency");
+            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trActivationMonths");
             dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trPrice");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -567,8 +573,19 @@ namespace AdministratorApp.View.windows
         }
 
 
+
         #endregion
 
-        
+        private async void Cb_country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select country
+            try
+            {
+                tb_currency.Text = FillCombo.countrynum.Where(c => c.countryId == Convert.ToInt32(cb_country.SelectedValue)).FirstOrDefault().currency;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }
