@@ -387,27 +387,29 @@ updateDate
                         newList = JsonConvert.DeserializeObject<List<agentPackage>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
                     }
                 }
+
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
                     try
                     {
-                        List<agentPackage> packages = entity.agentPackage.ToList();
-                        packages= packages.Where(x => x.agentId == userId).ToList();
-                        return TokenManager.GenerateToken(packages);
-                        //entity.agentPackage.RemoveRange(packages);
-                        //entity.SaveChanges();
-                        //foreach (agentPackage package in newList)
-                        //{
-                        //    package.createDate = DateTime.Now;
-                        //    package.updateDate = DateTime.Now;
-                        //    entity.agentPackage.Add(package);
-                        //}
-                        //entity.SaveChanges();
-                        //message = "1";
+                
+                        List<agentPackage> packages = entity.agentPackage.Where(x => x.agentId == userId).ToList();
+                        entity.agentPackage.RemoveRange(packages).ToString();
+
+                       entity.SaveChanges().ToString();
+                        foreach (agentPackage package in newList)
+                        {
+                            package.createDate = DateTime.Now;
+                            package.updateDate = DateTime.Now;
+                            entity.agentPackage.Add(package);
+                        }
+                        entity.SaveChanges();
+                        message = "1";
                     }
-                    catch
+                    catch 
                     {
                         message = "0";
+                        return TokenManager.GenerateToken(message);
                     }
                     return TokenManager.GenerateToken(message);
                 }
