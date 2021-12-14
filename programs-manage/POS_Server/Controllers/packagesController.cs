@@ -957,7 +957,7 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
 
-                        var packages = (from S in entity.packages
+                        var packagess = (from S in entity.packages
                                         join cp in entity.countryPackageDate.Where(p => p.countryId == entity.users.Where(x => x.userId == userId && x.countryId == p.countryId).Select(x => x.countryId).FirstOrDefault()) on S.packageId equals cp.packageId
                                         select new packagesModel()
                                         {
@@ -984,6 +984,31 @@ namespace Programs_Server.Controllers
                                             updateUserId = S.updateUserId,
                                             notes = S.notes,
                                         }).ToList();
+
+                       var packages = packagess.GroupBy(x => x.packageId).Select(S=>new {
+                           packageId =S.FirstOrDefault().packageId,
+                           packageName =S.FirstOrDefault().packageName,
+                           details =S.FirstOrDefault().details,
+                           branchCount =S.FirstOrDefault().branchCount,
+                           posCount =S.FirstOrDefault().posCount,
+                           userCount =S.FirstOrDefault().userCount,
+                           vendorCount =S.FirstOrDefault().vendorCount,
+                           customerCount =S.FirstOrDefault().customerCount,
+                           itemCount =S.FirstOrDefault().itemCount,
+                           salesInvCount =S.FirstOrDefault().salesInvCount,
+                           programId =S.FirstOrDefault().programId,
+                           verId =S.FirstOrDefault().verId,
+
+                           isActive =S.FirstOrDefault().isActive,
+                           createDate =S.FirstOrDefault().createDate,
+                           updateDate =S.FirstOrDefault().updateDate,
+                           packageCode =S.FirstOrDefault().packageCode,
+                           storeCount =S.FirstOrDefault().storeCount,
+
+                           createUserId =S.FirstOrDefault().createUserId,
+                           updateUserId =S.FirstOrDefault().updateUserId,
+                           notes =S.FirstOrDefault().notes,
+                       }) .ToList();
                         return TokenManager.GenerateToken(packages);
                     }
                 }
