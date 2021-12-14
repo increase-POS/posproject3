@@ -2503,4 +2503,16 @@
   <data name="trPopAlreadyExist" xml:space="preserve">
     <value>موجود مسبقاً</value>
   </data>
+  <data name="trAgentPackages" xml:space="preserve">
+    <value>حزم الوكيل</value>
+  </data>
+  <data name="trAllPackages" xml:space="preserve">
+    <value>كل الحزم</value>
+  </data>
+  <data name="trPackages" xml:space="preserve">
+    <value>الحزم</value>
+  </data>
+  <data name="trPeriod" xml:space="preserve">
+    <value>المدة</value>
+  </data>
 </root>

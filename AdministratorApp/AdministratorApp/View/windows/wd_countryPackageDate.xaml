@@ -205,7 +205,7 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Width="*"  Header="Month" Binding="{Binding Path=monthCount}">
+                                <DataGridTextColumn Width="*"  Header="Period" Binding="{Binding Path=.,Converter={StaticResource packagePeriodConverter }}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>

@@ -101,7 +101,7 @@ namespace AdministratorApp.View.windows
 
             dg_package.Columns[0].Header = MainWindow.resourcemanager.GetString("trCountry");
             dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trCurrency");
-            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trActivationMonths");
+            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trPeriod");
             dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trPrice");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");

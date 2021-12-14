@@ -1,5 +1,6 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
+using AdministratorApp.View.windows;
 using Microsoft.Win32;
 using netoaster;
 using POS.View.windows;
@@ -77,6 +78,11 @@ namespace AdministratorApp.View.sectionData
                 translate();
                 #endregion
 
+                if ((MainWindow.userLogin.type.Equals("ad")) || (MainWindow.userLogin.type.Equals("us")))
+                    btn_packages.Visibility = Visibility.Visible;
+                else
+                    btn_packages.Visibility = Visibility.Collapsed;
+
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
@@ -135,7 +141,7 @@ namespace AdministratorApp.View.sectionData
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-
+            btn_packages.Content = MainWindow.resourcemanager.GetString("trPackages");
         }
         #region Add - Update - Delete - activate  
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -425,6 +431,7 @@ namespace AdministratorApp.View.sectionData
                     this.DataContext = user;
                     if (user != null)
                     {
+                        btn_packages.IsEnabled = true;
                         tb_code.Text = user.code;
                         cb_country.SelectedValue = user.countryId;
                         this.DataContext = user;
@@ -548,7 +555,7 @@ namespace AdministratorApp.View.sectionData
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             p_error_email.Visibility = Visibility.Collapsed;
-
+            btn_packages.IsEnabled = false;
         }
 
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -802,6 +809,21 @@ namespace AdministratorApp.View.sectionData
             GC.Collect();
         }
 
-     
+        private void Btn_packages_Click(object sender, RoutedEventArgs e)
+        {//packages
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_agentPackages w = new wd_agentPackages();
+                w.agentID = user.userId;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

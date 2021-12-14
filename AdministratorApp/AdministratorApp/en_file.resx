@@ -2527,4 +2527,16 @@ Please add Email in setting</value>
   <data name="trPopAlreadyExist" xml:space="preserve">
     <value>Already Exists</value>
   </data>
+  <data name="trAgentPackages" xml:space="preserve">
+    <value>Agent Packages</value>
+  </data>
+  <data name="trAllPackages" xml:space="preserve">
+    <value>All Packages</value>
+  </data>
+  <data name="trPackages" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="trPeriod" xml:space="preserve">
+    <value>Period</value>
+  </data>
 </root>

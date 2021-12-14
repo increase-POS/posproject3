@@ -622,23 +622,35 @@
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
-                    BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"  />
+                    BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"  >
+               
+            </Border>
             <Grid Grid.Row="3" Margin="5,5,5,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btn_add"   Click="Btn_add_Click"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" x:Name="btn_packages"   Visibility="Collapsed" IsEnabled="False"
+                            materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" 
+                            BorderBrush="{x:Null}" Margin="5"    Content="packages" Click="Btn_packages_Click" />
+                <Grid Grid.Row="1" Margin="5,5,5,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="btn_add"   Click="Btn_add_Click"
                         materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="add"/>
-                <Button Grid.Column="1" x:Name="btn_update" Click="Btn_update_Click"
+                    <Button Grid.Column="1" x:Name="btn_update" Click="Btn_update_Click"
                        materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                         Margin="5"    Content="update"/>
-                <Button Grid.Column="2" x:Name="btn_delete"  Click="Btn_delete_Click"
+                    <Button Grid.Column="2" x:Name="btn_delete"  Click="Btn_delete_Click"
                        materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                         Margin="5"    Content="delete"/>
+                </Grid>
             </Grid>
+           
         </Grid>
     </Grid>
 </UserControl>
