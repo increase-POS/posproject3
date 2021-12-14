@@ -180,6 +180,7 @@
     <Compile Include="converters\BooleanReverseConverter.cs" />
     <Compile Include="converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="converters\dateFrameConverter.cs" />
+    <Compile Include="converters\packagePeriodConverter.cs" />
     <Compile Include="converters\permissionsNameConverter.cs" />
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
@@ -225,6 +226,9 @@
     </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_agentPackages.xaml.cs">
+      <DependentUpon>wd_agentPackages.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_changePassword.xaml.cs">
       <DependentUpon>wd_changePassword.xaml</DependentUpon>
@@ -318,6 +322,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_agentPackages.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

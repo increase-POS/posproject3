@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace POS.converters
+namespace AdministratorApp.converters
 {
     class BooleanToVisibilityConverter : IValueConverter
     {

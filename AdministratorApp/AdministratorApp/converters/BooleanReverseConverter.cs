@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace POS.converters
+namespace AdministratorApp.converters
 {
     class BooleanReverseConverter : IValueConverter
     {

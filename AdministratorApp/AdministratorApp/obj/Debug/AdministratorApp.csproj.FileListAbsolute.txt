@@ -696,3 +696,7 @@ E:\AdministratorApp 9-12-2021\AdministratorApp\obj\Debug\View\windows\wd_country
 E:\github\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.SqlServer.Types.dll
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.g.cs
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_agentPackages.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_agentPackages.baml
