@@ -225,6 +225,7 @@
     </Compile>
     <Compile Include="Classes\Calculate.cs" />
     <Compile Include="Classes\Md5Encription.cs" />
+    <Compile Include="Controllers\agentCustomerController.cs" />
     <Compile Include="Controllers\cityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\customersController.cs" />
@@ -276,6 +277,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ManagModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\agentCustomerModel.cs" />
     <Compile Include="Models\countryPackageDateModel.cs" />
     <Compile Include="Models\agentPackageModel.cs" />
     <Compile Include="Models\customersModel.cs" />

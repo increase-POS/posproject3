@@ -152,6 +152,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ApiClasses\AgentCustomer.cs" />
     <Compile Include="Classes\ApiClasses\CountryPackageDate.cs" />
     <Compile Include="Classes\ApiClasses\ApiConnect.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
