@@ -28,8 +28,7 @@ namespace AdministratorApp.View.sales
     {
         Packages package = new Packages();
         IEnumerable<Packages> packages;
-        byte tgl_packageState;
-        string searchText = "";
+       
         public static List<string> requiredControlList;
         PackageUser packuser = new PackageUser();
         PackageUser packuserModel = new PackageUser();
@@ -62,7 +61,8 @@ namespace AdministratorApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "package", "agent" , "customer" , "count"};
+
+                requiredControlList = new List<string> { "package", "agent" , "customer" , "period"};
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -78,9 +78,19 @@ namespace AdministratorApp.View.sales
                 translate();
                 #endregion
 
-                await FillCombo.fillPackage(cb_package);
                 await FillCombo.fillAgent(cb_agent);
                 await FillCombo.fillCustomer(cb_customer);
+                
+                if(MainWindow.userLogin.type.Equals("ag"))
+                {
+                    cb_agent.SelectedValue = MainWindow.userLogin.userId;
+                    cb_agent.IsEnabled = false;
+                }
+                else
+                {
+                    bdr_agent.Visibility = Visibility.Collapsed;
+                    await FillCombo.fillPackage(cb_package);
+                }
                
                 await RefreshPackagesList();
                 Clear();
@@ -100,10 +110,12 @@ namespace AdministratorApp.View.sales
             txt_saleDetails.Text = MainWindow.resourcemanager.GetString("trSaleDetails");
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_package, MainWindow.resourcemanager.GetString("trPackageHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_count, MainWindow.resourcemanager.GetString("trCountHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_agent, MainWindow.resourcemanager.GetString("trAgentHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_period, MainWindow.resourcemanager.GetString("trPeriod"));
+
             btn_add.Content = MainWindow.resourcemanager.GetString("trSale");
+            btn_serial.Content = MainWindow.resourcemanager.GetString("trSerials");
 
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
             txt_packageCodeTitle.Text = MainWindow.resourcemanager.GetString("trCode");
@@ -128,30 +140,63 @@ namespace AdministratorApp.View.sales
         }
        
         #region events
-        private void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
+            //try
+            //{
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
                     this.DataContext = package;
                     if (package != null)
                     {
+                        #region fill period 
+                        CountryPackageDate cpdModel = new CountryPackageDate();
+                        Users userModel = new Users();
+                        IEnumerable<CountryPackageDate> countryPackageDates;
+                        countryPackageDates = await cpdModel.GetAll();
+                        if (bdr_agent.Visibility == Visibility.Visible)
+                        {
+                            Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == agent.countryId);
+                        }
+                        else
+                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue)
+                                                    //.GroupBy(s => new { s.monthCount })
+                                                    //.Select(s => new
+                                                    //{
+                                                    //    Name = s.FirstOrDefault().updateDate,
+                                                    //})
+                                                    ; 
 
+                        foreach (var p in countryPackageDates)
+                        {
+                            if (p.islimitDate)
+                                p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
+                            else
+                            {
+                                switch (p.monthCount)
+                                {
+                                    case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                                    case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                                    case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                                    case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                                }
+                            }
+                        }
+                        cb_period.DisplayMemberPath = "notes";
+                        cb_period.SelectedValuePath = "packageId";
+                        cb_period.ItemsSource = countryPackageDates;
+                        #endregion
                     }
                 }
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -161,11 +206,10 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 Clear();
-                cb_package.SelectedIndex = -1;
-                cb_agent.SelectedIndex = -1;
                 cb_customer.SelectedIndex = -1;
-                tb_count.Clear();
-                p_error_count.Visibility = Visibility.Collapsed;
+                cb_agent.SelectedIndex = -1;
+                cb_package.SelectedIndex = -1;
+                cb_period.SelectedIndex = -1;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -251,14 +295,17 @@ namespace AdministratorApp.View.sales
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
-                    packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
+                    if(cb_agent.Visibility == Visibility.Visible)
+                        packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
+                    else
+                        packuser.userId = 3;
                     if (cb_customer.SelectedValue != null)
                         packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
                     packuser.createUserId = MainWindow.userID;
                     packuser.packageNumber = "autoNum";///??????
                     packuser.isActive = 1;
 
-                    msg = await packuserModel.MultiSave(packuser, int.Parse(tb_count.Text));
+                    msg = await packuserModel.MultiSave(packuser, 1);
 
                     if (msg <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -279,9 +326,25 @@ namespace AdministratorApp.View.sales
             }
         }
 
+        private async void Cb_agent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select agent
+            try
+            {
+                if (cb_agent.SelectedIndex != -1)
+                    await FillCombo.fillAgentPackage(cb_package , (int)cb_agent.SelectedValue);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
         }
+
+    
     }
 }

@@ -18,6 +18,8 @@ namespace AdministratorApp.Classes
 
         static PackageUser packageUser = new PackageUser();
         static IEnumerable<PackageUser> packageUsers;
+
+        static IEnumerable<Packages> agentPackages;
         static public async Task fillPackageUser(ComboBox combo)
         {
             packageUsers = await packageUser.GetAll();
@@ -30,6 +32,14 @@ namespace AdministratorApp.Classes
         {
             packages = await package.GetAll();
             combo.ItemsSource = packages.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "packageId";
+            combo.DisplayMemberPath = "packageName";
+        }
+
+        static public async Task fillAgentPackage(ComboBox combo , int agentId)
+        {
+            agentPackages = await package.GetPackagesByAgent(agentId);
+            combo.ItemsSource = agentPackages.Where(p => p.isActive == 1);
             combo.SelectedValuePath = "packageId";
             combo.DisplayMemberPath = "packageName";
         }

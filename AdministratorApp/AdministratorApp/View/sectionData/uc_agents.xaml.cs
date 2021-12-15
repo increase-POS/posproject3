@@ -79,9 +79,9 @@ namespace AdministratorApp.View.sectionData
                 #endregion
 
                 if ((MainWindow.userLogin.type.Equals("ad")) || (MainWindow.userLogin.type.Equals("us")))
-                    btn_packages.Visibility = Visibility.Visible;
+                { btn_packages.Visibility = Visibility.Visible; btn_customers.Visibility = Visibility.Visible; }
                 else
-                    btn_packages.Visibility = Visibility.Collapsed;
+                { btn_packages.Visibility = Visibility.Collapsed; btn_customers.Visibility = Visibility.Collapsed; }
 
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
@@ -142,7 +142,9 @@ namespace AdministratorApp.View.sectionData
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             btn_packages.Content = MainWindow.resourcemanager.GetString("trPackages");
+            btn_customers.Content = MainWindow.resourcemanager.GetString("trCustomers");
         }
+
         #region Add - Update - Delete - activate  
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
@@ -432,6 +434,7 @@ namespace AdministratorApp.View.sectionData
                     if (user != null)
                     {
                         btn_packages.IsEnabled = true;
+                        btn_customers.IsEnabled = true;
                         tb_code.Text = user.code;
                         cb_country.SelectedValue = user.countryId;
                         this.DataContext = user;
@@ -811,6 +814,23 @@ namespace AdministratorApp.View.sectionData
 
         private void Btn_packages_Click(object sender, RoutedEventArgs e)
         {//packages
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_agentPackages w = new wd_agentPackages();
+                w.agentID = user.userId;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_customers_Click(object sender, RoutedEventArgs e)
+        {//customers
             try
             {
                 Window.GetWindow(this).Opacity = 0.2;

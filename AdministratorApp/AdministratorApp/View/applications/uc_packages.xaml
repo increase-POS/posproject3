@@ -354,7 +354,7 @@
                             </Path>
                         </Grid>
                     </Border>
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                    <Border Visibility="Collapsed" Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <TextBox x:Name="tb_price"  Text="{Binding price, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -553,7 +553,7 @@
                     </Border>
                     </Grid>
 
-                    <Grid>
+                    <Grid Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
