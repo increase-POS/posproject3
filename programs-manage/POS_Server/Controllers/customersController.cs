@@ -30,7 +30,7 @@ namespace Programs_Server.Controllers
         [Route("GetAll")]
         public string GetAll(string token)
         {
-           
+
             bool canDelete = false;
             token = TokenManager.readToken(HttpContext.Current.Request);
             var strP = TokenManager.GetPrincipal(token);
@@ -43,55 +43,55 @@ namespace Programs_Server.Controllers
                 try
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                {
-                    var List = (from S in entity.customers
-                                select new customersModel()
-                                {
-                                    custId = S.custId,
-                                    custname = S.custname,
-                                  //  custAccountName = S.custAccountName,
-                                    lastName = S.lastName,
-                                    company = S.company,
-                                    email = S.email,
-                                    phone = S.phone,
-                                    mobile = S.mobile,
-                                    fax = S.fax,
-                                    address = S.address,
-                                    custlevel = S.custlevel,
-                                    createDate = S.createDate,
-                                    updateDate = S.updateDate,
-                                    custCode = S.custCode,
-                                   // password = S.password,
-                                    image = S.image,
-                                    notes = S.notes,
-                                    balance = S.balance,
-                                    createUserId = S.createUserId,
-                                    updateUserId = S.updateUserId,
-
-                                    isActive = S.isActive,
-                                    countryId=S.countryId,
-
-                                }).ToList();
-                    /*
-
-
-                    */
-
-                    if (List.Count > 0)
                     {
-                        for (int i = 0; i < List.Count; i++)
-                        {
-                            if (List[i].isActive == 1)
-                            {
-                                int custId = (int)List[i].custId;
-                                var itemsI = entity.packageUser.Where(x => x.customerId == custId).Select(b => new { b.customerId }).FirstOrDefault();
+                        var List = (from S in entity.customers
+                                    select new customersModel()
+                                    {
+                                        custId = S.custId,
+                                        custname = S.custname,
+                                        //  custAccountName = S.custAccountName,
+                                        lastName = S.lastName,
+                                        company = S.company,
+                                        email = S.email,
+                                        phone = S.phone,
+                                        mobile = S.mobile,
+                                        fax = S.fax,
+                                        address = S.address,
+                                        custlevel = S.custlevel,
+                                        createDate = S.createDate,
+                                        updateDate = S.updateDate,
+                                        custCode = S.custCode,
+                                        // password = S.password,
+                                        image = S.image,
+                                        notes = S.notes,
+                                        balance = S.balance,
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
 
-                                if ((itemsI is null))
-                                    canDelete = true;
+                                        isActive = S.isActive,
+                                        countryId = S.countryId,
+
+                                    }).ToList();
+                        /*
+
+
+                        */
+
+                        if (List.Count > 0)
+                        {
+                            for (int i = 0; i < List.Count; i++)
+                            {
+                                if (List[i].isActive == 1)
+                                {
+                                    int custId = (int)List[i].custId;
+                                    var itemsI = entity.packageUser.Where(x => x.customerId == custId).Select(b => new { b.customerId }).FirstOrDefault();
+
+                                    if ((itemsI is null))
+                                        canDelete = true;
+                                }
+                                List[i].canDelete = canDelete;
                             }
-                            List[i].canDelete = canDelete;
                         }
-                    }
 
                         return TokenManager.GenerateToken(List);
                     }
@@ -134,48 +134,48 @@ namespace Programs_Server.Controllers
                 try
                 {
 
-                
-                using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                {
-                    var row = entity.customers
-                   .Where(u => u.custId == custId)
-                   .Select(S => new
-                   {
 
-                       S.custId,
-                       S.custname,
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var row = entity.customers
+                       .Where(u => u.custId == custId)
+                       .Select(S => new
+                       {
+
+                           S.custId,
+                           S.custname,
                        // S.custAccountName,
                        S.lastName,
-                       S.company,
-                       S.email,
-                       S.phone,
-                       S.mobile,
-                       S.fax,
-                       S.address,
-                       S.custlevel,
-                       S.createDate,
-                       S.updateDate,
-                       S.custCode,
+                           S.company,
+                           S.email,
+                           S.phone,
+                           S.mobile,
+                           S.fax,
+                           S.address,
+                           S.custlevel,
+                           S.createDate,
+                           S.updateDate,
+                           S.custCode,
                        // S.password,
                        S.image,
-                       S.notes,
-                       S.balance,
-                       S.createUserId,
-                       S.updateUserId,
-                       S.countryId,
-                       S.isActive,
-                   })
-                   .FirstOrDefault();
-                        
- return TokenManager.GenerateToken(row);
+                           S.notes,
+                           S.balance,
+                           S.createUserId,
+                           S.updateUserId,
+                           S.countryId,
+                           S.isActive,
+                       })
+                       .FirstOrDefault();
+
+                        return TokenManager.GenerateToken(row);
                     }
-            }
+                }
                 catch
                 {
                     return TokenManager.GenerateToken("0");
                 }
             }
-          
+
         }
 
         // add or update location
@@ -290,7 +290,7 @@ namespace Programs_Server.Controllers
 
 
 
-            
+
         }
 
         [HttpPost]
@@ -341,11 +341,11 @@ namespace Programs_Server.Controllers
                             entity.customers.Remove(objectDelete);
                             message = entity.SaveChanges().ToString();
 
-                           // return message;
+                            // return message;
                             return TokenManager.GenerateToken(message);
                         }
                     }
-                  
+
                     catch
                     {
                         return TokenManager.GenerateToken("0");
@@ -364,7 +364,7 @@ namespace Programs_Server.Controllers
                             objectDelete.updateDate = DateTime.Now;
                             message = entity.SaveChanges().ToString();
 
-                           
+
                             return TokenManager.GenerateToken(message.ToString());
                         }
                     }
@@ -524,7 +524,7 @@ namespace Programs_Server.Controllers
         }
         [HttpPost]
         [Route("UpdateImage")]
-        public string  UpdateImage(string token)//customerObject
+        public string UpdateImage(string token)//customerObject
         {
 
             string message = "";
@@ -592,8 +592,8 @@ namespace Programs_Server.Controllers
 
 
 
-          
-            }
+
+        }
 
 
         [HttpPost]
@@ -651,40 +651,218 @@ namespace Programs_Server.Controllers
                     return TokenManager.GenerateToken("0");
                 }
             }
-                //var re = Request;
-                //var headers = re.Headers;
-                //string token = "";
-                //if (headers.Contains("APIKey"))
-                //{
-                //    token = headers.GetValues("APIKey").First();
-                //}
-                //Validation validation = new Validation();
-                //bool valid = validation.CheckApiKey(token);
+            //var re = Request;
+            //var headers = re.Headers;
+            //string token = "";
+            //if (headers.Contains("APIKey"))
+            //{
+            //    token = headers.GetValues("APIKey").First();
+            //}
+            //Validation validation = new Validation();
+            //bool valid = validation.CheckApiKey(token);
 
-                //if (valid) // APIKey is valid
-                //{
-                //    List<string> numberList;
-                //    int lastNum = 0;
-                //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                //    {
-                //        numberList = entity.customers.Where(b => b.custCode.Contains(type + "-")).Select(b => b.custCode).ToList();
+            //if (valid) // APIKey is valid
+            //{
+            //    List<string> numberList;
+            //    int lastNum = 0;
+            //    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+            //    {
+            //        numberList = entity.customers.Where(b => b.custCode.Contains(type + "-")).Select(b => b.custCode).ToList();
 
-                //        for (int i = 0; i < numberList.Count; i++)
-                //        {
-                //            string code = numberList[i];
-                //            string s = code.Substring(code.LastIndexOf("-") + 1);
-                //            numberList[i] = s;
-                //        }
-                //        if (numberList.Count > 0)
-                //        {
-                //            numberList.Sort();
-                //            lastNum = int.Parse(numberList[numberList.Count - 1]);
-                //        }
-                //    }
-                //    return Ok(lastNum);
-                //}
-                //return NotFound();
+            //        for (int i = 0; i < numberList.Count; i++)
+            //        {
+            //            string code = numberList[i];
+            //            string s = code.Substring(code.LastIndexOf("-") + 1);
+            //            numberList[i] = s;
+            //        }
+            //        if (numberList.Count > 0)
+            //        {
+            //            numberList.Sort();
+            //            lastNum = int.Parse(numberList[numberList.Count - 1]);
+            //        }
+            //    }
+            //    return Ok(lastNum);
+            //}
+            //return NotFound();
+        }
+
+
+        /// //////////////////////////////////////
+        /// 
+        //قائمة الزبائن التي يمكن للموزع رؤيتها
+        [HttpPost]
+        [Route("GetCustomersByAgent")]
+        public string GetCustomersByAgent(string token)//string Object
+        {
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
             }
+            else
+            {
+                int userId = 0;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "userId")
+                    {
+                        userId = int.Parse(c.Value);
+                    }
+                }
+                try
+                {
+                    List<customersModel> List = new List<customersModel>();
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+
+                        List = (from S in entity.customers
+                                join paa in entity.agentCustomer on S.custId equals paa.customerId into ppa
+                                from pa in ppa.DefaultIfEmpty()
+                                where pa.agentId == userId 
+                                select new customersModel
+
+                                {
+
+                                    custId = S.custId,
+                                    custname = S.custname,
+                                    //  custAccountName = S.custAccountName,
+                                    lastName = S.lastName,
+                                    company = S.company,
+                                    email = S.email,
+                                    phone = S.phone,
+                                    mobile = S.mobile,
+                                    fax = S.fax,
+                                    address = S.address,
+                                    custlevel = S.custlevel,
+                                    createDate = S.createDate,
+                                    updateDate = S.updateDate,
+                                    custCode = S.custCode,
+                                    // password = S.password,
+                                    image = S.image,
+                                    notes = S.notes,
+                                    balance = S.balance,
+                                    createUserId = S.createUserId,
+                                    updateUserId = S.updateUserId,
+
+                                    isActive = S.isActive,
+                                    countryId = S.countryId,
+
+
+                                }).ToList();
+                        //if (List == null||List.Count==0)
+                        //{
+                        //    List = new List<packagesModel>();
+                        //}
+                        return TokenManager.GenerateToken(List);
+                    }
+                }
+                catch
+                {
+                    message = "0";
+                    return TokenManager.GenerateToken(message);
+
+                    // return TokenManager.GenerateToken(ex.ToString());
+
+                }
+
+            }
+        }
+
+        // وغير مرتبطة بموزع اخر - قائمة الزبائن الموجودة بنفس دولة الموزع
+        [HttpPost]
+        [Route("GetByAgentCountryId")]
+        public string GetByAgentCountryId(string token)//string Object
+        {
+            string message = "";
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int userId = 0;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "userId")
+                    {
+                        userId = int.Parse(c.Value);
+                    }
+                }
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+
+                    {
+
+                        var row = entity.users
+                      .Where(u => u.userId == userId)
+                      .Select(S => new
+                      {
+                          S.countryId,
+                      }).FirstOrDefault();
+
+                        //   users agent = entity.users.Where(x => x.userId == userId).Select(x => new users {x.userId, x.countryId, }).FirstOrDefault();
+                        int agentcountry =(int) row.countryId;
+                        var cIds = (from ac in entity.agentCustomer
+                                    select new
+                                    {
+                                        ac.customerId,
+                                    }
+
+                                   ).ToList();
+
+                        List<int> gropint = cIds.GroupBy(X => X.customerId).Select(X => (int)X.FirstOrDefault().customerId).ToList();
+
+                        var customerlist = (from S in entity.customers
+                                            where ( (!gropint.Contains(S.custId))   && S.countryId== agentcountry)
+                                            select new customersModel()
+                                            {
+                                                custId = S.custId,
+                                                custname = S.custname,
+                                                //  custAccountName = S.custAccountName,
+                                                lastName = S.lastName,
+                                                company = S.company,
+                                                email = S.email,
+                                                phone = S.phone,
+                                                mobile = S.mobile,
+                                                fax = S.fax,
+                                                address = S.address,
+                                                custlevel = S.custlevel,
+                                                createDate = S.createDate,
+                                                updateDate = S.updateDate,
+                                                custCode = S.custCode,
+                                                // password = S.password,
+                                                image = S.image,
+                                                notes = S.notes,
+                                                balance = S.balance,
+                                                createUserId = S.createUserId,
+                                                updateUserId = S.updateUserId,
+
+                                                isActive = S.isActive,
+                                                countryId = S.countryId,
+                                            }).ToList();
+
+               
+                        return TokenManager.GenerateToken(customerlist);
+                    }
+                }
+                catch (Exception ex)
+                {
+                   // message = "0";
+                    // return TokenManager.GenerateToken(message);
+                    return TokenManager.GenerateToken(ex.ToString());
+                }
+
+            }
+        }
+
 
 
     }

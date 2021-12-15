@@ -1012,11 +1012,11 @@ namespace Programs_Server.Controllers
                         return TokenManager.GenerateToken(packages);
                     }
                 }
-                catch (Exception ex)
+                catch 
                 {
                     message = "0";
                     // return TokenManager.GenerateToken(message);
-                    return TokenManager.GenerateToken(ex.ToString());
+                    return TokenManager.GenerateToken(message);
                 }
                 
             }

@@ -429,5 +429,52 @@ namespace AdministratorApp.ApiClasses
                 return byteImg;
             }
         }
+
+        /// /
+        public async Task<List<Customers>> GetCustomersByAgent(int agentId)
+        {
+            List<Customers> list = new List<Customers>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("userId", agentId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetCustomersByAgent", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<Customers>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+
+        }
+
+        public async Task<List<Customers>> GetByAgentCountryId(int agentId)
+        {
+            List<Customers> list = new List<Customers>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("userId", agentId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByAgentCountryId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<Customers>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+
+        }
     }
 }
