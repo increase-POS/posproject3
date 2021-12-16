@@ -72,6 +72,9 @@ namespace Programs_Server.Models
         public Nullable<bool> isOnlineServer { get; set; }
         public string customerServerCode { get; set; }
         public string packageSaleCode { get; set; }
+        public int monthCount { get; set; }
+        public bool canRenew { get; set; }
+        public bool isBooked { get; set; }
 
     }
     public class SendDetail

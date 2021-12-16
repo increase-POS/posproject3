@@ -921,7 +921,7 @@ namespace Programs_Server.Controllers
                                     packagesController packmodel = new packagesController();
                                     packagesSend package = new packagesSend();
                                     package = packmodel.GetByID((int)row.packageId);
-
+                                
                                     SendDetail senditem = new SendDetail();
                                     senditem.packageSend = package;
                                     senditem.PosSerialSendList = serialList;
@@ -936,14 +936,28 @@ namespace Programs_Server.Controllers
                             }
                             else
                             {
-
                                 // serial is booked
+
                                 SendDetail senditem = new SendDetail();
-                                packagesSend ps = new packagesSend();
-                                ps.posCount = -2;
-                                senditem.packageSend = ps;
-                                //senditem.packageSend.posCount = -2;
-                                return TokenManager.GenerateToken(senditem);
+
+                                if (row.canRenew == true)
+                                {
+                                    // write code here
+                                    return TokenManager.GenerateToken(senditem);
+                                }
+                                else
+                                {
+                             
+                                    packagesSend ps = new packagesSend();
+                                    ps.posCount = -2;
+                                    senditem.packageSend = ps;
+                                    //senditem.packageSend.posCount = -2;
+                                    return TokenManager.GenerateToken(senditem);
+
+                                }
+
+
+
                             }
 
                         }
