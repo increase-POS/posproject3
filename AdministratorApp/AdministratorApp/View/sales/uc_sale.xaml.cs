@@ -56,7 +56,7 @@ namespace AdministratorApp.View.sales
             }
         }
      
-        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
@@ -138,12 +138,15 @@ namespace AdministratorApp.View.sales
             txt_vendorCountNameTitle.Text = MainWindow.resourcemanager.GetString("trVendorCount");
             txt_itemCountNameTitle.Text = MainWindow.resourcemanager.GetString("trItemCount");
         }
-       
+
         #region events
+        CountryPackageDate cpdModel = new CountryPackageDate();
+        IEnumerable<CountryPackageDate> countryPackageDates;
+
         private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
+            try
+            {
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
@@ -151,9 +154,8 @@ namespace AdministratorApp.View.sales
                     if (package != null)
                     {
                         #region fill period 
-                        CountryPackageDate cpdModel = new CountryPackageDate();
+                        
                         Users userModel = new Users();
-                        IEnumerable<CountryPackageDate> countryPackageDates;
                         countryPackageDates = await cpdModel.GetAll();
                         if (bdr_agent.Visibility == Visibility.Visible)
                         {
@@ -185,18 +187,18 @@ namespace AdministratorApp.View.sales
                             }
                         }
                         cb_period.DisplayMemberPath = "notes";
-                        cb_period.SelectedValuePath = "packageId";
+                        cb_period.SelectedValuePath = "Id";
                         cb_period.ItemsSource = countryPackageDates;
                         #endregion
                     }
                 }
 
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -345,6 +347,26 @@ namespace AdministratorApp.View.sales
             GC.Collect();
         }
 
-    
+        private async void Cb_period_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select period
+            try
+            {
+                if (cb_period.SelectedIndex != -1)
+                {
+                    Country cModel = new Country();
+                    CountryPackageDate cpd = new CountryPackageDate();
+                    Country country = new Country();
+                    List<Country> countries = new List<Country>();
+                    cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
+                    tb_price.Text = cpd.price.ToString();
+                    countries = await cModel.GetAll();
+                    txt_currency.Text = countries.Where(c => c.countryId == cpd.countryId).FirstOrDefault().currency;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

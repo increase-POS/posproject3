@@ -2539,4 +2539,10 @@ Please add Email in setting</value>
   <data name="trPeriod" xml:space="preserve">
     <value>Period</value>
   </data>
+  <data name="trAgentCustomer" xml:space="preserve">
+    <value>Agent Customers</value>
+  </data>
+  <data name="trAllCustomers" xml:space="preserve">
+    <value>All Customers</value>
+  </data>
 </root>

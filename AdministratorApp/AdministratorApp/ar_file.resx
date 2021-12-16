@@ -2515,4 +2515,10 @@
   <data name="trPeriod" xml:space="preserve">
     <value>المدة</value>
   </data>
+  <data name="trAgentCustomer" xml:space="preserve">
+    <value>زبائن المورد</value>
+  </data>
+  <data name="trAllCustomers" xml:space="preserve">
+    <value>كل الزبائن</value>
+  </data>
 </root>

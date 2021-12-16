@@ -462,6 +462,47 @@ namespace AdministratorApp.View.sales
             catch { }
         }
         #endregion
-         
+
+        private async void Dg_packageUser_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {//double click
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Packages package = new Packages();
+                if (dg_packageUser.SelectedIndex != -1)
+                {
+                    //PackageUser pUser = dg_packageUser.SelectedItem as PackageUser;
+                    if (packageUser.packageId > 0)
+                    {
+                        package = await package.GetByID(packageUser.packageId.Value);
+                        MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
+                        uc_sales.Instance.UserControl_Unloaded(null, null);
+                        uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
+                        uc_sale.Instance.UserControl_Loaded(null, null);
+                        //uc_sale._InvoiceType = invoice.invType;
+                        //uc_sale.Instance.invoice = invoice;
+                        //uc_sale.isFromReport = true;
+                        //if (item.archived == 0)
+                        //    uc_payInvoice.archived = false;
+                        //else
+                        //    uc_payInvoice.archived = true;
+                        //await uc_payInvoice.Instance.fillInvoiceInputs(invoice);
+                    }
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+        }
     }
 }

@@ -36,7 +36,6 @@ namespace AdministratorApp.View.windows
         AgentPackage agentPackageModel = new AgentPackage();
 
         Packages package = new Packages();
-        AgentPackage agentPackage = new AgentPackage();
 
         string txtSearch = "";
         public wd_agentPackages()

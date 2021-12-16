@@ -105,7 +105,7 @@ namespace AdministratorApp.View.sales
             }
         }
         
-        private void Btn_sale_Click(object sender, RoutedEventArgs e)
+        public void Btn_sale_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace AdministratorApp.View.sales
             }
         }
 
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        public void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             // Collect all generations of memory.
             GC.Collect();

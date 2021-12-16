@@ -643,7 +643,7 @@ namespace AdministratorApp
             }
         }
        
-        private  void Btn_sales_Click(object sender, RoutedEventArgs e)
+        public  void Btn_sales_Click(object sender, RoutedEventArgs e)
         {
             try
             {

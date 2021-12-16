@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdministratorApp.View.sales"
              mc:Ignorable="d"   Loaded="UserControl_Loaded"
-           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="800" d:DesignWidth="950">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="800" d:DesignWidth="950" Unloaded="UserControl_Unloaded">
     <Grid x:Name="grid_main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -98,8 +98,8 @@
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,5,5,17.5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_packageUser" SelectionChanged="Dg_packageUser_SelectionChanged"  AutoGenerateColumns="False"    Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                               x:Name="dg_packageUser" SelectionChanged="Dg_packageUser_SelectionChanged"  AutoGenerateColumns="False"    Background="White"
+                               ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" MouseDoubleClick="Dg_packageUser_MouseDoubleClick">
                         <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                         </DataGrid.OpacityMask>
