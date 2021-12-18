@@ -45,7 +45,7 @@ namespace AdministratorApp.View.sales
             }
         }
         public static List<string> menuList;
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        public void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {

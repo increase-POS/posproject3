@@ -26,8 +26,7 @@ namespace AdministratorApp.View.sales
     /// </summary>
     public partial class uc_sale : UserControl
     {
-        Packages package = new Packages();
-        IEnumerable<Packages> packages;
+        public Packages package = new Packages();
        
         public static List<string> requiredControlList;
         PackageUser packuser = new PackageUser();
@@ -58,9 +57,9 @@ namespace AdministratorApp.View.sales
      
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "package", "agent" , "customer" , "period"};
 
@@ -91,18 +90,28 @@ namespace AdministratorApp.View.sales
                     bdr_agent.Visibility = Visibility.Collapsed;
                     await FillCombo.fillPackage(cb_package);
                 }
-               
-                await RefreshPackagesList();
-                Clear();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+                
+                //if(uc_packageUser.packageUser != null)
+                //try
+                //{
+                //    cb_customer.SelectedValue = uc_packageUser.packageUser.customerId.Value;
+                //    cb_agent.SelectedValue = uc_packageUser.packageUser.userId.Value;
+                //    cb_package.SelectedValue = uc_packageUser.packageUser.packageId;
+                //    cb_period.SelectedValue = uc_packageUser.packageUser.countryPackageId;
+                //}
+                //catch { }
+                //await RefreshPackagesList();
+                if (uc_packageUser.packageUser == null) Clear();
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private void translate()
         {
@@ -145,60 +154,69 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            try
-            {
+            //try
+            //{
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
-                    this.DataContext = package;
-                    if (package != null)
-                    {
-                        #region fill period 
-                        
-                        Users userModel = new Users();
-                        countryPackageDates = await cpdModel.GetAll();
-                        if (bdr_agent.Visibility == Visibility.Visible)
-                        {
-                            Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == agent.countryId);
-                        }
-                        else
-                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue)
-                                                    //.GroupBy(s => new { s.monthCount })
-                                                    //.Select(s => new
-                                                    //{
-                                                    //    Name = s.FirstOrDefault().updateDate,
-                                                    //})
-                                                    ; 
+                    int agentID = 0;
+                    if(cb_agent.SelectedItem != null) agentID = (int)cb_agent.SelectedValue;
 
-                        foreach (var p in countryPackageDates)
-                        {
-                            if (p.islimitDate)
-                                p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
-                            else
-                            {
-                                switch (p.monthCount)
-                                {
-                                    case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
-                                    case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
-                                    case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
-                                    case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
-                                }
-                            }
-                        }
-                        cb_period.DisplayMemberPath = "notes";
-                        cb_period.SelectedValuePath = "Id";
-                        cb_period.ItemsSource = countryPackageDates;
-                        #endregion
-                    }
+                    await fillInputs(package , agentID, (int)cb_customer.SelectedValue);
+
+                    #region old
+                    //this.DataContext = package;
+                    //if (package != null)
+                    //{
+                    //    #region fill period 
+
+                    //    Users userModel = new Users();
+                    //    Customers custModel = new Customers();
+                    //    Customers cust = new Customers();
+                    //    cust = await custModel.GetByID((int)cb_customer.SelectedValue);
+                    //    countryPackageDates = await cpdModel.GetAll();
+                    //    if (bdr_agent.Visibility == Visibility.Visible)
+                    //    {
+                    //        Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                    //        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                    //    }
+                    //    else
+                    //        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId)
+                    //                                //.GroupBy(s => new { s.monthCount })
+                    //                                //.Select(s => new
+                    //                                //{
+                    //                                //    Name = s.FirstOrDefault().updateDate,
+                    //                                //})
+                    //                                ; 
+
+                    //    foreach (var p in countryPackageDates)
+                    //    {
+                    //        if (p.islimitDate)
+                    //            p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
+                    //        else
+                    //        {
+                    //            switch (p.monthCount)
+                    //            {
+                    //                case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                    //                case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                    //                case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                    //                case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                    //            }
+                    //        }
+                    //    }
+                    //    cb_period.DisplayMemberPath = "notes";
+                    //    cb_period.SelectedValuePath = "Id";
+                    //    cb_period.ItemsSource = countryPackageDates;
+                    //    #endregion
+                    //}
+                    #endregion
                 }
 
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -224,11 +242,11 @@ namespace AdministratorApp.View.sales
         #endregion
 
         #region Refresh & Search
-        async Task<IEnumerable<Packages>> RefreshPackagesList()
-        {
-            packages = await package.GetAll();
-            return packages;
-        }
+        //async Task<IEnumerable<Packages>> RefreshPackagesList()
+        //{
+        //    packages = await package.GetAll();
+        //    return packages;
+        //}
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
@@ -236,7 +254,11 @@ namespace AdministratorApp.View.sales
         {
             this.DataContext = new Packages();
             HelpClass.clearValidate(requiredControlList, this);
+            cb_period.SelectedIndex = -1;
+            tb_price.Clear();
+            txt_currency.Text = "";
         }
+
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
@@ -305,7 +327,9 @@ namespace AdministratorApp.View.sales
                         packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
                     packuser.createUserId = MainWindow.userID;
                     packuser.packageNumber = "autoNum";///??????
+                    //packuser.packageNumber = await packuserModel.generateCodeNumber();
                     packuser.isActive = 1;
+                    packuser.canRenew = true;
 
                     msg = await packuserModel.MultiSave(packuser, 1);
 
@@ -368,5 +392,62 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        public async Task fillInputs(Packages _package , int agentID , int custID)
+        {
+            //try
+            //{
+                package = _package;
+                this.DataContext = package;
+                if (package != null)
+                {
+                    #region fill period 
+                    Users userModel = new Users();
+                    Customers custModel = new Customers();
+                    Customers cust = new Customers();
+                    //cust = await custModel.GetByID((int)cb_customer.SelectedValue);
+                    cust = await custModel.GetByID(custID);
+                    countryPackageDates = await cpdModel.GetAll();
+                    if (bdr_agent.Visibility == Visibility.Visible)
+                    {
+                        //Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                        Users agent = await userModel.GetByID(agentID);
+                        //countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == _package.packageId && x.countryId == cust.countryId);
+                    }
+                    else
+                        //countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == _package.packageId && x.countryId == cust.countryId);
+
+
+                    foreach (var p in countryPackageDates)
+                    {
+                        if (p.islimitDate)
+                            p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
+                        else
+                        {
+                            switch (p.monthCount)
+                            {
+                                case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                                case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                                case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                                case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                            }
+                        }
+                    }
+                    cb_period.DisplayMemberPath = "notes";
+                    cb_period.SelectedValuePath = "Id";
+                    cb_period.ItemsSource = countryPackageDates;
+                    #endregion
+                }
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+
     }
 }

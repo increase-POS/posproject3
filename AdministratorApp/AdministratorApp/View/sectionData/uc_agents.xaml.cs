@@ -831,19 +831,19 @@ namespace AdministratorApp.View.sectionData
 
         private void Btn_customers_Click(object sender, RoutedEventArgs e)
         {//customers
-            //try
-            //{
+            try
+            {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_customers w = new wd_customers();
                 w.agentID = user.userId;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

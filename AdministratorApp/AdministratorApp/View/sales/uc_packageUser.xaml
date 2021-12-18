@@ -18,7 +18,6 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-
                 <Grid   >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -95,12 +94,13 @@
 
                 </Grid>
                 <Grid  Grid.Row="1" >
-                    <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
+                    <Border Margin="5,5,5,45"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
-                    <DataGrid  Margin="5,5,5,17.5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
+                    <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
                                x:Name="dg_packageUser" SelectionChanged="Dg_packageUser_SelectionChanged"  AutoGenerateColumns="False"    Background="White"
                                ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" MouseDoubleClick="Dg_packageUser_MouseDoubleClick">
-                        <DataGrid.OpacityMask>
+                      
+                            <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                         </DataGrid.OpacityMask>
                         <DataGrid.Resources>
@@ -112,7 +112,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=packageSaleCode}">
+                            <DataGridTextColumn Width="*"  Header="Process Num" Binding="{Binding Path=packageNumber}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -122,7 +122,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                            </DataGridTextColumn> 
                             <DataGridTextColumn Width="*"  Header="Agent" >
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding StringFormat="{}{0} {1}">
@@ -157,7 +157,8 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Package Number" Binding="{Binding Path=packageNumber}">
+                           
+                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=packageSaleCode}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -175,12 +176,10 @@
                 <Border BorderThickness="0,0,0,1" BorderBrush="#178DD2" Margin="10,0,10,10" Width="auto"
                      Grid.RowSpan="2"   HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <StackPanel  Orientation="Horizontal" >
-
-                        <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
-                          Padding="0" Height="35" 
-                          BorderBrush="{x:Null}" >
+                           <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
+                                        Padding="0" Height="35" BorderBrush="{x:Null}" >
                             <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
-                          Width="22" Height="22">
+                                                     Width="22" Height="22">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_report"  
                                               Placement="left" 
@@ -284,6 +283,35 @@
                         </Button>
                         <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
                     </DockPanel>
+                    <Border   CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <TextBox x:Name="tb_packageNumber"  Text="{Binding packageNumber, Mode=OneWay}" Padding="10,5,0,0" 
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:HintAssist.Hint="Process Number..."  
+                                 Foreground="#4E4E4E"    KeyboardNavigation.IsTabStop="False"
+                                 MaxLength="50" BorderThickness="0" IsReadOnly="True"
+                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                 Height="40"   Margin="4,0" />
+                    </Border>
+                   
+                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid   >
+                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5" SelectedValue="{Binding userId, Mode=OneWay}"    
+                                        TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="Agent..."    
+                                        VerticalAlignment="Center" BorderThickness="0"
+                                        Height="40" IsEnabled="False"  />
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid   >
+                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5" SelectedValue="{Binding customerId, Mode=OneWay}"    
+                                          TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                      materialDesign:HintAssist.Hint="Customer..."    
+                                          VerticalAlignment="Center" BorderThickness="0"
+                                          Height="40" IsEnabled="False"  />
+                        </Grid>
+                    </Border>
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <TextBox x:Name="tb_packageSaleCode"  Text="{Binding packageSaleCode, Mode=OneWay}" Padding="10,5,0,0" 
@@ -301,34 +329,6 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                        <Grid   >
-                            <ComboBox   x:Name="cb_agent" Padding="10,5,5,5" SelectedValue="{Binding userId, Mode=OneWay}"    
-                                          TextBlock.Foreground="#4E4E4E"    Margin="4,0"
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                      materialDesign:HintAssist.Hint="Agent..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
-                        </Grid>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                        <Grid   >
-                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5" SelectedValue="{Binding customerId, Mode=OneWay}"    
-                                          TextBlock.Foreground="#4E4E4E"    Margin="4,0"
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                      materialDesign:HintAssist.Hint="Customer..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
-                        </Grid>
-                    </Border>
-                    <Border   CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                        <TextBox x:Name="tb_packageNumber"  Text="{Binding packageNumber, Mode=OneWay}" Padding="10,5,0,0" 
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"  materialDesign:HintAssist.Hint="Package Number..."  
-                                 Foreground="#4E4E4E"    KeyboardNavigation.IsTabStop="False"
-                                 MaxLength="50" BorderThickness="0" IsReadOnly="True"
-                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                 Height="40"   Margin="4,0" />
-                    </Border>
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <TextBox x:Name="tb_customerServerCode"  Text="{Binding customerServerCode, Mode=OneWay}" Padding="10,5,0,0" 
@@ -356,7 +356,7 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
                         <ToggleButton Grid.Column="1"   x:Name="tgl_isBooked"  IsChecked="{Binding isBooked, Mode=OneWay}" 
-                                      VerticalAlignment="Center" Padding="10,15,5,5"  
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsEnabled="False"
                                       Margin="0" Height="13" Width="28"  TabIndex="15" />
 
                         <Border Grid.Column="2" CornerRadius="10" Margin="10,5,10,5" 
@@ -367,7 +367,7 @@
                                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
                                             materialDesign:HintAssist.Hint="Book Date..."    
                                             VerticalAlignment="Center" BorderThickness="0"
-                                            Height="40"  IsEnabled="False" />
+                                            Height="40"  IsEnabled="False"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -384,7 +384,7 @@
                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
                                       materialDesign:HintAssist.Hint="Expire Date..."    
                                           VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   />
+                                          Height="40"  IsEnabled="False" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -400,7 +400,7 @@
                                   Padding="10,0,5,0"  
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                   materialDesign:HintAssist.Hint="Note..."  
-                                  Foreground="#4E4E4E"
+                                  Foreground="#4E4E4E" IsReadOnly="True"
                                  Margin="4,0"  BorderThickness="0"
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
                         </Grid>
@@ -408,9 +408,9 @@
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
-                    BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"  />
+                    BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"/>
 
-            <Grid Grid.Row="3" Margin="5,5,5,10">
+            <Grid Grid.Row="3" Margin="5,5,5,10" Visibility="Collapsed">
                 <Button Grid.Column="0" x:Name="btn_add"  
                         materialDesign:ButtonAssist.CornerRadius="10"      Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="Save" Click="Btn_add_Click"/>

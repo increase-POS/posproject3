@@ -546,9 +546,6 @@
   <data name="trPopAdd" xml:space="preserve">
     <value>Added success</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="trPopAddValidate" xml:space="preserve">
     <value>It is not possible to add without the code and name and mobile number</value>
   </data>
@@ -1755,9 +1752,6 @@
   <data name="trPurchaseOrdersBill" xml:space="preserve">
     <value>Purchase Orders</value>
   </data>
-  <data name="String2" xml:space="preserve">
-    <value />
-  </data>
   <data name="trProcessNumHint" xml:space="preserve">
     <value>Process Number...</value>
   </data>
@@ -1908,9 +1902,6 @@ Please add Email in setting</value>
   </data>
   <data name="trDepositor" xml:space="preserve">
     <value>Depositor</value>
-  </data>
-  <data name="String3" xml:space="preserve">
-    <value />
   </data>
   <data name="trPurchaceOrder" xml:space="preserve">
     <value>Purchace Order</value>
@@ -2544,5 +2535,23 @@ Please add Email in setting</value>
   </data>
   <data name="trAllCustomers" xml:space="preserve">
     <value>All Customers</value>
+  </data>
+  <data name="trAgent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="trAgentPackage" xml:space="preserve">
+    <value>Agent Package</value>
+  </data>
+  <data name="trBookDateHint" xml:space="preserve">
+    <value>Book Date...</value>
+  </data>
+  <data name="trExpirationDateHint" xml:space="preserve">
+    <value>Expiration Date...</value>
+  </data>
+  <data name="trPackageSaleCodeHint" xml:space="preserve">
+    <value>Package Sale Code...</value>
+  </data>
+  <data name="trServerCodeHint" xml:space="preserve">
+    <value>trServerCode...</value>
   </data>
 </root>

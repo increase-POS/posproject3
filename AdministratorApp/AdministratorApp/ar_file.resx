@@ -2521,4 +2521,22 @@
   <data name="trAllCustomers" xml:space="preserve">
     <value>كل الزبائن</value>
   </data>
+  <data name="trAgent" xml:space="preserve">
+    <value>الوكيل</value>
+  </data>
+  <data name="trAgentPackage" xml:space="preserve">
+    <value>حزمة الوكيل</value>
+  </data>
+  <data name="trBookDateHint" xml:space="preserve">
+    <value>تاريخ الحجز...</value>
+  </data>
+  <data name="trExpirationDateHint" xml:space="preserve">
+    <value>تاريخ انتهاء الصلاحية...</value>
+  </data>
+  <data name="trPackageSaleCodeHint" xml:space="preserve">
+    <value>كود بيع الحزمة...</value>
+  </data>
+  <data name="trServerCodeHint" xml:space="preserve">
+    <value>كود المخدم...</value>
+  </data>
 </root>

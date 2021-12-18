@@ -53,7 +53,7 @@ namespace AdministratorApp.View.sales
 
         IEnumerable<PackageUser> packageUsersQuery;
         IEnumerable<PackageUser> packageUsers;
-        PackageUser packageUser = new PackageUser();
+        public static PackageUser packageUser = new PackageUser();
         byte tgl_packageUserState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -90,53 +90,39 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void translate()
         {
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_packageUserHeader.Text = MainWindow.resourcemanager.GetString("trPackageUser");
-            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            //txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            txt_title.Text = MainWindow.resourcemanager.GetString("trAgentPackage");
 
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
-            //TextBox tbStart = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbStart, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            //TextBox tbEnd = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbEnd, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_packageSaleCode, MainWindow.resourcemanager.GetString("trPackageSaleCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_agent, MainWindow.resourcemanager.GetString("trAgentHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_packageNumber, MainWindow.resourcemanager.GetString("trProcessNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerServerCode, MainWindow.resourcemanager.GetString("trServerCodeHint"));
+            txt_isBooked.Text = MainWindow.resourcemanager.GetString("trBooked");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_bookDate, MainWindow.resourcemanager.GetString("trBookDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_expireDate, MainWindow.resourcemanager.GetString("trExpirationDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            //txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            //txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            //txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            //tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            btn_add.Content = MainWindow.resourcemanager.GetString("trSave");
 
-            //dg_packageUser.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_packageUser.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_packageUser.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            //dg_packageUser.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            //dg_packageUser.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
+            dg_packageUser.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcessNumTooltip");
+            dg_packageUser.Columns[1].Header = MainWindow.resourcemanager.GetString("trAgent");
+            dg_packageUser.Columns[2].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            dg_packageUser.Columns[3].Header = MainWindow.resourcemanager.GetString("trCode");
 
-            //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
-            //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
-
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
         }
+
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -465,39 +451,36 @@ namespace AdministratorApp.View.sales
 
         private async void Dg_packageUser_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {//double click
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+                //HelpClass.StartAwait(grid_main);
 
                 Packages package = new Packages();
                 if (dg_packageUser.SelectedIndex != -1)
                 {
-                    //PackageUser pUser = dg_packageUser.SelectedItem as PackageUser;
                     if (packageUser.packageId > 0)
                     {
                         package = await package.GetByID(packageUser.packageId.Value);
                         MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
-                        uc_sales.Instance.UserControl_Unloaded(null, null);
+                        uc_sales.Instance.Window_Loaded(null, null);
                         uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
                         uc_sale.Instance.UserControl_Loaded(null, null);
-                        //uc_sale._InvoiceType = invoice.invType;
-                        //uc_sale.Instance.invoice = invoice;
-                        //uc_sale.isFromReport = true;
-                        //if (item.archived == 0)
-                        //    uc_payInvoice.archived = false;
-                        //else
-                        //    uc_payInvoice.archived = true;
-                        //await uc_payInvoice.Instance.fillInvoiceInputs(invoice);
+                        uc_sale.Instance.package = package;
+                        uc_sale.Instance.cb_customer.SelectedValue = packageUser.customerId.Value;
+                        uc_sale.Instance.cb_agent.SelectedValue = packageUser.userId.Value;
+                        uc_sale.Instance.cb_package.SelectedValue = packageUser.packageId;
+                        uc_sale.Instance.cb_period.SelectedValue = packageUser.countryPackageId;
+                        await uc_sale.Instance.fillInputs(package , packageUser.userId.Value , packageUser.customerId.Value);
                     }
                 }
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                //HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
