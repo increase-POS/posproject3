@@ -41,5 +41,6 @@ namespace Programs_Server
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<versions> versions { get; set; }
         public virtual DbSet<agentCustomer> agentCustomer { get; set; }
+        public virtual DbSet<payOp> payOp { get; set; }
     }
 }

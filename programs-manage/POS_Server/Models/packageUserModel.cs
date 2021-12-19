@@ -31,6 +31,13 @@ namespace Programs_Server.Models
         public string customerLastName { get; set; }
         public Nullable<int> countryPackageId { get; set; }
         public bool canRenew { get; set; }
+ 
+        public int oldPackageId { get; set; }
+        public string type { get; set; }
+        public bool isPayed { get; set; }
+        public int salesInvCount { get; set; }
+        public int monthCount { get; set; }
+
     }
 
 

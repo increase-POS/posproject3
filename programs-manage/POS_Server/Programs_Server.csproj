@@ -226,6 +226,7 @@
     <Compile Include="Classes\Calculate.cs" />
     <Compile Include="Classes\Md5Encription.cs" />
     <Compile Include="Controllers\agentCustomerController.cs" />
+    <Compile Include="Controllers\payOpController.cs" />
     <Compile Include="Controllers\cityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\customersController.cs" />
@@ -278,6 +279,7 @@
       <DependentUpon>ManagModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\agentCustomerModel.cs" />
+    <Compile Include="Models\payOpModel.cs" />
     <Compile Include="Models\countryPackageDateModel.cs" />
     <Compile Include="Models\agentPackageModel.cs" />
     <Compile Include="Models\customersModel.cs" />
@@ -302,6 +304,9 @@
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
     <Compile Include="packageUser.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="payOp.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
     <Compile Include="posSerials.cs">

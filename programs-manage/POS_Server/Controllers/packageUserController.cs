@@ -1118,5 +1118,223 @@ namespace Programs_Server.Controllers
             }
         }
 
+
+        [HttpPost]
+        [Route("packageBook")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public string packageBook(string token)//string Object
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        {
+
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                string Object = "";
+                packageUser newObject = null;
+                packageUserModel modelObject = new packageUserModel();
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "Object")
+                    {
+                        Object = c.Value.Replace("\\", string.Empty);
+                        Object = Object.Trim('"');
+                        newObject = JsonConvert.DeserializeObject<packageUser>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                        modelObject = JsonConvert.DeserializeObject<packageUserModel>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                        break;
+                    }
+                }
+                if (newObject != null)
+                {
+                    if (newObject.updateUserId == 0 || newObject.updateUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.updateUserId = id;
+                    }
+                    if (newObject.createUserId == 0 || newObject.createUserId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.createUserId = id;
+                    }
+                    if (newObject.packageId == 0 || newObject.packageId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.packageId = id;
+                    }
+                    if (newObject.userId == 0 || newObject.userId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.userId = id;
+                    }
+                    if (newObject.customerId == 0 || newObject.customerId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.customerId = id;
+                    }
+
+                    if (newObject.countryPackageId == 0 || newObject.countryPackageId == null)
+                    {
+                        Nullable<int> id = null;
+                        newObject.countryPackageId = id;
+                    }
+
+                    try
+                    {
+                        //////////////////////////////
+                        
+                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                        {
+
+                            //string packagecode;
+                            //string usercode;
+                            packages tmpPackage = new packages();
+                            countryPackageDate tmpcpd = new countryPackageDate();
+                            using (incprogramsdbEntities entity1 = new incprogramsdbEntities())
+                            {
+                               tmpPackage = entity1.packages.Where(p => p.packageId == newObject.packageId).FirstOrDefault();
+                      
+                                //tmpcpd=entity1.countryPackageDate.Where(p => p.Id == newObject.countryPackageId).FirstOrDefault();
+
+                               
+                            }
+                            var puEntity = entity.Set<packageUser>();
+                            if (modelObject.packageUserId == 0 && modelObject.oldPackageId==0 )
+                            {
+
+                                // first time book
+                                newObject.createDate = DateTime.Now;
+                                newObject.updateDate = DateTime.Now;
+                                newObject.updateUserId = newObject.createUserId;
+                                newObject.packageSaleCode ="" ;
+                                newObject.customerServerCode = "";
+                                newObject.isBooked =false;
+                                newObject.bookDate = null;
+                                newObject.isActive = 1;
+                                newObject.expireDate =null;
+                                newObject.canRenew = true;
+                                newObject.type = "np";
+                                newObject.isPayed = false;
+                                //newObject.salesInvCount = tmpPackage.salesInvCount;
+                                //newObject.monthCount = tmpcpd.monthCount; 
+                                newObject.salesInvCount =0;//change  on pay
+                                newObject.monthCount = 0;//change  on pay
+                                puEntity.Add(newObject);
+                                entity.SaveChanges();
+
+                        
+
+                                message = newObject.packageUserId.ToString();
+
+
+
+                            }else if (modelObject.packageUserId >0 && modelObject.oldPackageId == modelObject.packageId)
+                            {
+                                // renew period
+
+                                var tmpObject = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
+
+                                tmpObject.updateDate = DateTime.Now;
+                               // tmpObject.packageUserId = newObject.packageUserId;
+                               // tmpObject.packageId = newObject.packageId;
+                               // tmpObject.userId = newObject.userId;
+                                //   tmpObject.packageSaleCode = newObject.packageSaleCode;
+                               // tmpObject.packageNumber = newObject.packageNumber;
+                               // tmpObject.customerId = newObject.customerId;
+                             //   tmpObject.customerServerCode = newObject.customerServerCode;
+                              //  tmpObject.isBooked = newObject.isBooked;
+                                tmpObject.notes = newObject.notes;
+                        
+                                tmpObject.updateUserId = newObject.updateUserId;
+                               // tmpObject.bookDate = newObject.bookDate;
+                               // tmpObject.isActive = newObject.isActive;
+                             //   tmpObject.expireDate = newObject.expireDate;//on pay
+                                tmpObject.isOnlineServer = newObject.isOnlineServer;
+
+                                tmpObject.countryPackageId = newObject.countryPackageId;
+
+                                // tmpObject.canRenew = newObject.canRenew;
+                                tmpObject.oldPackageId = newObject.oldPackageId;
+                                tmpObject.type = "rn";
+                                tmpObject.isPayed = false;
+
+                                entity.SaveChanges();
+
+                                message = tmpObject.packageUserId.ToString();
+
+
+                            }
+                            else if(modelObject.packageUserId > 0 && modelObject.oldPackageId != modelObject.packageId)
+                            {
+                                // change packege
+
+                                var tmpObject = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
+
+                                tmpObject.updateDate = DateTime.Now;
+                                // tmpObject.packageUserId = newObject.packageUserId;
+                              tmpObject.packageId = newObject.packageId;
+                                // tmpObject.userId = newObject.userId;
+                                //   tmpObject.packageSaleCode = newObject.packageSaleCode;
+                                // tmpObject.packageNumber = newObject.packageNumber;
+                                // tmpObject.customerId = newObject.customerId;
+                                //   tmpObject.customerServerCode = newObject.customerServerCode;
+
+                                //  tmpObject.isBooked = newObject.isBooked;
+                                tmpObject.notes = newObject.notes;
+
+                                tmpObject.updateUserId = newObject.updateUserId;
+                                // tmpObject.bookDate = newObject.bookDate;
+                                // tmpObject.isActive = newObject.isActive;
+                                //   tmpObject.expireDate = newObject.expireDate;//on pay
+                                tmpObject.isOnlineServer = newObject.isOnlineServer;
+
+                                tmpObject.countryPackageId = newObject.countryPackageId;
+
+                                // tmpObject.canRenew = newObject.canRenew;// on pay
+                                tmpObject.oldPackageId = newObject.oldPackageId;
+                                tmpObject.type = "chp";
+
+                                tmpObject.isPayed = false;
+
+                                entity.SaveChanges();
+
+                                message = tmpObject.packageUserId.ToString();
+                            }
+                            else
+                            {
+                                // error
+                                return TokenManager.GenerateToken("0");
+                            }
+                           
+
+                            return TokenManager.GenerateToken(message);
+                        }
+
+                    }
+
+
+                    catch
+                    {
+                        return TokenManager.GenerateToken("0");
+                    }
+                }
+                else
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+
+            }
+
+
+        }
+
+
     }
 }

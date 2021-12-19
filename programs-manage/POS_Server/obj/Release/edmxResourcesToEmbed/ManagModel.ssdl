@@ -195,6 +195,26 @@
     <Property Name="isOnlineServer" Type="bit" />
     <Property Name="countryPackageId" Type="int" />
     <Property Name="canRenew" Type="bit" Nullable="false" />
+    <Property Name="oldPackageId" Type="int" Nullable="false" />
+    <Property Name="type" Type="nvarchar" MaxLength="10" />
+    <Property Name="isPayed" Type="bit" Nullable="false" />
+    <Property Name="salesInvCount" Type="int" Nullable="false" />
+    <Property Name="monthCount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="payOp">
+    <Key>
+      <PropertyRef Name="payOpId" />
+    </Key>
+    <Property Name="payOpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="500" />
+    <Property Name="type" Type="nvarchar" MaxLength="10" />
+    <Property Name="packageUserId" Type="int" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+    <Property Name="notes" Type="ntext" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -708,6 +728,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_payOp_packageUser">
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packageUser">
+        <PropertyRef Name="packageUserId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="packageUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_posSerials_packageUser">
     <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
     <End Role="posSerials" Type="Self.posSerials" Multiplicity="*" />
@@ -829,6 +861,7 @@
     <EntitySet Name="objects" EntityType="Self.objects" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="packages" EntityType="Self.packages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="packageUser" EntityType="Self.packageUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
@@ -976,6 +1009,10 @@
     <AssociationSet Name="FK_packageUser_users2" Association="Self.FK_packageUser_users2">
       <End Role="users" EntitySet="users" />
       <End Role="packageUser" EntitySet="packageUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payOp_packageUser" Association="Self.FK_payOp_packageUser">
+      <End Role="packageUser" EntitySet="packageUser" />
+      <End Role="payOp" EntitySet="payOp" />
     </AssociationSet>
     <AssociationSet Name="FK_posSerials_packageUser" Association="Self.FK_posSerials_packageUser">
       <End Role="packageUser" EntitySet="packageUser" />

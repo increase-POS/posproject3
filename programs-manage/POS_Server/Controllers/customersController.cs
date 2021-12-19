@@ -275,9 +275,10 @@ namespace Programs_Server.Controllers
                         }
                         return TokenManager.GenerateToken(message);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        return TokenManager.GenerateToken("0");
+                        // return TokenManager.GenerateToken("0");
+                    return TokenManager.GenerateToken(ex.ToString());
                     }
                 }
                 else

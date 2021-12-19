@@ -66,6 +66,8 @@
         <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users" />
         <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users1" />
         <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users2" />
+        <EntityTypeShape EntityType="incprogramsdbModel.payOp" Width="1.5" PointX="12.75" PointY="43.5" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_packageUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

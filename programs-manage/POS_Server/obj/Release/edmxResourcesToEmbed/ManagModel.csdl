@@ -228,6 +228,12 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_packageUser_users1" FromRole="packageUser" ToRole="users" />
     <NavigationProperty Name="users2" Relationship="Self.FK_packageUser_users2" FromRole="packageUser" ToRole="users" />
     <NavigationProperty Name="posSerials" Relationship="Self.FK_posSerials_packageUser" FromRole="packageUser" ToRole="posSerials" />
+    <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_packageUser" FromRole="packageUser" ToRole="payOp" />
+    <Property Name="oldPackageId" Type="Int32" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="isPayed" Type="Boolean" Nullable="false" />
+    <Property Name="salesInvCount" Type="Int32" Nullable="false" />
+    <Property Name="monthCount" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -1038,6 +1044,11 @@
       <End Role="users" EntitySet="users" />
       <End Role="agentCustomer" EntitySet="agentCustomer" />
     </AssociationSet>
+    <EntitySet Name="payOp" EntityType="incprogramsdbModel.payOp" />
+    <AssociationSet Name="FK_payOp_packageUser" Association="incprogramsdbModel.FK_payOp_packageUser">
+      <End Role="packageUser" EntitySet="packageUser" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="agentCustomer">
     <Key>
@@ -1101,6 +1112,34 @@
       </Principal>
       <Dependent Role="agentCustomer">
         <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="payOp">
+    <Key>
+      <PropertyRef Name="payOpId" />
+    </Key>
+    <Property Name="payOpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
+    <Property Name="code" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="packageUserId" Type="Int32" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="packageUser" Relationship="incprogramsdbModel.FK_payOp_packageUser" FromRole="payOp" ToRole="packageUser" />
+  </EntityType>
+  <Association Name="FK_payOp_packageUser">
+    <End Type="incprogramsdbModel.packageUser" Role="packageUser" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packageUser">
+        <PropertyRef Name="packageUserId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="packageUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

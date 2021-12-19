@@ -173,6 +173,11 @@
     <EntitySetMapping Name="packageUser">
       <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
         <MappingFragment StoreEntitySet="packageUser">
+          <ScalarProperty Name="monthCount" ColumnName="monthCount" />
+          <ScalarProperty Name="salesInvCount" ColumnName="salesInvCount" />
+          <ScalarProperty Name="isPayed" ColumnName="isPayed" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="oldPackageId" ColumnName="oldPackageId" />
           <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
           <ScalarProperty Name="packageId" ColumnName="packageId" />
           <ScalarProperty Name="userId" ColumnName="userId" />
@@ -290,6 +295,22 @@
           <ScalarProperty Name="customerId" ColumnName="customerId" />
           <ScalarProperty Name="agentId" ColumnName="agentId" />
           <ScalarProperty Name="agentCustomerId" ColumnName="agentCustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="payOp">
+      <EntityTypeMapping TypeName="incprogramsdbModel.payOp">
+        <MappingFragment StoreEntitySet="payOp">
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+          <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+          <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="payOpId" ColumnName="payOpId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
