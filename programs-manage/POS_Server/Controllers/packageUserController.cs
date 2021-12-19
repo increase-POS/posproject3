@@ -1069,5 +1069,54 @@ namespace Programs_Server.Controllers
                 return TokenManager.GenerateToken(message);
             }
         }
+
+        [HttpPost]
+        [Route("GetLastNum")]
+        public string GetLastNum(string token)
+        {
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                string packageCode = "";
+                int agentId = 0;
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "packageCode")
+                    {
+                        packageCode = c.Value;
+                    }
+                    else if (c.Type == "agentId")
+                    {
+                        agentId = int.Parse(c.Value);
+                    }
+                }
+                List<string> numberList;
+                int lastNum = 0;
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    numberList = entity.packageUser.Where(b => b.packageNumber.Contains(packageCode + "-") && b.userId == agentId).Select(b => b.packageNumber).ToList();
+
+                    for (int i = 0; i < numberList.Count; i++)
+                    {
+                        string code = numberList[i];
+                        string s = code.Substring(code.LastIndexOf("-") + 1);
+                        numberList[i] = s;
+                    }
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+                return TokenManager.GenerateToken(lastNum);
+            }
+        }
+
     }
 }
