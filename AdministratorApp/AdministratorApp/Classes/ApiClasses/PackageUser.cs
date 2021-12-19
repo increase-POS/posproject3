@@ -284,7 +284,35 @@ namespace AdministratorApp.ApiClasses
             return item;
 
         }
+        public async Task<int> GetLastNum(string Code, int agentId)
+        {
+            int count = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("Code", Code);
+            parameters.Add("agentId", agentId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("packageUser/GetLastNum", parameters);
 
-       
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    count = int.Parse(c.Value);
+                    break;
+                }
+            }
+            return count;
+        }
+        public async Task<string> generateNumber(string packageCode, string agentCode, int agentId)
+        {
+            int sequence = await GetLastNum(packageCode, agentId);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999999)
+                strSeq = sequence.ToString().PadLeft(6, '0');
+            string invoiceNum = packageCode + "-" + agentCode + "-" + strSeq;
+            return invoiceNum;
+        }
+
     }
 }

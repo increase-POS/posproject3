@@ -53,7 +53,7 @@ namespace AdministratorApp.View.sales
 
         IEnumerable<PackageUser> packageUsersQuery;
         IEnumerable<PackageUser> packageUsers;
-        public static PackageUser packageUser = new PackageUser();
+        PackageUser packageUser = new PackageUser();
         byte tgl_packageUserState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -103,12 +103,13 @@ namespace AdministratorApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_packageNumber, MainWindow.resourcemanager.GetString("trProcessNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerServerCode, MainWindow.resourcemanager.GetString("trServerCodeHint"));
-            txt_isBooked.Text = MainWindow.resourcemanager.GetString("trBooked");
+            //txt_isBooked.Text = MainWindow.resourcemanager.GetString("trBooked");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_bookDate, MainWindow.resourcemanager.GetString("trBookDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_expireDate, MainWindow.resourcemanager.GetString("trExpirationDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_pay.Content = MainWindow.resourcemanager.GetString("trPay");
+            btn_serials.Content = MainWindow.resourcemanager.GetString("trSerials");
 
             dg_packageUser.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcessNumTooltip");
             dg_packageUser.Columns[1].Header = MainWindow.resourcemanager.GetString("trAgent");
@@ -154,7 +155,7 @@ namespace AdministratorApp.View.sales
                     packageUser.customerId = (int)cb_customer.SelectedValue;
                     packageUser.packageNumber = tb_packageNumber.Text;
                     packageUser.customerServerCode = tb_customerServerCode.Text;
-                    packageUser.isBooked = (bool) tgl_isBooked.IsChecked;
+                    //packageUser.isBooked = (bool) tgl_isBooked.IsChecked;
                     if (dp_bookDate.SelectedDate != null)
                         packageUser.bookDate = dp_bookDate.SelectedDate.Value;
                     else packageUser.bookDate = null;
@@ -275,12 +276,11 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Dg_packageUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private async void Dg_packageUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        { //selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
 
                 if (dg_packageUser.SelectedIndex != -1)
                 {
@@ -289,7 +289,8 @@ namespace AdministratorApp.View.sales
 
                     if (packageUser != null)
                     {
-                       
+                        Packages packageModel = new Packages();
+                        Packages package = await packageModel.GetByID(packageUser.packageId.Value);
 
                     }
                 }
@@ -466,10 +467,15 @@ namespace AdministratorApp.View.sales
                         uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
                         uc_sale.Instance.UserControl_Loaded(null, null);
                         uc_sale.Instance.package = package;
-                        uc_sale.Instance.cb_customer.SelectedValue = packageUser.customerId.Value;
-                        uc_sale.Instance.cb_agent.SelectedValue = packageUser.userId.Value;
-                        uc_sale.Instance.cb_package.SelectedValue = packageUser.packageId;
-                        uc_sale.Instance.cb_period.SelectedValue = packageUser.countryPackageId;
+                       
+                        uc_sale.Instance.customerId = packageUser.customerId.Value;
+                        uc_sale.Instance.agentId = packageUser.userId.Value;
+                        uc_sale.Instance.packageId = packageUser.packageId.Value;
+                        try
+                        {
+                            uc_sale.Instance.countryPackageId = packageUser.countryPackageId.Value;
+                        }
+                        catch { }
                         await uc_sale.Instance.fillInputs(package , packageUser.userId.Value , packageUser.customerId.Value);
                     }
                 }

@@ -97,9 +97,10 @@
                     <Border Margin="5,5,5,45"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                               x:Name="dg_packageUser" SelectionChanged="Dg_packageUser_SelectionChanged"  AutoGenerateColumns="False"    Background="White"
-                               ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" MouseDoubleClick="Dg_packageUser_MouseDoubleClick">
-                      
+                               x:Name="dg_packageUser"   AutoGenerateColumns="False"    Background="White"
+                               ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" 
+                               MouseDoubleClick="Dg_packageUser_MouseDoubleClick"
+                               SelectionChanged="Dg_packageUser_SelectionChanged">
                             <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                         </DataGrid.OpacityMask>
@@ -345,37 +346,22 @@
                             </Path>
                         </Grid>
                     </Border>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"  x:Name="txt_isBooked" Margin="10,5,10,5"
-                                    Text="Booked" Foreground="#6e6e6e"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   FontSize="12"/>
-                        <ToggleButton Grid.Column="1"   x:Name="tgl_isBooked"  IsChecked="{Binding isBooked, Mode=OneWay}" 
-                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsEnabled="False"
-                                      Margin="0" Height="13" Width="28"  TabIndex="15" />
-
-                        <Border Grid.Column="2" CornerRadius="10" Margin="10,5,10,5" 
-                                IsEnabled="{Binding Path=IsChecked, ElementName=tgl_islimitDate}" BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                            <Grid>
-                                <DatePicker x:Name="dp_bookDate"  SelectedDate="{Binding bookDate, Mode=OneWay}" Padding="10,5,5,5"    
-                                            TextBlock.Foreground="#4E4E4E"    Margin="4,0" 
-                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
-                                            materialDesign:HintAssist.Hint="Book Date..."    
-                                            VerticalAlignment="Center" BorderThickness="0"
-                                            Height="40"  IsEnabled="False"/>
-                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                </Path>
-                            </Grid>
-                        </Border>
-                    </Grid>
+                    <Border CornerRadius="10" Margin="10,5,10,5" 
+                            IsEnabled="{Binding Path=IsChecked, ElementName=tgl_islimitDate}" BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <DatePicker x:Name="dp_bookDate"  SelectedDate="{Binding bookDate, Mode=OneWay}" Padding="10,5,5,5"    
+                                        TextBlock.Foreground="#4E4E4E"    Margin="4,0" 
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                                        materialDesign:HintAssist.Hint="Book Date..."    
+                                        VerticalAlignment="Center" BorderThickness="0"
+                                        Height="40"  IsEnabled="False"/>
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                            HorizontalAlignment="Right" Visibility="Collapsed"   
+                        VerticalAlignment="Center" Width="15"  Height="15"
+                            Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
                     <Border Grid.Column="2" CornerRadius="10" Margin="10,5,10,5" 
                                 IsEnabled="{Binding Path=IsChecked, ElementName=tgl_islimitDate}" BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
@@ -402,18 +388,250 @@
                                   materialDesign:HintAssist.Hint="Note..."  
                                   Foreground="#4E4E4E" IsReadOnly="True"
                                  Margin="4,0"  BorderThickness="0"
-                            Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
+                            Grid.Column="1"  Height="45" TextWrapping="Wrap"/>
                         </Grid>
                     </Border>
+
+                    <DockPanel LastChildFill="True"  >
+                        <TextBlock x:Name="txt_packageDetails" Text="Package Details" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
+                    </DockPanel>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_packageCode"  Text="{Binding packageCode, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Package Code..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_package"  Text="{Binding packageName, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Package..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_packageDetails"  Text="{Binding details, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Package Details..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <DockPanel LastChildFill="True"  >
+                        <TextBlock x:Name="txt_programDetails" Text="Programe Details" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
+                    </DockPanel>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_program"  Text="{Binding programName, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Program..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_version"  Text="{Binding verName, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Version..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_price"  Text="{Binding price, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Price..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <DockPanel LastChildFill="True"  >
+                        <TextBlock x:Name="txt_packageLimits" Text="Package Limits" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
+                    </DockPanel>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_branchCount"  Text="{Binding branchCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Branch Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_userCount"  Text="{Binding userCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="user Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_customerCount"  Text="{Binding customerCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Customer Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_salesInvCount"  Text="{Binding saleInvCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Invoices Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_posCount"  Text="{Binding posCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Pos Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_vendorCount"  Text="{Binding vendorCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Vendor Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Grid>
+                            <TextBox x:Name="tb_ItemsCount"  Text="{Binding itemCount, Mode=OneWay}" Padding="10,5,0,0" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Items Count..."  
+                                     Foreground="#4E4E4E"  IsReadOnly="True"
+                                     MaxLength="50" BorderThickness="0"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                            </Path>
+                        </Grid>
+                    </Border>
+                    
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
                     BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"/>
 
-            <Grid Grid.Row="3" Margin="5,5,5,10" Visibility="Collapsed">
-                <Button Grid.Column="0" x:Name="btn_add"  
-                        materialDesign:ButtonAssist.CornerRadius="10"      Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
-                        Margin="5"    Content="Save" Click="Btn_add_Click"/>
+            <Grid Grid.Row="3" Margin="5,5,5,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Column="0" Grid.Row="0" x:Name="btn_pay"  
+                        materialDesign:ButtonAssist.CornerRadius="10"   
+                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
+                        Margin="5"    Content="pay" />
+                <Button Grid.Column="0" Grid.Row="1" x:Name="btn_serials"  
+                        materialDesign:ButtonAssist.CornerRadius="10"   
+                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
+                        Margin="5"    Content="serials" />
             </Grid>
         </Grid>
     </Grid>

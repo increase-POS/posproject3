@@ -1,5 +1,6 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
+using AdministratorApp.View.windows;
 using netoaster;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace AdministratorApp.View.sales
     public partial class uc_sale : UserControl
     {
         public Packages package = new Packages();
+        public int customerId , agentId , packageId , countryPackageId;
        
         public static List<string> requiredControlList;
         PackageUser packuser = new PackageUser();
@@ -91,18 +93,23 @@ namespace AdministratorApp.View.sales
                     await FillCombo.fillPackage(cb_package);
                 }
 
-                
-                //if(uc_packageUser.packageUser != null)
-                //try
-                //{
-                //    cb_customer.SelectedValue = uc_packageUser.packageUser.customerId.Value;
-                //    cb_agent.SelectedValue = uc_packageUser.packageUser.userId.Value;
-                //    cb_package.SelectedValue = uc_packageUser.packageUser.packageId;
-                //    cb_period.SelectedValue = uc_packageUser.packageUser.countryPackageId;
-                //}
-                //catch { }
+
                 //await RefreshPackagesList();
-                if (uc_packageUser.packageUser == null) Clear();
+                if (packageId == 0)
+                {
+                    Clear();
+                    btn_add.IsEnabled = true;
+                    btn_upgrade.IsEnabled = false;
+                }
+                else
+                {
+                    btn_add.IsEnabled = false;
+                    btn_upgrade.IsEnabled = true;
+                    cb_customer.SelectedValue = customerId;
+                    cb_agent.SelectedValue = agentId;
+                    //cb_package.SelectedValue = packageId;
+                    //cb_period.SelectedValue = countryPackageId;
+                }
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -123,8 +130,8 @@ namespace AdministratorApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_period, MainWindow.resourcemanager.GetString("trPeriod"));
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trSale");
-            btn_serial.Content = MainWindow.resourcemanager.GetString("trSerials");
+            btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+            btn_upgrade.Content = MainWindow.resourcemanager.GetString("trUpgrade");
 
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
             txt_packageCodeTitle.Text = MainWindow.resourcemanager.GetString("trCode");
@@ -308,13 +315,13 @@ namespace AdministratorApp.View.sales
             }
         }
         #endregion
-
+        public static int oldPackageId = 0;
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//sale
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                oldPackageId = 0;
                 int msg = 0;
                 if (HelpClass.validate(requiredControlList, this))
                 {
@@ -326,8 +333,9 @@ namespace AdministratorApp.View.sales
                     if (cb_customer.SelectedValue != null)
                         packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
                     packuser.createUserId = MainWindow.userID;
-                    packuser.packageNumber = "autoNum";///??????
-                    //packuser.packageNumber = await packuserModel.generateCodeNumber();
+                    Users userModel = new Users();
+                    Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                    packuser.packageNumber = await packuserModel.generateNumber("si", agent.code , (int)cb_agent.SelectedValue);
                     packuser.isActive = 1;
                     packuser.canRenew = true;
 
@@ -357,13 +365,44 @@ namespace AdministratorApp.View.sales
             try
             {
                 if (cb_agent.SelectedIndex != -1)
-                    await FillCombo.fillAgentPackage(cb_package , (int)cb_agent.SelectedValue);
+                {
+                    await FillCombo.fillAgentPackage(cb_package, (int)cb_agent.SelectedValue);
+                    if(customerId != 0) cb_package.SelectedValue = packageId;
+                }
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
 
+        }
+
+        private void Btn_customer_Click(object sender, RoutedEventArgs e)
+        {//new customer
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_newCustomer w = new wd_newCustomer();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
+        {//upgrade
+            try
+            {
+                oldPackageId = (int)cb_package.SelectedValue ;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -438,8 +477,9 @@ namespace AdministratorApp.View.sales
                     cb_period.DisplayMemberPath = "notes";
                     cb_period.SelectedValuePath = "Id";
                     cb_period.ItemsSource = countryPackageDates;
-                    #endregion
-                }
+                    if(customerId != 0) cb_period.SelectedValue = countryPackageId;
+                #endregion
+            }
 
             //}
             //catch (Exception ex)

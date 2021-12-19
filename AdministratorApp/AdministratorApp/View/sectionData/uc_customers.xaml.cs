@@ -144,7 +144,8 @@ namespace AdministratorApp.View.sectionData
                 customer = new Customers();
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    tb_custCode.Text = await customer.generateCodeNumber("cu");
+                    //tb_custCode.Text = await customer.generateCodeNumber("cu");
+                    tb_custCode.Text = await HelpClass.generateRandomString(5, "", "Customers", 0);
                     customer.custCode = tb_custCode.Text;
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
@@ -189,7 +190,6 @@ namespace AdministratorApp.View.sectionData
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

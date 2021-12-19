@@ -2554,4 +2554,10 @@ Please add Email in setting</value>
   <data name="trServerCodeHint" xml:space="preserve">
     <value>trServerCode...</value>
   </data>
+  <data name="trUpgrade" xml:space="preserve">
+    <value>Upgrade</value>
+  </data>
+  <data name="trBook" xml:space="preserve">
+    <value>Book</value>
+  </data>
 </root>

@@ -24,8 +24,59 @@ namespace AdministratorApp.Classes
     {
        static public BrushConverter brushConverter = new BrushConverter();
         public static ImageBrush imageBrush = new ImageBrush();
-        
-        
+
+        static Users userModel = new Users();
+        static Customers customerModel = new Customers();
+
+        public static async Task<string> generateRandomString(int length, string type, string _class, int id)
+        {
+            Random random = new Random(); string returnStr = "";
+            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            //return new string(Enumerable.Repeat(chars, length)
+            //  .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            string str  = new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            if (!await isCodeExist(str, type, _class, id))
+                returnStr = str;
+            else
+                await generateRandomString(length, type, _class, id);
+
+            return returnStr;
+        }
+
+        public static async Task<bool> isCodeExist(string randomNum, string type, string _class, int id)
+        {
+            bool iscodeExist = false;
+            try
+            {
+                List<string> codes = new List<string>();
+
+                if (_class.Equals("Users"))
+                {
+                    List<Users> users = await userModel.GetAll();
+                    
+                    if (users.Any(u => u.code == randomNum && u.userId != id && u.type == type))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                else if (_class.Equals("Customers"))
+                {
+                    List<Customers> customers = await customerModel.GetAll();
+
+                    if (customers.Any(b => b.custCode == randomNum && b.custId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                
+            }
+            catch { }
+            return iscodeExist;
+        }
+
         public static void SetError(Control c, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;

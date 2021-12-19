@@ -162,7 +162,8 @@ namespace AdministratorApp.View.sectionData
                 user = new Users();
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength && HelpClass.IsValidEmail(this))
                 {
-                    tb_code.Text = await user.generateCodeNumber("ag");
+                    //tb_code.Text = await user.generateCodeNumber("ag");
+                    tb_code.Text = await HelpClass.generateRandomString(3 , "ag" , "Users" , 0);
                     user.code = tb_code.Text;
                     user.name = tb_name.Text;
                     user.lastName = tb_lastName.Text;

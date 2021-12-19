@@ -2539,4 +2539,10 @@
   <data name="trServerCodeHint" xml:space="preserve">
     <value>كود المخدم...</value>
   </data>
+  <data name="trUpgrade" xml:space="preserve">
+    <value>ترقية</value>
+  </data>
+  <data name="trBook" xml:space="preserve">
+    <value>حجز</value>
+  </data>
 </root>
