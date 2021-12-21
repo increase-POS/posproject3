@@ -51,7 +51,7 @@ namespace AdministratorApp.View.sales
             {
                 HelpClass.StartAwait(grid_mainGrid);
 
-                menuList = new List<string> { "sale", "packageUser", "posSerials" };
+                menuList = new List<string> { "book", "payments"};
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -80,9 +80,8 @@ namespace AdministratorApp.View.sales
 
         private void translate()
         {
-            btn_sale.Content = MainWindow.resourcemanager.GetString("trSales");
-            btn_packageUser.Content = MainWindow.resourcemanager.GetString("trUserPackage");
-            btn_posSerials.Content = MainWindow.resourcemanager.GetString("trSerials");
+            btn_sale.Content = MainWindow.resourcemanager.GetString("trBook");
+            btn_packageUser.Content = MainWindow.resourcemanager.GetString("trPayments");
         }
         void colorButtonRefreash(string str)
         {

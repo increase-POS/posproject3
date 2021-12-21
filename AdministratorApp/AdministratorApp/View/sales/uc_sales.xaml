@@ -17,17 +17,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <!--<ColumnDefinition Width="*"/>-->
             </Grid.ColumnDefinitions>
             <Button   Grid.Column="0"
-             Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
-                 Content="Sale" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                      x:Name="btn_sale" Click="Btn_sale_Click" Tag="sale"/>
+                      Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
+                      Content="Book" FontWeight="Bold"    Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                      x:Name="btn_sale" Click="Btn_sale_Click" Tag="book"/>
             <Button   Grid.Column="1"
-             Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                 Content="package user" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
-                       x:Name="btn_packageUser" Click="Btn_packageUser_Click" Tag="packageUser"/>
-            <Button   Grid.Column="2"
+                      Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                      Content="Payments" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   
+                       x:Name="btn_packageUser" Click="Btn_packageUser_Click" Tag="payments"/>
+            <Button   Grid.Column="2" Visibility="Collapsed"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="Serials" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                        x:Name="btn_posSerials" Click="Btn_posSerials_Click" Tag="posSerials"/>
