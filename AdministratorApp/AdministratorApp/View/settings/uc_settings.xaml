@@ -19,10 +19,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button   Grid.Column="0"
+            <!--<Button   Grid.Column="0"
              Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
                  Content="Permissions" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                      x:Name="btn_permissions" Click="Btn_permissions_Click" Tag="permissions"/>
+                      x:Name="btn_permissions" Click="Btn_permissions_Click" Tag="permissions"/>-->
             <!--<Button   Grid.Column="1"
              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                  Content="Agents" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"

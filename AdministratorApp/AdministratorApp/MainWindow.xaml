@@ -263,7 +263,6 @@
                             <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="Bell" 
                                          Width="25" Height="25"/>
                             <Button.Triggers>
-
                                 <EventTrigger RoutedEvent="Button.Click">
                                     <BeginStoryboard>
                                         <Storyboard>
@@ -282,6 +281,7 @@
                  
                     <Ellipse Grid.Column="7" Margin="5,5,5,5" x:Name="img_userLogin"
                 HorizontalAlignment="Center" VerticalAlignment="Center"   
+                             StrokeThickness="1" Stroke="{StaticResource LightGrey}"
                      Height="40" Width="40">
                         <Ellipse.Fill >
                             <ImageBrush Stretch="UniformToFill"  x:Name="IMG_userPic" ImageSource="pic/no-image-icon-40x40.png"   />

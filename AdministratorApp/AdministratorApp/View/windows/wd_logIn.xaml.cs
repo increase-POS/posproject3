@@ -157,14 +157,14 @@ namespace AdministratorApp.View.windows
                     if (user.accountName == null)
                     {
                         //user does not exist
-                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trUserNotFound");
+                        HelpClass.SetValidate(p_errorUserName, "trUserNotFound");
                     }
                     else
                     {
                         if (user.userId == 0)
                         {
                             //wrong password
-                            HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trWrongPassword");
+                        HelpClass.SetValidate(p_errorPassword, "trWrongPassword");
                         }
                         else
                         {
@@ -260,12 +260,12 @@ namespace AdministratorApp.View.windows
                 if (sender.GetType().Name == "TextBox")
                 {
                     if (txtUserName.Text.Equals(""))
-                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trEmptyUserNameToolTip");
+                        HelpClass.SetValidate(p_errorUserName, "trEmptyUserNameToolTip");
                 }
                 else if (sender.GetType().Name == "PasswordBox")
                 {
                     if (txtPassword.Password.Equals(""))
-                        HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trEmptyPasswordToolTip");
+                        HelpClass.SetValidate(p_errorPassword, "trEmptyPasswordToolTip");
                 }
             }
             catch (Exception ex)
@@ -276,13 +276,11 @@ namespace AdministratorApp.View.windows
         private void validateTextChanged(object sender, TextChangedEventArgs e)
         {
             clearValidate(p_errorUserName);
-            txtUserName.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-        }
+         }
         private void validatePasswordChanged(object sender, RoutedEventArgs e)
         {
             clearValidate(p_errorPassword);
-            txtPassword.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-        }
+         }
 
 
         private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)

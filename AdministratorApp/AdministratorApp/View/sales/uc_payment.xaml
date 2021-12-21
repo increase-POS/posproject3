@@ -278,7 +278,7 @@
                     </DockPanel>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
-                            <ComboBox   x:Name="cb_customerId" Padding="10,0,5,5" SelectedValue="{Binding customerId, Mode=OneWay}"    
+                            <ComboBox   x:Name="cb_customerId" Padding="10,0,5,0" SelectedValue="{Binding customerId, Mode=OneWay}"    
                                           TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Customer..."    
