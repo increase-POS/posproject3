@@ -11,7 +11,7 @@
         <ResourceDictionary>
             <converters:permissionsNameConverter x:Key="permissionsNameConverter"/>
             <converters:packagePeriodConverter   x:Key="packagePeriodConverter"/>
-
+            <converters:isActiveConverter   x:Key="isActiveConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /AdministratorApp;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>

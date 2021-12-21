@@ -130,29 +130,32 @@ namespace AdministratorApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_period, MainWindow.resourcemanager.GetString("trPeriod"));
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+            if(packageId == 0)
+                btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+            else
+                btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
             btn_upgrade.Content = MainWindow.resourcemanager.GetString("trUpgrade");
 
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
             txt_packageCodeTitle.Text = MainWindow.resourcemanager.GetString("trCode");
             txt_packageNameTitle.Text = MainWindow.resourcemanager.GetString("trName");
-            txt_detailsTitle.Text = MainWindow.resourcemanager.GetString("trDetails");
+            txt_priceTitle.Text = MainWindow.resourcemanager.GetString("trPrice");
+            txt_statusTitle.Text = MainWindow.resourcemanager.GetString("trStatus");
+            txt_serialsTitle.Text = MainWindow.resourcemanager.GetString("trSerials");
 
             txt_programDetails.Text = MainWindow.resourcemanager.GetString("trProgramDetails");
             txt_programTitle.Text = MainWindow.resourcemanager.GetString("trProgram");
             txt_versionTitle.Text = MainWindow.resourcemanager.GetString("trVersion");
-            txt_priceTitle.Text = MainWindow.resourcemanager.GetString("trPrice");
 
             txt_packageLimits.Text = MainWindow.resourcemanager.GetString("trPackageLimits");
-            txt_branchCountTitle.Text = MainWindow.resourcemanager.GetString("trBranchCount");
-            txt_userCountTitle.Text = MainWindow.resourcemanager.GetString("trUserCount");
-            txt_customerCountTitle.Text = MainWindow.resourcemanager.GetString("trCustomerCount");
-            txt_salesInvCountTitle.Text = MainWindow.resourcemanager.GetString("trInvoiceCount");
-            txt_endDateTitle.Text = MainWindow.resourcemanager.GetString("trEndDate");
-            txt_storeCountNameTitle.Text = MainWindow.resourcemanager.GetString("trStoreCount");
-            txt_posCountNameTitle.Text = MainWindow.resourcemanager.GetString("trPOSCount");
-            txt_vendorCountNameTitle.Text = MainWindow.resourcemanager.GetString("trVendorCount");
-            txt_itemCountNameTitle.Text = MainWindow.resourcemanager.GetString("trItemCount");
+            txt_branchCountTitle.Text = MainWindow.resourcemanager.GetString("trBranchs");
+            txt_userCountTitle.Text = MainWindow.resourcemanager.GetString("trUsers");
+            txt_customerCountTitle.Text = MainWindow.resourcemanager.GetString("trCustomers");
+            txt_salesInvCountTitle.Text = MainWindow.resourcemanager.GetString("trInvoices");
+            txt_storeCountNameTitle.Text = MainWindow.resourcemanager.GetString("trStores");
+            txt_posCountNameTitle.Text = MainWindow.resourcemanager.GetString("trPOS");///????
+            txt_vendorCountNameTitle.Text = MainWindow.resourcemanager.GetString("trVendors");
+            txt_itemCountNameTitle.Text = MainWindow.resourcemanager.GetString("trItems");
         }
 
         #region events
@@ -166,58 +169,48 @@ namespace AdministratorApp.View.sales
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
-                    int agentID = 0;
-                    if(cb_agent.SelectedItem != null) agentID = (int)cb_agent.SelectedValue;
+                
+                #region old
+                this.DataContext = package;
+                if (package != null)
+                {
+                    #region fill period 
 
-                    await fillInputs(package , agentID, (int)cb_customer.SelectedValue);
+                    Users userModel = new Users();
+                    Customers custModel = new Customers();
+                    Customers cust = new Customers();
+                    cust = await custModel.GetByID((int)cb_customer.SelectedValue);
+                    countryPackageDates = await cpdModel.GetAll();
+                    if (bdr_agent.Visibility == Visibility.Visible)
+                    {
+                        Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                    }
+                    else
+                        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
 
-                    #region old
-                    //this.DataContext = package;
-                    //if (package != null)
-                    //{
-                    //    #region fill period 
-
-                    //    Users userModel = new Users();
-                    //    Customers custModel = new Customers();
-                    //    Customers cust = new Customers();
-                    //    cust = await custModel.GetByID((int)cb_customer.SelectedValue);
-                    //    countryPackageDates = await cpdModel.GetAll();
-                    //    if (bdr_agent.Visibility == Visibility.Visible)
-                    //    {
-                    //        Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                    //        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
-                    //    }
-                    //    else
-                    //        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId)
-                    //                                //.GroupBy(s => new { s.monthCount })
-                    //                                //.Select(s => new
-                    //                                //{
-                    //                                //    Name = s.FirstOrDefault().updateDate,
-                    //                                //})
-                    //                                ; 
-
-                    //    foreach (var p in countryPackageDates)
-                    //    {
-                    //        if (p.islimitDate)
-                    //            p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
-                    //        else
-                    //        {
-                    //            switch (p.monthCount)
-                    //            {
-                    //                case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
-                    //                case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
-                    //                case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
-                    //                case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
-                    //            }
-                    //        }
-                    //    }
-                    //    cb_period.DisplayMemberPath = "notes";
-                    //    cb_period.SelectedValuePath = "Id";
-                    //    cb_period.ItemsSource = countryPackageDates;
-                    //    #endregion
-                    //}
+                    foreach (var p in countryPackageDates)
+                    {
+                        if (p.islimitDate)
+                            p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
+                        else
+                        {
+                            switch (p.monthCount)
+                            {
+                                case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                                case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                                case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                                case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                            }
+                        }
+                    }
+                    cb_period.DisplayMemberPath = "notes";
+                    cb_period.SelectedValuePath = "Id";
+                    cb_period.ItemsSource = countryPackageDates;
                     #endregion
                 }
+                #endregion
+            }
 
             //}
             //catch (Exception ex)
@@ -237,6 +230,8 @@ namespace AdministratorApp.View.sales
                 cb_agent.SelectedIndex = -1;
                 cb_package.SelectedIndex = -1;
                 cb_period.SelectedIndex = -1;
+                cb_package.IsEnabled = false;
+                cb_period.IsEnabled = false;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -259,11 +254,13 @@ namespace AdministratorApp.View.sales
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Packages();
+            try
+            {
+                this.DataContext = new Packages();
+            }
+            catch { }
             HelpClass.clearValidate(requiredControlList, this);
             cb_period.SelectedIndex = -1;
-            tb_price.Clear();
-            txt_currency.Text = "";
         }
 
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -389,7 +386,7 @@ namespace AdministratorApp.View.sales
             }
         }
 
-        private void Btn_addCustomer_Click(object sender, RoutedEventArgs e)
+        private async void Btn_addCustomer_Click(object sender, RoutedEventArgs e)
         {//add customer
             try
             {
@@ -399,6 +396,11 @@ namespace AdministratorApp.View.sales
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
 
+                if (w.isOk)
+                {
+                    await FillCombo.fillCustomer(cb_customer);
+                    cb_customer.SelectedValue = w.customerID;
+                }
             }
             catch (Exception ex)
             {
@@ -406,15 +408,24 @@ namespace AdministratorApp.View.sales
             }
         }
 
-        private void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
+        private async void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
         {//update customer
             try
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_newCustomer w = new wd_newCustomer();
-                w.customerID = (int)cb_customer.SelectedValue;
+                if (cb_customer.SelectedItem != null)
+                    w.customerID = (int)cb_customer.SelectedValue;
+                else
+                    w.customerID = 0;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
+
+                if (w.isOk)
+                {
+                    await FillCombo.fillCustomer(cb_customer);
+                    cb_customer.SelectedValue = w.customerID;
+                }
 
             }
             catch (Exception ex)
@@ -428,7 +439,29 @@ namespace AdministratorApp.View.sales
             try
             {
                 cb_customer.SelectedIndex = -1;
+                cb_package.IsEnabled = false;
+                cb_period.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
+        private void Btn_serials_Click(object sender, RoutedEventArgs e)
+        {//serials
+
+        }
+
+        private void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select customer
+            try
+            {
+                if (cb_customer.SelectedIndex != -1)
+                {
+                    cb_package.IsEnabled = true;
+                    cb_period.IsEnabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -452,9 +485,10 @@ namespace AdministratorApp.View.sales
                     Country country = new Country();
                     List<Country> countries = new List<Country>();
                     cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
-                    tb_price.Text = cpd.price.ToString();
-                    countries = await cModel.GetAll();
-                    txt_currency.Text = countries.Where(c => c.countryId == cpd.countryId).FirstOrDefault().currency;
+                    txt_price.Text = cpd.price.ToString();
+                    //tb_price.Text = cpd.price.ToString();
+                    //countries = await cModel.GetAll();
+                    //txt_currency.Text = countries.Where(c => c.countryId == cpd.countryId).FirstOrDefault().currency;
                 }
             }
             catch (Exception ex)

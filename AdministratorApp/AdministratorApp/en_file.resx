@@ -2560,4 +2560,13 @@ Please add Email in setting</value>
   <data name="trBook" xml:space="preserve">
     <value>Book</value>
   </data>
+  <data name="trBranchs" xml:space="preserve">
+    <value>Branchs</value>
+  </data>
+  <data name="trInValid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="trStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>

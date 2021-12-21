@@ -2545,4 +2545,13 @@
   <data name="trBook" xml:space="preserve">
     <value>حجز</value>
   </data>
+  <data name="trBranchs" xml:space="preserve">
+    <value>الفروع</value>
+  </data>
+  <data name="trInValid" xml:space="preserve">
+    <value>غير فعال</value>
+  </data>
+  <data name="trStatus" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
 </root>

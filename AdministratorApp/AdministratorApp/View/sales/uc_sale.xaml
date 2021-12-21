@@ -24,10 +24,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border BorderThickness="0" Grid.Row="0"    Grid.Column="0"     Margin="5,0,10,10"
-                    CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+                <Border BorderThickness="0" Grid.Row="0"     Grid.Column="0"     Margin="5,0,10,10"
+                        CornerRadius="7" BorderBrush="Black" Background="White"  Padding="0">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -56,12 +57,36 @@
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
-                        <TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_detailsTitle" Text="Details"  Margin="10"
+                        <TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_priceTitle" Text="Price"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
-                        <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_details" Text="{Binding details, Mode=OneWay}"  Margin="10" 
+                        <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_price" Text="{Binding price, Mode=OneWay}"  Margin="10" 
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
+                        <TextBlock  Grid.Row="4" Grid.Column="0"   x:Name="txt_statusTitle" Text="Status"  Margin="10"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
+                                  FontSize="16"  />
+                        <TextBlock  Grid.Row="4"  Grid.Column="1"   x:Name="txt_status" Text="{Binding Path=isActive, Converter={StaticResource isActiveConverter}}"  Margin="10" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
+                                  FontSize="14"  />
+                        <TextBlock  Grid.Row="5" Grid.Column="0"   x:Name="txt_serialsTitle" Text="Serials"  Margin="10"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
+                                  FontSize="16"  />
+                        <Button Grid.Row="5"  Grid.Column="1"  Padding="0" x:Name="btn_serials"
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right"  
+                                Margin="5,1" IsEnabled="True" Click="Btn_serials_Click" >
+                            <Path Fill="#4E4E4E" Stretch="Fill"  Width="27.5" Height="27.5"
+                                  Data="M275.8,467c-14.1-21.9-21.7-47.5-21.7-74.4c0-6.3,0.4-12.4,1.2-18.5H121.6v0c-3.4,0-6.8,0-10.3,0c0-15.9,0-31.2,0-47.1
+	                                    c2.5,0,4.7,0,6.8,0c50.8,0,101.6,0,152.5,0.1c6.2-11.4,14-22,23.5-31.4c5.4-5.4,11.3-10.4,17.5-14.8c-16.8,0-33.5,0-50.2,0
+	                                    c-50.2,0-100.2,0-150.3,0c0-15.8,0-31.1,0-47.1c2.7,0,4.8,0,7.1,0c89.8,0,179.7,0,269.5,0.1c0.6,0,1.2,0,1.8-0.1c0.6,0,1.2,0,1.9,0
+	                                    c0,7.4,0,14.7,0,22c16,0,31.6,2.8,46.2,7.9c0-29,0-58.8,0-82.2c0.2-12.2,0.2-24.4-0.1-36.7c0-2.3-1.2-5.2-2.9-6.9
+	                                    c-44.6-44.8-89.2-89.4-134-134c-1.5-1.5-4.2-2.7-6.4-2.7c-61.2-0.1-122.3-0.2-183.5,0c-18.4,0.1-31.8,9.3-40.7,25.3
+	                                    c-4.6,8.2-5.1,17.1-5.1,26.2c0,92.2,0,184.3,0,276.5c0,30.8-0.5,61.7,0.3,92.5c0.8,27.1,20.6,45.2,47.7,45.3c2.9,0,5.8,0,8.8,0v0
+	                                    H275.8z M274.2,38c41.8,41.9,84.1,84.4,125.4,125.9c-40.3,0-82.7,0-125.4,0C274.2,121.4,274.2,79.2,274.2,38z M391,284.1
+	                                    c-60.5,0-108.5,48-108.5,108.5c0,60.4,48,108.5,108.5,108.5c60.4,0,108.5-48.1,108.5-108.5C499.5,332.2,451.4,284.1,391,284.1z
+	                                    M453,409.7h-45v45h-35.6v-45h-45V374h45v-45h37.2v45H453V409.7z M0,250C0,250,0,250,0,250C0,250,0,250,0,250C0,250,0,250,0,250
+	                                    C0,250,0,250,0,250z" />
+                        </Button>
 
                     </Grid>
                 </Border>
@@ -97,12 +122,12 @@
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
-                        <TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_priceTitle" Text="price"  Margin="10"
+                        <!--<TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_priceTitle" Text="price"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_price" Text="{Binding price, Mode=OneWay}"  Margin="10" 
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
-                                  FontSize="14"  />
+                                  FontSize="14"  />-->
                        
                     </Grid>
                 </Border>
@@ -127,14 +152,14 @@
                                    FontSize="20"  Grid.ColumnSpan="4"
                                   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="10,5,5,5"/>
                         <!--#region Row 1-->
-                        <TextBlock  Grid.Row="1"  Grid.Column="0"  x:Name="txt_branchCountTitle" Text="branchCount"  Margin="10,5,5,5"
+                        <TextBlock  Grid.Row="1"  Grid.Column="0"  x:Name="txt_branchCountTitle" Text="branchs"  Margin="10,5,5,5"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="1" Grid.Column="1"  x:Name="txt_branchCountCode" Text="{Binding branchCount, Mode=OneWay}"  Margin="10"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
-                        <TextBlock Grid.Row="1"  Grid.Column="2"   x:Name="txt_storeCountNameTitle" Text="storeCount"  Margin="10"
+                        <TextBlock Grid.Row="1"  Grid.Column="2"   x:Name="txt_storeCountNameTitle" Text="stores"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="1" Grid.Column="3"   x:Name="txt_storeCountName" Text="{Binding storeCount, Mode=OneWay}"  Margin="10"
@@ -143,14 +168,14 @@
                             <!--#endregion-->
 
                         <!--#region Row 2-->
-                        <TextBlock  Grid.Row="2"  Grid.Column="0"  x:Name="txt_userCountTitle" Text="userCount"  Margin="10,5,5,5"
+                        <TextBlock  Grid.Row="2"  Grid.Column="0"  x:Name="txt_userCountTitle" Text="users"  Margin="10,5,5,5"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="2" Grid.Column="1"  x:Name="txt_userCountCode" Text="{Binding userCount, Mode=OneWay}"  Margin="10"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
-                        <TextBlock Grid.Row="2"  Grid.Column="2"   x:Name="txt_posCountNameTitle" Text="posCount"  Margin="10"
+                        <TextBlock Grid.Row="2"  Grid.Column="2"   x:Name="txt_posCountNameTitle" Text="pos"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="2" Grid.Column="3"   x:Name="txt_posCountName" Text="{Binding posCount, Mode=OneWay}"  Margin="10"
@@ -160,14 +185,14 @@
 
                         <!--#region Row 3-->
 
-                        <TextBlock  Grid.Row="3"  Grid.Column="0"  x:Name="txt_customerCountTitle" Text="customerCount"  Margin="10,5,5,5"
+                        <TextBlock  Grid.Row="3"  Grid.Column="0"  x:Name="txt_customerCountTitle" Text="customers"  Margin="10,5,5,5"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="3" Grid.Column="1"  x:Name="txt_customerCountCode" Text="{Binding customerCount, Mode=OneWay}"  Margin="10"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
-                        <TextBlock Grid.Row="3"  Grid.Column="2"   x:Name="txt_vendorCountNameTitle" Text="vendorCount"  Margin="10"
+                        <TextBlock Grid.Row="3"  Grid.Column="2"   x:Name="txt_vendorCountNameTitle" Text="vendors"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="3" Grid.Column="3"   x:Name="txt_vendorCountName" Text="{Binding vendorCount, Mode=OneWay}"  Margin="10"
@@ -177,14 +202,14 @@
 
                         <!--#region Row 4-->
 
-                        <TextBlock  Grid.Row="4"  Grid.Column="0"  x:Name="txt_salesInvCountTitle" Text="salesInvCount"  Margin="10,5,5,5"
+                        <TextBlock  Grid.Row="4"  Grid.Column="0"  x:Name="txt_salesInvCountTitle" Text="salesInvs"  Margin="10,5,5,5"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock  Grid.Row="4" Grid.Column="1"  x:Name="txt_salesInvCountCode" Text="{Binding salesInvCount, Mode=OneWay}"  Margin="10"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
 
-                        <TextBlock Grid.Row="4"  Grid.Column="2"   x:Name="txt_itemCountNameTitle" Text="itemCount"  Margin="10"
+                        <TextBlock Grid.Row="4"  Grid.Column="2"   x:Name="txt_itemCountNameTitle" Text="items"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
                         <TextBlock Grid.Row="4" Grid.Column="3"   x:Name="txt_itemCountName" Text="{Binding itemCount, Mode=OneWay}"  Margin="10"
@@ -193,24 +218,7 @@
                         <!--#endregion-->
 
                         <!--#region Row 5-->
-
-
-                        <TextBlock  Grid.Row="5"  Grid.Column="0"  x:Name="txt_endDateTitle" Text="endDate"  Margin="10,5,5,5"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
-                                  FontSize="16"  />
-                        <TextBlock  Grid.Row="5" Grid.Column="1"  x:Name="txt_endDateCode" Text="{Binding endDate, Mode=OneWay}"  Margin="10"
-                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
-                                  FontSize="14"    >
-                            <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                        <DataTrigger Binding="{Binding islimitDate}" Value="0">
-                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                        </TextBlock>
+                        
                         <!--#endregion-->
 
 
@@ -317,7 +325,8 @@
                 <StackPanel>
                     <DockPanel LastChildFill="True"  >
                         <TextBlock x:Name="txt_saleDetails" Text="Sale Details" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" Click="Btn_clear_Click" >
+                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" 
+                                Click="Btn_clear_Click" >
                             <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="20" Height="20">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
@@ -341,7 +350,7 @@
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Center" BorderThickness="0"
                                         Height="40" 
-                                        LostFocus="validateEmpty_LostFocus"/>
+                                        LostFocus="validateEmpty_LostFocus" SelectionChanged="Cb_customer_SelectionChanged"/>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_customer"
                                   HorizontalAlignment="Right" Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15" Grid.Column="0"
@@ -385,7 +394,7 @@
                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                        materialDesign:HintAssist.Hint="Agent..."    
                                        VerticalAlignment="Center" BorderThickness="0"
-                                       Height="40"
+                                       Height="40" 
                                        LostFocus="validateEmpty_LostFocus" 
                                        SelectionChanged="Cb_agent_SelectionChanged"/>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_agent"
@@ -402,7 +411,7 @@
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                         materialDesign:HintAssist.Hint="Package..."    
                                         VerticalAlignment="Center" BorderThickness="0"
-                                        Height="40" 
+                                        Height="40" IsEnabled="False"
                                         SelectionChanged="Cb_package_SelectionChanged"
                                         LostFocus="validateEmpty_LostFocus"/>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_package"
@@ -417,7 +426,8 @@
                             <ComboBox   x:Name="cb_period"             Padding="10,5,5,5" 
                                         TextBlock.Foreground="#4E4E4E" Margin="4,0"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                        materialDesign:HintAssist.Hint="Period..."    
+                                        materialDesign:HintAssist.Hint="Period..."  
+                                        IsEnabled="False"
                                         VerticalAlignment="Center"     BorderThickness="0"      Height="40"
                                         LostFocus="validateEmpty_LostFocus" SelectionChanged="Cb_period_SelectionChanged" />
                             <Path Fill="#E81123"   Stretch="Fill"     Margin="5,5,20,5" x:Name="p_error_period"
@@ -427,7 +437,7 @@
                             </Path>
                         </Grid>
                     </Border>
-                    <Grid Grid.Row="1">
+                    <!--<Grid Grid.Row="1" Visibility="Visible">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -448,7 +458,7 @@
                         </Border>
                         <TextBlock x:Name="txt_currency" Grid.Column="1" Text="" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
 
-                    </Grid>
+                    </Grid>-->
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
@@ -464,7 +474,7 @@
                         materialDesign:ButtonAssist.CornerRadius="10"   
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="sale" Click="Btn_add_Click"/>
-                <Button Grid.Column="0" Grid.Row="1" x:Name="btn_upgrade"  
+                <Button Grid.Column="0" Grid.Row="1" x:Name="btn_upgrade"  Visibility="Collapsed" 
                         materialDesign:ButtonAssist.CornerRadius="10"   
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="Upgrade" IsEnabled="False" 
