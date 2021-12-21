@@ -125,7 +125,7 @@ namespace AdministratorApp.View.sales
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_packageUser.Instance);
+                grid_main.Children.Add(uc_payment.Instance);
             }
             catch (Exception ex)
             {

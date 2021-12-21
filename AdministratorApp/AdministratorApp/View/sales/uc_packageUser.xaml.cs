@@ -90,7 +90,6 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void translate()
         {
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
@@ -449,7 +448,6 @@ namespace AdministratorApp.View.sales
             catch { }
         }
         #endregion
-
         private async void Dg_packageUser_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {//double click
             //try
@@ -488,7 +486,6 @@ namespace AdministratorApp.View.sales
             //    HelpClass.ExceptionMessage(ex, this);
             //}
         }
-
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
