@@ -18,9 +18,9 @@ namespace Programs_Server.Controllers
 {
 
 
-    [RoutePrefix("api/payOp")]
+    [RoutePrefix("api/puStatus")]
 
-    public class payOpController  : ApiController
+    public class puStatusController : ApiController
 
     {
         // GET api/<controller>
@@ -42,23 +42,20 @@ namespace Programs_Server.Controllers
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        var List = (from S in entity.payOp
-                                    join A in entity.packageUser on S.packageUserId equals A.packageUserId
-                                    join P in entity.packages on A.packageId equals P.packageId
-                                    join U in entity.users on A.userId equals U.userId
-                                    select new payOpModel()
+                        var List = (from S in entity.puStatus
+                                  
+                                    select new puStatusModel()
                                     {
-                                        payOpId = S.payOpId,
-                                        Price = S.Price,
-                                        code = S.code,
-                                        type = S.type,
+                                        stateId = S.stateId,
+                                        isActive = S.isActive,
                                         packageUserId = S.packageUserId,
-                                        createUserId = S.createUserId,
-                                        updateUserId = S.updateUserId,
                                         createDate = S.createDate,
                                         updateDate = S.updateDate,
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
                                         notes = S.notes,
-                                        totalnet=S.totalnet,
+
+
                                     }).ToList();
                         /*
           
@@ -112,15 +109,15 @@ namespace Programs_Server.Controllers
             }
             else
             {
-                int payOpId = 0;
+                int stateId = 0;
 
 
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
-                    if (c.Type == "payOpId")
+                    if (c.Type == "stateId")
                     {
-                        payOpId = int.Parse(c.Value);
+                        stateId = int.Parse(c.Value);
                     }
 
 
@@ -129,22 +126,18 @@ namespace Programs_Server.Controllers
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        var row = entity.payOp
-                       .Where(u => u.payOpId == payOpId)
+                        var row = entity.puStatus
+                       .Where(u => u.stateId == stateId)
                        .Select(S => new
                        {
-                           S.payOpId,
-                           S.Price,
-                           S.code,
-                           S.type,
+                           S.stateId,
+                           S.isActive,
                            S.packageUserId,
-                           S.createUserId,
-                           S.updateUserId,
                            S.createDate,
                            S.updateDate,
+                           S.createUserId,
+                           S.updateUserId,
                            S.notes,
-                          S.totalnet,
-
 
 
                        })
@@ -185,7 +178,7 @@ namespace Programs_Server.Controllers
             else
             {
                 string Object = "";
-                payOp newObject = null;
+                puStatus newObject = null;
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
@@ -193,7 +186,7 @@ namespace Programs_Server.Controllers
                     {
                         Object = c.Value.Replace("\\", string.Empty);
                         Object = Object.Trim('"');
-                        newObject = JsonConvert.DeserializeObject<payOp>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                        newObject = JsonConvert.DeserializeObject<puStatus>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
                         break;
                     }
                 }
@@ -224,8 +217,8 @@ namespace Programs_Server.Controllers
 
                         using (incprogramsdbEntities entity = new incprogramsdbEntities())
                         {
-                            var locationEntity = entity.Set<payOp>();
-                            if (newObject.payOpId == 0)
+                            var locationEntity = entity.Set<puStatus>();
+                            if (newObject.stateId == 0)
                             {
                                 newObject.createDate = DateTime.Now;
                                 newObject.updateDate = DateTime.Now;
@@ -239,24 +232,25 @@ namespace Programs_Server.Controllers
 
                               
 
-                                message = newObject.payOpId.ToString();
+                                message = newObject.stateId.ToString();
 
                             }
                             else
                             {
-                                var tmpObject = entity.payOp.Where(p => p.payOpId == newObject.payOpId).FirstOrDefault();
+                                var tmpObject = entity.puStatus.Where(p => p.stateId == newObject.stateId).FirstOrDefault();
 
                                 tmpObject.updateDate = DateTime.Now;
 
-                                tmpObject.payOpId = newObject.payOpId;
-                                tmpObject.Price = newObject.Price;
-                                tmpObject.code = newObject.code;
-                                tmpObject.type = newObject.type;
+                                tmpObject.stateId = newObject.stateId;
+                                tmpObject.isActive = newObject.isActive;
                                 tmpObject.packageUserId = newObject.packageUserId;
-                                tmpObject.createUserId = newObject.createUserId;
+                        
+                               
+                           
                                 tmpObject.updateUserId = newObject.updateUserId;
-                                
-                             
+                                tmpObject.notes = newObject.notes;
+
+
                                 tmpObject.notes = newObject.notes;
 
 
@@ -266,7 +260,7 @@ namespace Programs_Server.Controllers
 
                                 entity.SaveChanges();
 
-                                message = tmpObject.payOpId.ToString();
+                                message = tmpObject.stateId.ToString();
                             }
                             //  entity.SaveChanges();
 
@@ -291,9 +285,10 @@ namespace Programs_Server.Controllers
 
         }
 
-        public int Save(payOp newObject)//string Object
+        public int Save(puStatus newObject)//string Object
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
+
 
            int message =0;
 
@@ -314,37 +309,16 @@ namespace Programs_Server.Controllers
                         Nullable<int> id = null;
                         newObject.packageUserId = id;
                     }
-                if (newObject.agentId == 0 || newObject.agentId == null)
-                {
-                    Nullable<int> id = null;
-                    newObject.agentId = id;
-                }
-                if (newObject.customerId == 0 || newObject.customerId == null)
-                {
-                    Nullable<int> id = null;
-                    newObject.customerId = id;
-                }
+              
                     try
                     {
 
                         using (incprogramsdbEntities entity = new incprogramsdbEntities())
                         {
-                        if (newObject.packageUserId > 0)
-                        {
-                            using (incprogramsdbEntities entity1 = new incprogramsdbEntities())
+                            var locationEntity = entity.Set<puStatus>();
+                            if (newObject.stateId == 0)
                             {
-                                var tmpPackage = entity1.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
-                                //  packagecode = tmpPackage.packageCode;
-                                newObject.agentId = tmpPackage.userId;
-                                newObject.customerId = tmpPackage.customerId;
-                            }
-                        }
-                        var locationEntity = entity.Set<payOp>();
-                            if (newObject.payOpId == 0)
-                            {
-                    
-                        
-                            newObject.createDate = DateTime.Now;
+                                newObject.createDate = DateTime.Now;
                                 newObject.updateDate = DateTime.Now;
                                 newObject.updateUserId = newObject.createUserId;
 
@@ -353,28 +327,31 @@ namespace Programs_Server.Controllers
 
                           
 
-                                message = newObject.payOpId ;
+                                message = newObject.stateId;
 
                             }
                             else
                             {
-                                var tmpObject = entity.payOp.Where(p => p.payOpId == newObject.payOpId).FirstOrDefault();
+                                var tmpObject = entity.puStatus.Where(p => p.stateId == newObject.stateId).FirstOrDefault();
 
-                                tmpObject.updateDate = DateTime.Now;
+                            tmpObject.updateDate = DateTime.Now;
 
-                                tmpObject.payOpId = newObject.payOpId;
-                                tmpObject.Price = newObject.Price;
-                                tmpObject.code = newObject.code;
-                                tmpObject.type = newObject.type;
-                                tmpObject.packageUserId = newObject.packageUserId;
-                                tmpObject.createUserId = newObject.createUserId;
-                                tmpObject.updateUserId = newObject.updateUserId;
+                          //  tmpObject.stateId = newObject.stateId;
+                            tmpObject.isActive = newObject.isActive;
+                            tmpObject.packageUserId = newObject.packageUserId;
 
-                                tmpObject.notes = newObject.notes;
-                            tmpObject.totalnet = newObject.totalnet;
-                                entity.SaveChanges();
 
-                                message = tmpObject.payOpId ;
+
+                            tmpObject.updateUserId = newObject.updateUserId;
+                            tmpObject.notes = newObject.notes;
+
+
+                            tmpObject.notes = newObject.notes;
+
+
+                            entity.SaveChanges();
+
+                                message = tmpObject.stateId ;
                             }
                             //  entity.SaveChanges();
 
@@ -397,7 +374,7 @@ namespace Programs_Server.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        public string Delete(string token)//int payOpId, int userId, bool final
+        public string Delete(string token)//int stateId, int userId, bool final
         {
 
             string message = "";
@@ -410,16 +387,16 @@ namespace Programs_Server.Controllers
             }
             else
             {
-                int payOpId = 0;
+                int stateId = 0;
                 //int userId = 0;
                 //bool final = false;
 
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
-                    if (c.Type == "payOpId")
+                    if (c.Type == "stateId")
                     {
-                        payOpId = int.Parse(c.Value);
+                        stateId = int.Parse(c.Value);
                     }
                     //else if (c.Type == "userId")
                     //{
@@ -435,9 +412,9 @@ namespace Programs_Server.Controllers
                     {
                         using (incprogramsdbEntities entity = new incprogramsdbEntities())
                         {
-                            payOp objectDelete = entity.payOp.Find(payOpId);
+                            puStatus objectDelete = entity.puStatus.Find(stateId);
 
-                            entity.payOp.Remove(objectDelete);
+                            entity.puStatus.Remove(objectDelete);
                             message = entity.SaveChanges().ToString();
                             return TokenManager.GenerateToken(message);
 

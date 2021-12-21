@@ -12,23 +12,16 @@ namespace Programs_Server
     using System;
     using System.Collections.Generic;
     
-    public partial class payOp
+    public partial class puStatus
     {
-        public int payOpId { get; set; }
-        public decimal Price { get; set; }
-        public string code { get; set; }
-        public string type { get; set; }
+        public int stateId { get; set; }
+        public Nullable<int> isActive { get; set; }
         public Nullable<int> packageUserId { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> createUserId { get; set; }
+        public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
-        public decimal discountValue { get; set; }
-        public Nullable<int> agentId { get; set; }
-        public Nullable<int> customerId { get; set; }
-        public Nullable<int> countryPackageId { get; set; }
-        public decimal totalnet { get; set; }
     
         public virtual packageUser packageUser { get; set; }
     }

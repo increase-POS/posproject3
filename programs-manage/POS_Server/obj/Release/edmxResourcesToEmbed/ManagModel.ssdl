@@ -81,7 +81,8 @@
     <Property Name="custCode" Type="nvarchar" MaxLength="500" />
     <Property Name="image" Type="ntext" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
-    <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
+    <Property Name="balance" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+    <Property Name="balanceType" Type="tinyint" Nullable="false" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="isActive" Type="int" />
@@ -200,6 +201,9 @@
     <Property Name="isPayed" Type="bit" Nullable="false" />
     <Property Name="salesInvCount" Type="int" Nullable="false" />
     <Property Name="monthCount" Type="int" Nullable="false" />
+    <Property Name="totalsalesInvCount" Type="int" Nullable="false" />
+    <Property Name="activatedate" Type="datetime2" Precision="7" />
+    <Property Name="isServerActivated" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="payOp">
     <Key>
@@ -215,6 +219,11 @@
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="notes" Type="ntext" />
+    <Property Name="discountValue" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+    <Property Name="agentId" Type="int" />
+    <Property Name="customerId" Type="int" />
+    <Property Name="countryPackageId" Type="int" />
+    <Property Name="totalnet" Type="decimal" Precision="20" Scale="3" Nullable="false" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -243,6 +252,19 @@
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="programCode" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="puStatus">
+    <Key>
+      <PropertyRef Name="stateId" />
+    </Key>
+    <Property Name="stateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="isActive" Type="int" />
+    <Property Name="packageUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
@@ -800,6 +822,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_puStatus_packageUser">
+    <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
+    <End Role="puStatus" Type="Self.puStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packageUser">
+        <PropertyRef Name="packageUserId" />
+      </Principal>
+      <Dependent Role="puStatus">
+        <PropertyRef Name="packageUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_users_countriesCodes">
     <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
     <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -864,6 +898,7 @@
     <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="puStatus" EntityType="Self.puStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
@@ -1033,6 +1068,10 @@
     <AssociationSet Name="FK_programs_users1" Association="Self.FK_programs_users1">
       <End Role="users" EntitySet="users" />
       <End Role="programs" EntitySet="programs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_puStatus_packageUser" Association="Self.FK_puStatus_packageUser">
+      <End Role="packageUser" EntitySet="packageUser" />
+      <End Role="puStatus" EntitySet="puStatus" />
     </AssociationSet>
     <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
       <End Role="countriesCodes" EntitySet="countriesCodes" />

@@ -481,6 +481,10 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:Programs_Server.Controllers.customersController.GetCustomersByAgent(System.String)">
+            //////////////////////////////////////
+            
+        </member>
         <member name="M:Programs_Server.Controllers.packagesController.GetPackagesByAgent(System.String)">
             //////////////////////////////////////
             

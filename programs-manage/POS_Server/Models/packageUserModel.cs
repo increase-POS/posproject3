@@ -37,6 +37,8 @@ namespace Programs_Server.Models
         public bool isPayed { get; set; }
         public int salesInvCount { get; set; }
         public int monthCount { get; set; }
+        public Nullable<System.DateTime> activatedate { get; set; }
+        public bool isServerActivated { get; set; }
 
     }
 

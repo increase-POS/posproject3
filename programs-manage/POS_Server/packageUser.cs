@@ -19,6 +19,7 @@ namespace Programs_Server
         {
             this.posSerials = new HashSet<posSerials>();
             this.payOp = new HashSet<payOp>();
+            this.puStatus = new HashSet<puStatus>();
         }
     
         public int packageUserId { get; set; }
@@ -45,6 +46,9 @@ namespace Programs_Server
         public bool isPayed { get; set; }
         public int salesInvCount { get; set; }
         public int monthCount { get; set; }
+        public int totalsalesInvCount { get; set; }
+        public Nullable<System.DateTime> activatedate { get; set; }
+        public bool isServerActivated { get; set; }
     
         public virtual countryPackageDate countryPackageDate { get; set; }
         public virtual customers customers { get; set; }
@@ -56,5 +60,7 @@ namespace Programs_Server
         public virtual ICollection<posSerials> posSerials { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<puStatus> puStatus { get; set; }
     }
 }

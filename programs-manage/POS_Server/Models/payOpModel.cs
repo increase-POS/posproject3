@@ -18,6 +18,11 @@ namespace Programs_Server.Models
         public Nullable<System.DateTime> updateDate { get; set; }
         public string notes { get; set; }
         public bool canDelete { get; set; }
+        public decimal discountValue { get; set; }
+        public Nullable<int> agentId { get; set; }
+        public Nullable<int> customerId { get; set; }
+        public Nullable<int> countryPackageId { get; set; }
+        public decimal totalnet { get; set; }
 
     }
 }

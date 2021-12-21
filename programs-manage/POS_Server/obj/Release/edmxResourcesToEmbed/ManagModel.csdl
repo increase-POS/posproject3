@@ -82,7 +82,7 @@
     <Property Name="custCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
+    <Property Name="balance" Type="Decimal" Precision="20" Scale="3" Nullable="false" />
     <Property Name="createUserId" Type="Int32" />
     <Property Name="updateUserId" Type="Int32" />
     <Property Name="isActive" Type="Int32" />
@@ -92,6 +92,7 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
     <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
     <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="customers" ToRole="agentCustomer" />
+    <Property Name="balanceType" Type="Byte" Nullable="false" />
   </EntityType>
   <EntityType Name="error">
     <Key>
@@ -234,6 +235,10 @@
     <Property Name="isPayed" Type="Boolean" Nullable="false" />
     <Property Name="salesInvCount" Type="Int32" Nullable="false" />
     <Property Name="monthCount" Type="Int32" Nullable="false" />
+    <Property Name="totalsalesInvCount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="puStatus" Relationship="incprogramsdbModel.FK_puStatus_packageUser" FromRole="packageUser" ToRole="puStatus" />
+    <Property Name="activatedate" Type="DateTime" Precision="7" />
+    <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -1049,6 +1054,11 @@
       <End Role="packageUser" EntitySet="packageUser" />
       <End Role="payOp" EntitySet="payOp" />
     </AssociationSet>
+    <EntitySet Name="puStatus" EntityType="incprogramsdbModel.puStatus" />
+    <AssociationSet Name="FK_puStatus_packageUser" Association="incprogramsdbModel.FK_puStatus_packageUser">
+      <End Role="packageUser" EntitySet="packageUser" />
+      <End Role="puStatus" EntitySet="puStatus" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="agentCustomer">
     <Key>
@@ -1130,6 +1140,11 @@
     <Property Name="updateDate" Type="DateTime" Precision="7" />
     <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="packageUser" Relationship="incprogramsdbModel.FK_payOp_packageUser" FromRole="payOp" ToRole="packageUser" />
+    <Property Name="discountValue" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
+    <Property Name="agentId" Type="Int32" />
+    <Property Name="customerId" Type="Int32" />
+    <Property Name="countryPackageId" Type="Int32" />
+    <Property Name="totalnet" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
   </EntityType>
   <Association Name="FK_payOp_packageUser">
     <End Type="incprogramsdbModel.packageUser" Role="packageUser" Multiplicity="0..1" />
@@ -1139,6 +1154,32 @@
         <PropertyRef Name="packageUserId" />
       </Principal>
       <Dependent Role="payOp">
+        <PropertyRef Name="packageUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="puStatus">
+    <Key>
+      <PropertyRef Name="stateId" />
+    </Key>
+    <Property Name="stateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="isActive" Type="Int32" />
+    <Property Name="packageUserId" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="packageUser" Relationship="incprogramsdbModel.FK_puStatus_packageUser" FromRole="puStatus" ToRole="packageUser" />
+  </EntityType>
+  <Association Name="FK_puStatus_packageUser">
+    <End Type="incprogramsdbModel.packageUser" Role="packageUser" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.puStatus" Role="puStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packageUser">
+        <PropertyRef Name="packageUserId" />
+      </Principal>
+      <Dependent Role="puStatus">
         <PropertyRef Name="packageUserId" />
       </Dependent>
     </ReferentialConstraint>

@@ -36,11 +36,12 @@ namespace Programs_Server
         public string custCode { get; set; }
         public string image { get; set; }
         public string notes { get; set; }
-        public Nullable<decimal> balance { get; set; }
+        public decimal balance { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
         public Nullable<int> countryId { get; set; }
+        public byte balanceType { get; set; }
     
         public virtual countriesCodes countriesCodes { get; set; }
         public virtual users users { get; set; }

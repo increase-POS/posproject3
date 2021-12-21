@@ -86,7 +86,8 @@
           <Property Name="custCode" Type="nvarchar" MaxLength="500" />
           <Property Name="image" Type="ntext" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
-          <Property Name="balance" Type="decimal" Precision="20" Scale="3" />
+          <Property Name="balance" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+          <Property Name="balanceType" Type="tinyint" Nullable="false" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="isActive" Type="int" />
@@ -205,6 +206,9 @@
           <Property Name="isPayed" Type="bit" Nullable="false" />
           <Property Name="salesInvCount" Type="int" Nullable="false" />
           <Property Name="monthCount" Type="int" Nullable="false" />
+          <Property Name="totalsalesInvCount" Type="int" Nullable="false" />
+          <Property Name="activatedate" Type="datetime2" Precision="7" />
+          <Property Name="isServerActivated" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -220,6 +224,11 @@
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="notes" Type="ntext" />
+          <Property Name="discountValue" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+          <Property Name="agentId" Type="int" />
+          <Property Name="customerId" Type="int" />
+          <Property Name="countryPackageId" Type="int" />
+          <Property Name="totalnet" Type="decimal" Precision="20" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -248,6 +257,19 @@
           <Property Name="createDate" Type="datetime2" Precision="7" />
           <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="programCode" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="puStatus">
+          <Key>
+            <PropertyRef Name="stateId" />
+          </Key>
+          <Property Name="stateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isActive" Type="int" />
+          <Property Name="packageUserId" Type="int" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
@@ -805,6 +827,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_puStatus_packageUser">
+          <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
+          <End Role="puStatus" Type="Self.puStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="packageUser">
+              <PropertyRef Name="packageUserId" />
+            </Principal>
+            <Dependent Role="puStatus">
+              <PropertyRef Name="packageUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_users_countriesCodes">
           <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -869,6 +903,7 @@
           <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="puStatus" EntityType="Self.puStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
@@ -1039,6 +1074,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="programs" EntitySet="programs" />
           </AssociationSet>
+          <AssociationSet Name="FK_puStatus_packageUser" Association="Self.FK_puStatus_packageUser">
+            <End Role="packageUser" EntitySet="packageUser" />
+            <End Role="puStatus" EntitySet="puStatus" />
+          </AssociationSet>
           <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
             <End Role="countriesCodes" EntitySet="countriesCodes" />
             <End Role="users" EntitySet="users" />
@@ -1142,7 +1181,7 @@
           <Property Name="custCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="balance" Type="Decimal" Precision="20" Scale="3" Nullable="false" />
           <Property Name="createUserId" Type="Int32" />
           <Property Name="updateUserId" Type="Int32" />
           <Property Name="isActive" Type="Int32" />
@@ -1152,6 +1191,7 @@
           <NavigationProperty Name="users1" Relationship="Self.FK_customers_users1" FromRole="customers" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
           <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="customers" ToRole="agentCustomer" />
+          <Property Name="balanceType" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -1294,6 +1334,10 @@
           <Property Name="isPayed" Type="Boolean" Nullable="false" />
           <Property Name="salesInvCount" Type="Int32" Nullable="false" />
           <Property Name="monthCount" Type="Int32" Nullable="false" />
+          <Property Name="totalsalesInvCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="puStatus" Relationship="incprogramsdbModel.FK_puStatus_packageUser" FromRole="packageUser" ToRole="puStatus" />
+          <Property Name="activatedate" Type="DateTime" Precision="7" />
+          <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -2109,6 +2153,11 @@
             <End Role="packageUser" EntitySet="packageUser" />
             <End Role="payOp" EntitySet="payOp" />
           </AssociationSet>
+          <EntitySet Name="puStatus" EntityType="incprogramsdbModel.puStatus" />
+          <AssociationSet Name="FK_puStatus_packageUser" Association="incprogramsdbModel.FK_puStatus_packageUser">
+            <End Role="packageUser" EntitySet="packageUser" />
+            <End Role="puStatus" EntitySet="puStatus" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="agentCustomer">
           <Key>
@@ -2190,6 +2239,11 @@
           <Property Name="updateDate" Type="DateTime" Precision="7" />
           <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="packageUser" Relationship="incprogramsdbModel.FK_payOp_packageUser" FromRole="payOp" ToRole="packageUser" />
+          <Property Name="discountValue" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
+          <Property Name="agentId" Type="Int32" />
+          <Property Name="customerId" Type="Int32" />
+          <Property Name="countryPackageId" Type="Int32" />
+          <Property Name="totalnet" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
         </EntityType>
         <Association Name="FK_payOp_packageUser">
           <End Type="incprogramsdbModel.packageUser" Role="packageUser" Multiplicity="0..1" />
@@ -2199,6 +2253,32 @@
               <PropertyRef Name="packageUserId" />
             </Principal>
             <Dependent Role="payOp">
+              <PropertyRef Name="packageUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="puStatus">
+          <Key>
+            <PropertyRef Name="stateId" />
+          </Key>
+          <Property Name="stateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isActive" Type="Int32" />
+          <Property Name="packageUserId" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="packageUser" Relationship="incprogramsdbModel.FK_puStatus_packageUser" FromRole="puStatus" ToRole="packageUser" />
+        </EntityType>
+        <Association Name="FK_puStatus_packageUser">
+          <End Type="incprogramsdbModel.packageUser" Role="packageUser" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.puStatus" Role="puStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="packageUser">
+              <PropertyRef Name="packageUserId" />
+            </Principal>
+            <Dependent Role="puStatus">
               <PropertyRef Name="packageUserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2265,6 +2345,7 @@
           <EntitySetMapping Name="customers">
             <EntityTypeMapping TypeName="incprogramsdbModel.customers">
               <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="balanceType" ColumnName="balanceType" />
                 <ScalarProperty Name="custId" ColumnName="custId" />
                 <ScalarProperty Name="custname" ColumnName="custname" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
@@ -2381,6 +2462,9 @@
           <EntitySetMapping Name="packageUser">
             <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
               <MappingFragment StoreEntitySet="packageUser">
+                <ScalarProperty Name="isServerActivated" ColumnName="isServerActivated" />
+                <ScalarProperty Name="activatedate" ColumnName="activatedate" />
+                <ScalarProperty Name="totalsalesInvCount" ColumnName="totalsalesInvCount" />
                 <ScalarProperty Name="monthCount" ColumnName="monthCount" />
                 <ScalarProperty Name="salesInvCount" ColumnName="salesInvCount" />
                 <ScalarProperty Name="isPayed" ColumnName="isPayed" />
@@ -2509,6 +2593,11 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="incprogramsdbModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="totalnet" ColumnName="totalnet" />
+                <ScalarProperty Name="countryPackageId" ColumnName="countryPackageId" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="agentId" ColumnName="agentId" />
+                <ScalarProperty Name="discountValue" ColumnName="discountValue" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="updateDate" ColumnName="updateDate" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
@@ -2519,6 +2608,20 @@
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="payOpId" ColumnName="payOpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="puStatus">
+            <EntityTypeMapping TypeName="incprogramsdbModel.puStatus">
+              <MappingFragment StoreEntitySet="puStatus">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="stateId" ColumnName="stateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
