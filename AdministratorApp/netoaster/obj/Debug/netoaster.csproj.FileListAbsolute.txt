@@ -249,3 +249,18 @@ E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.csproj.CoreCompileIn
 E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.dll
 E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.pdb
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
+E:\AdministratorApp 21-12-2021\netoaster\bin\Debug\netoaster.dll
+E:\AdministratorApp 21-12-2021\netoaster\bin\Debug\netoaster.pdb
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\ToasterWindow.g.cs
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster_MarkupCompile.cache
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster_MarkupCompile.lref
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\Themes\Generic.baml
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\ToasterWindow.baml
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.g.resources
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.Properties.Resources.resources
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.csproj.GenerateResource.cache
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.dll
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.pdb
+E:\AdministratorApp 21-12-2021\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache

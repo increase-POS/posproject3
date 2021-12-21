@@ -237,8 +237,14 @@
     <Compile Include="View\windows\wd_countryPackageDate.xaml.cs">
       <DependentUpon>wd_countryPackageDate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_customers.xaml.cs">
+      <DependentUpon>wd_customers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_newCustomer.xaml.cs">
+      <DependentUpon>wd_newCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
@@ -338,7 +344,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\windows\wd_customers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_logIn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_newCustomer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

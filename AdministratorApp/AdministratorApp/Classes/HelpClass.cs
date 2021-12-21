@@ -367,6 +367,43 @@ namespace AdministratorApp.Classes
             return isValidEmail;
 
         }
+        public static bool IsValidEmailWindow(Window window)
+        {//for email
+            bool isValidEmail = true;
+            TextBox textBoxEmail = FindControls.FindVisualChildren<TextBox>(window).Where(x => x.Name == "tb_email")
+                    .FirstOrDefault();
+            Path pathEmail = FindControls.FindVisualChildren<Path>(window).Where(x => x.Name == "p_error_email")
+                    .FirstOrDefault();
+            if (textBoxEmail != null && pathEmail != null)
+            {
+                if (textBoxEmail.Text.Equals(""))
+                    return isValidEmail;
+                else
+                {
+                    Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                          RegexOptions.CultureInvariant | RegexOptions.Singleline);
+                    isValidEmail = regex.IsMatch(textBoxEmail.Text);
+
+                    if (!isValidEmail)
+                    {
+                        pathEmail.Visibility = Visibility.Visible;
+                        #region Tooltip
+                        ToolTip toolTip = new ToolTip();
+                        toolTip.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
+                        toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                        pathEmail.ToolTip = toolTip;
+                        #endregion
+                        isValidEmail = false;
+                    }
+                    else
+                    {
+                        pathEmail.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+            return isValidEmail;
+
+        }
         public static void clearValidate(List<string> requiredControlList, UserControl userControl)
         {
             try

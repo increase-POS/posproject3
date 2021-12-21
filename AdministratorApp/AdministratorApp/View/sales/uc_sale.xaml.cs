@@ -377,12 +377,25 @@ namespace AdministratorApp.View.sales
 
         }
 
-        private void Btn_customer_Click(object sender, RoutedEventArgs e)
-        {//new customer
+        private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
+        {//upgrade
+            try
+            {
+                oldPackageId = (int)cb_package.SelectedValue ;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_addCustomer_Click(object sender, RoutedEventArgs e)
+        {//add customer
             try
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_newCustomer w = new wd_newCustomer();
+                w.customerID = 0;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
 
@@ -393,11 +406,29 @@ namespace AdministratorApp.View.sales
             }
         }
 
-        private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
-        {//upgrade
+        private void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
+        {//update customer
             try
             {
-                oldPackageId = (int)cb_package.SelectedValue ;
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_newCustomer w = new wd_newCustomer();
+                w.customerID = (int)cb_customer.SelectedValue;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_clearCustomer_Click(object sender, RoutedEventArgs e)
+        {//clear customer
+            try
+            {
+                cb_customer.SelectedIndex = -1;
+
             }
             catch (Exception ex)
             {
