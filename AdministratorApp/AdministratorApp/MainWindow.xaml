@@ -50,7 +50,7 @@
                              Width="auto" Height="100"
                              FlowDirection="LeftToRight" >
                         <Border.Background>
-                            <ImageBrush x:Name="img_mainLogo"  Stretch="Uniform"  ImageSource="/pic/increase-logo.png"/>
+                            <ImageBrush x:Name="img_mainLogo"  Stretch="Uniform"  ImageSource="/pic/increase-logo100.png"/>
                         </Border.Background>
                     </Border>
 

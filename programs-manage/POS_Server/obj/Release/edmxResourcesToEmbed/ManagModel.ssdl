@@ -240,6 +240,7 @@
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="unLimited" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="programs">
     <Key>

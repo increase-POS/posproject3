@@ -258,6 +258,7 @@
     <NavigationProperty Name="packageUser" Relationship="Self.FK_posSerials_packageUser" FromRole="posSerials" ToRole="packageUser" />
     <NavigationProperty Name="users" Relationship="Self.FK_posSerials_users" FromRole="posSerials" ToRole="users" />
     <NavigationProperty Name="users1" Relationship="Self.FK_posSerials_users1" FromRole="posSerials" ToRole="users" />
+    <Property Name="unLimited" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="programs">
     <Key>

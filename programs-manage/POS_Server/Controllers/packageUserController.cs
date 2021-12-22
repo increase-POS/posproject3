@@ -873,9 +873,10 @@ namespace Programs_Server.Controllers
 
                 // create pos serials
                 posSerials postemp = new posSerials();
-                postemp.createUserId = newObject.createUserId;
-                postemp.isActive = 1;
-
+                postemp.createUserId = newObject.updateUserId;
+                postemp.updateUserId = newObject.updateUserId;
+                postemp.isActive = 0;
+             
                 postemp.isBooked = false;
                 postemp.packageUserId = newObject.packageUserId;
                 // postemp.posDeviceCode = "";
@@ -1264,16 +1265,21 @@ namespace Programs_Server.Controllers
                             packages tmpPackage = new packages();
                             countryPackageDate tmpcpd = new countryPackageDate();
                             packageUser oldPU = new packageUser();
+                            packages oldPackage = new packages();
+                            posSerials serialmodel = new posSerials();
+                            List<posSerials> serialList = new List<posSerials>();
+                            posSerialsController serCntrlr = new posSerialsController();
                             using (incprogramsdbEntities entity1 = new incprogramsdbEntities())
                             {
                                 tmpPackage = entity1.packages.Where(p => p.packageId == newObject.packageId).FirstOrDefault();
                                 if (newObject.packageUserId > 0)
                                 {
                                     oldPU = entity.packageUser.Where(p => p.packageUserId == newObject.oldPackageId).FirstOrDefault();
-
+                                    oldPackage = entity1.packages.Where(p => p.packageId == newObject.oldPackageId).FirstOrDefault();
+                                    
                                 }
 
-                                tmpcpd=entity1.countryPackageDate.Where(p => p.Id == newObject.countryPackageId).FirstOrDefault();
+                                tmpcpd =entity1.countryPackageDate.Where(p => p.Id == newObject.countryPackageId).FirstOrDefault();
 
 
                             }
@@ -1321,6 +1327,7 @@ namespace Programs_Server.Controllers
                                     newObject.packageSaleCode = createServerActiveKey(newObject);
                                 }
                                 entity.SaveChanges();
+                                // create pos serials
                                 int countpos = 0;
                                 if (tmpPackage.posCount != -1)
                                 {
@@ -1341,7 +1348,7 @@ namespace Programs_Server.Controllers
                                     message = "0";
                                 }
                               
-                               // dbPU.packageSaleCode = createServerActiveKey(dbPU);
+                               
                             }
                             else if (newObject.packageUserId > 0 && newObject.oldPackageId == newObject.packageId)
                             {
@@ -1418,10 +1425,144 @@ namespace Programs_Server.Controllers
 
                                 tmpObject.isPayed = false;
                                 //newObject.activatedate = null;// old activate
-                                newObject.isServerActivated = false;//at activate
+                                tmpObject.isServerActivated = false;//at activate
                                 entity.SaveChanges();
                                 ////
                                 //create  Pos serials
+                                // pos create  has 4 state
+
+                                if (oldPackage.posCount == -1 && tmpPackage.posCount != -1)
+                                {
+                                    //1
+                                    // disactive old serial then create new serials for new package
+                                    serialmodel = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId && p.unLimited==true).LastOrDefault();
+                                    serialmodel.isActive = -1;
+                                    serialmodel.updateDate = newObject.updateDate;
+                                 serialmodel.updateUserId = newObject.updateUserId;
+                                    entity.SaveChanges();
+                                    int countpos = 0;
+                                    if (tmpPackage.posCount != -1)
+                                    {
+                                        countpos = tmpPackage.posCount;
+                                    }
+                                    else
+                                    {
+                                        countpos = 1;
+
+                                    }
+
+                                   int res = createPosSerials(tmpObject, countpos);
+                                    if (res == countpos)
+                                    {
+                                        message = newObject.packageUserId.ToString();
+                                    }
+                                    else
+                                    {
+                                        message = "0";
+                                    }
+
+
+
+                                }
+                                else if (oldPackage.posCount != -1 && tmpPackage.posCount == -1)
+                                {
+                                    //2
+                                    // delete old serials then create one unlimited serial
+                                    serialList = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId ).ToList();
+                                    foreach (posSerials row in serialList)
+                                    {
+                                        row.isActive = -1;
+                                        row.updateDate = newObject.updateDate;
+                                        row.updateUserId = newObject.updateUserId;
+                                        entity.SaveChanges();
+                                    }
+                                    serialmodel = new posSerials();
+                                    serialmodel.unLimited = true;
+                                    serialmodel.isActive = 0;
+                                    serialmodel.isBooked = false;
+                                    string res = serCntrlr.posSerialSave(serialmodel);
+                                    int countpos = 0;
+
+                             //   int ress = createPosSerials(tmpObject, countpos);
+                                    if (int.Parse(res)>0)
+                                    {
+                                        message = newObject.packageUserId.ToString();
+
+                                    }
+                                    else
+                                    {
+                                        message = "0";
+                                    }
+
+                                }
+                                else if (oldPackage.posCount != -1 && tmpPackage.posCount != -1)
+                                {
+                                    if (oldPackage.posCount > tmpPackage.posCount)
+                                    {
+                                        //3
+                                        // is active =0 and wait until activate new serials manualy
+                                        serialList = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId && p.isActive!=-1).ToList();
+                                        foreach (posSerials row in serialList)
+                                        {
+                                            row.isActive = 0;
+                                            row.updateDate = newObject.updateDate;
+                                            row.updateUserId = newObject.updateUserId;
+                                            entity.SaveChanges();
+                                        }
+
+                                    }
+                                    else if (oldPackage.posCount < tmpPackage.posCount)
+                                    {
+                                        //4
+                                        // set old serials to isActive =0 then creat new serials where count = newcount-oldcount
+                                        serialList = entity.posSerials.Where(p => p.packageUserId == tmpObject.packageUserId && p.isActive != -1).ToList();
+                                        foreach (posSerials row in serialList)
+                                        {
+                                            row.isActive = 0;
+                                            row.updateDate = newObject.updateDate;
+                                            row.updateUserId = newObject.updateUserId;
+                                            entity.SaveChanges();
+                                        }
+                                        int countpos = 0;
+                                        countpos = tmpPackage.posCount - oldPackage.posCount;
+                                        int res = createPosSerials(tmpObject, countpos);
+                                        if (res == countpos)
+                                        {
+                                            message = newObject.packageUserId.ToString();
+                                        }
+                                        else
+                                        {
+                                            message = "0";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // equals oldPackage.posCount = tmpPackage.posCount
+                                        serialList = entity.posSerials.Where(p => p.packageUserId == tmpObject.packageUserId && p.isActive != -1).ToList();
+                                        foreach (posSerials row in serialList)
+                                        {
+                                            row.isActive = 0;
+                                            row.updateDate = newObject.updateDate;
+                                            row.updateUserId = newObject.updateUserId;
+                                            entity.SaveChanges();
+                                        }
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    // equals oldPackage.posCount = tmpPackage.posCount=-1 unlimited
+                                    serialList = entity.posSerials.Where(p => p.packageUserId == tmpObject.packageUserId && p.isActive != -1).ToList();
+                                    foreach (posSerials row in serialList)
+                                    {
+                                        row.isActive = 0;
+                                        row.updateDate = newObject.updateDate;
+                                        row.updateUserId = newObject.updateUserId;
+                                        entity.SaveChanges();
+                                    }
+                                }
+
                                 message = tmpObject.packageUserId.ToString();
                             }
                             else

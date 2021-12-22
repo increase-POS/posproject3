@@ -504,7 +504,7 @@ namespace Programs_Server.Controllers
 
         }
 
-        private string posSerialSave(posSerials newObject)
+       public string posSerialSave(posSerials newObject)
         {
           string  message = "";
             try
