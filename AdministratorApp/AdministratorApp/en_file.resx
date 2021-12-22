@@ -1435,7 +1435,7 @@
     <value>Barcode length is less than 13 digit</value>
   </data>
   <data name="trBranchs/Stores" xml:space="preserve">
-    <value>Branchs/Stores</value>
+    <value>Branches/Stores</value>
   </data>
   <data name="trSelectedBranchs/Stores" xml:space="preserve">
     <value>Selected Branchs/Stores</value>
@@ -2560,9 +2560,6 @@ Please add Email in setting</value>
   <data name="trBook" xml:space="preserve">
     <value>Book</value>
   </data>
-  <data name="trBranchs" xml:space="preserve">
-    <value>Branchs</value>
-  </data>
   <data name="trInValid" xml:space="preserve">
     <value>Invalid</value>
   </data>
@@ -2583,5 +2580,11 @@ Please add Email in setting</value>
   </data>
   <data name="trProcessDate" xml:space="preserve">
     <value>Process Date</value>
+  </data>
+  <data name="trPackageName" xml:space="preserve">
+    <value>Package Name</value>
+  </data>
+  <data name="trPayDetails" xml:space="preserve">
+    <value>Pay Details</value>
   </data>
 </root>

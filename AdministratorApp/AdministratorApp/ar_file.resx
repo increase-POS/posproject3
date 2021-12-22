@@ -2545,9 +2545,6 @@
   <data name="trBook" xml:space="preserve">
     <value>حجز</value>
   </data>
-  <data name="trBranchs" xml:space="preserve">
-    <value>الفروع</value>
-  </data>
   <data name="trInValid" xml:space="preserve">
     <value>غير فعال</value>
   </data>
@@ -2568,5 +2565,11 @@
   </data>
   <data name="trProcessDate" xml:space="preserve">
     <value>تاريخ الحجز</value>
+  </data>
+  <data name="trPackageName" xml:space="preserve">
+    <value>اسم الحزمة</value>
+  </data>
+  <data name="trPayDetails" xml:space="preserve">
+    <value>تفاصيل الدفع</value>
   </data>
 </root>

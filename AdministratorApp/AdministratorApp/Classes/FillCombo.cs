@@ -28,6 +28,14 @@ namespace AdministratorApp.Classes
             combo.DisplayMemberPath = "packageSaleCode";
         }
 
+        static public async Task fillBookNum(ComboBox combo)
+        {
+            packageUsers = await packageUser.GetAll();
+            combo.ItemsSource = packageUsers.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "packageUserId";
+            combo.DisplayMemberPath = "packageNumber";
+        }
+
         static public async Task fillPackage(ComboBox combo)
         {
             packages = await package.GetAll();
@@ -98,6 +106,13 @@ namespace AdministratorApp.Classes
         static public async Task fillCustomer(ComboBox combo)
         {
             customers = await customer.GetAll();
+            combo.ItemsSource = customers.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "custId";
+            combo.DisplayMemberPath = "custname";
+        }
+        static public async Task fillCustomerByAgent(ComboBox combo , int agentID)
+        {
+            customers = await customer.GetCustomersByAgent(agentID);
             combo.ItemsSource = customers.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "custId";
             combo.DisplayMemberPath = "custname";

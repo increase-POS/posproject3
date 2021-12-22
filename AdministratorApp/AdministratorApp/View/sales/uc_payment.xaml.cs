@@ -1,4 +1,7 @@
-﻿using AdministratorApp.Classes;
+﻿using AdministratorApp.ApiClasses;
+using AdministratorApp.Classes;
+using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +9,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,15 +51,19 @@ namespace AdministratorApp.View.sales
             }
 
         }
-        byte tgl_packageUserState;
-        string searchText = "";
+      
         public static List<string> requiredControlList;
+        PackageUser packageUserModel = new PackageUser();
+        IEnumerable<PackageUser> packageUsers;
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "" };
+
+                requiredControlList = new List<string> { "customer" , "bookNumber" };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -67,10 +75,14 @@ namespace AdministratorApp.View.sales
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
 
-                await FillCombo.fillCustomer(cb_customerId);
+                if(MainWindow.userLogin.type.Equals("ag"))
+                    await FillCombo.fillCustomerByAgent(cb_customer , MainWindow.userLogin.userId);
+                else
+                    await FillCombo.fillCustomer(cb_customer);
 
-                await Search();
+                //await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
             }
@@ -85,16 +97,28 @@ namespace AdministratorApp.View.sales
         {
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            txt_title.Text = MainWindow.resourcemanager.GetString("trAgentPackage");
+            txt_title.Text = MainWindow.resourcemanager.GetString("trPayment");
+            txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
+            txt_payDetails.Text = MainWindow.resourcemanager.GetString("trPayDetails");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, MainWindow.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_packageNumber, MainWindow.resourcemanager.GetString("trBookNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discount, MainWindow.resourcemanager.GetString("trDiscountHint"));
+
+            txt_packageNameTitle.Text = MainWindow.resourcemanager.GetString("trPackageName");
+            txt_periodTitle.Text = MainWindow.resourcemanager.GetString("trPeriod");
+            txt_expirDateTitle.Text = MainWindow.resourcemanager.GetString("trExpirationDate");
+            txt_priceTitle.Text = MainWindow.resourcemanager.GetString("trPrice");
+            txt_discountTitle.Text = MainWindow.resourcemanager.GetString("trDiscount");
+            txt_totalTitle.Text = MainWindow.resourcemanager.GetString("trTotal");
 
             btn_pay.Content = MainWindow.resourcemanager.GetString("trPay");
 
-            //dg_payments.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcessNumTooltip");
-            //dg_payments.Columns[1].Header = MainWindow.resourcemanager.GetString("trAgent");
-            //dg_payments.Columns[2].Header = MainWindow.resourcemanager.GetString("trCustomer");
-            //dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_payments.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcessNumTooltip");
+            dg_payments.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookNum");
+            dg_payments.Columns[2].Header = MainWindow.resourcemanager.GetString("trProcessDate");
+            dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trExpirationDate");
+            dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trPaid");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
@@ -105,9 +129,9 @@ namespace AdministratorApp.View.sales
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
+            {
 
                 HelpClass.StartAwait(grid_main);
                 //await RefreshPackageUserList();
@@ -212,13 +236,17 @@ namespace AdministratorApp.View.sales
         void Clear()
         {
             //this.DataContext = new PackageUser();
+            cb_customer.SelectedIndex = -1;
+            cb_packageNumber.SelectedIndex = -1;
+            tb_discount.Clear();
+            cb_packageNumber.IsEnabled = false;
+            tb_discount.IsEnabled = false;
             clearValidate();
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        { //only  digits
             try
             {
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 Regex regex = new Regex("[^0-9]+");
@@ -366,6 +394,208 @@ namespace AdministratorApp.View.sales
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
+        }
+
+        #region reports
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                BuildReport();
+
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+                string pdfpath = "";
+
+                pdfpath = @"\Thumb\report\temp.pdf";
+                //pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                BuildReport();
+
+                //LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                //wd_previewPdf w = new wd_previewPdf();
+                //w.pdfPath = pdfpath;
+                //if (!string.IsNullOrEmpty(w.pdfPath))
+                //{
+                //w.ShowDialog();
+                //w.wb_pdfWebViewer.Dispose();
+                //}
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+
+                BuildReport();
+                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Thread t1 = new Thread(() =>
+                {
+                    BuildReport();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            // LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+                });
+                t1.Start();
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        //ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        public void BuildReport()
+        {
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath = "";
+            string firstTitle = "paymentsReport";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
+            //bool isArabic = ReportCls.checkLang();
+            //if (isArabic)
+            //{
+            //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
+            //secondTitle = "vendors";
+            //}
+            //else
+            //{
+            //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
+            //secondTitle = "vendors";
+            //}
+            //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            //ReportCls.checkLang();
+            //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+            //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
+            //clsReports.setReportLanguage(paramarr);
+            //clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+        #endregion
+
+        private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select customer
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_packageNumber.IsEnabled = true;
+                tb_discount.IsEnabled = true;
+                await FillCombo.fillBookNum(cb_packageNumber);
+
+                #region fill Package deatails
+                packageUsers = await packageUserModel.GetAll();
+                packageUsers = packageUsers.Where(p => p.customerId == (int)cb_customer.SelectedValue && p.packageUserId == (int)cb_packageNumber.SelectedValue);
+                Packages package = new Packages();
+                Packages packageModel = new Packages();
+                package = await packageModel.GetByID(packageUsers.FirstOrDefault().packageId.Value);
+                txt_packageName.Text = package.packageName;
+                CountryPackageDate countryPackageDate = new CountryPackageDate();
+                CountryPackageDate countryPackageDateModel = new CountryPackageDate();
+                countryPackageDate = await countryPackageDate.GetByID(packageUsers.FirstOrDefault().countryPackageId.Value);
+                txt_period.Text = countryPackageDate.monthCount.ToString();///////??????????converter
+                txt_expirDate.Text = packageUsers.FirstOrDefault().expireDate.ToString();
+                txt_price.Text = countryPackageDate.price.ToString();
+                txt_moneyCode.Text = countryPackageDate.currency;
+                txt_discount.Text = tb_discount.Text;
+                txt_moneyCode1.Text = countryPackageDate.currency;
+                txt_total.Text = (float.Parse(txt_price.Text) - int.Parse(tb_discount.Text)).ToString();
+                txt_moneyCode3.Text = countryPackageDate.currency;
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
