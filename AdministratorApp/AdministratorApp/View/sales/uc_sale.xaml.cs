@@ -1,14 +1,18 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
 using AdministratorApp.View.windows;
+using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
 using netoaster;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,11 +63,13 @@ namespace AdministratorApp.View.sales
      
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "package", "agent" , "customer" , "period"};
+                package = null;
+                txt_status.Text = "";
+                this.DataContext = package;
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -84,17 +90,17 @@ namespace AdministratorApp.View.sales
                 
                 if(MainWindow.userLogin.type.Equals("ag"))
                 {
+                    requiredControlList = new List<string> { "package", "agent", "customer", "period" };
                     cb_agent.SelectedValue = MainWindow.userLogin.userId;
                     cb_agent.IsEnabled = false;
                 }
                 else
                 {
+                    requiredControlList = new List<string> { "package", "customer", "period" };
                     bdr_agent.Visibility = Visibility.Collapsed;
                     await FillCombo.fillPackage(cb_package);
                 }
 
-
-                //await RefreshPackagesList();
                 if (packageId == 0)
                 {
                     Clear();
@@ -111,15 +117,15 @@ namespace AdministratorApp.View.sales
                     //cb_period.SelectedValue = countryPackageId;
                 }
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            HelpClass.EndAwait(grid_main);
         }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+        }
+    }
         private void translate()
         {
             txt_title.Text = MainWindow.resourcemanager.GetString("trSales");
@@ -153,7 +159,7 @@ namespace AdministratorApp.View.sales
             txt_customerCountTitle.Text = MainWindow.resourcemanager.GetString("trCustomers");
             txt_salesInvCountTitle.Text = MainWindow.resourcemanager.GetString("trInvoices");
             txt_storeCountNameTitle.Text = MainWindow.resourcemanager.GetString("trStores");
-            txt_posCountNameTitle.Text = MainWindow.resourcemanager.GetString("trPOS");///????
+            txt_posCountNameTitle.Text = MainWindow.resourcemanager.GetString("trPOSs");
             txt_vendorCountNameTitle.Text = MainWindow.resourcemanager.GetString("trVendors");
             txt_itemCountNameTitle.Text = MainWindow.resourcemanager.GetString("trItems");
         }
@@ -164,59 +170,58 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
+            try
+            {
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
-                
-                #region old
-                this.DataContext = package;
-                if (package != null)
-                {
-                    #region fill period 
 
-                    Users userModel = new Users();
-                    Customers custModel = new Customers();
-                    Customers cust = new Customers();
-                    cust = await custModel.GetByID((int)cb_customer.SelectedValue);
-                    countryPackageDates = await cpdModel.GetAll();
-                    if (bdr_agent.Visibility == Visibility.Visible)
+                    this.DataContext = package;
+                    if (package != null)
                     {
-                        Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
-                    }
-                    else
-                        countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                        #region fill period 
 
-                    foreach (var p in countryPackageDates)
-                    {
-                        if (p.islimitDate)
-                            p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
-                        else
+                        Users userModel = new Users();
+                        Customers custModel = new Customers();
+                        Customers cust = new Customers();
+                        cust = await custModel.GetByID((int)cb_customer.SelectedValue);
+                        countryPackageDates = await cpdModel.GetAll();
+                        if (bdr_agent.Visibility == Visibility.Visible)
                         {
-                            switch (p.monthCount)
+                            Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                        }
+                        else
+                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+
+                        foreach (var p in countryPackageDates)
+                        {
+                            if (p.islimitDate)
+                                p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
+                            else
                             {
-                                case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
-                                case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
-                                case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
-                                case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                                switch (p.monthCount)
+                                {
+                                    case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                                    case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                                    case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                                    case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                                }
                             }
                         }
+                        cb_period.DisplayMemberPath = "notes";
+                        cb_period.SelectedValuePath = "Id";
+                        cb_period.ItemsSource = countryPackageDates;
+                        #endregion
                     }
-                    cb_period.DisplayMemberPath = "notes";
-                    cb_period.SelectedValuePath = "Id";
-                    cb_period.ItemsSource = countryPackageDates;
-                    #endregion
-                }
-                #endregion
-            }
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -323,17 +328,26 @@ namespace AdministratorApp.View.sales
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
-                    if(cb_agent.Visibility == Visibility.Visible)
+                    Users userModel = new Users();
+                    Users agent = new Users();
+                    if (MainWindow.userLogin.type.Equals("ag"))
+                    {
                         packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
+                        agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                    }
                     else
+                    {
                         packuser.userId = 3;
+                        agent = await userModel.GetByID(3);
+                    }
                     if (cb_customer.SelectedValue != null)
                         packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
                     packuser.createUserId = MainWindow.userID;
-                    Users userModel = new Users();
-                    Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                    packuser.packageNumber = await packuserModel.generateNumber("si", agent.code , (int)cb_agent.SelectedValue);
-                    packuser.isActive = 1;
+                    packuser.packageNumber = await packuserModel.generateNumber("si", agent.code , agent.userId);
+                    if(tgl_isActive.IsChecked == true)
+                        packuser.isActive = 1;
+                    else
+                        packuser.isActive = 0;
                     packuser.canRenew = true;
 
                     msg = await packuserModel.MultiSave(packuser, 1);
@@ -469,6 +483,7 @@ namespace AdministratorApp.View.sales
             }
         }
 
+        
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
@@ -486,9 +501,10 @@ namespace AdministratorApp.View.sales
                     List<Country> countries = new List<Country>();
                     cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
                     txt_price.Text = cpd.price.ToString();
-                    //tb_price.Text = cpd.price.ToString();
-                    //countries = await cModel.GetAll();
-                    //txt_currency.Text = countries.Where(c => c.countryId == cpd.countryId).FirstOrDefault().currency;
+                }
+                else
+                {
+                    txt_price.Text = "";
                 }
             }
             catch (Exception ex)
@@ -554,5 +570,165 @@ namespace AdministratorApp.View.sales
             //}
         }
 
+        #region reports
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                BuildReport();
+
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+
+                BuildReport();
+                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Thread t1 = new Thread(() =>
+                {
+                    BuildReport();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            // LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+                });
+                t1.Start();
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+                string pdfpath = "";
+
+                pdfpath = @"\Thumb\report\temp.pdf";
+                //pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                BuildReport();
+
+                //LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                //wd_previewPdf w = new wd_previewPdf();
+                //w.pdfPath = pdfpath;
+                //if (!string.IsNullOrEmpty(w.pdfPath))
+                //{
+                    //w.ShowDialog();
+                    //w.wb_pdfWebViewer.Dispose();
+                //}
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        //ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        public void BuildReport()
+        {
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath = "";
+            string firstTitle = "paymentsReport";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
+            //bool isArabic = ReportCls.checkLang();
+            //if (isArabic)
+            //{
+                //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
+                //secondTitle = "vendors";
+            //}
+            //else
+            //{
+                //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
+                //secondTitle = "vendors";
+            //}
+            //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            //ReportCls.checkLang();
+            //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+            //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
+            //clsReports.setReportLanguage(paramarr);
+            //clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+        #endregion
     }
 }

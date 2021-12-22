@@ -14,8 +14,10 @@ namespace AdministratorApp.converters
         {
             if (value.ToString().Equals("1"))
                 value = MainWindow.resourcemanager.GetString("trValid");
-            else
+            else if (value.ToString().Equals("0"))
                 value = MainWindow.resourcemanager.GetString("trInValid");
+            else
+                value = "";
             return value;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

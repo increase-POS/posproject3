@@ -2554,4 +2554,19 @@
   <data name="trStatus" xml:space="preserve">
     <value>الحالة</value>
   </data>
+  <data name="trPOSs" xml:space="preserve">
+    <value>نقاط البيع</value>
+  </data>
+  <data name="trBookNum" xml:space="preserve">
+    <value>رقم الحجز</value>
+  </data>
+  <data name="trBookNumHint" xml:space="preserve">
+    <value>رقم الحجز...</value>
+  </data>
+  <data name="trExpirationDate" xml:space="preserve">
+    <value>تاريخ انتهاء الصلاحية</value>
+  </data>
+  <data name="trProcessDate" xml:space="preserve">
+    <value>تاريخ الحجز</value>
+  </data>
 </root>

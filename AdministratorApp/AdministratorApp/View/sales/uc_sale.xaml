@@ -66,7 +66,7 @@
                         <TextBlock  Grid.Row="4" Grid.Column="0"   x:Name="txt_statusTitle" Text="Status"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
-                        <TextBlock  Grid.Row="4"  Grid.Column="1"   x:Name="txt_status" Text="{Binding Path=isActive, Converter={StaticResource isActiveConverter}}"  Margin="10" 
+                        <TextBlock  Grid.Row="4"  Grid.Column="1"   x:Name="txt_status" Text="{Binding Path=isActive, Mode=OneWay,Converter={StaticResource isActiveConverter}}"  Margin="10" 
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
                                   FontSize="14"  />
                         <TextBlock  Grid.Row="5" Grid.Column="0"   x:Name="txt_serialsTitle" Text="Serials"  Margin="10"
@@ -229,10 +229,8 @@
                     <StackPanel  Orientation="Horizontal" >
 
                         <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
-                          Padding="0" Height="35" 
-                          BorderBrush="{x:Null}" >
-                            <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
-                          Width="22" Height="22">
+                                Padding="0" Height="35" BorderBrush="{x:Null}" Click="Btn_pdf_Click" >
+                            <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf" Width="22" Height="22">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_report"  
                                               Placement="left" 
@@ -242,9 +240,9 @@
                                 </materialDesign:PackIcon.ToolTip>
                             </materialDesign:PackIcon>
                         </Button>
-                        <Button   Background="{x:Null}" Margin="0,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_preview"  
-                                       BorderBrush="{x:Null}">
+                        <Button   Background="{x:Null}" Margin="0,0,5,0" Padding="0" Height="35"   x:Name="btn_preview"  
+                                  BorderBrush="{x:Null}" Click="Btn_preview_Click"
+                                  >
                             <Grid FlowDirection="LeftToRight">
                                 <Path Fill="#4E4E4E" Stretch="Fill"
                           Width="15" Height="18" 
@@ -263,8 +261,9 @@
                                 </Path>
                             </Grid>
                         </Button>
-                        <Button   Background="{x:Null}"    Margin="5,0,5,0"
-                          Padding="0" Height="35"  x:Name="btn_print" BorderBrush="{x:Null}"  >
+                        <Button  Background="{x:Null}"    Margin="5,0,5,0"
+                                 Padding="0" Height="35"  x:Name="btn_print" BorderBrush="{x:Null}" Click="Btn_print_Click"  
+                                 >
                             <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
                                                      Width="22" Height="22">
                                 <materialDesign:PackIcon.ToolTip>
@@ -276,9 +275,9 @@
                                 </materialDesign:PackIcon.ToolTip>
                             </materialDesign:PackIcon>
                         </Button>
-                        <Button   Background="{x:Null}" Margin="5,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_exportToExcel" 
-                                       BorderBrush="{x:Null}">
+                        <Button  Background="{x:Null}" Margin="5,0,5,0" 
+                                 Padding="0" Height="35"   x:Name="btn_exportToExcel" BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click"
+                                 >
                             <Path Fill="#378500" Stretch="Fill"
                           Width="20" Height="20" 
                            FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
@@ -437,28 +436,22 @@
                             </Path>
                         </Grid>
                     </Border>
-                    <!--<Grid Grid.Row="1" Visibility="Visible">
+                    <Border Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}" >
+                        <Grid  Height="40">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}" >
-                            <Grid>
-                                <TextBox  x:Name="tb_price"    Text="{Binding price, Mode=OneWay}"         
-                                          TextBlock.Foreground="#4E4E4E" Margin="4,0"  Padding="10,5,5,5" 
-                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                                          materialDesign:HintAssist.Hint="Price..." IsReadOnly="True" 
-                                          VerticalAlignment="Center"     BorderThickness="0"      Height="40"/>
-                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_price"
-                                  HorizontalAlignment="Right"     Visibility="Collapsed"   
-                                  VerticalAlignment="Center"      Width="15"  Height="15"
-                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                </Path>
-                            </Grid>
-                        </Border>
-                        <TextBlock x:Name="txt_currency" Grid.Column="1" Text="" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="5,5,5,5"/>
-
-                    </Grid>-->
+                                <TextBlock  x:Name="txt_active" Grid.Column="0"
+                                            Margin="5,0,5,0" Text="Active" Foreground="#6e6e6e"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            FontSize="12"/>
+                                
+                        <ToggleButton Grid.Column="1"   x:Name="tgl_isActive"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
+                                      Margin="0" Height="13" Width="28" />
+                        </Grid>
+                    </Border>
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 

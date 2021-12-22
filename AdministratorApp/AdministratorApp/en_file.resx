@@ -2569,4 +2569,19 @@ Please add Email in setting</value>
   <data name="trStatus" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="trPOSs" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="trBookNum" xml:space="preserve">
+    <value>Book Num</value>
+  </data>
+  <data name="trBookNumHint" xml:space="preserve">
+    <value>Book Num...</value>
+  </data>
+  <data name="trExpirationDate" xml:space="preserve">
+    <value>Expiration Date</value>
+  </data>
+  <data name="trProcessDate" xml:space="preserve">
+    <value>Process Date</value>
+  </data>
 </root>
