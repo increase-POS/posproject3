@@ -25,6 +25,7 @@ namespace Programs_Server
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
+        public bool unLimited { get; set; }
     
         public virtual packageUser packageUser { get; set; }
         public virtual users users { get; set; }

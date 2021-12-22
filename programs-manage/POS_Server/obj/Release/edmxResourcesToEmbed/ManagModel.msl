@@ -207,6 +207,7 @@
     <EntitySetMapping Name="posSerials">
       <EntityTypeMapping TypeName="incprogramsdbModel.posSerials">
         <MappingFragment StoreEntitySet="posSerials">
+          <ScalarProperty Name="unLimited" ColumnName="unLimited" />
           <ScalarProperty Name="serialId" ColumnName="serialId" />
           <ScalarProperty Name="serial" ColumnName="serial" />
           <ScalarProperty Name="posDeviceCode" ColumnName="posDeviceCode" />
