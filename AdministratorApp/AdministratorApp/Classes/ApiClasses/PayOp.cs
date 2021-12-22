@@ -75,11 +75,12 @@ namespace AdministratorApp.ApiClasses
   
         }
 
-        public async Task<PayOp> GetByID(int packageId)
+        public async Task<PayOp> GetByID(int payOpId)
         {
             PayOp item = new PayOp();
+       
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("packageId", packageId.ToString());
+            parameters.Add("payOpId", payOpId.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByID", parameters);
 
@@ -95,6 +96,26 @@ namespace AdministratorApp.ApiClasses
             return item;
 
            
+        }
+
+
+        public async Task<List<PayOp>> GetByCustomerId(int customerId)
+        {
+           List<PayOp> list = new List<PayOp>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("customerId", customerId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
         }
 
         public async Task<int> Delete(int packageId, int userId, bool final)

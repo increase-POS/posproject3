@@ -39,6 +39,7 @@ namespace Programs_Server.Models
         public int monthCount { get; set; }
         public Nullable<System.DateTime> activatedate { get; set; }
         public bool isServerActivated { get; set; }
+        public Nullable<int> oldCountryPackageId { get; set; }
 
     }
 

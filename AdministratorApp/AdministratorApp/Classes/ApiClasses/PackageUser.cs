@@ -314,5 +314,33 @@ namespace AdministratorApp.ApiClasses
             return invoiceNum;
         }
 
+
+        public async Task<int> packageBook(PackageUser obj)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = urimainpath + "packageBook";
+
+            var myContent = JsonConvert.SerializeObject(obj);
+            parameters.Add("Object", myContent);
+
+            return await APIResult.post(method, parameters);
+
+      
+        }
+        public async Task<int> packagePay(PackageUser obj, PayOp payobj)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = urimainpath + "packagePay";
+
+            var myContent = JsonConvert.SerializeObject(obj);
+            parameters.Add("Object", myContent);
+            var myContentPay = JsonConvert.SerializeObject(payobj);
+            parameters.Add("PayObject", myContentPay);
+
+            return await APIResult.post(method, parameters);
+
+
+        }
+
     }
 }

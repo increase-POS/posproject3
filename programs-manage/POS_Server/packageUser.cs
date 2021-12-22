@@ -49,6 +49,7 @@ namespace Programs_Server
         public int totalsalesInvCount { get; set; }
         public Nullable<System.DateTime> activatedate { get; set; }
         public bool isServerActivated { get; set; }
+        public Nullable<int> oldCountryPackageId { get; set; }
     
         public virtual countryPackageDate countryPackageDate { get; set; }
         public virtual customers customers { get; set; }

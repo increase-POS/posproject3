@@ -166,6 +166,7 @@
     <Compile Include="Classes\ApiClasses\ErrorClass.cs" />
     <Compile Include="Classes\ApiClasses\AgentPackage.cs" />
     <Compile Include="Classes\ApiClasses\PackageUser.cs" />
+    <Compile Include="Classes\ApiClasses\PayOp.cs" />
     <Compile Include="Classes\ApiClasses\PosSerials.cs" />
     <Compile Include="Classes\ApiClasses\Programs.cs" />
     <Compile Include="Classes\ApiClasses\Users.cs" />

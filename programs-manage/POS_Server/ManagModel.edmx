@@ -209,6 +209,7 @@
           <Property Name="totalsalesInvCount" Type="int" Nullable="false" />
           <Property Name="activatedate" Type="datetime2" Precision="7" />
           <Property Name="isServerActivated" Type="bit" Nullable="false" />
+          <Property Name="oldCountryPackageId" Type="int" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -1339,6 +1340,7 @@
           <NavigationProperty Name="puStatus" Relationship="incprogramsdbModel.FK_puStatus_packageUser" FromRole="packageUser" ToRole="puStatus" />
           <Property Name="activatedate" Type="DateTime" Precision="7" />
           <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
+          <Property Name="oldCountryPackageId" Type="Int32" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -2464,6 +2466,7 @@
           <EntitySetMapping Name="packageUser">
             <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
               <MappingFragment StoreEntitySet="packageUser">
+                <ScalarProperty Name="oldCountryPackageId" ColumnName="oldCountryPackageId" />
                 <ScalarProperty Name="isServerActivated" ColumnName="isServerActivated" />
                 <ScalarProperty Name="activatedate" ColumnName="activatedate" />
                 <ScalarProperty Name="totalsalesInvCount" ColumnName="totalsalesInvCount" />

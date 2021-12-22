@@ -20,7 +20,7 @@ namespace Programs_Server.Controllers
 
     [RoutePrefix("api/payOp")]
 
-    public class payOpController  : ApiController
+    public class payOpController : ApiController
 
     {
         // GET api/<controller>
@@ -58,7 +58,11 @@ namespace Programs_Server.Controllers
                                         createDate = S.createDate,
                                         updateDate = S.updateDate,
                                         notes = S.notes,
-                                        totalnet=S.totalnet,
+                                        totalnet = S.totalnet,
+                                        countryPackageId = S.countryPackageId,
+                                        discountValue = S.discountValue,
+                                        customerId = S.customerId,
+                                        agentId = S.agentId,
                                     }).ToList();
                         /*
           
@@ -91,7 +95,7 @@ namespace Programs_Server.Controllers
                 }
             }
 
-            
+
         }
 
         // GET api/<controller>
@@ -143,8 +147,11 @@ namespace Programs_Server.Controllers
                            S.createDate,
                            S.updateDate,
                            S.notes,
-                          S.totalnet,
-
+                           S.totalnet,
+                           S.countryPackageId,
+                           S.discountValue,
+                           S.customerId,
+                           S.agentId,
 
 
                        })
@@ -152,6 +159,78 @@ namespace Programs_Server.Controllers
 
 
                         return TokenManager.GenerateToken(row);
+                    }
+
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+
+
+
+        }
+
+        [HttpPost]
+        [Route("GetByCustomerId")]
+        public string GetByCustomerId(string token)//int packageUserId
+        {
+
+
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int customerId = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "customerId")
+                    {
+                        customerId = int.Parse(c.Value);
+                    }
+
+
+                }
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var List = (from S in entity.payOp
+                                    join A in entity.packageUser on S.packageUserId equals A.packageUserId
+                                    join P in entity.packages on A.packageId equals P.packageId
+                                    join U in entity.users on A.userId equals U.userId
+                                    where S.customerId== customerId
+                                    select new payOpModel()
+                                    {
+                                        payOpId = S.payOpId,
+                                        Price = S.Price,
+                                        code = S.code,
+                                        type = S.type,
+                                        packageUserId = S.packageUserId,
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
+                                        createDate = S.createDate,
+                                        updateDate = S.updateDate,
+                                        notes = S.notes,
+                                        totalnet = S.totalnet,
+                                        countryPackageId = S.countryPackageId,
+                                        discountValue = S.discountValue,
+                                        customerId = S.customerId,
+                                        agentId = S.agentId,
+                                    }).ToList();
+
+                        return TokenManager.GenerateToken(List);
                     }
 
                 }
@@ -214,8 +293,8 @@ namespace Programs_Server.Controllers
                         Nullable<int> id = null;
                         newObject.packageUserId = id;
                     }
-                   
-                   
+
+
 
 
 
@@ -237,7 +316,7 @@ namespace Programs_Server.Controllers
 
                                 // get packageuser code
 
-                              
+
 
                                 message = newObject.payOpId.ToString();
 
@@ -255,8 +334,8 @@ namespace Programs_Server.Controllers
                                 tmpObject.packageUserId = newObject.packageUserId;
                                 tmpObject.createUserId = newObject.createUserId;
                                 tmpObject.updateUserId = newObject.updateUserId;
-                                
-                             
+
+
                                 tmpObject.notes = newObject.notes;
 
 
@@ -295,25 +374,25 @@ namespace Programs_Server.Controllers
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
 
-           int message =0;
+            int message = 0;
 
-                if (newObject != null)
+            if (newObject != null)
+            {
+                if (newObject.updateUserId == 0 || newObject.updateUserId == null)
                 {
-                    if (newObject.updateUserId == 0 || newObject.updateUserId == null)
-                    {
-                        Nullable<int> id = null;
-                        newObject.updateUserId = id;
-                    }
-                    if (newObject.createUserId == 0 || newObject.createUserId == null)
-                    {
-                        Nullable<int> id = null;
-                        newObject.createUserId = id;
-                    }
-                    if (newObject.packageUserId == 0 || newObject.packageUserId == null)
-                    {
-                        Nullable<int> id = null;
-                        newObject.packageUserId = id;
-                    }
+                    Nullable<int> id = null;
+                    newObject.updateUserId = id;
+                }
+                if (newObject.createUserId == 0 || newObject.createUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.createUserId = id;
+                }
+                if (newObject.packageUserId == 0 || newObject.packageUserId == null)
+                {
+                    Nullable<int> id = null;
+                    newObject.packageUserId = id;
+                }
                 if (newObject.agentId == 0 || newObject.agentId == null)
                 {
                     Nullable<int> id = null;
@@ -324,11 +403,11 @@ namespace Programs_Server.Controllers
                     Nullable<int> id = null;
                     newObject.customerId = id;
                 }
-                    try
-                    {
+                try
+                {
 
-                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                        {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
                         if (newObject.packageUserId > 0)
                         {
                             using (incprogramsdbEntities entity1 = new incprogramsdbEntities())
@@ -340,57 +419,57 @@ namespace Programs_Server.Controllers
                             }
                         }
                         var locationEntity = entity.Set<payOp>();
-                            if (newObject.payOpId == 0)
-                            {
-                    
-                        
+                        if (newObject.payOpId == 0)
+                        {
+
+
                             newObject.createDate = DateTime.Now;
-                                newObject.updateDate = DateTime.Now;
-                                newObject.updateUserId = newObject.createUserId;
+                            newObject.updateDate = DateTime.Now;
+                            newObject.updateUserId = newObject.createUserId;
 
-                                locationEntity.Add(newObject);
-                                entity.SaveChanges();
+                            locationEntity.Add(newObject);
+                            entity.SaveChanges();
 
-                          
 
-                                message = newObject.payOpId ;
 
-                            }
-                            else
-                            {
-                                var tmpObject = entity.payOp.Where(p => p.payOpId == newObject.payOpId).FirstOrDefault();
+                            message = newObject.payOpId;
 
-                                tmpObject.updateDate = DateTime.Now;
-
-                                tmpObject.payOpId = newObject.payOpId;
-                                tmpObject.Price = newObject.Price;
-                                tmpObject.code = newObject.code;
-                                tmpObject.type = newObject.type;
-                                tmpObject.packageUserId = newObject.packageUserId;
-                                tmpObject.createUserId = newObject.createUserId;
-                                tmpObject.updateUserId = newObject.updateUserId;
-
-                                tmpObject.notes = newObject.notes;
-                            tmpObject.totalnet = newObject.totalnet;
-                                entity.SaveChanges();
-
-                                message = tmpObject.payOpId ;
-                            }
-                            //  entity.SaveChanges();
-
-                            return  message ;
                         }
+                        else
+                        {
+                            var tmpObject = entity.payOp.Where(p => p.payOpId == newObject.payOpId).FirstOrDefault();
 
+                            tmpObject.updateDate = DateTime.Now;
+
+                            tmpObject.payOpId = newObject.payOpId;
+                            tmpObject.Price = newObject.Price;
+                            tmpObject.code = newObject.code;
+                            tmpObject.type = newObject.type;
+                            tmpObject.packageUserId = newObject.packageUserId;
+                            tmpObject.createUserId = newObject.createUserId;
+                            tmpObject.updateUserId = newObject.updateUserId;
+
+                            tmpObject.notes = newObject.notes;
+                            tmpObject.totalnet = newObject.totalnet;
+                            entity.SaveChanges();
+
+                            message = tmpObject.payOpId;
+                        }
+                        //  entity.SaveChanges();
+
+                        return message;
                     }
-                    catch
-                    {
-                        return  0 ;
-                    }
+
                 }
-                else
+                catch
                 {
-                    return  0 ;
+                    return 0;
                 }
+            }
+            else
+            {
+                return 0;
+            }
 
 
         }
@@ -425,40 +504,40 @@ namespace Programs_Server.Controllers
                     //{
                     //    userId = int.Parse(c.Value);
                     //}
-                
+
 
                 }
 
-                
 
-                    try
+
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
-                        {
-                            payOp objectDelete = entity.payOp.Find(payOpId);
+                        payOp objectDelete = entity.payOp.Find(payOpId);
 
-                            entity.payOp.Remove(objectDelete);
-                            message = entity.SaveChanges().ToString();
-                            return TokenManager.GenerateToken(message);
+                        entity.payOp.Remove(objectDelete);
+                        message = entity.SaveChanges().ToString();
+                        return TokenManager.GenerateToken(message);
 
-                        }
                     }
+                }
 
 
-                    catch
-                    {
-                        return TokenManager.GenerateToken("0");
-                    }
-              
-               
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+
+
             }
 
- 
+
         }
 
 
 
-      
+
 
     }
 }

@@ -876,7 +876,7 @@ namespace Programs_Server.Controllers
                 postemp.createUserId = newObject.updateUserId;
                 postemp.updateUserId = newObject.updateUserId;
                 postemp.isActive = 0;
-             
+
                 postemp.isBooked = false;
                 postemp.packageUserId = newObject.packageUserId;
                 // postemp.posDeviceCode = "";
@@ -1276,10 +1276,10 @@ namespace Programs_Server.Controllers
                                 {
                                     oldPU = entity.packageUser.Where(p => p.packageUserId == newObject.oldPackageId).FirstOrDefault();
                                     oldPackage = entity1.packages.Where(p => p.packageId == newObject.oldPackageId).FirstOrDefault();
-                                    
+
                                 }
 
-                                tmpcpd =entity1.countryPackageDate.Where(p => p.Id == newObject.countryPackageId).FirstOrDefault();
+                                tmpcpd = entity1.countryPackageDate.Where(p => p.Id == newObject.countryPackageId).FirstOrDefault();
 
 
                             }
@@ -1299,7 +1299,8 @@ namespace Programs_Server.Controllers
                                 newObject.bookDate = DateTime.Now;
 
                                 newObject.isActive = 1;
-                                newObject.expireDate = null;
+
+                                newObject.oldCountryPackageId = 0;
                                 if (tmpcpd.islimitDate == true)
                                 {
                                     DateTime dt = (DateTime)newObject.bookDate;
@@ -1307,7 +1308,7 @@ namespace Programs_Server.Controllers
                                 }
                                 else
                                 {
-                                    newObject.expireDate =null;
+                                    newObject.expireDate = null;
                                 }
                                 newObject.canRenew = false;//change on pay
                                 newObject.type = "np";
@@ -1325,6 +1326,7 @@ namespace Programs_Server.Controllers
                                 if (newObject.packageUserId > 0)
                                 {
                                     newObject.packageSaleCode = createServerActiveKey(newObject);
+                                    newObject.oldPackageId = 0;
                                 }
                                 entity.SaveChanges();
                                 // create pos serials
@@ -1347,8 +1349,8 @@ namespace Programs_Server.Controllers
                                 {
                                     message = "0";
                                 }
-                              
-                               
+
+
                             }
                             else if (newObject.packageUserId > 0 && newObject.oldPackageId == newObject.packageId)
                             {
@@ -1360,11 +1362,11 @@ namespace Programs_Server.Controllers
                                 // tmpObject.packageUserId = newObject.packageUserId;
                                 // tmpObject.packageId = newObject.packageId;
                                 // tmpObject.userId = newObject.userId;
-                                //   tmpObject.packageSaleCode = newObject.packageSaleCode;
+                                // tmpObject.packageSaleCode = newObject.packageSaleCode;
                                 // tmpObject.packageNumber = newObject.packageNumber;
                                 // tmpObject.customerId = newObject.customerId;
                                 //   tmpObject.customerServerCode = newObject.customerServerCode;
-                                tmpObject.isBooked =true;
+                                tmpObject.isBooked = true;
                                 tmpObject.notes = newObject.notes;
 
                                 tmpObject.updateUserId = newObject.updateUserId;
@@ -1375,7 +1377,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
 
                                 tmpObject.countryPackageId = newObject.countryPackageId;
-
+                                tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
                                 //    tmpObject.canRenew =false;//stay on last payed  state  then change  on pay or activate 
                                 tmpObject.oldPackageId = newObject.oldPackageId;
 
@@ -1399,7 +1401,7 @@ namespace Programs_Server.Controllers
                                 // tmpObject.packageUserId = newObject.packageUserId;
                                 tmpObject.packageId = newObject.packageId;
                                 // tmpObject.userId = newObject.userId;
-                              //  tmpObject.packageSaleCode = newObject.packageSaleCode;
+                                //  tmpObject.packageSaleCode = newObject.packageSaleCode;
                                 if (newObject.packageUserId > 0)
                                 {
                                     newObject.packageSaleCode = createServerActiveKey(newObject);
@@ -1407,23 +1409,40 @@ namespace Programs_Server.Controllers
                                 // tmpObject.packageNumber = newObject.packageNumber;
                                 // tmpObject.customerId = newObject.customerId;
                                 //   tmpObject.customerServerCode = newObject.customerServerCode;
-
-                                tmpObject.isBooked =true;
+                                tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
+                                tmpObject.isBooked = true;
                                 tmpObject.notes = newObject.notes;
 
                                 tmpObject.updateUserId = newObject.updateUserId;
-                                // tmpObject.bookDate = newObject.bookDate;//old
+                                // start new book date
+                                tmpObject.bookDate = DateTime.Now;
+                                if (tmpcpd.islimitDate == true)
+                                {
+                                    // dbPU.monthCount += tmpcpd.monthCount;
+                                    tmpObject.monthCount = tmpcpd.monthCount;
+                                    if (tmpObject.expireDate != null)
+                                    {
+                                        DateTime dt = (DateTime)tmpObject.bookDate;
+                                        tmpObject.expireDate = dt.AddMonths(tmpObject.monthCount);
+
+
+                                    }
+                                }
+                                tmpObject.monthCount = 0;
+                                tmpObject.salesInvCount = 0;
+
                                 // tmpObject.isActive = newObject.isActive;
-                                //   tmpObject.expireDate = newObject.expireDate;//old -change on pay
+                                // tmpObject.expireDate = newObject.expireDate;//old -change on pay
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
 
                                 tmpObject.countryPackageId = newObject.countryPackageId;
 
-                                // tmpObject.canRenew = newObject.canRenew;// on pay
+                                tmpObject.canRenew = false;// chang on pay
                                 tmpObject.oldPackageId = newObject.oldPackageId;
                                 tmpObject.type = "chpk";
 
                                 tmpObject.isPayed = false;
+                                // tmpObject.activatedate = null;// old activate
                                 //newObject.activatedate = null;// old activate
                                 tmpObject.isServerActivated = false;//at activate
                                 entity.SaveChanges();
@@ -1435,10 +1454,10 @@ namespace Programs_Server.Controllers
                                 {
                                     //1
                                     // disactive old serial then create new serials for new package
-                                    serialmodel = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId && p.unLimited==true).LastOrDefault();
+                                    serialmodel = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId && p.unLimited == true).LastOrDefault();
                                     serialmodel.isActive = -1;
                                     serialmodel.updateDate = newObject.updateDate;
-                                 serialmodel.updateUserId = newObject.updateUserId;
+                                    serialmodel.updateUserId = newObject.updateUserId;
                                     entity.SaveChanges();
                                     int countpos = 0;
                                     if (tmpPackage.posCount != -1)
@@ -1451,7 +1470,7 @@ namespace Programs_Server.Controllers
 
                                     }
 
-                                   int res = createPosSerials(tmpObject, countpos);
+                                    int res = createPosSerials(tmpObject, countpos);
                                     if (res == countpos)
                                     {
                                         message = newObject.packageUserId.ToString();
@@ -1468,7 +1487,7 @@ namespace Programs_Server.Controllers
                                 {
                                     //2
                                     // delete old serials then create one unlimited serial
-                                    serialList = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId ).ToList();
+                                    serialList = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId).ToList();
                                     foreach (posSerials row in serialList)
                                     {
                                         row.isActive = -1;
@@ -1483,8 +1502,8 @@ namespace Programs_Server.Controllers
                                     string res = serCntrlr.posSerialSave(serialmodel);
                                     int countpos = 0;
 
-                             //   int ress = createPosSerials(tmpObject, countpos);
-                                    if (int.Parse(res)>0)
+                                    //   int ress = createPosSerials(tmpObject, countpos);
+                                    if (int.Parse(res) > 0)
                                     {
                                         message = newObject.packageUserId.ToString();
 
@@ -1501,7 +1520,7 @@ namespace Programs_Server.Controllers
                                     {
                                         //3
                                         // is active =0 and wait until activate new serials manualy
-                                        serialList = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId && p.isActive!=-1).ToList();
+                                        serialList = entity.posSerials.Where(p => p.packageUserId == newObject.packageUserId && p.isActive != -1).ToList();
                                         foreach (posSerials row in serialList)
                                         {
                                             row.isActive = 0;
@@ -1696,58 +1715,45 @@ namespace Programs_Server.Controllers
 
                             }
                             var puEntity = entity.Set<packageUser>();
-                            if (newObject.packageUserId == 0 && newObject.oldPackageId == 0)
+                            if (dbPU.packageUserId > 0 && dbPU.oldPackageId == 0 && dbPU.type == "np" && dbPU.isPayed == false)
                             {
 
-                                // first time book
+                                // first time booked and now will pay
                                 // newObject.createDate = DateTime.Now;
+
                                 int res = paycntrlr.Save(newpay);
 
                                 dbPU.updateDate = DateTime.Now;
                                 dbPU.updateUserId = newObject.updateUserId;
-                                // create server activation key and pos serials
-                                dbPU.packageSaleCode = createServerActiveKey(dbPU);
+
 
                                 //
                                 //  newObject.customerServerCode = "";
-                                dbPU.isBooked = false;
+                                //dbPU.isBooked = false;
                                 dbPU.notes = newObject.notes;
 
                                 dbPU.bookDate = null;
                                 dbPU.isActive = 1;
-                                dbPU.expireDate = null;
+                                //   dbPU.expireDate = null;
                                 dbPU.canRenew = true;
                                 dbPU.oldPackageId = newObject.packageUserId;
 
                                 dbPU.type = "np";
                                 dbPU.isPayed = true;
 
-                                dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
-                                dbPU.monthCount = tmpcpd.monthCount;//change  on pay
-                                                                    //  puEntity.Add(newObject);
-                                entity.SaveChanges();
-                                int countpos = 0;
-                                if (tmpPackage.posCount != -1)
-                                {
-                                    countpos = tmpPackage.posCount;
-                                }
-                                else
-                                {
-                                    countpos = 1;
+                                dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay then change on activat to 0
+                                dbPU.totalsalesInvCount = tmpPackage.salesInvCount;// change on activat to 0
+                                                                                   //   dbPU.monthCount = tmpcpd.monthCount;//change  on pay  then change on activat to 0
+                                                                                   //  puEntity.Add(newObject);
 
-                                }
-                                res = createPosSerials(dbPU, countpos);
-                                if (res == countpos)
-                                {
-                                    message = newObject.packageUserId.ToString();
-                                }
-                                else
-                                {
-                                    message = "0";
-                                }
+                                dbPU.oldCountryPackageId = dbPU.countryPackageId;
+                               entity.SaveChanges();
+
+                                message = newObject.packageUserId.ToString();
+
 
                             }
-                            else if (newObject.packageUserId > 0 && newObject.oldPackageId == newObject.packageId && newObject.countryPackageId == dbPU.countryPackageId)
+                            else if (dbPU.packageUserId > 0 && dbPU.oldPackageId == dbPU.packageId && dbPU.countryPackageId == dbPU.oldCountryPackageId)
                             {
                                 // renew same period 
 
@@ -1763,13 +1769,13 @@ namespace Programs_Server.Controllers
                                 // tmpObject.packageNumber = newObject.packageNumber;
                                 // tmpObject.customerId = newObject.customerId;
                                 //   tmpObject.customerServerCode = newObject.customerServerCode;
-                                //  tmpObject.isBooked = newObject.isBooked;
+                                dbPU.isBooked = true;
                                 dbPU.notes = newObject.notes;
 
                                 dbPU.updateUserId = newObject.updateUserId;
                                 // tmpObject.bookDate = newObject.bookDate;
                                 dbPU.isActive = 1;
-                                //   tmpObject.expireDate = newObject.expireDate;//on pay
+
                                 dbPU.isOnlineServer = newObject.isOnlineServer;
 
                                 //   dbPU.countryPackageId = newObject.countryPackageId;
@@ -1781,32 +1787,62 @@ namespace Programs_Server.Controllers
 
                                 if (dbPU.canRenew == true)
                                 {
-                                    dbPU.salesInvCount += tmpPackage.salesInvCount;//change  on pay
-                                    dbPU.monthCount += tmpcpd.monthCount;//change  on pay
+                                    if (tmpPackage.salesInvCount != -1)
+                                    {
+                                        dbPU.salesInvCount += tmpPackage.salesInvCount;//change  on pay
+                                        dbPU.totalsalesInvCount += tmpPackage.salesInvCount;
+                                    }
+                                    else
+                                    {
+                                        //unlimited
+                                        dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
+
+                                    }
+                                    if (tmpcpd.islimitDate == true)
+                                    {
+                                        // dbPU.monthCount += tmpcpd.monthCount;
+                                        dbPU.monthCount += tmpcpd.monthCount;
+                                        if (dbPU.expireDate != null)
+                                        {
+                                            DateTime dt = (DateTime)dbPU.expireDate;
+                                            dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
+                                            dbPU.monthCount = 0;
+
+                                        }
+                                    }
+
+                                    dbPU.monthCount = 0;
+                                    //  dbPU.monthCount += tmpcpd.monthCount;//change  on pay
                                 }
                                 else
                                 {
-                                    // false
-                                    dbPU.monthCount = tmpcpd.monthCount;
-                                    dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
+                                    //  canRenew=false
+                                    if (tmpPackage.salesInvCount != -1)
+                                    {
+                                        dbPU.salesInvCount += tmpPackage.salesInvCount;//change  on pay
+                                        dbPU.totalsalesInvCount += tmpPackage.salesInvCount;
+                                    }
+                                    else
+                                    {
+                                        //unlimited
+                                        dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
+
+                                    }
                                 }
                                 dbPU.canRenew = true;
                                 // update expiredate
-                                if (dbPU.expireDate != null)
-                                {
-                                    DateTime dt = (DateTime)dbPU.expireDate;
-                                    dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
-                                }
+
 
                                 entity.SaveChanges();
 
                                 message = dbPU.packageUserId.ToString();
 
                             }
-                            else if (newObject.packageUserId > 0 && newObject.oldPackageId == newObject.packageId && newObject.countryPackageId != dbPU.countryPackageId)
+                            else if (dbPU.packageUserId > 0 && dbPU.oldPackageId == dbPU.packageId && dbPU.type == "chpr" && dbPU.isPayed == false)
                             {
                                 // chang  period 
                                 //change
+
                                 int res = paycntrlr.Save(newpay);
 
                                 dbPU.updateDate = DateTime.Now;
@@ -1817,48 +1853,61 @@ namespace Programs_Server.Controllers
                                 // tmpObject.packageNumber = newObject.packageNumber;
                                 // tmpObject.customerId = newObject.customerId;
                                 //   tmpObject.customerServerCode = newObject.customerServerCode;
-                                //  tmpObject.isBooked = newObject.isBooked;
+                                dbPU.isBooked = true;
                                 dbPU.notes = newObject.notes;
 
                                 dbPU.updateUserId = newObject.updateUserId;
                                 // tmpObject.bookDate = newObject.bookDate;
                                 dbPU.isActive = 1;
                                 //   tmpObject.expireDate = newObject.expireDate;//on pay
-                                dbPU.isOnlineServer = newObject.isOnlineServer;
+                                //   dbPU.isOnlineServer = newObject.isOnlineServer;
 
-                                dbPU.countryPackageId = newObject.countryPackageId;
+                                //   dbPU.countryPackageId = newObject.countryPackageId;
 
 
-                                dbPU.oldPackageId = dbPU.packageUserId;
+                                // dbPU.oldPackageId = dbPU.packageUserId;
+
+
+
+
+
+
+                                // update expiredate
+                                if (tmpcpd.islimitDate == true)
+                                {
+                                    // dbPU.monthCount += tmpcpd.monthCount;
+                                    dbPU.monthCount += tmpcpd.monthCount;
+                                    if (dbPU.expireDate != null)
+                                    {
+                                        DateTime dt = (DateTime)dbPU.expireDate;
+                                        dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
+                                        dbPU.monthCount = 0;
+
+                                    }
+                                }
+                                dbPU.canRenew = true;
                                 dbPU.type = "chpr";
                                 dbPU.isPayed = true;
-
                                 // chang salesInvCount to add it on activation
-                                if (dbPU.canRenew == true)
+                                if (tmpPackage.salesInvCount != -1)
                                 {
                                     dbPU.salesInvCount += tmpPackage.salesInvCount;//change  on pay
-                                    dbPU.monthCount += tmpcpd.monthCount;//change  on pay
+                                    dbPU.totalsalesInvCount += tmpPackage.salesInvCount;
                                 }
                                 else
                                 {
-                                    // false
-                                    dbPU.monthCount = tmpcpd.monthCount;
+                                    //unlimited
                                     dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
+
                                 }
 
-                                dbPU.canRenew = true;
-                                // update expiredate
-                                if (dbPU.expireDate != null)
-                                {
-                                    DateTime dt = (DateTime)dbPU.expireDate;
-                                    dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
-                                }
+                                dbPU.oldCountryPackageId = dbPU.countryPackageId;
                                 entity.SaveChanges();
 
                                 message = dbPU.packageUserId.ToString();
 
                             }
-                            else if (newObject.packageUserId > 0 && newObject.oldPackageId != newObject.packageId)
+                            else if (dbPU.packageUserId > 0 && dbPU.oldPackageId != dbPU.packageId && dbPU.type == "chpk" && dbPU.isPayed == false)
                             {
                                 // change packege
 
@@ -1872,15 +1921,38 @@ namespace Programs_Server.Controllers
 
                                 //
                                 //  newObject.customerServerCode = "";
-                                dbPU.isBooked = false;
+                                // dbPU.isBooked = false;
                                 dbPU.notes = newObject.notes;
 
                                 // dbPU.bookDate = null;
                                 dbPU.isActive = 1;
+                                if (tmpcpd.islimitDate == true)
+                                {
+                                    // dbPU.monthCount += tmpcpd.monthCount;
+                                    dbPU.monthCount = tmpcpd.monthCount;
+                                    if (dbPU.expireDate != null)
+                                    {
+                                        DateTime dt = (DateTime)dbPU.expireDate;
+                                        dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
+                                        dbPU.monthCount = 0;
 
+                                    }
+                                }
+                                // chang salesInvCount to add it on activation
+                                if (tmpPackage.salesInvCount != -1)
+                                {
+                                    dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
+                                    dbPU.totalsalesInvCount += tmpPackage.salesInvCount;
+                                }
+                                else
+                                {
+                                    //unlimited
+                                    dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay -1
+
+                                }
                                 // dbPU.expireDate = null;
                                 dbPU.canRenew = true;
-                                dbPU.oldPackageId = newObject.packageUserId;
+                                dbPU.oldPackageId = newObject.oldPackageId;
 
                                 dbPU.type = "chpk";
                                 dbPU.isPayed = true;
@@ -1888,67 +1960,7 @@ namespace Programs_Server.Controllers
                                 dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
                                 dbPU.monthCount = tmpcpd.monthCount;//change  on pay
 
-                                // pos create  has 4 state
-                                if (oldPackage.posCount == -1 && tmpPackage.posCount != -1)
-                                {
-                                    //1
-                                    // disactive old serial then create new serials for new package
-                                }
-                                else if (oldPackage.posCount != -1 && tmpPackage.posCount == -1)
-                                {
-                                    //2
-
-                                }
-                                else if (oldPackage.posCount != -1 && tmpPackage.posCount != -1)
-                                {
-                                    if (oldPackage.posCount > tmpPackage.posCount)
-                                    {
-                                        //3
-
-                                    }
-                                    else if (oldPackage.posCount < tmpPackage.posCount)
-                                    {
-                                        //4
-
-                                    }
-                                    else
-                                    {
-                                        // equals oldPackage.posCount = tmpPackage.posCount
-                                    }
-
-
-                                }
-                                else
-                                {
-                                    // equals oldPackage.posCount = tmpPackage.posCount=-1 unlimited
-                                }
-
-                                //var tmpObject = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
-
-                                //tmpObject.updateDate = DateTime.Now;
-                                //// tmpObject.packageUserId = newObject.packageUserId;
-                                //tmpObject.packageId = newObject.packageId;
-                                //// tmpObject.userId = newObject.userId;
-                                ////   tmpObject.packageSaleCode = newObject.packageSaleCode;
-                                //// tmpObject.packageNumber = newObject.packageNumber;
-                                //// tmpObject.customerId = newObject.customerId;
-                                ////   tmpObject.customerServerCode = newObject.customerServerCode;
-
-                                ////  tmpObject.isBooked = newObject.isBooked;
-                                //tmpObject.notes = newObject.notes;
-
-                                //tmpObject.updateUserId = newObject.updateUserId;
-                                //// tmpObject.bookDate = newObject.bookDate;
-                                //// tmpObject.isActive = newObject.isActive;
-                                ////   tmpObject.expireDate = newObject.expireDate;//on pay
-                                //tmpObject.isOnlineServer = newObject.isOnlineServer;
-
-                                //tmpObject.countryPackageId = newObject.countryPackageId;
-
-                                //// tmpObject.canRenew = newObject.canRenew;// on pay
-                                //tmpObject.oldPackageId = newObject.oldPackageId;
-                                //tmpObject.type = "chpk";
-
+                                dbPU.oldCountryPackageId = dbPU.countryPackageId;
 
                                 entity.SaveChanges();
 

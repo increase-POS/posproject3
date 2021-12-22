@@ -239,6 +239,7 @@
     <NavigationProperty Name="puStatus" Relationship="incprogramsdbModel.FK_puStatus_packageUser" FromRole="packageUser" ToRole="puStatus" />
     <Property Name="activatedate" Type="DateTime" Precision="7" />
     <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
+    <Property Name="oldCountryPackageId" Type="Int32" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
