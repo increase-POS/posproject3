@@ -67,9 +67,9 @@ namespace AdministratorApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                package = null;
-                txt_status.Text = "";
-                this.DataContext = package;
+                //package = new Packages();
+                //package.isActive = null;
+                //this.DataContext = package;
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -154,7 +154,7 @@ namespace AdministratorApp.View.sales
             txt_versionTitle.Text = MainWindow.resourcemanager.GetString("trVersion");
 
             txt_packageLimits.Text = MainWindow.resourcemanager.GetString("trPackageLimits");
-            txt_branchCountTitle.Text = MainWindow.resourcemanager.GetString("trBranchs");
+            txt_branchCountTitle.Text = MainWindow.resourcemanager.GetString("trBranches");
             txt_userCountTitle.Text = MainWindow.resourcemanager.GetString("trUsers");
             txt_customerCountTitle.Text = MainWindow.resourcemanager.GetString("trCustomers");
             txt_salesInvCountTitle.Text = MainWindow.resourcemanager.GetString("trInvoices");
