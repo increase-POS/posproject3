@@ -387,6 +387,91 @@ namespace Programs_Server.Controllers
     
         }
 
+        [HttpPost]
+        [Route("GetByCustomerPackId")]
+        public string GetByCustomerPackId(string token)//int packageUserId
+        {
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int customerId = 0;
+                int packageId = 0;
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "customerId")
+                    {
+                        customerId = int.Parse(c.Value);
+                    }
+                    if (c.Type == "packageId")
+                    {
+                        packageId = int.Parse(c.Value);
+                    }
+
+                }
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var List = (from D in entity.countryPackageDate
+                                    join N in entity.countriesCodes on D.countryId equals N.countryId
+                                    join C in entity.customers on N.countryId equals C.countryId
+                                    join S in entity.packages on D.packageId equals S.packageId
+
+                                    where C.countryId == D.countryId && S.packageId== packageId && C.custId == customerId
+
+                                    select new countryPackageDateModel()
+                                    {
+
+                                        Id = D.Id,
+                                        countryId = D.countryId,
+                                   
+                                        packageId = D.packageId,
+                                        monthCount = D.monthCount,
+                                    
+                                        price = D.price,
+                                        notes = D.notes,
+                                       
+                                        islimitDate = D.islimitDate,
+                                        isActive = D.isActive,
+                                      
+                                        currency = N.currency,
+
+
+
+                                    }).ToList();
+
+                        //var glist = List.GroupBy(X => X.packageId).Select(X => new packageUserModel
+                        //{
+                        //    packageId = X.FirstOrDefault().packageId,
+                        //    notes = X.FirstOrDefault().notes,
+
+
+                        //    isActive = X.FirstOrDefault().isActive,
+
+
+                        //    packageName = X.FirstOrDefault().packageName,
+                        //}).ToList();
+                        return TokenManager.GenerateToken(List);
+
+                    }
+
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+        }
 
 
     }

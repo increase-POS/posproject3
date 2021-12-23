@@ -1022,6 +1022,88 @@ namespace Programs_Server.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("GetByCustomerCountry")]
+        public string GetByCustomerCountry(string token)//int packageUserId
+        {
+
+
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int customerId = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "customerId")
+                    {
+                        customerId = int.Parse(c.Value);
+                    }
+
+
+                }
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var List = (from D in entity.countryPackageDate
+                                    join N in entity.countriesCodes on D.countryId equals N.countryId
+                                   join C in entity.customers on N.countryId equals C.countryId
+                                   join S in entity.packages on D.packageId equals S.packageId
+
+                                   where C.countryId==D.countryId && C.custId== customerId
+
+                                   select new packageUserModel()
+                                   {
+                                      
+                                       packageId = S.packageId,
+                                       notes = S.notes,
+                                    
+         
+                                       isActive = S.isActive,
+                              
+                                      
+                                       packageName = S.packageName,
+                                     
+
+
+                                   }).ToList();
+
+                        var glist = List.GroupBy(X => X.packageId).Select(X => new packageUserModel
+                        {
+                            packageId = X.FirstOrDefault().packageId,
+                            notes = X.FirstOrDefault().notes,
+
+
+                            isActive = X.FirstOrDefault().isActive,
+
+
+                            packageName = X.FirstOrDefault().packageName,
+                        }).ToList();
+                        return TokenManager.GenerateToken(glist);
+
+                    }
+
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+
+
+
+        }
 
 
     }
