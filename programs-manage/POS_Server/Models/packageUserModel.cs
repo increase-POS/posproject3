@@ -41,6 +41,11 @@ namespace Programs_Server.Models
         public bool isServerActivated { get; set; }
         public Nullable<int> oldCountryPackageId { get; set; }
 
+        public string packageName { get; set; }
+        public bool islimitDate { get; set; }
+        public Nullable<decimal> price { get; set; }
+        public string currency { get; set; }
+
     }
 
 
