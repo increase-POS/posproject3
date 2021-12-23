@@ -96,8 +96,8 @@ namespace AdministratorApp.View.applications
         }
         private void translate()
         {
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             //txt_packageHeader.Text = MainWindow.resourcemanager.GetString("trPackages");
             //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
@@ -122,11 +122,10 @@ namespace AdministratorApp.View.applications
             //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
             //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
 
-            //dg_package.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            //dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            //dg_package.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
+            dg_package.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
+            dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
 
             //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
             //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");

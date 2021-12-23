@@ -275,6 +275,28 @@ namespace AdministratorApp.ApiClasses
 
         }
 
+        public async Task<List<Packages>> GetByCustomerCountry(int customerId)
+        {
+            List<Packages> list = new List<Packages>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("customerId", customerId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerCountry", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<Packages>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+
+        }
 
     }
 }

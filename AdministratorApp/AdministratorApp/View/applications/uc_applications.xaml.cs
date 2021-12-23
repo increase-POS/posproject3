@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,6 +55,20 @@ namespace AdministratorApp.View.applications
 
                 menuList = new List<string> { "programs", "versions", "packages" };
 
+                #region translate
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+                #endregion
+
                 Btn_programs_Click(btn_programs , null);
 
                 if (sender != null)
@@ -64,6 +80,14 @@ namespace AdministratorApp.View.applications
                     HelpClass.EndAwait(grid_mainGrid);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void translate()
+        {
+            btn_programs.Content = MainWindow.resourcemanager.GetString("trPrograms");
+            btn_versions.Content = MainWindow.resourcemanager.GetString("trVersions");
+            btn_packages.Content = MainWindow.resourcemanager.GetString("trPackages");
+
         }
 
         void colorButtonRefreash(string str)

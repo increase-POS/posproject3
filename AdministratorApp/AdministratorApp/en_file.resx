@@ -2587,4 +2587,19 @@ Please add Email in setting</value>
   <data name="trPayDetails" xml:space="preserve">
     <value>Pay Details</value>
   </data>
+  <data name="trPopAddBook" xml:space="preserve">
+    <value>Booking succeeded</value>
+  </data>
+  <data name="trPopPay" xml:space="preserve">
+    <value>Payment succeeded</value>
+  </data>
+  <data name="trPopUpgradeSucceed" xml:space="preserve">
+    <value>Upgrade succeeded</value>
+  </data>
+  <data name="trPrograms" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="trVersions" xml:space="preserve">
+    <value>Versions</value>
+  </data>
 </root>

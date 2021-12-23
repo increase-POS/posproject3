@@ -2572,4 +2572,19 @@
   <data name="trPayDetails" xml:space="preserve">
     <value>تفاصيل الدفع</value>
   </data>
+  <data name="trPopAddBook" xml:space="preserve">
+    <value>تم الحجز بنجاح</value>
+  </data>
+  <data name="trPopPay" xml:space="preserve">
+    <value>تم الدفع بنجاح</value>
+  </data>
+  <data name="trPopUpgradeSucceed" xml:space="preserve">
+    <value>تمت الترقية بنجاح</value>
+  </data>
+  <data name="trPrograms" xml:space="preserve">
+    <value>البرامج</value>
+  </data>
+  <data name="trVersions" xml:space="preserve">
+    <value>الإصدارات</value>
+  </data>
 </root>

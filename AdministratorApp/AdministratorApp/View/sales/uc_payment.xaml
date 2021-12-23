@@ -296,11 +296,12 @@
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
                             <ComboBox   x:Name="cb_packageNumber" Padding="10,5,5,5" SelectedValue="{Binding packageNumber, Mode=OneWay}"    
-                                          TextBlock.Foreground="#4E4E4E"    Margin="4,0"
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                      materialDesign:HintAssist.Hint="booked Number..."    
-                                          VerticalAlignment="Center" BorderThickness="0"
-                                          Height="40"   IsEnabled="False"/>
+                                        TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="booked Number..."    
+                                        VerticalAlignment="Center" BorderThickness="0"
+                                        Height="40"   IsEnabled="False" 
+                                        SelectionChanged="Cb_packageNumber_SelectionChanged"/>
                             <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_packageNumber"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -343,18 +344,19 @@
                         <TextBlock  Grid.Row="0"  Grid.Column="0"  x:Name="txt_packageNumberTitle"
                                     Text="5568799155" FontSize="18" FontWeight="SemiBold"
                               HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"  Margin="15,5,5,5"/>
-                        <Button Grid.Column="1" Grid.Row="0" x:Name="btn_upgrade"  
-                        materialDesign:ButtonAssist.CornerRadius="10"     HorizontalAlignment="Right"
-                                 Padding="2" Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
-                                Margin="0 5 15 5"  Width="35" Height="35"  >
+                        <Button Grid.Column="1" Grid.Row="0" x:Name="btn_upgrade"  IsEnabled="False"
+                                materialDesign:ButtonAssist.CornerRadius="10"     HorizontalAlignment="Right"
+                                Padding="2" Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
+                                Margin="0 5 15 5"  Width="35" Height="35" Click="Btn_upgrade_Click"  
+                                >
                             <materialDesign:PackIcon Foreground="White" Kind="Upload"   Width="25" Height="25"/>
                         </Button>
 
                         <TextBlock  Grid.Row="1"  Grid.Column="0"  x:Name="txt_packageNameTitle"
                                     Text="Package Name" FontSize="14"
-                              HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"  Margin="15,5,5,5"/>
+                                    HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"  Margin="15,5,5,5"/>
                         <TextBlock  Grid.Row="1"  Grid.Column="1"  x:Name="txt_packageName"
-                                    Text="Package Name"  
+                                    Text=""  
                               HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}" 
                                     Margin="0 5 15 5"/>
 
@@ -365,7 +367,7 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"     
                         Margin="15,5,5,5"/>
                         <TextBlock Grid.Row="3"  Grid.Column="1"  x:Name="txt_period" 
-                                   Text="3 month"  
+                                   Text=""  
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"     
                         Margin="0 5 15 5"/>
 
@@ -373,7 +375,7 @@
                                    Text="Expire Date" FontSize="14"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"                                Margin="15,5,5,5"/>
                         <TextBlock Grid.Row="4"  Grid.Column="1"  x:Name="txt_expirDate"
-                                   Text="2022/3/1"  
+                                   Text=""  
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}" 
                                    Margin="0 5 15 5"/>
 
@@ -451,7 +453,8 @@
                 <Button Grid.Column="0" Grid.Row="0" x:Name="btn_pay"  
                         materialDesign:ButtonAssist.CornerRadius="10"   
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
-                        Margin="5"    Content="pay" />
+                        Margin="5"    Content="pay" Click="Btn_pay_Click" 
+                        />
             </Grid>
         </Grid>
     </Grid>
