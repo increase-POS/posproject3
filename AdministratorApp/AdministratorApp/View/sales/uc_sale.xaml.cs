@@ -179,39 +179,40 @@ namespace AdministratorApp.View.sales
                     this.DataContext = package;
                     if (package != null)
                     {
+                        await FillCombo.fillPeriod(cb_period , (int)cb_customer.SelectedValue , (int)cb_package.SelectedValue);
                         #region fill period 
 
-                        Users userModel = new Users();
-                        Customers custModel = new Customers();
-                        Customers cust = new Customers();
-                        cust = await custModel.GetByID((int)cb_customer.SelectedValue);
-                        countryPackageDates = await cpdModel.GetAll();
-                        if (bdr_agent.Visibility == Visibility.Visible)
-                        {
-                            Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
-                        }
-                        else
-                            countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                        //Users userModel = new Users();
+                        //Customers custModel = new Customers();
+                        //Customers cust = new Customers();
+                        //cust = await custModel.GetByID((int)cb_customer.SelectedValue);
+                        //countryPackageDates = await cpdModel.GetAll();
+                        //if (bdr_agent.Visibility == Visibility.Visible)
+                        //{
+                        //    Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                        //    countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
+                        //}
+                        //else
+                        //    countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
 
-                        foreach (var p in countryPackageDates)
-                        {
-                            if (p.islimitDate)
-                                p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
-                            else
-                            {
-                                switch (p.monthCount)
-                                {
-                                    case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
-                                    case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
-                                    case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
-                                    case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
-                                }
-                            }
-                        }
-                        cb_period.DisplayMemberPath = "notes";
-                        cb_period.SelectedValuePath = "Id";
-                        cb_period.ItemsSource = countryPackageDates;
+                        //foreach (var p in countryPackageDates)
+                        //{
+                        //    if (p.islimitDate)
+                        //        p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
+                        //    else
+                        //    {
+                        //        switch (p.monthCount)
+                        //        {
+                        //            case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                        //            case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                        //            case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                        //            case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                        //        }
+                        //    }
+                        //}
+                        //cb_period.DisplayMemberPath = "notes";
+                        //cb_period.SelectedValuePath = "Id";
+                        //cb_period.ItemsSource = countryPackageDates;
                         #endregion
                     }
 

@@ -20,6 +20,9 @@ namespace AdministratorApp.Classes
         static IEnumerable<PackageUser> packageUsers;
 
         static IEnumerable<Packages> agentPackages;
+
+        static CountryPackageDate cpd = new CountryPackageDate();
+        static IEnumerable<CountryPackageDate> countryPackageDates;
         static public async Task fillPackageUser(ComboBox combo)
         {
             packageUsers = await packageUser.GetAll();
@@ -47,14 +50,22 @@ namespace AdministratorApp.Classes
         }
 
         static public async Task fillPackageByCustomer(ComboBox combo , int customerId)
-        {///////////////??????????
+        {
             packages = await package.GetByCustomerCountry(customerId);
             combo.ItemsSource = packages.Where(x => x.isActive == 1 );
             combo.SelectedValuePath = "packageId";
             combo.DisplayMemberPath = "packageName";
             combo.SelectedIndex = -1;
         }
-
+        
+        static public async Task fillPeriod(ComboBox combo, int customerId, int packageId)
+        {
+            countryPackageDates = await cpd.GetByCustomerPackId(customerId , packageId);
+            combo.ItemsSource = packages.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "Id";
+            combo.DisplayMemberPath = "countryName";
+            combo.SelectedIndex = -1;
+        }
         static public async Task fillAgentPackage(ComboBox combo , int agentId)
         {
             agentPackages = await package.GetPackagesByAgent(agentId);
