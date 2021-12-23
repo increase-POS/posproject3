@@ -138,36 +138,50 @@ namespace Programs_Server.Controllers
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                        var row = entity.packageUser
-                       .Where(u => u.packageUserId == packageUserId)
-                       .Select(S => new
-                       {
+                        var row = (from S in entity.packageUser
+                                    join A in entity.users on S.userId equals A.userId
+                                    join C in entity.customers on S.customerId equals C.custId
+                                    join P in entity.packages on S.packageId equals P.packageId
+                                    join D in entity.countryPackageDate on S.countryPackageId equals D.Id
+                                    join N in entity.countriesCodes on D.countryId equals N.countryId
+                                    where S.packageUserId == packageUserId
+                                    select new packageUserModel()
+                                    {
+                                        packageUserId = S.packageUserId,
+                                        packageId = S.packageId,
+                                        userId = S.userId,
+                                        userName = A.name,
+                                        userLastName = A.lastName,
+                                        packageSaleCode = S.packageSaleCode,
+                                        packageNumber = S.packageNumber,
+                                        customerId = S.customerId,
+                                        customerName = C.custname,
+                                        customerLastName = C.lastName,
+                                        customerServerCode = S.customerServerCode,
+                                        isBooked = S.isBooked,
+                                        notes = S.notes,
+                                        createDate = S.createDate,
+                                        updateDate = S.updateDate,
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
+                                        bookDate = S.bookDate,
+                                        isActive = S.isActive,
+                                        expireDate = S.expireDate,
+                                        isOnlineServer = S.isOnlineServer,
+                                        countryPackageId = S.countryPackageId,
+                                        canRenew = S.canRenew,
+                                        packageName=P.packageName,
+                                        monthCount=D.monthCount,
+                                        islimitDate=D.islimitDate,
+                                        price=D.price,
+                                        currency=N.currency,
 
-                           S.packageUserId,
-                           S.packageId,
-                           S.userId,
-                           S.packageSaleCode,
-                           S.packageNumber,
-                           S.customerId,
-                           S.customerServerCode,
-                           S.isBooked,
-                           S.notes,
-                           S.createDate,
-                           S.updateDate,
-                           S.createUserId,
-                           S.updateUserId,
-                           S.bookDate,
-                           S.isActive,
-                           S.expireDate,
-                           S.isOnlineServer,
-                           S.countryPackageId,
-                           S.canRenew,
 
-                       })
-                       .FirstOrDefault();
-
-
+                                    }).FirstOrDefault();
+                        
+                    
                         return TokenManager.GenerateToken(row);
+
                     }
 
                 }
