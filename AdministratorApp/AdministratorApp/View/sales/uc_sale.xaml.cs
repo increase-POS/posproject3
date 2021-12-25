@@ -32,10 +32,12 @@ namespace AdministratorApp.View.sales
     public partial class uc_sale : UserControl
     {
         public Packages package = new Packages();
-        public int customerId , agentId , packageId , countryPackageId;
+        public int oldCustomerId , oldAgentId , oldPackageId , oldCountryPackageId;
        
         public static List<string> requiredControlList;
-        PackageUser packuser = new PackageUser();
+        //public static int oldPackageId = 0, oldCountryPackageId;
+
+        public PackageUser packuser = new PackageUser();
         PackageUser packuserModel = new PackageUser();
 
         public uc_sale()
@@ -101,31 +103,32 @@ namespace AdministratorApp.View.sales
                     cb_agent.SelectedValue = 3;
                 }
 
-                //if (packageId == 0)
-                //{
-                //    Clear();
-                //    btn_add.IsEnabled = true;
-                //    btn_upgrade.IsEnabled = false;
-                //}
-                //else
-                //{
-                //    btn_add.IsEnabled = false;
-                //    btn_upgrade.IsEnabled = true;
-                //    cb_customer.SelectedValue = customerId;
-                //    cb_agent.SelectedValue = agentId;
-                //    //cb_package.SelectedValue = packageId;
-                //    //cb_period.SelectedValue = countryPackageId;
-                //}
+                if (oldPackageId == 0)
+                {
+                    Clear();
+                    btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+                }
+                else
+                {
+                    btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
+                    cb_customer.SelectedValue = oldCustomerId;
+                    cb_agent.SelectedValue = oldAgentId;
+                    if (MainWindow.userLogin.type.Equals("ag"))
+                    {
+                        cb_package.SelectedValue = oldPackageId;
+                        cb_period.SelectedValue = oldCountryPackageId;
+                    }
+                }
 
-        //    HelpClass.EndAwait(grid_main);
-        //}
-        //    catch (Exception ex)
-        //    {
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //    catch (Exception ex)
+            //    {
 
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //}
-    }
+            //        HelpClass.EndAwait(grid_main);
+            //        HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
         private void translate()
         {
             txt_title.Text = MainWindow.resourcemanager.GetString("trSales");
@@ -136,11 +139,11 @@ namespace AdministratorApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_period, MainWindow.resourcemanager.GetString("trPeriod"));
 
-            if(packageId == 0)
-                btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
-            else
-                btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
-            btn_upgrade.Content = MainWindow.resourcemanager.GetString("trUpgrade");
+            //if(packageId == 0)
+            //    btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+            //else
+            //    btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
+            //btn_upgrade.Content = MainWindow.resourcemanager.GetString("trUpgrade");
 
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
             txt_packageCodeTitle.Text = MainWindow.resourcemanager.GetString("trCode");
@@ -182,6 +185,8 @@ namespace AdministratorApp.View.sales
                         await FillCombo.fillPeriod(cb_period , (int)cb_customer.SelectedValue , (int)cb_package.SelectedValue);
                         #region fill period 
 
+                        if (oldPackageId != 0)
+                            cb_period.SelectedValue = oldCountryPackageId;
                         //Users userModel = new Users();
                         //Customers custModel = new Customers();
                         //Customers cust = new Customers();
@@ -266,6 +271,8 @@ namespace AdministratorApp.View.sales
             }
             catch { }
             HelpClass.clearValidate(requiredControlList, this);
+            cb_customer.SelectedIndex = -1;
+            cb_package.SelectedIndex = -1;
             cb_period.SelectedIndex = -1;
         }
 
@@ -318,34 +325,21 @@ namespace AdministratorApp.View.sales
             }
         }
         #endregion
-        public static int oldPackageId = 0;
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        {//sale
+        {//book
              //try
              //{
              //    HelpClass.StartAwait(grid_main);
 
-                oldPackageId = 0;
                 int msg = 0;
 
                 string pop = "";
                
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    //packuser.packageUserId = 0;
                     packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
                     Users userModel = new Users();
                     Users agent = new Users();
-                    //if (MainWindow.userLogin.type.Equals("ag"))
-                    //{
-                    //    packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
-                    //    agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                    //}
-                    //else
-                    //{
-                    //    packuser.userId = 3;
-                    //    agent = await userModel.GetByID(3);
-                    //}
                     packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
                     agent = await userModel.GetByID((int)cb_agent.SelectedValue);
                     packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
@@ -356,8 +350,14 @@ namespace AdministratorApp.View.sales
                     else
                         packuser.isActive = 0;
                     packuser.canRenew = true;
+                    packuser.packageSaleCode = packuser.packageSaleCode;
+                    packuser.notes = "";
+                    packuser.isOnlineServer = null;
+                    packuser.countryPackageId = (int)cb_period.SelectedValue;
+                    packuser.oldPackageId = oldPackageId;
+                    packuser.oldCountryPackageId = oldCountryPackageId;
 
-                    if (packuser.packageUserId == 0) pop = "trPopAddBook";
+                if (packuser.packageUserId == 0) pop = "trPopAddBook";
                     else pop = "trPopUpgradeSucceed";
 
                     msg = await packuserModel.packageBook(packuser);
@@ -367,8 +367,8 @@ namespace AdministratorApp.View.sales
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString(pop), animation: ToasterAnimation.FadeIn);
-
-                        Clear();
+                        if(pop.Equals("trPopAddBook"))
+                           Clear();
                     }
                 }
 
@@ -487,7 +487,10 @@ namespace AdministratorApp.View.sales
                     cb_period.IsEnabled = true;
 
                     if (MainWindow.userLogin.type != "ag")
-                        await FillCombo.fillPackageByCustomer(cb_package, (int)cb_customer.SelectedValue);////?????????
+                    {
+                        await FillCombo.fillPackageByCustomer(cb_package, (int)cb_customer.SelectedValue);
+                        cb_package.SelectedValue = oldPackageId;
+                    }
                 }
             //}
             //catch (Exception ex)
@@ -571,7 +574,7 @@ namespace AdministratorApp.View.sales
                     cb_period.DisplayMemberPath = "notes";
                     cb_period.SelectedValuePath = "Id";
                     cb_period.ItemsSource = countryPackageDates;
-                    if(customerId != 0) cb_period.SelectedValue = countryPackageId;
+                    if(oldCustomerId != 0) cb_period.SelectedValue = oldCountryPackageId;
                 #endregion
 
             }

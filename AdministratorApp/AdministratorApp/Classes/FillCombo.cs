@@ -33,8 +33,9 @@ namespace AdministratorApp.Classes
 
         static public async Task fillBookNum(ComboBox combo , int customerId)
         {
-            packageUsers = await packageUser.GetAll();
-            combo.ItemsSource = packageUsers.Where(x => x.isActive == 1 && x.customerId == customerId);
+            packageUsers = await packageUser.GetByCustomerId(customerId);
+
+            combo.ItemsSource = packageUsers.Where(x => x.isActive == 1 );
             combo.SelectedValuePath = "packageUserId";
             combo.DisplayMemberPath = "packageNumber";
             combo.SelectedIndex = -1;
@@ -61,9 +62,18 @@ namespace AdministratorApp.Classes
         static public async Task fillPeriod(ComboBox combo, int customerId, int packageId)
         {
             countryPackageDates = await cpd.GetByCustomerPackId(customerId , packageId);
-            combo.ItemsSource = packages.Where(x => x.isActive == 1);
+
+            foreach (CountryPackageDate cpd in countryPackageDates)
+            {
+                string period = "";
+
+                period = HelpClass.getPeriod(cpd);
+
+                cpd.notes = period + "       " + cpd.price + " " + cpd.currency;
+            }
+            combo.ItemsSource = countryPackageDates.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "Id";
-            combo.DisplayMemberPath = "countryName";
+            combo.DisplayMemberPath = "notes";
             combo.SelectedIndex = -1;
         }
         static public async Task fillAgentPackage(ComboBox combo , int agentId)
@@ -115,6 +125,7 @@ namespace AdministratorApp.Classes
       
         static public async Task fillAgent(ComboBox combo)
         {
+            users = null;
             users = await user.GetAll();
             combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag");
             combo.SelectedValuePath = "userId";

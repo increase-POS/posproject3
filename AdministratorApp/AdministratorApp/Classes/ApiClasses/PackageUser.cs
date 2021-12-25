@@ -57,9 +57,6 @@ namespace AdministratorApp.ApiClasses
         public Nullable<System.DateTime> endDate { get; set; }
         public bool islimitDate { get; set; }
 
-
-
-
     }
 
     public class PackageUser
@@ -84,10 +81,27 @@ namespace AdministratorApp.ApiClasses
         public string userLastName { get; set; }
         public string customerName { get; set; }
         public string customerLastName { get; set; }
-
         public bool canDelete { get; set; }
         public Nullable<int> countryPackageId { get; set; }
-    public bool canRenew { get; set; }
+        public bool canRenew { get; set; }
+        public Nullable<bool> isOnlineServer { get; set; }
+        public int oldPackageId { get; set; }
+        public string type { get; set; }
+        public bool isPayed { get; set; }
+        public int salesInvCount { get; set; }
+        public int monthCount { get; set; }
+        public Nullable<System.DateTime> activatedate { get; set; }
+        public bool isServerActivated { get; set; }
+        public Nullable<int> oldCountryPackageId { get; set; }
+        public string packageName { get; set; }
+        public bool islimitDate { get; set; }
+        public Nullable<decimal> price { get; set; }
+        public string currency { get; set; }
+        public string programName { get; set; }
+        public string verName { get; set; }
+        public int branchCount { get; set; }
+        public int programId { get; set; }
+        public int verId { get; set; }
 
         private string urimainpath = "packageUser/";
         /// <summary>
@@ -339,6 +353,27 @@ namespace AdministratorApp.ApiClasses
 
             return await APIResult.post(method, parameters);
 
+
+        }
+
+        public async Task<List<PackageUser>> GetByCustomerId(int customerId)
+        {
+            List<PackageUser> list = new List<PackageUser>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("customerId", customerId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByCustomerId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<PackageUser>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
 
         }
 

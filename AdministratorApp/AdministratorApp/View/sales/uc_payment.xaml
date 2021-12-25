@@ -106,7 +106,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="Process Num" Binding="{Binding Path=ssssssss}">
+                            <DataGridTextColumn Width="*"  Header="Process Num" Binding="{Binding Path=code}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -117,7 +117,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="booked Num" Binding="{Binding Path=ssssssss}">
+                            <DataGridTextColumn Width="*"  Header="booked Num" Binding="{Binding Path=packageNumber}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -128,7 +128,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Process Date" Binding="{Binding Path=ssssssss}">
+                            <DataGridTextColumn Width="*"  Header="Process Date" Binding="{Binding Path=updateDate}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -139,7 +139,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Expire Date" Binding="{Binding Path=ssssssss}">
+                            <DataGridTextColumn Width="*"  Header="Expire Date" Binding="{Binding Path=expireDate}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -150,7 +150,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Paid" Binding="{Binding Path=ssssssss}">
+                            <DataGridTextColumn Width="*"  Header="Paid" Binding="{Binding Path=totalnet}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -284,7 +284,8 @@
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Center" BorderThickness="0"
-                                        Height="40" SelectionChanged="Cb_customer_SelectionChanged"   />
+                                        Height="40" 
+                                        SelectionChanged="Cb_customer_SelectionChanged"   />
                             <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_customer"
                                   HorizontalAlignment="Right"    Visibility="Collapsed"  
                                   VerticalAlignment="Center" Width="15"  Height="15"
@@ -315,9 +316,10 @@
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Discount..."    
                                      Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     MaxLength="9"    Height="40"   Margin="4,0" IsEnabled="False"
+                                     MaxLength="9"    Height="40"   Margin="4,0" IsEnabled="False" 
                                      PreviewTextInput="Number_PreviewTextInput" 
-                                     PreviewKeyDown="Spaces_PreviewKeyDown"/>
+                                     PreviewKeyDown="Spaces_PreviewKeyDown" 
+                                     TextChanged="Tb_discount_TextChanged"/>
                             <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
                          VerticalAlignment="Center" Width="15"  Height="15"
