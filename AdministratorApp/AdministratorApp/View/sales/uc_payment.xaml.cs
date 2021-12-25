@@ -55,9 +55,13 @@ namespace AdministratorApp.View.sales
       
         public static List<string> requiredControlList;
         PackageUser packageUserModel = new PackageUser();
+        PackageUser packageUser = new PackageUser();
+        Packages package = new Packages();
+        IEnumerable<PackageUser> packageUsers;
         IEnumerable<PayOp> payOps;
-        //IEnumerable<PackageUser> packageUsers;
         PayOp payOp = new PayOp();
+        decimal totalNet = 0;
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             //try
@@ -121,7 +125,7 @@ namespace AdministratorApp.View.sales
             dg_payments.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookNum");
             dg_payments.Columns[2].Header = MainWindow.resourcemanager.GetString("trProcessDate");
             dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trExpirationDate");
-            dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trPaid");
+            dg_payments.Columns[4].Header = MainWindow.resourcemanager.GetString("trPaid");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
@@ -588,38 +592,69 @@ namespace AdministratorApp.View.sales
             //    HelpClass.ExceptionMessage(ex, this);
             //}
         }
-        PackageUser packageUser = new PackageUser();
-        Packages package = new Packages();
-
+        
         private async void Cb_packageNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
          //try
          //{
          //    HelpClass.StartAwait(grid_main);
 
+            if (cb_packageNumber.SelectedIndex != -1)
+            {
                 btn_upgrade.IsEnabled = true;
+
+                packageUser = cb_packageNumber.SelectedItem as PackageUser;
+
                 #region fill Package details
-                packageUser = await packageUserModel.GetByID((int)cb_packageNumber.SelectedValue);
-                //packageUsers = await packageUserModel.GetAll();
-                //packageUsers = packageUsers.Where(p => p.packageId == (int)cb_packageNumber.SelectedValue);
-                Packages packageModel = new Packages();
+                //packageUser = await packageUserModel.GetByID((int)cb_packageNumber.SelectedValue);
+
+                //Packages packageModel = new Packages();
                 if (packageUser != null)
                 {
-                    package = await packageModel.GetByID(packageUser.packageId.Value);
-                    txt_packageName.Text = package.packageName;
-                    CountryPackageDate countryPackageDate = new CountryPackageDate();
-                    CountryPackageDate countryPackageDateModel = new CountryPackageDate();
-                    countryPackageDate = await countryPackageDateModel.GetByID(packageUser.countryPackageId.Value);
-                    txt_period.Text = countryPackageDate.monthCount.ToString();///////??????????converter
+                    txt_packageNumberTitle.Text = packageUser.packageNumber;
+                    txt_packageName.Text = packageUser.packageName;
+                    txt_period.Text = packageUser.monthCount.ToString();//converter
                     txt_expirDate.Text = packageUser.expireDate.ToString();
-                    txt_price.Text = countryPackageDate.price.ToString();
-                    txt_moneyCode.Text = countryPackageDate.currency;
+                    txt_price.Text = packageUser.price.ToString();
+                    txt_moneyCode.Text = packageUser.currency;
                     txt_discount.Text = tb_discount.Text;
-                    txt_moneyCode1.Text = countryPackageDate.currency;
-                    txt_total.Text = (float.Parse(txt_price.Text) - int.Parse(tb_discount.Text)).ToString();
-                    txt_moneyCode3.Text = countryPackageDate.currency;
+                    txt_expirDate.Text = packageUser.expireDate.ToString();
+                    txt_moneyCode1.Text = packageUser.currency;
+                    int discount = 0;
+                    try
+                    {
+                        discount = int.Parse(tb_discount.Text);
+                    }
+                    catch { discount = 0; }
+                    //txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
+                    txt_moneyCode3.Text = packageUser.currency;
+                    //package = await packageModel.GetByID(packageUser.packageId.Value);
+                    //txt_packageName.Text = package.packageName;
+                    //CountryPackageDate countryPackageDate = new CountryPackageDate();
+                    //CountryPackageDate countryPackageDateModel = new CountryPackageDate();
+                    //countryPackageDate = await countryPackageDateModel.GetByID(packageUser.countryPackageId.Value);
+                    //txt_period.Text = HelpClass.getPeriod(countryPackageDate);
+                    //txt_expirDate.Text = packageUser.expireDate.ToString();
+                    //txt_price.Text = countryPackageDate.price.ToString();
+                    //txt_moneyCode.Text = countryPackageDate.currency;
+                    //txt_discount.Text = tb_discount.Text;
+                    //txt_moneyCode1.Text = countryPackageDate.currency;
+                    //int discount = 0;
+                    //try
+                    //{
+                    //    discount = int.Parse(tb_discount.Text);
+                    //}
+                    //catch { discount = 0; }
+                    //txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
+                    //txt_moneyCode3.Text = countryPackageDate.currency;
                 }
                 #endregion
+
+                #region fill datagrid
+                payOps = await payOp.GetByCustomerId((int)cb_customer.SelectedValue);
+                dg_payments.ItemsSource = payOps;
+                #endregion
+            }
             //    HelpClass.EndAwait(grid_main);
             //}
             //catch (Exception ex)
@@ -637,23 +672,20 @@ namespace AdministratorApp.View.sales
 
                 if (packageUser.packageId > 0)
                 {
-                    //package = await package.GetByID(packageUser.packageId.Value);
                     MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
                     uc_sales.Instance.Window_Loaded(null, null);
                     uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
                     uc_sale.Instance.UserControl_Loaded(null, null);
                     uc_sale.Instance.package = package;
 
-                    uc_sale.Instance.customerId = packageUser.customerId.Value;
-                    uc_sale.Instance.agentId = packageUser.userId.Value;
-                    uc_sale.Instance.packageId = packageUser.packageId.Value;
-                    try
-                    {
-                        uc_sale.Instance.countryPackageId = packageUser.countryPackageId.Value;
-                    }
-                    catch { }
+                    uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
+                    uc_sale.Instance.oldAgentId = packageUser.userId.Value;
+                    uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
+                    uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
+                    uc_sale.Instance.packuser = packageUser;
+
                     //await uc_sale.Instance.fillInputs(package, packageUser.userId.Value, packageUser.customerId.Value);
-                }
+            }
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -672,16 +704,18 @@ namespace AdministratorApp.View.sales
             int msg = 0;
 
             payOp.Price = decimal.Parse(txt_price.Text);
-            payOp.code = "";
-            payOp.type = "";
+            payOp.code = "";//auto po-000000
+            payOp.type = packageUser.notes;//from package user????????
             payOp.packageUserId = packageUser.packageUserId;
             payOp.createUserId = MainWindow.userID;
             payOp.notes = "";
             payOp.discountValue = decimal.Parse(txt_discount.Text);
-            payOp.agentId = 0;//??????????????????
+            if (MainWindow.userLogin.type.Equals("ag"))
+                payOp.agentId = MainWindow.userID;
+            else payOp.agentId = 3;
             payOp.customerId = (int)cb_customer.SelectedValue;
             payOp.countryPackageId = packageUser.countryPackageId;
-            payOp.totalnet = decimal.Parse(txt_total.Text);////????
+            payOp.totalnet = totalNet;
 
             msg = await packageUserModel.packagePay(packageUser , payOp);
             if (msg <= 0)
@@ -699,6 +733,26 @@ namespace AdministratorApp.View.sales
             //    HelpClass.EndAwait(grid_main);
             //    HelpClass.ExceptionMessage(ex, this);
             //}
+        }
+
+        private void Tb_discount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+
+                try
+                {
+                    txt_discount.Text = tb_discount.Text;
+                }
+                catch { txt_discount.Text = "0"; }
+                totalNet = decimal.Parse(txt_price.Text) - int.Parse(txt_discount.Text);
+                txt_total.Text = totalNet.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                //HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

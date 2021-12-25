@@ -33,6 +33,8 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> customerId { get; set; }
         public Nullable<int> countryPackageId { get; set; }
         public decimal totalnet { get; set; }
+        public string packageNumber { get; set; }//bookNum
+        public Nullable<System.DateTime> expireDate { get; set; }//expireDate
 
         private string urimainpath = "PayOp/";
         /// <summary>

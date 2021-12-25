@@ -673,8 +673,24 @@ namespace AdministratorApp.Classes
 
         }
 
-      
+       public static string getPeriod(CountryPackageDate cpd)
+        {
+            string period = "";
 
+            if (cpd.islimitDate)
+                period = MainWindow.resourcemanager.GetString("trUnLimited");
+            else
+            {
+                switch (cpd.monthCount)
+                {
+                    case 1: period = MainWindow.resourcemanager.GetString("trOneMonth"); break;
+                    case 3: period = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
+                    case 6: period = MainWindow.resourcemanager.GetString("trSixMonth"); break;
+                    case 0: period = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                }
+            }
+            return period;
+        }
 
         public static string translate(string str)
         {
