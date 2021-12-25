@@ -626,7 +626,7 @@ namespace AdministratorApp.View.sales
                         discount = int.Parse(tb_discount.Text);
                     }
                     catch { discount = 0; }
-                    //txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
+                    txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
                     txt_moneyCode3.Text = packageUser.currency;
                     //package = await packageModel.GetByID(packageUser.packageId.Value);
                     //txt_packageName.Text = package.packageName;

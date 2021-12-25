@@ -466,12 +466,12 @@ namespace AdministratorApp.View.sales
                         uc_sale.Instance.UserControl_Loaded(null, null);
                         uc_sale.Instance.package = package;
                        
-                        uc_sale.Instance.customerId = packageUser.customerId.Value;
-                        uc_sale.Instance.agentId = packageUser.userId.Value;
-                        uc_sale.Instance.packageId = packageUser.packageId.Value;
+                        uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
+                        uc_sale.Instance.oldAgentId = packageUser.userId.Value;
+                        uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
                         try
                         {
-                            uc_sale.Instance.countryPackageId = packageUser.countryPackageId.Value;
+                            uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
                         }
                         catch { }
                         await uc_sale.Instance.fillInputs(package , packageUser.userId.Value , packageUser.customerId.Value);
