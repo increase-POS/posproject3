@@ -2009,5 +2009,146 @@ namespace Programs_Server.Controllers
         }
 
 
+        [HttpPost]
+        [Route("GetByCustomerId")]
+        public string GetByCustomerId(string token)//int packageUserId
+        {
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int customerId = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "customerId")
+                    {
+                        customerId = int.Parse(c.Value);
+                    }
+
+
+                }
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        var List = (from PU in entity.packageUser
+                                    join D in entity.countryPackageDate on PU.countryPackageId equals D.Id
+                               
+                                    join N in entity.countriesCodes on D.countryId equals N.countryId
+                                    join C in entity.customers on N.countryId equals C.countryId
+                                    join S in entity.packages on D.packageId equals S.packageId
+                                    join G in entity.programs on S.programId equals G.programId
+                                    join V in entity.versions on S.verId equals V.verId
+                                    where  C.custId == customerId 
+
+                                    select new packageUserModel()
+                                    {
+
+                                        packageId = PU.packageId,
+                                        notes = PU.notes,
+
+
+                                        isActive = PU.isActive,
+
+
+                                        packageName = S.packageName,
+                                        programName = G.name,
+                                        programId = G.programId,
+                                        verName = V.name,
+                                        verId = V.verId,
+                                        branchCount = S.branchCount,
+                                        packageUserId = PU.packageUserId,
+                                 
+                                        userId = PU.userId,
+                                     
+                                        packageSaleCode = PU.packageSaleCode,
+                                        packageNumber = PU.packageNumber,
+                                        customerId = PU.customerId,
+                                        customerName = C.custname,
+                                        customerLastName = C.lastName,
+                                        customerServerCode = PU.customerServerCode,
+                                        isBooked = PU.isBooked,
+                                      
+                                        createDate = PU.createDate,
+                                        updateDate = PU.updateDate,
+                                        createUserId = PU.createUserId,
+                                        updateUserId = PU.updateUserId,
+                                        bookDate = PU.bookDate,
+                                       
+                                        expireDate = PU.expireDate,
+                                        isOnlineServer = PU.isOnlineServer,
+                                        countryPackageId = PU.countryPackageId,
+                                        canRenew = PU.canRenew,
+                                        type=PU.type,
+                                        price=D.price,
+
+                                    }).ToList();
+
+                        var glist = List.GroupBy(X => X.packageId).Select(X => new packageUserModel
+                        {
+                           
+                            packageId = X.FirstOrDefault().packageId,
+                            notes = X.FirstOrDefault().notes,
+
+
+                            isActive = X.FirstOrDefault().isActive,
+
+
+                            packageName = X.FirstOrDefault().packageName,
+                            programName = X.FirstOrDefault().programName,
+                            programId = X.FirstOrDefault().programId,
+                            verName = X.FirstOrDefault().verName,
+                            verId = X.FirstOrDefault().verId,
+                            branchCount = X.FirstOrDefault().branchCount,
+                            packageUserId = X.FirstOrDefault().packageUserId,
+
+                            userId = X.FirstOrDefault().userId,
+
+                            packageSaleCode = X.FirstOrDefault().packageSaleCode,
+                            packageNumber = X.FirstOrDefault().packageNumber,
+                            customerId = X.FirstOrDefault().customerId,
+                            customerName = X.FirstOrDefault().customerName,
+                            customerLastName = X.FirstOrDefault().customerLastName,
+                            customerServerCode = X.FirstOrDefault().customerServerCode,
+                            isBooked = X.FirstOrDefault().isBooked,
+
+                            createDate = X.FirstOrDefault().createDate,
+                            updateDate = X.FirstOrDefault().updateDate,
+                            createUserId = X.FirstOrDefault().createUserId,
+                            updateUserId = X.FirstOrDefault().updateUserId,
+                            bookDate = X.FirstOrDefault().bookDate,
+
+                            expireDate = X.FirstOrDefault().expireDate,
+                            isOnlineServer = X.FirstOrDefault().isOnlineServer,
+                            countryPackageId = X.FirstOrDefault().countryPackageId,
+                            canRenew = X.FirstOrDefault().canRenew,
+                            type = X.FirstOrDefault().type,
+                            price = X.FirstOrDefault().price,
+                        }).ToList();
+                        return TokenManager.GenerateToken(glist);
+
+                    }
+
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+
+
+
+        }
+
     }
 }

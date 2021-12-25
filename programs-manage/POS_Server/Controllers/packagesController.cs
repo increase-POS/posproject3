@@ -876,42 +876,42 @@ namespace Programs_Server.Controllers
                     {
 
                         List = (from S in entity.packages
-                                    join paa in entity.agentPackage on S.packageId equals paa.packageId into ppa
-                                    from pa in ppa.DefaultIfEmpty()
-                                    where pa.agentId == userId
-                                    select new packagesModel()
+                                join paa in entity.agentPackage on S.packageId equals paa.packageId into ppa
+                                join G in entity.programs on S.programId equals G.programId
+                                join V in entity.versions on S.verId equals V.verId
+                                from pa in ppa.DefaultIfEmpty()
+                                where pa.agentId == userId
+                                select new packagesModel()
 
-                                    {
-                                        
-                                        packageId = S.packageId,
-                                        packageName = S.packageName,
-                                        details = S.details,
-                                        branchCount = S.branchCount,
-                                        posCount = S.posCount,
-                                        userCount = S.userCount,
-                                        vendorCount = S.vendorCount,
-                                        customerCount = S.customerCount,
-                                        itemCount = S.itemCount,
-                                        salesInvCount = S.salesInvCount,
-                                        programId = S.programId,
+                                {
+
+                                    packageId = S.packageId,
+                                    packageName = S.packageName,
+                                    details = S.details,
+                                    branchCount = S.branchCount,
+                                    posCount = S.posCount,
+                                    userCount = S.userCount,
+                                    vendorCount = S.vendorCount,
+                                    customerCount = S.customerCount,
+                                    itemCount = S.itemCount,
+                                    salesInvCount = S.salesInvCount,
+                                    programId = S.programId,
                                     //    programName = S.programs.name,
-                                        verId = S.verId,
-                                     //   verName = S.versions.name,
+                                    verId = S.verId,
+                                    //   verName = S.versions.name,
 
-                                        isActive = S.isActive,
-                                        createDate = S.createDate,
-                                        updateDate = S.updateDate,
-                                        packageCode = S.packageCode,
-                                        storeCount = S.storeCount,
+                                    isActive = S.isActive,
+                                    createDate = S.createDate,
+                                    updateDate = S.updateDate,
+                                    packageCode = S.packageCode,
+                                    storeCount = S.storeCount,
 
-                                        createUserId = S.createUserId,
-                                        updateUserId = S.updateUserId,
-                                        notes = S.notes,
-
-
-                                    }).ToList();
-                        //if (List == null||List.Count==0)
-                        //{
+                                    createUserId = S.createUserId,
+                                    updateUserId = S.updateUserId,
+                                    notes = S.notes,
+                                    programName = G.name,
+                                    verName = V.name,
+                                }).ToList();
                         //    List = new List<packagesModel>();
                         //}
                         return TokenManager.GenerateToken(List);
@@ -1027,8 +1027,6 @@ namespace Programs_Server.Controllers
         public string GetByCustomerCountry(string token)//int packageUserId
         {
 
-
-
             string message = "";
 
             token = TokenManager.readToken(HttpContext.Current.Request);
@@ -1060,10 +1058,11 @@ namespace Programs_Server.Controllers
                                     join N in entity.countriesCodes on D.countryId equals N.countryId
                                    join C in entity.customers on N.countryId equals C.countryId
                                    join S in entity.packages on D.packageId equals S.packageId
+                                    join G in entity.programs on S.programId equals G.programId
+                                    join V in entity.versions on S.verId equals V.verId
+                                    where C.countryId==D.countryId && C.custId== customerId
 
-                                   where C.countryId==D.countryId && C.custId== customerId
-
-                                   select new packageUserModel()
+                                   select new packagesModel()
                                    {
                                       
                                        packageId = S.packageId,
@@ -1074,12 +1073,25 @@ namespace Programs_Server.Controllers
                               
                                       
                                        packageName = S.packageName,
-                                     
+                                    programName = G.name,
+                                       programId = G.programId,
+                                       verName =V.name,
+                                       verId = V.verId,
+                                       branchCount =S.branchCount,
+
+                                       packageCode=S.packageCode,
+                                       posCount = S.posCount,
+                                       userCount = S.userCount,
+                                       vendorCount = S.vendorCount,
+                                       customerCount = S.customerCount,
+                                       itemCount = S.itemCount,
+                                       salesInvCount = S.salesInvCount,
+                                       storeCount = S.storeCount,
 
 
                                    }).ToList();
 
-                        var glist = List.GroupBy(X => X.packageId).Select(X => new packageUserModel
+                        var glist = List.GroupBy(X => X.packageId).Select(X => new packagesModel
                         {
                             packageId = X.FirstOrDefault().packageId,
                             notes = X.FirstOrDefault().notes,
@@ -1089,6 +1101,23 @@ namespace Programs_Server.Controllers
 
 
                             packageName = X.FirstOrDefault().packageName,
+                            programName = X.FirstOrDefault().programName,
+                            programId = X.FirstOrDefault().programId,
+                            verName = X.FirstOrDefault().verName,
+                            verId = X.FirstOrDefault().verId,
+                            branchCount = X.FirstOrDefault().branchCount,
+
+                            packageCode = X.FirstOrDefault().packageCode,
+                            posCount = X.FirstOrDefault().posCount,
+                            userCount = X.FirstOrDefault().userCount,
+                            vendorCount = X.FirstOrDefault().vendorCount,
+                            customerCount = X.FirstOrDefault().customerCount,
+                            itemCount = X.FirstOrDefault().itemCount,
+                         
+                            salesInvCount = X.FirstOrDefault().salesInvCount,
+                            storeCount = X.FirstOrDefault().storeCount,
+
+
                         }).ToList();
                         return TokenManager.GenerateToken(glist);
 

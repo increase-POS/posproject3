@@ -210,7 +210,7 @@ namespace Programs_Server.Controllers
                                     join A in entity.packageUser on S.packageUserId equals A.packageUserId
                                     join P in entity.packages on A.packageId equals P.packageId
                                     join U in entity.users on A.userId equals U.userId
-                                    where S.customerId== customerId
+                                    where S.customerId == customerId
                                     select new payOpModel()
                                     {
                                         payOpId = S.payOpId,
@@ -228,6 +228,11 @@ namespace Programs_Server.Controllers
                                         discountValue = S.discountValue,
                                         customerId = S.customerId,
                                         agentId = S.agentId,
+                                        packageNumber = A.packageNumber,
+
+                                        expireDate = A.expireDate,
+
+
                                     }).ToList();
 
                         return TokenManager.GenerateToken(List);
