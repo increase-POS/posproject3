@@ -1746,11 +1746,11 @@ namespace Programs_Server.Controllers
                                 //dbPU.isBooked = false;
                                 dbPU.notes = newObject.notes;
 
-                                dbPU.bookDate = null;
+                              //  dbPU.bookDate = null;
                                 dbPU.isActive = 1;
                                 //   dbPU.expireDate = null;
                                 dbPU.canRenew = true;
-                                dbPU.oldPackageId = newObject.packageUserId;
+                                dbPU.oldPackageId =(int) dbPU.packageId;
 
                                 dbPU.type = "np";
                                 dbPU.isPayed = true;
@@ -1795,7 +1795,7 @@ namespace Programs_Server.Controllers
                                 //   dbPU.countryPackageId = newObject.countryPackageId;
 
 
-                                dbPU.oldPackageId = dbPU.packageUserId;
+                                dbPU.oldPackageId = (int)dbPU.packageId;
                                 dbPU.type = "rn";
                                 dbPU.isPayed = true;
 
@@ -1879,7 +1879,7 @@ namespace Programs_Server.Controllers
                                 //   dbPU.countryPackageId = newObject.countryPackageId;
 
 
-                                // dbPU.oldPackageId = dbPU.packageUserId;
+                               dbPU.oldPackageId =(int) dbPU.packageId;
 
 
 
@@ -1940,19 +1940,21 @@ namespace Programs_Server.Controllers
 
                                 // dbPU.bookDate = null;
                                 dbPU.isActive = 1;
-                                if (tmpcpd.islimitDate == true)
-                                {
-                                    // dbPU.monthCount += tmpcpd.monthCount;
-                                    dbPU.monthCount = tmpcpd.monthCount;
-                                    if (dbPU.expireDate != null)
-                                    {
-                                        DateTime dt = (DateTime)dbPU.expireDate;
-                                        dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
-                                        dbPU.monthCount = 0;
+                                //dbPU.expireDate changed on upgrade
+                                //if (tmpcpd.islimitDate == true)
+                                //{
+                                //    // dbPU.monthCount += tmpcpd.monthCount;
+                                //    dbPU.monthCount = tmpcpd.monthCount;
+                                //    if (dbPU.expireDate != null)
+                                //    {
+                                //        DateTime dt = (DateTime)dbPU.expireDate;
+                                //        dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
+                                //        dbPU.monthCount = 0;
 
-                                    }
-                                }
+                                //    }
+                                //}
                                 // chang salesInvCount to add it on activation
+                                dbPU.monthCount = 0;
                                 if (tmpPackage.salesInvCount != -1)
                                 {
                                     dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
@@ -1966,13 +1968,13 @@ namespace Programs_Server.Controllers
                                 }
                                 // dbPU.expireDate = null;
                                 dbPU.canRenew = true;
-                                dbPU.oldPackageId = newObject.oldPackageId;
+                                dbPU.oldPackageId = (int)dbPU.packageId;
 
                                 dbPU.type = "chpk";
                                 dbPU.isPayed = true;
 
                                 dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
-                                dbPU.monthCount = tmpcpd.monthCount;//change  on pay
+                            //    dbPU.monthCount = tmpcpd.monthCount;//change  on pay
 
                                 dbPU.oldCountryPackageId = dbPU.countryPackageId;
 
@@ -2049,7 +2051,7 @@ namespace Programs_Server.Controllers
                                     join S in entity.packages on D.packageId equals S.packageId
                                     join G in entity.programs on S.programId equals G.programId
                                     join V in entity.versions on S.verId equals V.verId
-                                    where  C.custId == customerId 
+                                    where  PU.customerId == customerId 
 
                                     select new packageUserModel()
                                     {
@@ -2091,10 +2093,11 @@ namespace Programs_Server.Controllers
                                         canRenew = PU.canRenew,
                                         type=PU.type,
                                         price=D.price,
-
+                                        monthCount= D.monthCount,
+                                        islimitDate = D.islimitDate,
                                     }).ToList();
 
-                        var glist = List.GroupBy(X => X.packageId).Select(X => new packageUserModel
+                        var glist = List.GroupBy(X => X.packageUserId).Select(X => new packageUserModel
                         {
                            
                             packageId = X.FirstOrDefault().packageId,
@@ -2134,6 +2137,8 @@ namespace Programs_Server.Controllers
                             canRenew = X.FirstOrDefault().canRenew,
                             type = X.FirstOrDefault().type,
                             price = X.FirstOrDefault().price,
+                            monthCount = X.FirstOrDefault().monthCount,
+                            islimitDate = X.FirstOrDefault().islimitDate,
                         }).ToList();
                         return TokenManager.GenerateToken(glist);
 

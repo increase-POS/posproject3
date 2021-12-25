@@ -180,8 +180,45 @@ namespace AdministratorApp.ApiClasses
         }
 
 
+        public async Task<List<PosSerials>> GetByPackUserId(int packageUserId)
+        {
+
+            List<PosSerials> list = new List<PosSerials>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("packageUserId", serialId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByPackUserId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+
+                    list.Add(JsonConvert.DeserializeObject<PosSerials>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+
+            return list;
+
+        }
+
+        public async Task<int> UpdateList(List<PosSerials> newList, int userId)
+        {
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("userId", userId.ToString());
+
+            var list = JsonConvert.SerializeObject(newList);
+            parameters.Add("newlistobject", list);
+            //#################
+            string method = urimainpath + "UpdateList";
+            int res = await APIResult.post(method, parameters);
+            
+            return res;
 
 
+
+        }
 
     }
 }
