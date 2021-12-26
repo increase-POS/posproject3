@@ -541,8 +541,49 @@ namespace Programs_Server.Controllers
         }
 
 
+        [HttpPost]
+        [Route("GetLastNum")]
+        public string GetLastNum(string token)
+        {
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                string payOpCode = "";
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "payOpCode")
+                    {
+                        payOpCode = c.Value;
+                    }
 
+                }
+                List<string> numberList;
+                int lastNum = 0;
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    numberList = entity.payOp.Where(b => b.code.Contains(payOpCode + "-")).Select(b => b.code).ToList();
 
+                    for (int i = 0; i < numberList.Count; i++)
+                    {
+                        string code = numberList[i];
+                        string s = code.Substring(code.LastIndexOf("-") + 1);
+                        numberList[i] = s;
+                    }
+                    if (numberList.Count > 0)
+                    {
+                        numberList.Sort();
+                        lastNum = int.Parse(numberList[numberList.Count - 1]);
+                    }
+                }
+                return TokenManager.GenerateToken(lastNum);
+            }
+        }
 
     }
 }

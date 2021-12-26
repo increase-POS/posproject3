@@ -364,6 +364,58 @@ namespace Programs_Server.Controllers
 
         }
 
+        public packagesModel GetPmByID(int packageId)
+        {
+
+            packagesModel row = new packagesModel();
+
+            try
+            {
+
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    row = entity.packages
+                       .Where(u => u.packageId == packageId && u.isActive == 1)
+                       .Select(S => new packagesModel
+                       {
+
+                           //  packageId = S.packageId,
+                           packageName = S.packageName,
+                           // details = S.details,
+                           branchCount = S.branchCount,
+                           posCount = S.posCount,
+                           userCount = S.userCount,
+                           vendorCount = S.vendorCount,
+                           customerCount = S.customerCount,
+                           itemCount = S.itemCount,
+                           salesInvCount = S.salesInvCount,
+                           programId = S.programId,
+                           programName = S.programs.name,
+                           verId = S.verId,
+                           verName=S.versions.name,
+                          
+                           isActive = S.isActive,
+                           createDate = S.createDate,
+                           updateDate = S.updateDate,
+                           packageCode = S.packageCode,
+                           storeCount = S.storeCount,
+
+                           createUserId = S.createUserId,
+                           updateUserId = S.updateUserId,
+                           notes = S.notes,
+
+                       }).FirstOrDefault();
+
+                    return row;
+                }
+
+            }
+            catch
+            {
+                return row;
+            }
+
+        }
 
         // add or update location
         [HttpPost]

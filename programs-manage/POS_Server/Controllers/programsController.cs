@@ -258,6 +258,50 @@ namespace Programs_Server.Controllers
             //    return NotFound();
         }
 
+       
+        public programs GetByID(int programId)//int programId
+        {
+
+            string message = "";
+
+
+            programs prog = new programs();
+
+
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                  List<programs>  List = entity.programs.ToList();
+                    prog = List.Where(u => u.programId == programId)
+                       .Select(S => new programs
+                       {
+
+                           programId=S.programId,
+                           name= S.name,
+                           details=  S.details,
+                           notes=S.notes,
+                           isActive= S.isActive,
+                           createDate= S.createDate,
+                           updateDate=S.updateDate,
+                           programCode= S.programCode,
+                           createUserId=  S.createUserId,
+                           updateUserId=  S.updateUserId,
+
+                       })
+                       .FirstOrDefault();
+
+                        return prog;
+                    }
+
+                }
+                catch
+                {
+                    return prog;
+                }
+        }
+
+
         [HttpPost]
         [Route("isExistCode")]
         public string isExistCode(string token)//string programCode

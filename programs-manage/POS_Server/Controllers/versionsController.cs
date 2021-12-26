@@ -265,6 +265,52 @@ namespace Programs_Server.Controllers
             //    return NotFound();
         }
 
+        public versions GetByID(int verId)//int verId
+        {
+
+
+            versions ver =new versions();
+
+
+         
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                    List<versions> List = entity.versions.ToList();
+                    ver= List.Where(u => u.verId == verId && u.isActive==1)
+                       .Select(S => new versions
+                       {
+                           verId=S.verId,
+                           name=S.name,
+                           details= S.details,
+                           isActive= S.isActive,
+                           versionscode= S.versionscode,
+                           createDate=  S.createDate,
+                           updateDate= S.updateDate,
+                           createUserId=  S.createUserId,
+                           updateUserId=   S.updateUserId,
+                           programId=   S.programId,
+
+                           notes= S.notes,
+                       })
+                       .FirstOrDefault();
+
+
+                        return ver;
+                    }
+
+                }
+                catch
+                {
+                return ver;
+                }
+
+        
+     
+        }
+
+
         // add or update location
         [HttpPost]
         [Route("Save")]

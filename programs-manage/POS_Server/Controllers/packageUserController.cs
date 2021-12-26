@@ -139,47 +139,47 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         var row = (from S in entity.packageUser
-                                    join A in entity.users on S.userId equals A.userId
-                                    join C in entity.customers on S.customerId equals C.custId
-                                    join P in entity.packages on S.packageId equals P.packageId
-                                    join D in entity.countryPackageDate on S.countryPackageId equals D.Id
-                                    join N in entity.countriesCodes on D.countryId equals N.countryId
-                                    where S.packageUserId == packageUserId
-                                    select new packageUserModel()
-                                    {
-                                        packageUserId = S.packageUserId,
-                                        packageId = S.packageId,
-                                        userId = S.userId,
-                                        userName = A.name,
-                                        userLastName = A.lastName,
-                                        packageSaleCode = S.packageSaleCode,
-                                        packageNumber = S.packageNumber,
-                                        customerId = S.customerId,
-                                        customerName = C.custname,
-                                        customerLastName = C.lastName,
-                                        customerServerCode = S.customerServerCode,
-                                        isBooked = S.isBooked,
-                                        notes = S.notes,
-                                        createDate = S.createDate,
-                                        updateDate = S.updateDate,
-                                        createUserId = S.createUserId,
-                                        updateUserId = S.updateUserId,
-                                        bookDate = S.bookDate,
-                                        isActive = S.isActive,
-                                        expireDate = S.expireDate,
-                                        isOnlineServer = S.isOnlineServer,
-                                        countryPackageId = S.countryPackageId,
-                                        canRenew = S.canRenew,
-                                        packageName=P.packageName,
-                                        monthCount=D.monthCount,
-                                        islimitDate=D.islimitDate,
-                                        price=D.price,
-                                        currency=N.currency,
+                                   join A in entity.users on S.userId equals A.userId
+                                   join C in entity.customers on S.customerId equals C.custId
+                                   join P in entity.packages on S.packageId equals P.packageId
+                                   join D in entity.countryPackageDate on S.countryPackageId equals D.Id
+                                   join N in entity.countriesCodes on D.countryId equals N.countryId
+                                   where S.packageUserId == packageUserId
+                                   select new packageUserModel()
+                                   {
+                                       packageUserId = S.packageUserId,
+                                       packageId = S.packageId,
+                                       userId = S.userId,
+                                       userName = A.name,
+                                       userLastName = A.lastName,
+                                       packageSaleCode = S.packageSaleCode,
+                                       packageNumber = S.packageNumber,
+                                       customerId = S.customerId,
+                                       customerName = C.custname,
+                                       customerLastName = C.lastName,
+                                       customerServerCode = S.customerServerCode,
+                                       isBooked = S.isBooked,
+                                       notes = S.notes,
+                                       createDate = S.createDate,
+                                       updateDate = S.updateDate,
+                                       createUserId = S.createUserId,
+                                       updateUserId = S.updateUserId,
+                                       bookDate = S.bookDate,
+                                       isActive = S.isActive,
+                                       expireDate = S.expireDate,
+                                       isOnlineServer = S.isOnlineServer,
+                                       countryPackageId = S.countryPackageId,
+                                       canRenew = S.canRenew,
+                                       packageName = P.packageName,
+                                       monthCount = D.monthCount,
+                                       islimitDate = D.islimitDate,
+                                       price = D.price,
+                                       currency = N.currency,
 
 
-                                    }).FirstOrDefault();
-                        
-                    
+                                   }).FirstOrDefault();
+
+
                         return TokenManager.GenerateToken(row);
 
                     }
@@ -943,10 +943,11 @@ namespace Programs_Server.Controllers
                 }
                 try
                 {
-                    packageUser row = new packageUser();
+                    packageUser packuserrow = new packageUser();
 
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
+                        //get packageuser row
                         // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
 
                         List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
@@ -954,7 +955,7 @@ namespace Programs_Server.Controllers
 
                         if (list != null && list.Count > 0)
                         {
-                            row = list
+                            packuserrow = list
                                         .Select(S => new packageUser
                                         {
 
@@ -977,58 +978,125 @@ namespace Programs_Server.Controllers
                                             isOnlineServer = S.isOnlineServer,
                                             countryPackageId = S.countryPackageId,
                                             canRenew = S.canRenew,
+                                            oldPackageId = S.oldPackageId,
+                                            type = S.type,
+                                            isPayed = S.isPayed,
+                                            monthCount = S.monthCount,
+                                            totalsalesInvCount = S.totalsalesInvCount,
+                                            activatedate = S.activatedate,
+                                            isServerActivated = S.isServerActivated,
+
+                                            //islimitDate = D.islimitDate,
+
 
                                         }).FirstOrDefault();
 
-
-
+                            SendDetail senditem = new SendDetail();
                             // return TokenManager.GenerateToken(row.packageUserId);
+                            // get last payed row
+                            payOpModel lastpayrow = (from S in entity.payOp
+                                                     join A in entity.packageUser on S.packageUserId equals A.packageUserId
+                                                     join D in entity.countryPackageDate on S.countryPackageId equals D.Id
+                                                     join P in entity.packages on A.packageId equals P.packageId
+                                                     join U in entity.users on A.userId equals U.userId
+                                                     where S.packageUserId == packuserrow.packageUserId
+                                                     select new payOpModel()
+                                                     {
+                                                         payOpId = S.payOpId,
+                                                         Price = S.Price,
+                                                         code = S.code,
+                                                         type = S.type,
+                                                         packageUserId = S.packageUserId,
+                                                         createUserId = S.createUserId,
+                                                         updateUserId = S.updateUserId,
+                                                         createDate = S.createDate,
+                                                         updateDate = S.updateDate,
+                                                         notes = S.notes,
+                                                         totalnet = S.totalnet,
+                                                         countryPackageId = S.countryPackageId,// from payed row
+                                                         discountValue = S.discountValue,
+                                                         customerId = S.customerId,
+                                                         agentId = S.agentId,
+                                                         packageNumber = A.packageNumber,
 
-                            if (row.isBooked == false && row.isActive == 1) //&&  row.expireDate==null 
+                                                         packageId = D.packageId,
+                                                         expireDate = A.expireDate,
+
+                                                     }).OrderBy(x => x.updateDate).ToList().Last();
+
+                            if (packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
                             {
-                                row.isBooked = true;
-                                row.customerServerCode = customerServerCode;
-                                row.bookDate = DateTime.Now;
-                                //  save server hardware key
-                                int res = Save(row);// temp comment
-                                                    //     int res = 1;// temp
-                                if (res > 0)
-                                {
-                                    //get poserials 
-                                    posSerialsController serialmodel = new posSerialsController();
-                                    List<PosSerialSend> serialList = new List<PosSerialSend>();
-                                    List<string> serialposlist = new List<string>();
-                                    serialList = serialmodel.GetBypackageUserId(row.packageUserId);
+
+                                // chpk not payed yet
+                                // dont activate until pay
+                                return TokenManager.GenerateToken("0");
+                            }
+                            else if (packuserrow.isBooked == true && packuserrow.isActive == 1) //&&  row.expireDate==null 
+                            {
+                                // first activate
+
+                                //     int res = 1;// temp
+
+                                //get poserials 
+                                programsController progcntrlr = new programsController();
+                                versionsController vercntrlr = new versionsController();
+                                programs prog = new programs();
+                                versions ver = new versions();
+                                packagesModel pack = new packagesModel();
+                                countryPackageDateController cpdCntrlr = new countryPackageDateController();
+                                countryPackageDate cpD = new countryPackageDate();
+                                posSerialsController serialmodel = new posSerialsController();
+                                List<PosSerialSend> serialList = new List<PosSerialSend>();
+                                List<string> serialposlist = new List<string>();
+
+                                serialList = serialmodel.GetBypackageUserId(packuserrow.packageUserId);
+
+                                //  serialposlist = serialList.Select(x => x.serial).ToList();
+                                // get package details
+
+                                packagesController packmodel = new packagesController();
+                                packagesSend package = new packagesSend();
+
+                                // get last package Id
+                                package = packmodel.GetByID((int)lastpayrow.packageId);
+                                pack = packmodel.GetPmByID((int)lastpayrow.packageId);
+                                prog = progcntrlr.GetByID((int)pack.programId);
+                                ver = vercntrlr.GetByID((int)pack.verId);
+                                cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
 
 
-                                    //  serialposlist = serialList.Select(x => x.serial).ToList();
-                                    // get package details
-                                    packagesController packmodel = new packagesController();
-                                    packagesSend package = new packagesSend();
-                                    package = packmodel.GetByID((int)row.packageId);
+                                // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
+                                package.programName = prog.name;
+                                package.verName = ver.name;
+                                package.packageSaleCode = packuserrow.packageSaleCode;
+                                package.expireDate = packuserrow.expireDate;
+                                package.isOnlineServer = packuserrow.isOnlineServer;
+                                package.packageNumber = packuserrow.packageNumber;
 
-                                    SendDetail senditem = new SendDetail();
-                                    senditem.packageSend = package;
-                                    senditem.PosSerialSendList = serialList;
+                                //packuserrow.countryPackageId
+                                package.islimitDate = cpD.islimitDate;
+                                package.isActive = (int)packuserrow.isActive;
+                                package.activatedate = DateTime.Now;// save on client if null 
+                             //   SendDetail senditem = new SendDetail();
 
-                                    return TokenManager.GenerateToken(senditem);
-                                }
-                                else
-                                {
-                                    return TokenManager.GenerateToken("0");
-                                }
+                                senditem.packageSend = package;
+                                senditem.PosSerialSendList = serialList;
+
+                            //    return TokenManager.GenerateToken(senditem);
+
+
 
                             }
                             else
                             {
                                 // serial is booked
 
-                                SendDetail senditem = new SendDetail();
+                          
 
-                                if (row.canRenew == true)
+                                if (packuserrow.canRenew == true)
                                 {
                                     // write code here
-                                    return TokenManager.GenerateToken(senditem);
+                                  //  return TokenManager.GenerateToken(senditem);
                                 }
                                 else
                                 {
@@ -1037,7 +1105,7 @@ namespace Programs_Server.Controllers
                                     ps.posCount = -2;
                                     senditem.packageSend = ps;
                                     //senditem.packageSend.posCount = -2;
-                                    return TokenManager.GenerateToken(senditem);
+                                  //  return TokenManager.GenerateToken(senditem);
 
                                 }
 
@@ -1045,6 +1113,15 @@ namespace Programs_Server.Controllers
 
                             }
 
+                            packuserrow.isServerActivated = true;
+                            packuserrow.customerServerCode = customerServerCode;
+                            packuserrow.activatedate = DateTime.Now;
+                            packuserrow.totalsalesInvCount = 0;
+                            packuserrow.canRenew = false;
+
+                            //  save server hardware key
+                            int res = Save(packuserrow);
+                            return TokenManager.GenerateToken(senditem);
                         }
                         else
                         {
@@ -1068,6 +1145,7 @@ namespace Programs_Server.Controllers
                     //error
                     return TokenManager.GenerateToken("0");
                 }
+                //   return TokenManager.GenerateToken("00");
             }
 
 
@@ -1746,11 +1824,11 @@ namespace Programs_Server.Controllers
                                 //dbPU.isBooked = false;
                                 dbPU.notes = newObject.notes;
 
-                              //  dbPU.bookDate = null;
+                                //  dbPU.bookDate = null;
                                 dbPU.isActive = 1;
                                 //   dbPU.expireDate = null;
                                 dbPU.canRenew = true;
-                                dbPU.oldPackageId =(int) dbPU.packageId;
+                                dbPU.oldPackageId = (int)dbPU.packageId;
 
                                 dbPU.type = "np";
                                 dbPU.isPayed = true;
@@ -1761,7 +1839,7 @@ namespace Programs_Server.Controllers
                                                                                    //  puEntity.Add(newObject);
 
                                 dbPU.oldCountryPackageId = dbPU.countryPackageId;
-                               entity.SaveChanges();
+                                entity.SaveChanges();
 
                                 message = newObject.packageUserId.ToString();
 
@@ -1879,7 +1957,7 @@ namespace Programs_Server.Controllers
                                 //   dbPU.countryPackageId = newObject.countryPackageId;
 
 
-                               dbPU.oldPackageId =(int) dbPU.packageId;
+                                dbPU.oldPackageId = (int)dbPU.packageId;
 
 
 
@@ -1905,7 +1983,7 @@ namespace Programs_Server.Controllers
                                 // chang salesInvCount to add it on activation
                                 if (tmpPackage.salesInvCount != -1)
                                 {
-                                    dbPU.salesInvCount += tmpPackage.salesInvCount;//change  on pay
+                                    dbPU.salesInvCount = 0;//change  on pay
                                     dbPU.totalsalesInvCount += tmpPackage.salesInvCount;
                                 }
                                 else
@@ -1974,7 +2052,7 @@ namespace Programs_Server.Controllers
                                 dbPU.isPayed = true;
 
                                 dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
-                            //    dbPU.monthCount = tmpcpd.monthCount;//change  on pay
+                                                                              //    dbPU.monthCount = tmpcpd.monthCount;//change  on pay
 
                                 dbPU.oldCountryPackageId = dbPU.countryPackageId;
 
@@ -2045,13 +2123,13 @@ namespace Programs_Server.Controllers
                     {
                         var List = (from PU in entity.packageUser
                                     join D in entity.countryPackageDate on PU.countryPackageId equals D.Id
-                               
+
                                     join N in entity.countriesCodes on D.countryId equals N.countryId
                                     join C in entity.customers on N.countryId equals C.countryId
                                     join S in entity.packages on D.packageId equals S.packageId
                                     join G in entity.programs on S.programId equals G.programId
                                     join V in entity.versions on S.verId equals V.verId
-                                    where  PU.customerId == customerId 
+                                    where PU.customerId == customerId
 
                                     select new packageUserModel()
                                     {
@@ -2070,9 +2148,9 @@ namespace Programs_Server.Controllers
                                         verId = V.verId,
                                         branchCount = S.branchCount,
                                         packageUserId = PU.packageUserId,
-                                 
+
                                         userId = PU.userId,
-                                     
+
                                         packageSaleCode = PU.packageSaleCode,
                                         packageNumber = PU.packageNumber,
                                         customerId = PU.customerId,
@@ -2080,26 +2158,26 @@ namespace Programs_Server.Controllers
                                         customerLastName = C.lastName,
                                         customerServerCode = PU.customerServerCode,
                                         isBooked = PU.isBooked,
-                                      
+
                                         createDate = PU.createDate,
                                         updateDate = PU.updateDate,
                                         createUserId = PU.createUserId,
                                         updateUserId = PU.updateUserId,
                                         bookDate = PU.bookDate,
-                                       
+
                                         expireDate = PU.expireDate,
                                         isOnlineServer = PU.isOnlineServer,
                                         countryPackageId = PU.countryPackageId,
                                         canRenew = PU.canRenew,
-                                        type=PU.type,
-                                        price=D.price,
-                                        monthCount= D.monthCount,
+                                        type = PU.type,
+                                        price = D.price,
+                                        monthCount = D.monthCount,
                                         islimitDate = D.islimitDate,
                                     }).ToList();
 
                         var glist = List.GroupBy(X => X.packageUserId).Select(X => new packageUserModel
                         {
-                           
+
                             packageId = X.FirstOrDefault().packageId,
                             notes = X.FirstOrDefault().notes,
 

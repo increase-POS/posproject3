@@ -246,9 +246,9 @@ namespace Programs_Server.Controllers
 
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
-                    List = entity.posSerials
-                       .Where(u => u.packageUserId == packageUserId && u.isActive == 1)
-                       .Select(S => new posSerials
+                    List = entity.posSerials.ToList();
+
+                    List=List.Where(S=>S.packageUserId==packageUserId).Select(S => new posSerials
                        {
                            serialId = S.serialId,
                            serial = S.serial,

@@ -171,6 +171,48 @@ namespace Programs_Server.Controllers
 
         }
 
+
+    
+        public countryPackageDate GetByID(int Id) 
+        {
+            countryPackageDate row = new countryPackageDate();
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                    List<countryPackageDate> List = entity.countryPackageDate.ToList();
+
+                  row =  List.Where(u => u.Id == Id)
+                       .Select(S => new countryPackageDate
+                       {
+
+                           Id = S.Id,
+                           countryId = S.countryId,
+                      
+                           packageId = S.packageId,
+                           monthCount = S.monthCount,
+                           yearCount = S.yearCount,
+                           price = S.price,
+                           notes = S.notes,
+                           createUserId = S.createUserId,
+                           updateUserId = S.updateUserId,
+                           createDate = S.createDate,
+                           updateDate = S.updateDate,
+                           islimitDate = S.islimitDate,
+                           isActive = S.isActive,
+                       })
+                       .FirstOrDefault();
+                        return  row;
+                    }
+
+                }
+                catch
+                {
+                    return row;
+                }
+        }
+
+
         // add or update location
         [HttpPost]
         [Route("Save")]
