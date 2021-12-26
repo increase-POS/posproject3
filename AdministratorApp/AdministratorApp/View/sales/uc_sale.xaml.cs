@@ -187,37 +187,7 @@ namespace AdministratorApp.View.sales
 
                         if (oldPackageId != 0)
                             cb_period.SelectedValue = oldCountryPackageId;
-                        //Users userModel = new Users();
-                        //Customers custModel = new Customers();
-                        //Customers cust = new Customers();
-                        //cust = await custModel.GetByID((int)cb_customer.SelectedValue);
-                        //countryPackageDates = await cpdModel.GetAll();
-                        //if (bdr_agent.Visibility == Visibility.Visible)
-                        //{
-                        //    Users agent = await userModel.GetByID((int)cb_agent.SelectedValue);
-                        //    countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
-                        //}
-                        //else
-                        //    countryPackageDates = countryPackageDates.Where(x => x.isActive == 1 && x.packageId == (int)cb_package.SelectedValue && x.countryId == cust.countryId);
-
-                        //foreach (var p in countryPackageDates)
-                        //{
-                        //    if (p.islimitDate)
-                        //        p.notes = MainWindow.resourcemanager.GetString("trUnLimited");
-                        //    else
-                        //    {
-                        //        switch (p.monthCount)
-                        //        {
-                        //            case 1: p.notes = MainWindow.resourcemanager.GetString("trOneMonth"); break;
-                        //            case 3: p.notes = MainWindow.resourcemanager.GetString("trThreeMonth"); break;
-                        //            case 6: p.notes = MainWindow.resourcemanager.GetString("trSixMonth"); break;
-                        //            case 0: p.notes = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
-                        //        }
-                        //    }
-                        //}
-                        //cb_period.DisplayMemberPath = "notes";
-                        //cb_period.SelectedValuePath = "Id";
-                        //cb_period.ItemsSource = countryPackageDates;
+                       
                         #endregion
                     }
 
@@ -243,6 +213,8 @@ namespace AdministratorApp.View.sales
                 cb_period.SelectedIndex = -1;
                 cb_package.IsEnabled = false;
                 cb_period.IsEnabled = false;
+                btn_serials.IsEnabled = false;
+                txt_activationCodeTitle.Text = "";
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -474,7 +446,19 @@ namespace AdministratorApp.View.sales
 
         private void Btn_serials_Click(object sender, RoutedEventArgs e)
         {//serials
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_seialsList w = new wd_seialsList();
+                w.packageUserID = packuser.packageUserId;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
 
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)

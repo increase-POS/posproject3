@@ -129,14 +129,42 @@ namespace AdministratorApp.ApiClasses
 
             string method = urimainpath + "Delete";
             return await APIResult.post(method, parameters);
-
-      
         }
 
-       
+        public async Task<int> GetLastNum(string Code)
+        {
+            int count = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("payOpCode", Code);
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("PayOp/GetLastNum", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    count = int.Parse(c.Value);
+                    break;
+                }
+            }
+            return count;
+        }
+
+        public async Task<string> generateNumber(string payOpCode)
+        {
+            int sequence = await GetLastNum(payOpCode);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999999)
+                strSeq = sequence.ToString().PadLeft(6, '0');
+            string payOpNum = payOpCode + "-" + strSeq;
+            return payOpNum;
+        }
+
+
         /// ////
-   
-     
-    
+
+
+
     }
 }

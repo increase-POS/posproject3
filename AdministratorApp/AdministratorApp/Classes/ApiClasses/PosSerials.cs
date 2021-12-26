@@ -185,7 +185,7 @@ namespace AdministratorApp.ApiClasses
 
             List<PosSerials> list = new List<PosSerials>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("packageUserId", serialId.ToString());
+            parameters.Add("packageUserId", packageUserId.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByPackUserId", parameters);
 

@@ -137,8 +137,8 @@
                                   FontSize="16"  />
                         <Button Grid.Row="1"  Grid.Column="1"  Padding="0" x:Name="btn_serials"
                                 Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right"  
-                                Margin="10,1" IsEnabled="True" Click="Btn_serials_Click"
-                                 Width="35" Height="35">
+                                Margin="10,1" Width="35" Height="35" IsEnabled="False"
+                                 Click="Btn_serials_Click">
                             <Path Fill="{StaticResource MainColor}" Stretch="Fill"  Width="25" Height="30"
                                   Data="M376.2,111.2c0-7.7-2.5-14.4-7.7-19.9c-7.2-7.6-14.7-14.9-22.2-22.2c-3.2-3.1-7.1-5.2-11.3-6.6
 	c-2-0.6-4-1-6.1-1.5c-27,0-54,0-81,0c-0.2,0.1-0.5,0.3-0.7,0.3c-4.9,1.5-7.5,5-7.5,10.1c0,32.5,0,65,0,97.5c0,19.7,0,39.4,0,59.1
@@ -444,12 +444,7 @@
                                        Height="40" IsEnabled="False"
                                        LostFocus="validateEmpty_LostFocus" 
                                        SelectionChanged="Cb_agent_SelectionChanged"/>
-                            <!--<TextBox x:Name="tb_agent"  Text="{Binding discount, Mode=OneWay}"   Padding="10,0,5,0" 
-                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0" materialDesign:HintAssist.Hint="Discount..."    
-                                     Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     MaxLength="9"    Height="40"   Margin="4,0" IsEnabled="False"
-                                     LostFocus="validateEmpty_LostFocus"/>-->
+                         
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_agent"
                                   HorizontalAlignment="Right" Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"

@@ -17,16 +17,16 @@ namespace AdministratorApp.converters
 
             string period = "";
 
-            if (s.islimitDate)
+            if (!s.islimitDate)
                 period = MainWindow.resourcemanager.GetString("trUnLimited"); 
             else
             {
                 switch (s.monthCount)
                 {
-                    case 1: period = MainWindow.resourcemanager.GetString("trOneMonth");    break;
-                    case 3: period = MainWindow.resourcemanager.GetString("trThreeMonth");  break;
-                    case 6: period = MainWindow.resourcemanager.GetString("trSixMonth");    break;
-                    case 0: period = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
+                    case 1: period  = MainWindow.resourcemanager.GetString("trOneMonth");    break;
+                    case 3: period  = MainWindow.resourcemanager.GetString("trThreeMonth");  break;
+                    case 6: period  = MainWindow.resourcemanager.GetString("trSixMonth");    break;
+                    case 12: period = MainWindow.resourcemanager.GetString("trTwelveMonth"); break;
                 }
             }
           

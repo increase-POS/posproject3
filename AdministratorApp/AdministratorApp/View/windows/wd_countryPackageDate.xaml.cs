@@ -386,6 +386,7 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
+                chk_allCountries.IsChecked = true;
                 await RefreshCountryPackageDateList();
                 await Search();
 
@@ -410,16 +411,16 @@ namespace AdministratorApp.View.windows
                     {
                         this.DataContext = countryPackageDate;
 
-                    if (countryPackageDate.islimitDate)
+                    if (!countryPackageDate.islimitDate)
                             cb_month.SelectedValue = 0;
                         else
                         {
                             switch (countryPackageDate.monthCount)
                             {
-                                case 1: cb_month.SelectedValue = 1;  break;
-                                case 3: cb_month.SelectedValue = 3;  break;
-                                case 6: cb_month.SelectedValue = 6;  break;
-                                case 0: cb_month.SelectedValue = 12; break;
+                                case 1 : cb_month.SelectedValue = 1;  break;
+                                case 3 : cb_month.SelectedValue = 3;  break;
+                                case 6 : cb_month.SelectedValue = 6;  break;
+                                case 12: cb_month.SelectedValue = 12; break;
                             }
                         }
 
@@ -478,21 +479,12 @@ namespace AdministratorApp.View.windows
                     {
                         countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
                         countryPackageDate.packageId = packageID;
-                        if (Convert.ToInt32(cb_month.SelectedValue) == 12)
-                        {
-                            countryPackageDate.monthCount = 0;
-                            countryPackageDate.yearCount = 1;
-                        }
-                        else
-                        {
-                            countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
-                            countryPackageDate.yearCount = 0;
-                        }
+                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
                         countryPackageDate.price = decimal.Parse(tb_price.Text);
                         if (Convert.ToInt32(cb_month.SelectedValue) == 0)
-                            countryPackageDate.islimitDate = true;
-                        else
                             countryPackageDate.islimitDate = false;
+                        else
+                            countryPackageDate.islimitDate = true;
                         countryPackageDate.notes = tb_notes.Text;
                         countryPackageDate.isActive = 1;
                         countryPackageDate.createUserId = MainWindow.userLogin.userId;
@@ -533,21 +525,12 @@ namespace AdministratorApp.View.windows
                     {
                         countryPackageDate.countryId = Convert.ToInt32(cb_country.SelectedValue);
                         countryPackageDate.packageId = packageID;
-                        if (Convert.ToInt32(cb_month.SelectedValue) == 12)
-                        {
-                            countryPackageDate.monthCount = 0;
-                            countryPackageDate.yearCount = 1;
-                        }
-                        else
-                        {
-                            countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
-                            countryPackageDate.yearCount = 0;
-                        }
+                        countryPackageDate.monthCount = Convert.ToInt32(cb_month.SelectedValue);
                         countryPackageDate.price = decimal.Parse(tb_price.Text);
                         if (Convert.ToInt32(cb_month.SelectedValue) == 0)
-                            countryPackageDate.islimitDate = true;
-                        else
                             countryPackageDate.islimitDate = false;
+                        else
+                            countryPackageDate.islimitDate = true;
                         countryPackageDate.notes = tb_notes.Text;
                         countryPackageDate.isActive = 1;
                         countryPackageDate.createUserId = MainWindow.userLogin.userId;

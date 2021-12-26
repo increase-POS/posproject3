@@ -43,13 +43,14 @@
 	c0-1.4,0.2-2.8,0.6-4.2C68,27.3,58.3,36.5,57.9,48.2C57.5,60,66.7,69.7,78.5,70.1c11.7,0.4,21.5-8.8,21.9-20.6c0.1-2-0.2-4-0.7-5.9
 	C97.6,44.8,95.2,45.5,92.7,45.5z"/>
                             </Border>
-                            <TextBox x:Name="tb_search" TextChanged="Tb_search_TextChanged" Grid.Column="1"    Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
+                            <TextBox x:Name="tb_search"  Grid.Column="1"    
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
+                                     Foreground="#4E4E4E"  Padding="10,5,0,0" 
+                                     MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="0,0,4,0" />
+                                     Height="40"   Margin="0,0,4,0" 
+                                     TextChanged="Tb_search_TextChanged"/>
                         </Grid>
                     </Border>
                     <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="3" Padding="0" 
@@ -67,7 +68,8 @@
 	C1083.3,547,996.3,512.9,896,512.9c-66.9,0-129.2,16.2-187.1,48.6s-104.3,77.1-139.2,134c-5.5,8.5-18.7,37.7-39.7,87.6
 	c-4,11.5-11.5,17.2-22.5,17.2H358.7c-6.5,0-12.1-2.4-16.8-7.1c-4.7-4.7-7.1-10.4-7.1-16.8V771c32.4-133.7,99.8-242.1,202-325.2
 	c102.3-83.1,222-124.6,359.2-124.6c72.8,0,143.7,13.8,212.5,41.5s130,66.7,183.3,117.1l97.3-96.5c9.5-9.5,20.7-14.2,33.7-14.2
-	s24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7V752.3z">
+	s24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7V752.3z"
+                              >
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -91,9 +93,7 @@
                             Background="White"/>
                     <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
                                x:Name="dg_payments"   AutoGenerateColumns="False"    Background="White"
-                               ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" 
-                               MouseDoubleClick="Dg_payments_MouseDoubleClick"
-                               SelectionChanged="Dg_payments_SelectionChanged">
+                               ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" >
                         <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                         </DataGrid.OpacityMask>
@@ -285,7 +285,8 @@
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Center" BorderThickness="0"
                                         Height="40" 
-                                        SelectionChanged="Cb_customer_SelectionChanged"   />
+                                        SelectionChanged="Cb_customer_SelectionChanged" 
+                                        LostFocus="validateEmpty_LostFocus"/>
                             <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_customer"
                                   HorizontalAlignment="Right"    Visibility="Collapsed"  
                                   VerticalAlignment="Center" Width="15"  Height="15"
@@ -302,20 +303,22 @@
                                         materialDesign:HintAssist.Hint="booked Number..."    
                                         VerticalAlignment="Center" BorderThickness="0"
                                         Height="40"   IsEnabled="False" 
-                                        SelectionChanged="Cb_packageNumber_SelectionChanged"/>
+                                        SelectionChanged="Cb_packageNumber_SelectionChanged"
+                                        LostFocus="validateEmpty_LostFocus"/>
                             <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_packageNumber"
-                              HorizontalAlignment="Right"    Visibility="Collapsed"  
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                  HorizontalAlignment="Right"   Visibility="Collapsed"  
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                             </Path>
                         </Grid>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
-                            <TextBox x:Name="tb_discount"  Text="{Binding discount, Mode=OneWay}"   Padding="10,0,5,0" 
+                            
+                            <TextBox x:Name="tb_discount"    Padding="10,0,5,0" 
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0" materialDesign:HintAssist.Hint="Discount..."    
-                                     Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     BorderThickness="0"   materialDesign:HintAssist.Hint="Discount..."    
+                                     Foreground="#4E4E4E"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      MaxLength="9"    Height="40"   Margin="4,0" IsEnabled="False" 
                                      PreviewTextInput="Number_PreviewTextInput" 
                                      PreviewKeyDown="Spaces_PreviewKeyDown" 
@@ -344,8 +347,9 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock  Grid.Row="0"  Grid.Column="0"  x:Name="txt_packageNumberTitle"
-                                    Text="5568799155" FontSize="18" FontWeight="SemiBold"
-                              HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"  Margin="15,5,5,5"/>
+                                    Text="{Binding packageNumber, Mode=OneWay}"
+                                    FontSize="18" FontWeight="SemiBold"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"  Margin="15,5,5,5"/>
                         <Button Grid.Column="1" Grid.Row="0" x:Name="btn_upgrade"  IsEnabled="False"
                                 materialDesign:ButtonAssist.CornerRadius="10"     HorizontalAlignment="Right"
                                 Padding="2" Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
@@ -358,18 +362,18 @@
                                     Text="Package Name" FontSize="14"
                                     HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"  Margin="15,5,5,5"/>
                         <TextBlock  Grid.Row="1"  Grid.Column="1"  x:Name="txt_packageName"
-                                    Text=""  
+                                    Text="{Binding packageName, Mode=OneWay}"
                               HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}" 
                                     Margin="0 5 15 5"/>
 
-                       
+
+                        <!--Text="{Binding Path=.,Converter={StaticResource packagePeriodConverter }}"-->
 
                         <TextBlock Grid.Row="3"  Grid.Column="0"  x:Name="txt_periodTitle" 
                                    Text="period" FontSize="14"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"     
                         Margin="15,5,5,5"/>
                         <TextBlock Grid.Row="3"  Grid.Column="1"  x:Name="txt_period" 
-                                   Text=""  
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"     
                         Margin="0 5 15 5"/>
 
@@ -377,7 +381,7 @@
                                    Text="Expire Date" FontSize="14"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"                                Margin="15,5,5,5"/>
                         <TextBlock Grid.Row="4"  Grid.Column="1"  x:Name="txt_expirDate"
-                                   Text=""  
+                                   Text="{Binding expireDate, Mode=OneWay}"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}" 
                                    Margin="0 5 15 5"/>
 
@@ -403,10 +407,10 @@
                                    Margin="15,5,5,5"/>
                         <StackPanel Grid.Row="0"  Grid.Column="1" Margin="0 5 15 5" 
                                     HorizontalAlignment="Right" Orientation="Horizontal">
-                            <TextBlock  x:Name="txt_price" Text="0"  
+                            <TextBlock  x:Name="txt_price"  Text="{Binding price, Mode=OneWay}"
                          VerticalAlignment="Center" Foreground="{StaticResource MainColor}"  
                                    Margin="0 0 5 0"/>
-                            <TextBlock  x:Name="txt_moneyCode" Text="KWD"  
+                            <TextBlock  x:Name="txt_moneyCode"  Text="{Binding currency, Mode=OneWay}"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"  
                                    Margin="0"/>
 
@@ -419,7 +423,7 @@
                             <TextBlock  x:Name="txt_discount" Text="0"  
                          VerticalAlignment="Center" Foreground="{StaticResource MainColor}"  
                                    Margin="0 0 5 0"/>
-                            <TextBlock  x:Name="txt_moneyCode1" Text="KWD"  
+                            <TextBlock  x:Name="txt_moneyCode1"  Text="{Binding currency, Mode=OneWay}"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"  
                                    Margin="0"/>
                         </StackPanel>
@@ -433,7 +437,7 @@
                             <TextBlock  x:Name="txt_total" Text="0"   FontSize="18"  FontWeight="SemiBold" 
                          VerticalAlignment="Center" Foreground="{StaticResource MainColor}"  
                                    Margin="0 0 5 0"/>
-                            <TextBlock  x:Name="txt_moneyCode3" Text="KWD"   FontSize="18"  FontWeight="SemiBold" 
+                            <TextBlock  x:Name="txt_moneyCode3"  Text="{Binding currency, Mode=OneWay}"   FontSize="18"  FontWeight="SemiBold" 
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"  
                                    Margin="0"/>
 
