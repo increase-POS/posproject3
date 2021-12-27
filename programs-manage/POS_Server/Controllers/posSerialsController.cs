@@ -165,7 +165,7 @@ namespace Programs_Server.Controllers
 
                            isBooked = S.isBooked,
 
-                           //  isActive = S.isActive,
+                           isActive = (S.isActive==1)?1:0,
                            //serialId = S.serialId,
                            //serial = S.serial,
                            //posDeviceCode = S.posDeviceCode,
