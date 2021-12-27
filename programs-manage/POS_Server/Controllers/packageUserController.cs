@@ -905,6 +905,134 @@ namespace Programs_Server.Controllers
 
         }
 
+
+        public packageUser getPUbycode(string packageSaleCode)
+        {
+
+            packageUser packuserrow = new packageUser();
+            try
+            {
+
+
+
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    //get packageuser row
+                    // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
+
+                    List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
+                    list = list.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
+
+                    if (list != null && list.Count > 0)
+                    {
+                        packuserrow = list
+                                    .Select(S => new packageUser
+                                    {
+
+                                        packageUserId = S.packageUserId,
+                                        packageId = S.packageId,
+                                        userId = S.userId,
+                                        packageSaleCode = S.packageSaleCode,
+                                        packageNumber = S.packageNumber,
+                                        customerId = S.customerId,
+                                        customerServerCode = S.customerServerCode,
+                                        isBooked = S.isBooked,
+                                        notes = S.notes,
+                                        createDate = S.createDate,
+                                        updateDate = S.updateDate,
+                                        createUserId = S.createUserId,
+                                        updateUserId = S.updateUserId,
+                                        bookDate = S.bookDate,
+                                        isActive = S.isActive,
+                                        expireDate = S.expireDate,
+                                        isOnlineServer = S.isOnlineServer,
+                                        countryPackageId = S.countryPackageId,
+                                        canRenew = S.canRenew,
+                                        oldPackageId = S.oldPackageId,
+                                        type = S.type,
+                                        isPayed = S.isPayed,
+                                        monthCount = S.monthCount,
+                                        totalsalesInvCount = S.totalsalesInvCount,
+                                        activatedate = S.activatedate,
+                                        isServerActivated = S.isServerActivated,
+
+                                        //islimitDate = D.islimitDate,
+
+
+                                    }).FirstOrDefault();
+                        return packuserrow;
+                    }
+                    else
+                    {
+                        packuserrow = new packageUser();
+                        return packuserrow;
+                    }
+                }
+
+
+            }
+            catch
+            {
+                packuserrow = new packageUser();
+                return packuserrow;
+            }
+
+        }
+
+
+        public payOpModel getLastPayOp(int packageUserId)
+        {
+
+            payOpModel lastpayrow = new payOpModel();
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    lastpayrow = (from S in entity.payOp
+                                  join A in entity.packageUser on S.packageUserId equals A.packageUserId
+                                  join D in entity.countryPackageDate on S.countryPackageId equals D.Id
+                                  join P in entity.packages on A.packageId equals P.packageId
+                                  join U in entity.users on A.userId equals U.userId
+                                  where S.packageUserId == packageUserId
+                                  select new payOpModel()
+                                  {
+                                      payOpId = S.payOpId,
+                                      Price = S.Price,
+                                      code = S.code,
+                                      type = S.type,
+                                      packageUserId = S.packageUserId,
+                                      createUserId = S.createUserId,
+                                      updateUserId = S.updateUserId,
+                                      createDate = S.createDate,
+                                      updateDate = S.updateDate,
+                                      notes = S.notes,
+                                      totalnet = S.totalnet,
+                                      countryPackageId = S.countryPackageId,// from payed row
+                                      discountValue = S.discountValue,
+                                      customerId = S.customerId,
+                                      agentId = S.agentId,
+                                      packageNumber = A.packageNumber,
+
+                                      packageId = D.packageId,
+                                      expireDate = A.expireDate,
+
+                                  }).OrderBy(x => x.updateDate).ToList().Last();
+
+                    return lastpayrow;
+
+                }
+
+
+
+            }
+            catch
+            {
+                lastpayrow = new payOpModel();
+                return lastpayrow;
+            }
+
+        }
+
         [HttpPost]
         [Route("ActivateServer")]
         public string ActivateServer(string token)
@@ -944,196 +1072,196 @@ namespace Programs_Server.Controllers
                 try
                 {
                     packageUser packuserrow = new packageUser();
-
+                    payOpModel lastpayrow = new payOpModel();
+                    List<PosSerialSend> serialList = new List<PosSerialSend>();
+                    SendDetail senditem = new SendDetail();
+                    packagesSend package = new packagesSend();
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         //get packageuser row
                         // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
-
-                        List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
-                        list = list.Where(u => u.packageSaleCode.Equals(packageSaleCode)).ToList();
-
-                        if (list != null && list.Count > 0)
+                        packuserrow = getPUbycode(packageSaleCode);
+                        if (packuserrow.packageUserId > 0)
                         {
-                            packuserrow = list
-                                        .Select(S => new packageUser
-                                        {
 
-                                            packageUserId = S.packageUserId,
-                                            packageId = S.packageId,
-                                            userId = S.userId,
-                                            packageSaleCode = S.packageSaleCode,
-                                            packageNumber = S.packageNumber,
-                                            customerId = S.customerId,
-                                            customerServerCode = S.customerServerCode,
-                                            isBooked = S.isBooked,
-                                            notes = S.notes,
-                                            createDate = S.createDate,
-                                            updateDate = S.updateDate,
-                                            createUserId = S.createUserId,
-                                            updateUserId = S.updateUserId,
-                                            bookDate = S.bookDate,
-                                            isActive = S.isActive,
-                                            expireDate = S.expireDate,
-                                            isOnlineServer = S.isOnlineServer,
-                                            countryPackageId = S.countryPackageId,
-                                            canRenew = S.canRenew,
-                                            oldPackageId = S.oldPackageId,
-                                            type = S.type,
-                                            isPayed = S.isPayed,
-                                            monthCount = S.monthCount,
-                                            totalsalesInvCount = S.totalsalesInvCount,
-                                            activatedate = S.activatedate,
-                                            isServerActivated = S.isServerActivated,
-
-                                            //islimitDate = D.islimitDate,
-
-
-                                        }).FirstOrDefault();
-
-                            SendDetail senditem = new SendDetail();
                             // return TokenManager.GenerateToken(row.packageUserId);
                             // get last payed row
-                            payOpModel lastpayrow = (from S in entity.payOp
-                                                     join A in entity.packageUser on S.packageUserId equals A.packageUserId
-                                                     join D in entity.countryPackageDate on S.countryPackageId equals D.Id
-                                                     join P in entity.packages on A.packageId equals P.packageId
-                                                     join U in entity.users on A.userId equals U.userId
-                                                     where S.packageUserId == packuserrow.packageUserId
-                                                     select new payOpModel()
-                                                     {
-                                                         payOpId = S.payOpId,
-                                                         Price = S.Price,
-                                                         code = S.code,
-                                                         type = S.type,
-                                                         packageUserId = S.packageUserId,
-                                                         createUserId = S.createUserId,
-                                                         updateUserId = S.updateUserId,
-                                                         createDate = S.createDate,
-                                                         updateDate = S.updateDate,
-                                                         notes = S.notes,
-                                                         totalnet = S.totalnet,
-                                                         countryPackageId = S.countryPackageId,// from payed row
-                                                         discountValue = S.discountValue,
-                                                         customerId = S.customerId,
-                                                         agentId = S.agentId,
-                                                         packageNumber = A.packageNumber,
-
-                                                         packageId = D.packageId,
-                                                         expireDate = A.expireDate,
-
-                                                     }).OrderBy(x => x.updateDate).ToList().Last();
-
-                            if (packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
+                            lastpayrow = getLastPayOp(packuserrow.packageUserId);
+                            if (lastpayrow.payOpId > 0)
                             {
-
-                                // chpk not payed yet
-                                // dont activate until pay
-                                return TokenManager.GenerateToken("0");
-                            }
-                            else if (packuserrow.isBooked == true && packuserrow.isActive == 1) //&&  row.expireDate==null 
-                            {
-                                // first activate
-
-                                //     int res = 1;// temp
-
-                                //get poserials 
-                                programsController progcntrlr = new programsController();
-                                versionsController vercntrlr = new versionsController();
-                                programs prog = new programs();
-                                versions ver = new versions();
-                                packagesModel pack = new packagesModel();
-                                countryPackageDateController cpdCntrlr = new countryPackageDateController();
-                                countryPackageDate cpD = new countryPackageDate();
-                                posSerialsController serialmodel = new posSerialsController();
-                                List<PosSerialSend> serialList = new List<PosSerialSend>();
-                                List<string> serialposlist = new List<string>();
-
-                                serialList = serialmodel.GetBypackageUserId(packuserrow.packageUserId);
-
-                                //  serialposlist = serialList.Select(x => x.serial).ToList();
-                                // get package details
-
-                                packagesController packmodel = new packagesController();
-                                packagesSend package = new packagesSend();
-
-                                // get last package Id
-                                package = packmodel.GetByID((int)lastpayrow.packageId);
-                                pack = packmodel.GetPmByID((int)lastpayrow.packageId);
-                                prog = progcntrlr.GetByID((int)pack.programId);
-                                ver = vercntrlr.GetByID((int)pack.verId);
-                                cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
-
-
-                                // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
-                                package.programName = prog.name;
-                                package.verName = ver.name;
-                                package.packageSaleCode = packuserrow.packageSaleCode;
-                                package.expireDate = packuserrow.expireDate;
-                                package.isOnlineServer = packuserrow.isOnlineServer;
-                                package.packageNumber = packuserrow.packageNumber;
-
-                                //packuserrow.countryPackageId
-                                package.islimitDate = cpD.islimitDate;
-                                package.isActive = (int)packuserrow.isActive;
-                                package.activatedate = DateTime.Now;// save on client if null 
-                             //   SendDetail senditem = new SendDetail();
-
-                                senditem.packageSend = package;
-                                senditem.PosSerialSendList = serialList;
-
-                            //    return TokenManager.GenerateToken(senditem);
-
-
-
-                            }
-                            else
-                            {
-                                // serial is booked
-
-                          
-
-                                if (packuserrow.canRenew == true)
+                                if (packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
                                 {
-                                    // write code here
-                                  //  return TokenManager.GenerateToken(senditem);
+
+                                    // chpk not payed yet
+                                    // dont activate until pay
+                                    return TokenManager.GenerateToken("0");
+                                }
+                                else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode))) //&&  row.expireDate==null 
+                                {
+
+                                    
+
+
+                                    //get poserials 
+                                    programsController progcntrlr = new programsController();
+                                    versionsController vercntrlr = new versionsController();
+                                    programs prog = new programs();
+                                    versions ver = new versions();
+                                    packagesModel pack = new packagesModel();
+                                    countryPackageDateController cpdCntrlr = new countryPackageDateController();
+                                    countryPackageDate cpD = new countryPackageDate();
+                                    posSerialsController serialmodel = new posSerialsController();
+
+                                    List<string> serialposlist = new List<string>();
+
+                                    serialList = serialmodel.GetBypackageUserId(packuserrow.packageUserId);
+
+                                    //  serialposlist = serialList.Select(x => x.serial).ToList();
+                                    // get package details
+
+                                    packagesController packmodel = new packagesController();
+
+
+                                    // get last package Id
+                                    package = packmodel.GetByID((int)lastpayrow.packageId);
+                                    pack = packmodel.GetPmByID((int)lastpayrow.packageId);
+                                    prog = progcntrlr.GetByID((int)pack.programId);
+                                    ver = vercntrlr.GetByID((int)pack.verId);
+                                    cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
+
+
+                                    // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
+                                    package.programName = prog.name;
+                                    package.verName = ver.name;
+                                    package.packageSaleCode = packuserrow.packageSaleCode;
+                                    package.expireDate = packuserrow.expireDate;
+                                    package.isOnlineServer = packuserrow.isOnlineServer;
+                                    package.packageNumber = packuserrow.packageNumber;
+
+                                    //packuserrow.countryPackageId
+                                    package.islimitDate = cpD.islimitDate;
+                                    package.isActive = (int)packuserrow.isActive;
+                                    package.activatedate = DateTime.Now;// save on client if null 
+                                    package.result = 1;                                  //   SendDetail senditem = new SendDetail();
+                                    package.isServerActivated = packuserrow.isServerActivated;
+
+                                    senditem.packageSend = package;
+                                    senditem.PosSerialSendList = serialList;
+
+                                    //    return TokenManager.GenerateToken(senditem);
+
+                                    packuserrow.isServerActivated = true;
+                                    packuserrow.customerServerCode = customerServerCode;
+                                    if (packuserrow.activatedate == null)
+                                    {
+                                        packuserrow.activatedate = DateTime.Now;
+                                    }
+
+                                    packuserrow.totalsalesInvCount = 0;
+                                    packuserrow.canRenew = false;
+
+                                    //  save server hardware key
+                                    int res = Save(packuserrow);
+                                    return TokenManager.GenerateToken(senditem);
                                 }
                                 else
                                 {
+                                    // serverID not match or package not active
+                                    serialList = new List<PosSerialSend>();
+                                    package = new packagesSend();
 
-                                    packagesSend ps = new packagesSend();
-                                    ps.posCount = -2;
-                                    senditem.packageSend = ps;
-                                    //senditem.packageSend.posCount = -2;
-                                  //  return TokenManager.GenerateToken(senditem);
+                                    senditem = new SendDetail();
+
+                                    senditem.packageSend = package;
+                                    senditem.PosSerialSendList = serialList;
+                                    if (packuserrow.isActive != 1)
+                                    {
+                                        //package not active
+                                        package.result = -2;
+                                    }
+                                    else if (!(packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode==customerServerCode)))
+                                    {
+                                        // serverID not match 
+                                        package.result = -3; 
+                                    }
+
+                                    senditem.packageSend = package;
+
+                                    return TokenManager.GenerateToken(senditem);
+
+
+                                    //if (packuserrow.canRenew == true)
+                                    //{
+                                    //    // write code here
+                                    //    //  return TokenManager.GenerateToken(senditem);
+                                    //}
+                                    //else
+                                    //{
+
+                                    //    packagesSend ps = new packagesSend();
+                                    //    ps.posCount = -2;
+                                    //    senditem.packageSend = ps;
+                                    //    //senditem.packageSend.posCount = -2;
+                                    //    //  return TokenManager.GenerateToken(senditem);
+
+                                    //}
+
+
 
                                 }
 
 
+                             //   return TokenManager.GenerateToken(senditem);
+                            }
+                            else
+                            {
+                                // not payed 
+
+                                serialList = new List<PosSerialSend>();
+                                package = new packagesSend();
+
+                                senditem = new SendDetail();
+
+                                senditem.packageSend = package;
+                                senditem.PosSerialSendList = serialList;
+                              
+                                    package.result = -4;
+                              
+                            
+
+                                senditem.packageSend = package;
+
+                                return TokenManager.GenerateToken(senditem);
 
                             }
-
-                            packuserrow.isServerActivated = true;
-                            packuserrow.customerServerCode = customerServerCode;
-                            packuserrow.activatedate = DateTime.Now;
-                            packuserrow.totalsalesInvCount = 0;
-                            packuserrow.canRenew = false;
-
-                            //  save server hardware key
-                            int res = Save(packuserrow);
-                            return TokenManager.GenerateToken(senditem);
                         }
                         else
                         {
                             //serial not found
+                            serialList = new List<PosSerialSend>();
+                            package = new packagesSend();
 
-                            SendDetail senditem = new SendDetail();
-                            packagesSend ps = new packagesSend();
-                            ps.posCount = -3;
-                            senditem.packageSend = ps;
+                            senditem = new SendDetail();
 
-                            // senditem.packageSend.posCount = -3;
+                            senditem.packageSend = package;
+                            senditem.PosSerialSendList = serialList;
+
+                            package.result = -5;
+
+
+
+                            senditem.packageSend = package;
+
                             return TokenManager.GenerateToken(senditem);
+
+
+                            //senditem = new SendDetail();
+                            //packagesSend ps = new packagesSend();
+                            //ps.posCount = -3;
+                            //senditem.packageSend = ps;
+
+                            //// senditem.packageSend.posCount = -3;
+                            //return TokenManager.GenerateToken(senditem);
                         }
 
 
@@ -2035,8 +2163,9 @@ namespace Programs_Server.Controllers
                                 dbPU.monthCount = 0;
                                 if (tmpPackage.salesInvCount != -1)
                                 {
-                                    dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
+                                    //change  on pay
                                     dbPU.totalsalesInvCount += tmpPackage.salesInvCount;
+                                    dbPU.salesInvCount = 0;
                                 }
                                 else
                                 {
@@ -2051,8 +2180,8 @@ namespace Programs_Server.Controllers
                                 dbPU.type = "chpk";
                                 dbPU.isPayed = true;
 
-                                dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
-                                                                              //    dbPU.monthCount = tmpcpd.monthCount;//change  on pay
+
+                                //    dbPU.monthCount = tmpcpd.monthCount;//change  on pay
 
                                 dbPU.oldCountryPackageId = dbPU.countryPackageId;
 
@@ -2232,6 +2361,126 @@ namespace Programs_Server.Controllers
 
 
         }
+
+
+        [HttpPost]
+        [Route("SendCustDetail")]
+        public string SendCustDetail(string token)
+        {
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+
+
+                packagesSend sdp = new packagesSend();
+                List<PosSerialSend> srList = new List<PosSerialSend>();
+                SendDetail sd = new SendDetail();
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+
+                foreach (Claim c in claims)
+                {
+
+
+                    if (c.Type == "object")
+                    {
+                        sd = JsonConvert.DeserializeObject<SendDetail>(c.Value, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+
+                    }
+
+                }
+                try
+                {
+
+
+                    return TokenManager.GenerateToken(sd.PosSerialSendList.FirstOrDefault().serial.ToString());
+                    //return TokenManager.GenerateToken(srList.FirstOrDefault().serial.ToString());
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+
+            }
+        }
+
+
+        //        [HttpPost]
+        //        [Route("SendCustDetail")]
+        //#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        //        public string SendCustDetail(string token)//string Object
+        //#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        //        {
+
+
+        //            string message = "";
+
+        //            token = TokenManager.readToken(HttpContext.Current.Request);
+        //            //var strP = TokenManager.GetPrincipal(token);
+        //            //if (strP != "0") //invalid authorization
+        //            //{
+        //            //    return TokenManager.GenerateToken(strP);
+        //            //}
+        //            //else
+        //            //{
+        //                string Object = "";
+        //                SendDetail newObject = new SendDetail();
+        //                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+        //                foreach (Claim c in claims)
+        //                {
+        //                    if (c.Type == "Object")
+        //                    {
+        //                        message = c.Value;
+
+        //                        //    Object = c.Value.Replace("\\", string.Empty);
+        //                        //    Object = Object.Trim('"');
+        //                        //    newObject = JsonConvert.DeserializeObject<SendDetail>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+        //                        //}
+        //                        //if (c.Type == "Object2")
+        //                        //{
+        //                        //    Object = c.Value.Replace("\\", string.Empty);
+        //                        //    Object = Object.Trim('"');
+        //                        //    newObject2 = JsonConvert.DeserializeObject<List<PosSerialSend>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+
+        //                        //}
+        //                        //  newObject = JsonConvert.DeserializeObject<List<itemsTransfer>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+
+        //                    }
+        //                    //if (newObject != null)
+        //                    //{
+
+        //                    try
+        //                    {
+        //                        return TokenManager.GenerateToken(message + "25");
+
+
+        //                        //    return TokenManager.GenerateToken(newObject.packageSend.salesInvCount.ToString()+"25");
+        //                    }
+
+
+        //                    catch (Exception ex)
+        //                    {
+        //                        return TokenManager.GenerateToken("6");
+        //                        //  return TokenManager.GenerateToken(ex.ToString());
+        //                    }
+        //                    //}
+        //                    //else
+        //                    //{
+        //                    //    return TokenManager.GenerateToken("6");
+        //                    //}
+
+        //                }
+
+        //                return TokenManager.GenerateToken(message + "25");
+        //            //}
+
+        //        }
+
+
 
     }
 }
