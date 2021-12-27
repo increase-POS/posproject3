@@ -32,7 +32,14 @@ namespace AdministratorApp.View.windows
         string txtSearch = "";
         public wd_seialsList()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -70,6 +77,11 @@ namespace AdministratorApp.View.windows
 
         private void translat()
         {
+            txt_title.Text = MainWindow.resourcemanager.GetString("trSerials");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_searchitems, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_allSerials.Text = MainWindow.resourcemanager.GetString("trSerials");
+            tt_close.Content = MainWindow.resourcemanager.GetString("trClose");
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)

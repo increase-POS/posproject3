@@ -126,6 +126,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Serial" Binding="{Binding Path=serial}"/>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Booked"   Binding="{Binding Path=isActive}"/>
+                            <DataGridCheckBoxColumn Width="*"                 Header="Booked"   Binding="{Binding Path=isBooked}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
