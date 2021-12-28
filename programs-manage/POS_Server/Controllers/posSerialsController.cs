@@ -750,6 +750,63 @@ namespace Programs_Server.Controllers
         }
 
 
+        public int   UpdatebySerial(posSerials newObject)
+        {
+            int message = 0;
+            //
+
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<posSerials>();
+                    if (newObject.serial == null|| newObject.serial == "")
+                    {                       
+                        message = 0;
+                        //
+                    }
+                    else
+                    {
+                        var tmpObject = entity.posSerials.Where(p => p.serial == newObject.serial).FirstOrDefault();
+                        if (tmpObject!=null && tmpObject.serialId>0)
+                        {
+
+                      
+                     //   tmpObject.updateDate = DateTime.Now;
+                        //  tmpObject.serialId = newObject.serialId;
+                    //    tmpObject.serial = newObject.serial;
+                        tmpObject.posDeviceCode = newObject.posDeviceCode;
+                       // tmpObject.packageUserId = newObject.packageUserId;
+                        tmpObject.isBooked = newObject.isBooked;
+                     //   tmpObject.isActive = newObject.isActive;
+
+                      //  tmpObject.updateUserId = newObject.updateUserId;
+                    //    tmpObject.notes = newObject.notes;
+                       // tmpObject.isActive = newObject.isActive;
+                      //  tmpObject.unLimited = newObject.unLimited;
+                        entity.SaveChanges();
+
+                        message = tmpObject.serialId;
+                        }
+                        else
+                        {
+                            message = 0;
+                        }
+                    }
+                    //  en
+
+                    //  entity.SaveChanges();
+
+                }
+
+            }
+            catch
+            {
+                message = -1;
+            }
+            return message;
+        }
+
         [HttpPost]
         [Route("UpdateList")]
         public string UpdateList(string token)//string Object

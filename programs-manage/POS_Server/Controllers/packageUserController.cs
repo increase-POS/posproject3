@@ -1099,7 +1099,7 @@ namespace Programs_Server.Controllers
                                 else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode))) //&&  row.expireDate==null 
                                 {
 
-                                    
+
 
 
                                     //get poserials 
@@ -1166,6 +1166,7 @@ namespace Programs_Server.Controllers
                                 }
                                 else
                                 {
+
                                     // serverID not match or package not active
                                     serialList = new List<PosSerialSend>();
                                     package = new packagesSend();
@@ -1179,10 +1180,10 @@ namespace Programs_Server.Controllers
                                         //package not active
                                         package.result = -2;
                                     }
-                                    else if (!(packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode==customerServerCode)))
+                                    else if (!(packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode)))
                                     {
                                         // serverID not match 
-                                        package.result = -3; 
+                                        package.result = -3;
                                     }
 
                                     senditem.packageSend = package;
@@ -1211,7 +1212,7 @@ namespace Programs_Server.Controllers
                                 }
 
 
-                             //   return TokenManager.GenerateToken(senditem);
+                                //   return TokenManager.GenerateToken(senditem);
                             }
                             else
                             {
@@ -1224,10 +1225,10 @@ namespace Programs_Server.Controllers
 
                                 senditem.packageSend = package;
                                 senditem.PosSerialSendList = serialList;
-                              
-                                    package.result = -4;
-                              
-                            
+
+                                package.result = -4;
+
+
 
                                 senditem.packageSend = package;
 
@@ -2375,10 +2376,10 @@ namespace Programs_Server.Controllers
             }
             else
             {
+                string message = "0";
 
-
-                packagesSend sdp = new packagesSend();
-                List<PosSerialSend> srList = new List<PosSerialSend>();
+             
+               
                 SendDetail sd = new SendDetail();
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
 
@@ -2395,9 +2396,22 @@ namespace Programs_Server.Controllers
                 }
                 try
                 {
+                    posSerialsController pscntrlr = new posSerialsController();
 
 
-                    return TokenManager.GenerateToken(sd.PosSerialSendList.FirstOrDefault().serial.ToString());
+                    foreach (PosSerialSend crow in sd.PosSerialSendList)
+                    {
+                        posSerials newObject = new posSerials();
+                        newObject.serial = crow.serial;
+                        newObject.isBooked = crow.isBooked;
+                        newObject.posDeviceCode = crow.posDeviceCode;
+                        pscntrlr.UpdatebySerial(newObject);
+                    }
+                    // save data here
+
+
+                    message = "1";
+                    return TokenManager.GenerateToken(message);
                     //return TokenManager.GenerateToken(srList.FirstOrDefault().serial.ToString());
                 }
                 catch
@@ -2409,76 +2423,7 @@ namespace Programs_Server.Controllers
         }
 
 
-        //        [HttpPost]
-        //        [Route("SendCustDetail")]
-        //#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        //        public string SendCustDetail(string token)//string Object
-        //#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        //        {
 
-
-        //            string message = "";
-
-        //            token = TokenManager.readToken(HttpContext.Current.Request);
-        //            //var strP = TokenManager.GetPrincipal(token);
-        //            //if (strP != "0") //invalid authorization
-        //            //{
-        //            //    return TokenManager.GenerateToken(strP);
-        //            //}
-        //            //else
-        //            //{
-        //                string Object = "";
-        //                SendDetail newObject = new SendDetail();
-        //                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
-        //                foreach (Claim c in claims)
-        //                {
-        //                    if (c.Type == "Object")
-        //                    {
-        //                        message = c.Value;
-
-        //                        //    Object = c.Value.Replace("\\", string.Empty);
-        //                        //    Object = Object.Trim('"');
-        //                        //    newObject = JsonConvert.DeserializeObject<SendDetail>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //                        //}
-        //                        //if (c.Type == "Object2")
-        //                        //{
-        //                        //    Object = c.Value.Replace("\\", string.Empty);
-        //                        //    Object = Object.Trim('"');
-        //                        //    newObject2 = JsonConvert.DeserializeObject<List<PosSerialSend>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-
-        //                        //}
-        //                        //  newObject = JsonConvert.DeserializeObject<List<itemsTransfer>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-
-        //                    }
-        //                    //if (newObject != null)
-        //                    //{
-
-        //                    try
-        //                    {
-        //                        return TokenManager.GenerateToken(message + "25");
-
-
-        //                        //    return TokenManager.GenerateToken(newObject.packageSend.salesInvCount.ToString()+"25");
-        //                    }
-
-
-        //                    catch (Exception ex)
-        //                    {
-        //                        return TokenManager.GenerateToken("6");
-        //                        //  return TokenManager.GenerateToken(ex.ToString());
-        //                    }
-        //                    //}
-        //                    //else
-        //                    //{
-        //                    //    return TokenManager.GenerateToken("6");
-        //                    //}
-
-        //                }
-
-        //                return TokenManager.GenerateToken(message + "25");
-        //            //}
-
-        //        }
 
 
 
