@@ -116,17 +116,16 @@
                 <Line Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Stretch="Fill" Stroke="#DFDFDF"  X2="1"  Margin="1,1,1,1"
                           VerticalAlignment="Bottom"/>
                 <TextBlock Text="Serials" x:Name="txt_allSerials" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Foreground="#999999" FontWeight="SemiBold"  FontSize="16"/>
+                           Foreground="#999999" FontWeight="SemiBold"  FontSize="16" Visibility="Collapsed"/>
                 <Border Grid.Row="3"  Margin="10"   BorderBrush="#999999" BorderThickness="1">
                     <DataGrid x:Name="dg_serials"  Background="White"
-                              Visibility="Visible" HeadersVisibility="None"
-                              IsReadOnly="False" CanUserAddRows="False"
+                              Visibility="Visible" 
+                              CanUserAddRows="False"
                               AutoGenerateColumns="False"    
                               ColumnWidth="SizeToHeader">
                         <DataGrid.Columns>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Serial" Binding="{Binding Path=serial}"/>
-                            <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Booked"   Binding="{Binding Path=isActive}"/>
-                            <DataGridCheckBoxColumn Width="*"                 Header="Booked"   Binding="{Binding Path=isBooked}" />
+                            <DataGridTextColumn      Width="*" IsReadOnly="True"  Header="Serial"   Binding="{Binding Path=serial}"/>
+                            <DataGridCheckBoxColumn  Width="*"                    Header="Active"   Binding="{Binding Path=isActive}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>

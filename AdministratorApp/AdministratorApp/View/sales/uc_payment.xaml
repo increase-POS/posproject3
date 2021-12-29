@@ -267,7 +267,8 @@
                 <StackPanel>
                     <DockPanel LastChildFill="True"  >
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="10,5,5,5"/>
-                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Click="Btn_clear_Click" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" >
+                        <Button DockPanel.Dock="Right" x:Name="btn_clear" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" 
+                                Click="Btn_clear_Click">
                             <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="35" Height="35">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
@@ -334,7 +335,7 @@
                         <TextBlock x:Name="txt_packageDetails" Text="package details" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="10,5,5,5"/>
                         <Separator Background="#999999" VerticalAlignment="Center" Width="auto" Margin="0 0 15 0" />
                     </DockPanel>
-                    <Grid Margin="0 5">
+                    <Grid Margin="0 5" x:Name="grid_packageDetails">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -367,15 +368,15 @@
                                     Margin="0 5 15 5"/>
 
 
-                        <!--Text="{Binding Path=.,Converter={StaticResource packagePeriodConverter }}"-->
+                        <!--Text="{Binding Path=expireDate, Converter={StaticResource packagePeriodConverter }}"-->
 
                         <TextBlock Grid.Row="3"  Grid.Column="0"  x:Name="txt_periodTitle" 
                                    Text="period" FontSize="14"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"     
                         Margin="15,5,5,5"/>
                         <TextBlock Grid.Row="3"  Grid.Column="1"  x:Name="txt_period" 
-                        HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"     
-                        Margin="0 5 15 5"/>
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"     
+                                   Margin="0 5 15 5" />
 
                         <TextBlock Grid.Row="4"  Grid.Column="0"  x:Name="txt_expirDateTitle"
                                    Text="Expire Date" FontSize="14"

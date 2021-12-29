@@ -35,7 +35,6 @@ namespace AdministratorApp.View.sales
         public int oldCustomerId , oldAgentId , oldPackageId , oldCountryPackageId;
        
         public static List<string> requiredControlList;
-        //public static int oldPackageId = 0, oldCountryPackageId;
 
         public PackageUser packuser = new PackageUser();
         PackageUser packuserModel = new PackageUser();
@@ -65,13 +64,13 @@ namespace AdministratorApp.View.sales
      
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-                //package = new Packages();
+                package = new Packages();
                 //package.isActive = null;
-                //this.DataContext = package;
+                this.DataContext = package;
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -120,14 +119,14 @@ namespace AdministratorApp.View.sales
                     }
                 }
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //    catch (Exception ex)
-            //    {
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
 
-            //        HelpClass.EndAwait(grid_main);
-            //        HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void translate()
         {
@@ -138,12 +137,6 @@ namespace AdministratorApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_agent, MainWindow.resourcemanager.GetString("trAgentHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_period, MainWindow.resourcemanager.GetString("trPeriod"));
-
-            //if(packageId == 0)
-            //    btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
-            //else
-            //    btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
-            //btn_upgrade.Content = MainWindow.resourcemanager.GetString("trUpgrade");
 
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
             txt_packageCodeTitle.Text = MainWindow.resourcemanager.GetString("trCode");
@@ -173,8 +166,8 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
+            try
+            {
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
@@ -192,12 +185,12 @@ namespace AdministratorApp.View.sales
                     }
 
                 }
-               
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -299,9 +292,9 @@ namespace AdministratorApp.View.sales
         #endregion
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//book
-             //try
-             //{
-             //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 int msg = 0;
 
@@ -344,13 +337,13 @@ namespace AdministratorApp.View.sales
                     }
                 }
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_agent_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -463,8 +456,8 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            //try
-            //{
+            try
+            {
                 if (cb_customer.SelectedIndex != -1)
                 {
                     cb_package.IsEnabled = true;
@@ -476,11 +469,11 @@ namespace AdministratorApp.View.sales
                         cb_package.SelectedValue = oldPackageId;
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         
@@ -515,8 +508,8 @@ namespace AdministratorApp.View.sales
 
         public async Task fillInputs(Packages _package , int agentID , int custID)
         {
-            //try
-            //{
+            try
+            {
                 package = _package;
                 this.DataContext = package;
                 if (package != null)
@@ -564,12 +557,12 @@ namespace AdministratorApp.View.sales
             }
 
 
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region reports

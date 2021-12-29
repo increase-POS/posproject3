@@ -248,6 +248,9 @@
     <Compile Include="View\windows\wd_newCustomer.xaml.cs">
       <DependentUpon>wd_newCustomer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_seialsList.xaml.cs">
+      <DependentUpon>wd_seialsList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
@@ -355,6 +358,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_newCustomer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_seialsList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

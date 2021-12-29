@@ -82,6 +82,9 @@ namespace AdministratorApp.View.windows
             txt_allSerials.Text = MainWindow.resourcemanager.GetString("trSerials");
             tt_close.Content = MainWindow.resourcemanager.GetString("trClose");
             btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+
+            dg_serials.Columns[0].Header = MainWindow.resourcemanager.GetString("trSerialNum");
+            dg_serials.Columns[1].Header = MainWindow.resourcemanager.GetString("trIsActive");
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -140,16 +143,20 @@ namespace AdministratorApp.View.windows
                 p = await pModel.GetByID(pu.packageId.Value);
                 if (isActiveCount <= p.posCount)
                 {
-                    await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
+                    int res = await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
 
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                    
-                    //isActive = true;
-                    this.Close();
+                    if (res >= 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        //isActive = true;
+                        this.Close();
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
                 else
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
                 }
 
 

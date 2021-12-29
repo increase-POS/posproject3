@@ -62,8 +62,6 @@ namespace AdministratorApp.View.sales
         PayOp payOp = new PayOp();
         decimal totalNet = 0;
         int discount = 0;
-        //public PayOp context1 { get; set; }
-        //public PackageUser context2 { get; set; }
 
         string searchText = "";
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -103,6 +101,8 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #region methods
         private void translate()
         {
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
@@ -137,6 +137,70 @@ namespace AdministratorApp.View.sales
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
         }
+
+        void clearValidate()
+        {
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (path != null)
+                        HelpClass.clearValidate(path);
+                }
+            }
+            catch { }
+        }
+
+        void Clear()
+        {
+            //this.DataContext = new PayOp();
+            //grid_packageDetails.DataContext = new PackageUser();
+            //grid_payDetails.DataContext = new PackageUser();
+            cb_customer.SelectedIndex = -1;
+            cb_packageNumber.SelectedIndex = -1;
+            tb_discount.Text = "0";
+            cb_packageNumber.IsEnabled = false;
+            tb_discount.IsEnabled = false;
+            clearValidate();
+        }
+
+        bool validate()
+        {
+            bool isValid = true;
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(this).Where(x => x.Name == "tb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
+                         .FirstOrDefault();
+                    if (textBox != null && path != null)
+                        if (!HelpClass.validateEmpty(textBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(this).Where(x => x.Name == "cb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
+                         .FirstOrDefault();
+                    if (comboBox != null && path != null)
+                        if (!HelpClass.validateEmpty(comboBox.Text, path))
+                            isValid = false;
+                }
+            }
+            catch { }
+            return isValid;
+        }
+
+        #endregion
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
@@ -196,16 +260,7 @@ namespace AdministratorApp.View.sales
         
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-        void Clear()
-        {
-            //this.DataContext = new PackageUser();
-            cb_customer.SelectedIndex = -1;
-            cb_packageNumber.SelectedIndex = -1;
-            tb_discount.Text = "0";
-            cb_packageNumber.IsEnabled = false;
-            tb_discount.IsEnabled = false;
-            clearValidate();
-        }
+      
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         { //only  digits
             try
@@ -268,53 +323,7 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        bool validate()
-        {
-            bool isValid = true;
-            try
-            {
-                foreach (var control in requiredControlList)
-                {
-                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(this).Where(x => x.Name == "tb_" + control)
-                        .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
-                         .FirstOrDefault();
-                    if (textBox != null && path != null)
-                        if (!HelpClass.validateEmpty(textBox.Text, path))
-                            isValid = false;
-                }
-                foreach (var control in requiredControlList)
-                {
-                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(this).Where(x => x.Name == "cb_" + control)
-                        .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
-                         .FirstOrDefault();
-                    if (comboBox != null && path != null)
-                        if (!HelpClass.validateEmpty(comboBox.Text, path))
-                            isValid = false;
-                }
-            }
-            catch { }
-            return isValid;
-        }
-        void clearValidate()
-        {
-            try
-            {
-                foreach (var control in requiredControlList)
-                {
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    if (path != null)
-                        HelpClass.clearValidate(path);
-                }
-            }
-            catch { }
-        }
+       
         #endregion
        
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -497,7 +506,13 @@ namespace AdministratorApp.View.sales
                 tb_discount.IsEnabled = true;
                 if (cb_customer.SelectedIndex != -1)
                 {
+                    //this.DataContext = cb_customer.SelectedItem as PayOp;
+
                     await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
+                    if (cb_packageNumber.Items.Count > 0)
+                        btn_upgrade.IsEnabled = true;
+                    else
+                        btn_upgrade.IsEnabled = false;
 
                     await RefreshPayOpList();
                     await Search();
@@ -557,31 +572,34 @@ namespace AdministratorApp.View.sales
 
                     packageUser = cb_packageNumber.SelectedItem as PackageUser;
 
-                    //this.DataContext = packageUser;
+                    grid_packageDetails.DataContext = packageUser;
+                    grid_payDetails.DataContext = packageUser;
 
                     #region fill Package details
                     if (packageUser != null)
                     {
-                        txt_packageNumberTitle.Text = packageUser.packageNumber;
-                        txt_packageName.Text = packageUser.packageName;
-                        CountryPackageDate cpd = new CountryPackageDate();
-                        CountryPackageDate cpdModel = new CountryPackageDate();
-                        cpd = await cpdModel.GetByID(packageUser.countryPackageId.Value);
-                        txt_period.Text = HelpClass.getPeriod(cpd);
-                        txt_expirDate.Text = packageUser.expireDate.ToString();
-                        txt_price.Text = packageUser.price.ToString();
-                        txt_moneyCode.Text = packageUser.currency;
-                        txt_discount.Text = tb_discount.Text;
-                        txt_expirDate.Text = packageUser.expireDate.ToString();
-                        txt_moneyCode1.Text = packageUser.currency;
-                        int discount = 0;
-                        try
-                        {
-                            discount = int.Parse(tb_discount.Text);
-                        }
-                        catch { discount = 0; }
-                        txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
-                        txt_moneyCode3.Text = packageUser.currency;
+                        #region
+                        //txt_packageNumberTitle.Text = packageUser.packageNumber;
+                        //txt_packageName.Text = packageUser.packageName;
+                        //CountryPackageDate cpd = new CountryPackageDate();
+                        //CountryPackageDate cpdModel = new CountryPackageDate();
+                        //cpd = await cpdModel.GetByID(packageUser.countryPackageId.Value);
+                        //txt_period.Text = HelpClass.getPeriod(cpd);
+                        //txt_expirDate.Text = packageUser.expireDate.ToString();
+                        //txt_price.Text = packageUser.price.ToString();
+                        //txt_moneyCode.Text = packageUser.currency;
+                        //txt_discount.Text = tb_discount.Text;
+                        //txt_expirDate.Text = packageUser.expireDate.ToString();
+                        //txt_moneyCode1.Text = packageUser.currency;
+                        //int discount = 0;
+                        //try
+                        //{
+                        //    discount = int.Parse(tb_discount.Text);
+                        //}
+                        //catch { discount = 0; }
+                        //txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
+                        //txt_moneyCode3.Text = packageUser.currency;
+                        #endregion
                     }
                     #endregion
 
