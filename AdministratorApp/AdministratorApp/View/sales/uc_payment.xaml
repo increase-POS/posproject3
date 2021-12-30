@@ -368,15 +368,24 @@
                                     Margin="0 5 15 5"/>
 
 
-                        <!--Text="{Binding Path=expireDate, Converter={StaticResource packagePeriodConverter }}"-->
 
                         <TextBlock Grid.Row="3"  Grid.Column="0"  x:Name="txt_periodTitle" 
                                    Text="period" FontSize="14"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"     
                         Margin="15,5,5,5"/>
+                        <!--Text="{Binding Path=expireDate, Converter={StaticResource packagePeriodConverter }}"-->
                         <TextBlock Grid.Row="3"  Grid.Column="1"  x:Name="txt_period" 
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"     
-                                   Margin="0 5 15 5" />
+                                   HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Foreground="{StaticResource MainColor}"     
+                                   Margin="0 5 15 5" >
+                            <TextBlock.Text>
+                                <MultiBinding  Converter="{StaticResource packagePeriodConverter}">
+                                    <Binding Path="monthCount"></Binding>
+                                    <Binding Path="islimitDate"></Binding>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                            
+                        </TextBlock>
 
                         <TextBlock Grid.Row="4"  Grid.Column="0"  x:Name="txt_expirDateTitle"
                                    Text="Expire Date" FontSize="14"
