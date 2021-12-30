@@ -468,12 +468,12 @@ namespace Programs_Server.Controllers
                 }
                 catch
                 {
-                    return 0;
+                    return -10;
                 }
             }
             else
             {
-                return 0;
+                return -20;
             }
 
 

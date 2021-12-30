@@ -448,12 +448,12 @@ namespace Programs_Server.Controllers
                             var tmpObject = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
 
                             tmpObject.updateDate = DateTime.Now;
-                            tmpObject.packageUserId = newObject.packageUserId;
-                            tmpObject.packageId = newObject.packageId;
+                          //  tmpObject.packageUserId = newObject.packageUserId;
+                           // tmpObject.packageId = newObject.packageId;
                             tmpObject.userId = newObject.userId;
                             // tmpObject.packageSaleCode = newObject.packageSaleCode;
                          //  tmpObject.packageNumber = newObject.packageNumber;
-                            tmpObject.customerId = newObject.customerId;
+                        //    tmpObject.customerId = newObject.customerId;
                             tmpObject.customerServerCode = newObject.customerServerCode;
                             tmpObject.isBooked = newObject.isBooked;
                             tmpObject.notes = newObject.notes;
@@ -462,7 +462,7 @@ namespace Programs_Server.Controllers
                             //tmpObject.createUserId = newObject.createUserId;
                             tmpObject.updateUserId = newObject.updateUserId;
                             tmpObject.bookDate = newObject.bookDate;
-                            tmpObject.isActive = newObject.isActive;
+                          //  tmpObject.isActive = newObject.isActive;
                             tmpObject.expireDate = newObject.expireDate;
                             tmpObject.isOnlineServer = newObject.isOnlineServer;
                             tmpObject.customerServerCode = newObject.customerServerCode;
@@ -471,9 +471,9 @@ namespace Programs_Server.Controllers
                             tmpObject.monthCount = newObject.monthCount;
                             tmpObject.activatedate = newObject.activatedate;
                             tmpObject.isServerActivated = newObject.isServerActivated;
-                            tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
-                            tmpObject.countryPackageId = newObject.countryPackageId;
-                            tmpObject.isPayed = newObject.isPayed;
+                            //tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
+                          //  tmpObject.countryPackageId = newObject.countryPackageId;
+                          //  tmpObject.isPayed = newObject.isPayed;
 
                             tmpObject.canRenew = newObject.canRenew;
                             entity.SaveChanges();
@@ -1856,32 +1856,38 @@ namespace Programs_Server.Controllers
             }
             else
             {
-                string Object = "";
-                string Object2 = "";
-                packageUser newObject = null;
-                payOp newpay = new payOp();
-
-                packageUserModel modelObject = new packageUserModel();
-                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
-                foreach (Claim c in claims)
+                try
                 {
-                    if (c.Type == "Object")
-                    {
-                        Object = c.Value.Replace("\\", string.Empty);
-                        Object = Object.Trim('"');
-                        newObject = JsonConvert.DeserializeObject<packageUser>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                        //modelObject = JsonConvert.DeserializeObject<packageUserModel>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    string Object = "";
+                    string Object2 = "";
+                    packageUser newObject = null;
+                    payOp newpay = new payOp();
 
-                    }
-                    else if (c.Type == "PayObject")
+                    packageUserModel modelObject = new packageUserModel();
+                    IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                    foreach (Claim c in claims)
                     {
-                        Object2 = c.Value.Replace("\\", string.Empty);
-                        Object2 = Object2.Trim('"');
-                        newpay = JsonConvert.DeserializeObject<payOp>(Object2, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                        //modelObject = JsonConvert.DeserializeObject<packageUserModel>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                        if (c.Type == "Object")
+                        {
+                            Object = c.Value.Replace("\\", string.Empty);
+                            Object = Object.Trim('"');
+                            newObject = JsonConvert.DeserializeObject<packageUser>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                            //modelObject = JsonConvert.DeserializeObject<packageUserModel>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
 
+                        }
+                        else if (c.Type == "PayObject")
+                        {
+                            Object2 = c.Value.Replace("\\", string.Empty);
+                            Object2 = Object2.Trim('"');
+                            newpay = JsonConvert.DeserializeObject<payOp>(Object2, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                            //modelObject = JsonConvert.DeserializeObject<packageUserModel>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+
+                        }
                     }
-                }
+
+                
+
+
                 if (newObject != null)
                 {
                     if (newObject.updateUserId == 0 || newObject.updateUserId == null)
@@ -1944,6 +1950,7 @@ namespace Programs_Server.Controllers
                                 tmpcpd = entity1.countryPackageDate.Where(p => p.Id == newObject.countryPackageId).FirstOrDefault();
 
                             }
+
                             var puEntity = entity.Set<packageUser>();
                             if (dbPU.packageUserId > 0 && dbPU.oldPackageId == 0 && dbPU.type == "np" && dbPU.isPayed == false)
                             {
@@ -2098,10 +2105,6 @@ namespace Programs_Server.Controllers
                                 dbPU.oldPackageId = (int)dbPU.packageId;
 
 
-
-
-
-
                                 // update expiredate
                                 if (tmpcpd.islimitDate == true)
                                 {
@@ -2202,7 +2205,7 @@ namespace Programs_Server.Controllers
                             else
                             {
                                 // error
-                                return TokenManager.GenerateToken("0");
+                                return TokenManager.GenerateToken("-25");
                             }
 
 
@@ -2212,14 +2215,21 @@ namespace Programs_Server.Controllers
                     }
 
 
-                    catch
+                    catch (Exception ex)
                     {
-                        return TokenManager.GenerateToken("0");
+                       // return TokenManager.GenerateToken("0");
+                        return TokenManager.GenerateToken(ex.ToString());
                     }
                 }
                 else
                 {
                     return TokenManager.GenerateToken("0");
+                }
+
+                }
+                catch (Exception ex)
+                {
+                    return TokenManager.GenerateToken(ex.ToString());
                 }
 
             }
