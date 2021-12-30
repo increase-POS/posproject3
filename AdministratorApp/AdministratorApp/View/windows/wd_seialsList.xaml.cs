@@ -19,6 +19,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using AdministratorApp.ApiClasses;
+
 
 namespace AdministratorApp.View.windows
 {
@@ -33,6 +36,10 @@ namespace AdministratorApp.View.windows
         IEnumerable<PosSerials> posSerials;
         public int packageUserID = 0;
         string txtSearch = "";
+        //print
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
         public wd_seialsList()
         {
             try
@@ -249,20 +256,19 @@ namespace AdministratorApp.View.windows
         #region reports
 
         //ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        public void BuildReport()
+  
+        public async void  BuildReport()
         {
 
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath = "";
-            string firstTitle = "paymentsReport";
+            string firstTitle = "Serials";
             string secondTitle = "";
             string subTitle = "";
             string Title = "";
 
-            //bool isArabic = ReportCls.checkLang();
+            bool isArabic = ReportCls.checkLang();
             //if (isArabic)
             //{
             //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
@@ -273,13 +279,18 @@ namespace AdministratorApp.View.windows
             //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
             //secondTitle = "vendors";
             //}
-            //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            addpath = @"\Reports\Sale\Book\Serials\En\serials.rdlc";
+         
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             //ReportCls.checkLang();
             //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
+            Title = "Serials";
             paramarr.Add(new ReportParameter("trTitle", Title));
-            //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
+            List<PosSerials> repserialList = new List<PosSerials>();
+
+            repserialList = await posSerialModel.GetByPackUserId(packageUserID);
+            clsReports.serialsReport(repserialList.Where(s=>s.isActive==1), rep, reppath, paramarr);
             //clsReports.setReportLanguage(paramarr);
             //clsReports.Header(paramarr);
 
@@ -301,7 +312,7 @@ namespace AdministratorApp.View.windows
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     string filepath = saveFileDialog.FileName;
-                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                   LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
                 #endregion
 
@@ -330,7 +341,7 @@ namespace AdministratorApp.View.windows
                         if (saveFileDialog.ShowDialog() == true)
                         {
                             string filepath = saveFileDialog.FileName;
-                            // LocalReportExtensions.ExportToExcel(rep, filepath);
+                            LocalReportExtensions.ExportToExcel(rep, filepath);
                         }
                     });
                 });

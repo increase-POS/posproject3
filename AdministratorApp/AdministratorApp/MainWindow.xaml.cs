@@ -38,6 +38,7 @@ namespace AdministratorApp
         public static ResourceManager resourcemanagerreport;
         static public MainWindow mainWindow;
         public static string lang = "en";
+        public static string Reportlang = "en";
         internal static Users userLogin = new Users();
         public static int userID=1;
         //public static CountryCode Region;
@@ -50,6 +51,15 @@ namespace AdministratorApp
         static public List<GroupObject> groupObjects = new List<GroupObject>();
         Users userModel = new Users();
         ImageBrush myBrush = new ImageBrush();
+        public static string Currency;
+        public static int CurrencyId;
+        public static string companyName;
+        public static string Email;
+        public static string Fax;
+        public static string Mobile;
+        public static string Address;
+        public static string Phone;
+        public static string logoImage;
 
         public MainWindow()
         {
