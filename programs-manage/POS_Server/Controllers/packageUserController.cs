@@ -451,8 +451,8 @@ namespace Programs_Server.Controllers
                             tmpObject.packageUserId = newObject.packageUserId;
                             tmpObject.packageId = newObject.packageId;
                             tmpObject.userId = newObject.userId;
-                            //   tmpObject.packageSaleCode = newObject.packageSaleCode;
-                            tmpObject.packageNumber = newObject.packageNumber;
+                            // tmpObject.packageSaleCode = newObject.packageSaleCode;
+                         //  tmpObject.packageNumber = newObject.packageNumber;
                             tmpObject.customerId = newObject.customerId;
                             tmpObject.customerServerCode = newObject.customerServerCode;
                             tmpObject.isBooked = newObject.isBooked;
@@ -465,8 +465,16 @@ namespace Programs_Server.Controllers
                             tmpObject.isActive = newObject.isActive;
                             tmpObject.expireDate = newObject.expireDate;
                             tmpObject.isOnlineServer = newObject.isOnlineServer;
-
+                            tmpObject.customerServerCode = newObject.customerServerCode;
+                            tmpObject.salesInvCount = newObject.salesInvCount;
+                            tmpObject.totalsalesInvCount = newObject.totalsalesInvCount;
+                            tmpObject.monthCount = newObject.monthCount;
+                            tmpObject.activatedate = newObject.activatedate;
+                            tmpObject.isServerActivated = newObject.isServerActivated;
+                            tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
                             tmpObject.countryPackageId = newObject.countryPackageId;
+                            tmpObject.isPayed = newObject.isPayed;
+
                             tmpObject.canRenew = newObject.canRenew;
                             entity.SaveChanges();
 
@@ -1137,7 +1145,7 @@ namespace Programs_Server.Controllers
                                     package.expireDate = packuserrow.expireDate;
                                     package.isOnlineServer = packuserrow.isOnlineServer;
                                     package.packageNumber = packuserrow.packageNumber;
-
+                                    package.totalsalesInvCount = packuserrow.totalsalesInvCount;
                                     //packuserrow.countryPackageId
                                     package.islimitDate = cpD.islimitDate;
                                     package.isActive = (int)packuserrow.isActive;
@@ -1519,7 +1527,7 @@ namespace Programs_Server.Controllers
                                 newObject.isBooked = true;
                                 newObject.bookDate = DateTime.Now;
 
-                                newObject.isActive = 1;
+                                //newObject.isActive = 1;
 
                                 newObject.oldCountryPackageId = 0;
                                 if (tmpcpd.islimitDate == true)
@@ -1573,9 +1581,10 @@ namespace Programs_Server.Controllers
 
 
                             }
+
                             else if (newObject.packageUserId > 0 && newObject.oldPackageId == newObject.packageId)
                             {
-                                // upgrade: chang  period
+                                // upgrade: chang  period +rn
 
                                 var tmpObject = entity.packageUser.Where(p => p.packageUserId == newObject.packageUserId).FirstOrDefault();
 
@@ -1652,7 +1661,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.monthCount = 0;
                                 tmpObject.salesInvCount = 0;
 
-                                // tmpObject.isActive = newObject.isActive;
+                              tmpObject.isActive = newObject.isActive;
                                 // tmpObject.expireDate = newObject.expireDate;//old -change on pay
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
 
@@ -1954,7 +1963,7 @@ namespace Programs_Server.Controllers
                                 dbPU.notes = newObject.notes;
 
                                 //  dbPU.bookDate = null;
-                                dbPU.isActive = 1;
+                              //  dbPU.isActive = 1;
                                 //   dbPU.expireDate = null;
                                 dbPU.canRenew = true;
                                 dbPU.oldPackageId = (int)dbPU.packageId;
@@ -1995,7 +2004,7 @@ namespace Programs_Server.Controllers
 
                                 dbPU.updateUserId = newObject.updateUserId;
                                 // tmpObject.bookDate = newObject.bookDate;
-                                dbPU.isActive = 1;
+                            //    dbPU.isActive = 1;
 
                                 dbPU.isOnlineServer = newObject.isOnlineServer;
 
@@ -2079,7 +2088,7 @@ namespace Programs_Server.Controllers
 
                                 dbPU.updateUserId = newObject.updateUserId;
                                 // tmpObject.bookDate = newObject.bookDate;
-                                dbPU.isActive = 1;
+                              //  dbPU.isActive = 1;
                                 //   tmpObject.expireDate = newObject.expireDate;//on pay
                                 //   dbPU.isOnlineServer = newObject.isOnlineServer;
 
@@ -2146,7 +2155,7 @@ namespace Programs_Server.Controllers
                                 dbPU.notes = newObject.notes;
 
                                 // dbPU.bookDate = null;
-                                dbPU.isActive = 1;
+                              //  dbPU.isActive = 1;
                                 //dbPU.expireDate changed on upgrade
                                 //if (tmpcpd.islimitDate == true)
                                 //{
@@ -2378,8 +2387,6 @@ namespace Programs_Server.Controllers
             {
                 string message = "0";
 
-             
-               
                 SendDetail sd = new SendDetail();
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
 
