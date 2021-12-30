@@ -2587,4 +2587,10 @@
   <data name="trVersions" xml:space="preserve">
     <value>الإصدارات</value>
   </data>
+  <data name="trIsActive" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="trIsActiveCountPopError" xml:space="preserve">
+    <value>تجاوز الحد</value>
+  </data>
 </root>

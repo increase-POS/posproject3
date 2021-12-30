@@ -2602,4 +2602,10 @@ Please add Email in setting</value>
   <data name="trVersions" xml:space="preserve">
     <value>Versions</value>
   </data>
+  <data name="trIsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="trIsActiveCountPopError" xml:space="preserve">
+    <value>over the limit</value>
+  </data>
 </root>
