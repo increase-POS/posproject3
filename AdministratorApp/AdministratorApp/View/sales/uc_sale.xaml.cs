@@ -100,6 +100,7 @@ namespace AdministratorApp.View.sales
                 {
                     await FillCombo.fillCustomer(cb_customer);
                     cb_agent.SelectedValue = 3;
+                    cb_agent.Visibility = Visibility.Collapsed;
                 }
 
                 if (oldPackageId == 0)
@@ -200,14 +201,7 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 Clear();
-                cb_customer.SelectedIndex = -1;
-                cb_agent.SelectedIndex = -1;
-                cb_package.SelectedIndex = -1;
-                cb_period.SelectedIndex = -1;
-                cb_package.IsEnabled = false;
-                cb_period.IsEnabled = false;
-                btn_serials.IsEnabled = false;
-                txt_activationCodeTitle.Text = "";
+              
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -235,17 +229,22 @@ namespace AdministratorApp.View.sales
                 this.DataContext = new Packages();
             }
             catch { }
-            HelpClass.clearValidate(requiredControlList, this);
             cb_customer.SelectedIndex = -1;
+            cb_agent.SelectedIndex = -1;
             cb_package.SelectedIndex = -1;
             cb_period.SelectedIndex = -1;
+            cb_package.IsEnabled = false;
+            cb_period.IsEnabled = false;
+            btn_serials.IsEnabled = false;
+            tb_activationCode.Text = "";
+            btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+            HelpClass.clearValidate(requiredControlList, this);
         }
 
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        { //only  digits
             try
             {
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 Regex regex = new Regex("[^0-9]+");

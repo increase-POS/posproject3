@@ -545,15 +545,13 @@ namespace AdministratorApp.View.sales
                 await RefreshPayOpList();
 
             searchText = tb_search.Text.ToLower();
-            //payOpQuery = payOps.Where(s => (s.code.ToLower().Contains(searchText) ||
-            //                                s.packageNumber.ToLower().Contains(searchText) ||
-            //                                s.updateDate.ToString().ToLower().Contains(searchText) ||
-            //                                s.expireDate.ToString().ToLower().Contains(searchText) ||
-            //                                s.totalnet.ToString().ToLower().Contains(searchText)
-            //));
-            payOpQuery = payOps.Where(s => (
-                                           s.packageNumber.ToLower().Contains(searchText)
-           ));
+            payOpQuery = payOps.Where(s => (s.code.ToLower().Contains(searchText) ||
+                                            s.packageNumber.ToLower().Contains(searchText) ||
+                                            s.updateDate.ToString().ToLower().Contains(searchText) ||
+                                            s.expireDate.ToString().ToLower().Contains(searchText) ||
+                                            s.totalnet.ToString().ToLower().Contains(searchText)
+            ));
+
             RefreshPayOpView();
         }
 
@@ -578,6 +576,7 @@ namespace AdministratorApp.View.sales
                     #region fill Package details
                     if (packageUser != null)
                     {
+                        txt_total.Text = txt_price.Text;
                         #region
                         //txt_packageNumberTitle.Text = packageUser.packageNumber;
                         //txt_packageName.Text = packageUser.packageName;
@@ -635,7 +634,7 @@ namespace AdministratorApp.View.sales
                     uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
                     uc_sale.Instance.packuser = packageUser;
                     uc_sale.Instance.btn_serials.IsEnabled = true;
-                    uc_sale.Instance.txt_activationCodeTitle.Text = packageUser.packageSaleCode;
+                    uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
 
                 }
 

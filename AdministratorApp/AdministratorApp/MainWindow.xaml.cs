@@ -25,6 +25,7 @@ using AdministratorApp.View.sales;
 using AdministratorApp.View.settings;
 using System.Windows.Resources;
 using AdministratorApp.View.windows;
+using AdministratorApp.View.reports;
 
 namespace AdministratorApp
 {
@@ -523,7 +524,18 @@ namespace AdministratorApp
                 while (!isDone);
                 #endregion
 
-                Btn_applications_Click(btn_applications , null);
+                if (MainWindow.userLogin.type == "ag")
+                {
+                    btn_applications.Visibility = Visibility.Collapsed;
+                    btn_sectionData.Visibility = Visibility.Collapsed;
+                    btn_settings.Visibility = Visibility.Collapsed;
+
+                    Btn_sales_Click(btn_sales , null);
+                }
+                else
+                {
+                    Btn_applications_Click(btn_applications, null);
+                }
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
             }
@@ -598,7 +610,7 @@ namespace AdministratorApp
         }
        
         private void BTN_Close_Click(object sender, RoutedEventArgs e)
-        {
+        {//close
             try
             {
                 if (sender != null)
@@ -616,7 +628,7 @@ namespace AdministratorApp
             }
         }
         private void BTN_Minimize_Click(object sender, RoutedEventArgs e)
-        {
+        {//minimize
             try
             {
                 this.WindowState = System.Windows.WindowState.Minimized;
@@ -627,7 +639,7 @@ namespace AdministratorApp
             }
         }
         private void Btn_applications_Click(object sender, RoutedEventArgs e)
-        {
+        {//application
             try
             {
                 Button button = sender as Button;
@@ -644,7 +656,7 @@ namespace AdministratorApp
         }
        
         public  void Btn_sales_Click(object sender, RoutedEventArgs e)
-        {
+        {//sales
             try
             {
                 Button button = sender as Button;
@@ -661,7 +673,7 @@ namespace AdministratorApp
         }
 
         private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
-        {
+        {//sectiondata
             try
             {
                 Button button = sender as Button;
@@ -678,7 +690,7 @@ namespace AdministratorApp
         }
 
         private void Btn_reports_Click(object sender, RoutedEventArgs e)
-        {
+        {//reports
             try
             {
                 Button button = sender as Button;
@@ -686,7 +698,7 @@ namespace AdministratorApp
                 ColorIconRefreash(button.Tag.ToString());
                 openVisible(button.Tag.ToString());
                 grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_home.Instance);
+                grid_main.Children.Add(uc_reports.Instance);
             }
             catch (Exception ex)
             {
