@@ -178,6 +178,12 @@
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
     <Compile Include="Classes\KeyValue.cs" />
+    <Compile Include="Classes\printClass\clsReports.cs" />
+    <Compile Include="Classes\printClass\LocalReportExtensions.cs" />
+    <Compile Include="Classes\printClass\numberToWord\CurrencyInfo.cs" />
+    <Compile Include="Classes\printClass\numberToWord\ToWord.cs" />
+    <Compile Include="Classes\printClass\ReportCls.cs" />
+    <Compile Include="Classes\printClass\rptSectionData.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\BooleanReverseConverter.cs" />
     <Compile Include="converters\BooleanToVisibilityConverter.cs" />
@@ -196,6 +202,9 @@
     </Compile>
     <Compile Include="View\applications\us_programs.xaml.cs">
       <DependentUpon>us_programs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\uc_reports.xaml.cs">
+      <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\uc_packageUser.xaml.cs">
       <DependentUpon>uc_packageUser.xaml</DependentUpon>
@@ -292,6 +301,10 @@
     <Page Include="View\applications\us_programs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\uc_reports.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\sales\uc_packageUser.xaml">
       <SubType>Designer</SubType>
@@ -394,10 +407,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Sale\Book\Serials\Ar\serials.rdlc" />
+    <Content Include="Reports\Sale\Book\Serials\En\serials.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <Resource Include="fonts\barcodeFont.ttf" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PosSerials.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -407,10 +425,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Reports\" />
     <Folder Include="Thumb\customers\" />
     <Folder Include="Thumb\users\" />
-    <Folder Include="View\reports\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\increase-logo.png" />

@@ -704,3 +704,9 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\w
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\sales\uc_payment.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_customers.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_newCustomer.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_seialsList.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\reports\uc_reports.g.cs
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_seialsList.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\reports\uc_reports.baml
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\RdlCompile.cache
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\RdlCompile.compiled
