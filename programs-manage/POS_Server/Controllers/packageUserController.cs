@@ -2205,7 +2205,7 @@ namespace Programs_Server.Controllers
                             else
                             {
                                 // error
-                                return TokenManager.GenerateToken("-25");
+                                return TokenManager.GenerateToken("-6");
                             }
 
 
@@ -2215,10 +2215,10 @@ namespace Programs_Server.Controllers
                     }
 
 
-                    catch (Exception ex)
+                    catch
                     {
-                       // return TokenManager.GenerateToken("0");
-                        return TokenManager.GenerateToken(ex.ToString());
+                       return TokenManager.GenerateToken("0");
+                     
                     }
                 }
                 else
@@ -2227,9 +2227,10 @@ namespace Programs_Server.Controllers
                 }
 
                 }
-                catch (Exception ex)
+                catch 
                 {
-                    return TokenManager.GenerateToken(ex.ToString());
+                    //return TokenManager.GenerateToken(ex.ToString());
+                    return TokenManager.GenerateToken("0");
                 }
 
             }
