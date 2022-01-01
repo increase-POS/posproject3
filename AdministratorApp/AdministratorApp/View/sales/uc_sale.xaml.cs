@@ -39,6 +39,9 @@ namespace AdministratorApp.View.sales
         public PackageUser packuser = new PackageUser();
         PackageUser packuserModel = new PackageUser();
 
+        Users userModel = new Users();
+        Users agent = new Users();
+
         public uc_sale()
         {
             try
@@ -69,7 +72,7 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 package = new Packages();
-                //package.isActive = null;
+               
                 this.DataContext = package;
 
                 #region translate
@@ -84,25 +87,23 @@ namespace AdministratorApp.View.sales
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                #endregion
+            #endregion
 
-                await FillCombo.fillAgent(cb_agent);
                 requiredControlList = new List<string> { "package", "customer", "period" };
 
                 if (MainWindow.userLogin.type.Equals("ag"))
                 {
                     await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId);
-                    cb_agent.SelectedValue = MainWindow.userLogin.userId;
+                    agent = await userModel.GetByID(MainWindow.userLogin.userId);
                     await FillCombo.fillAgentPackage(cb_package , MainWindow.userLogin.userId);
                     cb_package.IsEnabled = true;
                 }
                 else
                 {
                     await FillCombo.fillCustomer(cb_customer);
-                    cb_agent.SelectedValue = 3;
+                    agent = await userModel.GetByID(3);
                     cb_agent.Visibility = Visibility.Collapsed;
                 }
-
                 if (oldPackageId == 0)
                 {
                     Clear();
@@ -112,21 +113,22 @@ namespace AdministratorApp.View.sales
                 {
                     btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
                     cb_customer.SelectedValue = oldCustomerId;
-                    cb_agent.SelectedValue = oldAgentId;
+                    agent = await userModel.GetByID(MainWindow.userLogin.userId);
                     if (MainWindow.userLogin.type.Equals("ag"))
                     {
                         cb_package.SelectedValue = oldPackageId;
                         cb_period.SelectedValue = oldCountryPackageId;
                     }
                 }
+                cb_agent.Text = agent.accountName;
 
                 HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translate()
@@ -230,7 +232,7 @@ namespace AdministratorApp.View.sales
             }
             catch { }
             cb_customer.SelectedIndex = -1;
-            cb_agent.SelectedIndex = -1;
+            cb_agent.Text = "";
             cb_package.SelectedIndex = -1;
             cb_period.SelectedIndex = -1;
             cb_package.IsEnabled = false;
@@ -302,10 +304,7 @@ namespace AdministratorApp.View.sales
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
-                    Users userModel = new Users();
-                    Users agent = new Users();
-                    packuser.userId = int.Parse(cb_agent.SelectedValue.ToString());
-                    agent = await userModel.GetByID((int)cb_agent.SelectedValue);
+                    packuser.userId = agent.userId;
                     packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
                     packuser.createUserId = MainWindow.userID;
                     packuser.packageNumber = await packuserModel.generateNumber("si", agent.code , agent.userId);
@@ -345,22 +344,22 @@ namespace AdministratorApp.View.sales
             }
         }
 
-        private async void Cb_agent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select agent
-            try
-            {
-                if (cb_agent.SelectedIndex != -1)
-                {
-                    await FillCombo.fillAgentPackage(cb_package, (int)cb_agent.SelectedValue);
-                    //if(customerId != 0) cb_package.SelectedValue = packageId;
-                }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+        //private async void Cb_agent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{//select agent
+        //    try
+        //    {
+        //        if (cb_agent.SelectedIndex != -1)
+        //        {
+        //            await FillCombo.fillAgentPackage(cb_package, (int)cb_agent.SelectedValue);
+        //            //if(customerId != 0) cb_package.SelectedValue = packageId;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
 
-        }
+        //}
 
         private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
         {//upgrade

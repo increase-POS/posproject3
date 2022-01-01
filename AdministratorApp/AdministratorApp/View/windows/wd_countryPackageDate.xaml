@@ -220,8 +220,14 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-
-                                <DataGridTextColumn Width="*"  Header="Period" Binding="{Binding Path=.,Converter={StaticResource packagePeriodConverter }}">
+                                <!--Binding="{Binding Path=.,Converter={StaticResource packagePeriodConverter }}"-->
+                                <DataGridTextColumn Width="*"  Header="Period" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource packagePeriodConverter}">
+                                            <Binding Path="monthCount" />
+                                            <Binding Path="islimitDate" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>

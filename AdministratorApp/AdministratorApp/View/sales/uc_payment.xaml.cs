@@ -155,14 +155,25 @@ namespace AdministratorApp.View.sales
 
         void Clear()
         {
-            //this.DataContext = new PayOp();
-            //grid_packageDetails.DataContext = new PackageUser();
-            //grid_payDetails.DataContext = new PackageUser();
             cb_customer.SelectedIndex = -1;
+           
+            clearValidate();
+        }
+
+        void ClearPackageUser()
+        {
             cb_packageNumber.SelectedIndex = -1;
+
             tb_discount.Text = "0";
-            cb_packageNumber.IsEnabled = false;
             tb_discount.IsEnabled = false;
+
+            txt_total.Text = "0";
+
+            txt_period.Visibility = Visibility.Hidden;
+
+            grid_packageDetails.DataContext = new PackageUser();
+            grid_payDetails.DataContext = new PackageUser();
+
             clearValidate();
         }
 
@@ -570,6 +581,8 @@ namespace AdministratorApp.View.sales
 
                     packageUser = cb_packageNumber.SelectedItem as PackageUser;
 
+                    txt_period.Visibility = Visibility.Visible;
+
                     grid_packageDetails.DataContext = packageUser;
                     grid_payDetails.DataContext = packageUser;
 
@@ -657,7 +670,6 @@ namespace AdministratorApp.View.sales
                 {
                     payOp.Price = decimal.Parse(txt_price.Text);
                     payOp.code = await payOpModel.generateNumber("po");//auto po-000000
-                    //payOp.code = "";
                     payOp.type = packageUser.type;
                     payOp.packageUserId = packageUser.packageUserId;
                     payOp.createUserId = MainWindow.userID;
@@ -682,7 +694,7 @@ namespace AdministratorApp.View.sales
                         await RefreshPayOpList();
                         await Search();
 
-                        Clear();
+                        ClearPackageUser();
                     }
                 }
                 HelpClass.EndAwait(grid_main);
