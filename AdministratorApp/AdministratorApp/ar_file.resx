@@ -2593,4 +2593,31 @@
   <data name="trIsActiveCountPopError" xml:space="preserve">
     <value>تجاوز الحد</value>
   </data>
+  <data name="trBranchCountHint" xml:space="preserve">
+    <value>عدد الفروع...</value>
+  </data>
+  <data name="trCustomerCountHint" xml:space="preserve">
+    <value>عدد الزبائن...</value>
+  </data>
+  <data name="trItemsCountHint" xml:space="preserve">
+    <value>عدد العناصر...</value>
+  </data>
+  <data name="trPOSCountHint" xml:space="preserve">
+    <value>عدد نقاط البيع...</value>
+  </data>
+  <data name="trProgramHint" xml:space="preserve">
+    <value>البرنامج...</value>
+  </data>
+  <data name="trSaleInvCountHint" xml:space="preserve">
+    <value>عدد فواتير المبيع...</value>
+  </data>
+  <data name="trStoreCountHint" xml:space="preserve">
+    <value>عدد المخازن...</value>
+  </data>
+  <data name="trVendorCountHint" xml:space="preserve">
+    <value>عدد الموردين...</value>
+  </data>
+  <data name="trVersionHint" xml:space="preserve">
+    <value>الإصدار...</value>
+  </data>
 </root>

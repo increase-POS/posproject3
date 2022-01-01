@@ -67,6 +67,7 @@ namespace AdministratorApp.View.applications
                 , "posCount", "customerCount", "vendorCount"
                 , "salesInvCount", "itemCount"};
 
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -79,6 +80,8 @@ namespace AdministratorApp.View.applications
                 }
                 await FillCombo.fillProgram(cb_program);
                 translate();
+                #endregion
+
                 Keyboard.Focus(tb_code);
 
                 await RefreshPackagesList();
@@ -98,46 +101,43 @@ namespace AdministratorApp.View.applications
         {
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_packageHeader.Text = MainWindow.resourcemanager.GetString("trPackages");
-            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            //txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            txt_title.Text = MainWindow.resourcemanager.GetString("trPackages");
+            txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_packageName, MainWindow.resourcemanager.GetString("trPackageHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, MainWindow.resourcemanager.GetString("trDetailsHint"));
 
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
-            //TextBox tbStart = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbStart, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            //TextBox tbEnd = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbEnd, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_programDetails.Text = MainWindow.resourcemanager.GetString("trProgramDetails");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_program, MainWindow.resourcemanager.GetString("trProgramHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_version, MainWindow.resourcemanager.GetString("trVersionHint"));
 
-            //txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            //txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            //txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            //tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            txt_packageLimits.Text = MainWindow.resourcemanager.GetString("trPackageLimits");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_branchCount, MainWindow.resourcemanager.GetString("trBranchCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_storeCount, MainWindow.resourcemanager.GetString("trStoreCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userCount, MainWindow.resourcemanager.GetString("trUserCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_posCount, MainWindow.resourcemanager.GetString("trPOSCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerCount, MainWindow.resourcemanager.GetString("trCustomerCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_vendorCount, MainWindow.resourcemanager.GetString("trVendorCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_salesInvCount, MainWindow.resourcemanager.GetString("trSaleInvCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemCount, MainWindow.resourcemanager.GetString("trItemsCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
+            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
+            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            btn_packagePriceDate.Content = MainWindow.resourcemanager.GetString("trPrice");
 
             dg_package.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
+            dg_package.Columns[1].Header = MainWindow.resourcemanager.GetString("trPackage");
+            dg_package.Columns[2].Header = MainWindow.resourcemanager.GetString("trProgram");
+            dg_package.Columns[3].Header = MainWindow.resourcemanager.GetString("trVersion");
 
-            //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
-            //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
         }
         #region Add - Update - Delete - activate  

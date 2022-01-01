@@ -2608,4 +2608,31 @@ Please add Email in setting</value>
   <data name="trIsActiveCountPopError" xml:space="preserve">
     <value>over the limit</value>
   </data>
+  <data name="trBranchCountHint" xml:space="preserve">
+    <value>Branches Count...</value>
+  </data>
+  <data name="trCustomerCountHint" xml:space="preserve">
+    <value>Customers Count...</value>
+  </data>
+  <data name="trItemsCountHint" xml:space="preserve">
+    <value>Items Count...</value>
+  </data>
+  <data name="trPOSCountHint" xml:space="preserve">
+    <value>POS Count...</value>
+  </data>
+  <data name="trProgramHint" xml:space="preserve">
+    <value>Program...</value>
+  </data>
+  <data name="trSaleInvCountHint" xml:space="preserve">
+    <value>Sale Invoices Count...</value>
+  </data>
+  <data name="trStoreCountHint" xml:space="preserve">
+    <value>Stores Count...</value>
+  </data>
+  <data name="trVendorCountHint" xml:space="preserve">
+    <value>Vendor Count...</value>
+  </data>
+  <data name="trVersionHint" xml:space="preserve">
+    <value>Version...</value>
+  </data>
 </root>
