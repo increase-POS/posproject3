@@ -230,6 +230,25 @@
           <Property Name="customerId" Type="int" />
           <Property Name="countryPackageId" Type="int" />
           <Property Name="totalnet" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+          <Property Name="packageId" Type="int" />
+          <Property Name="expireDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="posInfo">
+          <Key>
+            <PropertyRef Name="posInfoId" />
+          </Key>
+          <Property Name="posInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="posName" Type="nvarchar" MaxLength="500" />
+          <Property Name="branchName" Type="nvarchar" MaxLength="500" />
+          <Property Name="posDeviceCode" Type="nvarchar" MaxLength="500" />
+          <Property Name="isBooked" Type="bit" Nullable="false" />
+          <Property Name="isActive" Type="int" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+          <Property Name="notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="serialId" Type="int" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -757,6 +776,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_payOp_countryPackageDate">
+          <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="countryPackageDate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="countryPackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_packages">
+          <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="packages">
+              <PropertyRef Name="packageId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="packageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_payOp_packageUser">
           <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
           <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
@@ -766,6 +821,54 @@
             </Principal>
             <Dependent Role="payOp">
               <PropertyRef Name="packageUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users1">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users2">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="agentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_posInfo_posSerials">
+          <End Role="posSerials" Type="Self.posSerials" Multiplicity="0..1" />
+          <End Role="posInfo" Type="Self.posInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posSerials">
+              <PropertyRef Name="serialId" />
+            </Principal>
+            <Dependent Role="posInfo">
+              <PropertyRef Name="serialId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -903,6 +1006,7 @@
           <EntitySet Name="packages" EntityType="Self.packages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="packageUser" EntityType="Self.packageUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="posInfo" EntityType="Self.posInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="puStatus" EntityType="Self.puStatus" Schema="dbo" store:Type="Tables" />
@@ -1052,9 +1156,37 @@
             <End Role="users" EntitySet="users" />
             <End Role="packageUser" EntitySet="packageUser" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_countryPackageDate" Association="Self.FK_payOp_countryPackageDate">
+            <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_customers" Association="Self.FK_payOp_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_packages" Association="Self.FK_payOp_packages">
+            <End Role="packages" EntitySet="packages" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
           <AssociationSet Name="FK_payOp_packageUser" Association="Self.FK_payOp_packageUser">
             <End Role="packageUser" EntitySet="packageUser" />
             <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users" Association="Self.FK_payOp_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users1" Association="Self.FK_payOp_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users2" Association="Self.FK_payOp_users2">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_posInfo_posSerials" Association="Self.FK_posInfo_posSerials">
+            <End Role="posSerials" EntitySet="posSerials" />
+            <End Role="posInfo" EntitySet="posInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_posSerials_packageUser" Association="Self.FK_posSerials_packageUser">
             <End Role="packageUser" EntitySet="packageUser" />
@@ -1163,6 +1295,7 @@
           <NavigationProperty Name="users" Relationship="Self.FK_countryPackageDate_users" FromRole="countryPackageDate" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_countryPackageDate_users1" FromRole="countryPackageDate" ToRole="users" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_countryPackageDate" FromRole="countryPackageDate" ToRole="packageUser" />
+          <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_countryPackageDate" FromRole="countryPackageDate" ToRole="payOp" />
         </EntityType>
         <EntityType Name="customers">
           <Key>
@@ -1194,6 +1327,7 @@
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_customers" FromRole="customers" ToRole="packageUser" />
           <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_customers" FromRole="customers" ToRole="agentCustomer" />
           <Property Name="balanceType" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_customers" FromRole="customers" ToRole="payOp" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -1299,6 +1433,7 @@
           <NavigationProperty Name="users1" Relationship="Self.FK_packages_users1" FromRole="packages" ToRole="users" />
           <NavigationProperty Name="versions" Relationship="Self.FK_packages_versions" FromRole="packages" ToRole="versions" />
           <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_packages" FromRole="packages" ToRole="packageUser" />
+          <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_packages" FromRole="packages" ToRole="payOp" />
         </EntityType>
         <EntityType Name="packageUser">
           <Key>
@@ -1361,6 +1496,7 @@
           <NavigationProperty Name="users" Relationship="Self.FK_posSerials_users" FromRole="posSerials" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.FK_posSerials_users1" FromRole="posSerials" ToRole="users" />
           <Property Name="unLimited" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="posInfo" Relationship="incprogramsdbModel.FK_posInfo_posSerials" FromRole="posSerials" ToRole="posInfo" />
         </EntityType>
         <EntityType Name="programs">
           <Key>
@@ -1442,6 +1578,9 @@
           <NavigationProperty Name="agentCustomer" Relationship="incprogramsdbModel.FK_agentCustomer_users" FromRole="users" ToRole="agentCustomer" />
           <NavigationProperty Name="agentCustomer1" Relationship="incprogramsdbModel.FK_agentCustomer_users1" FromRole="users" ToRole="agentCustomer" />
           <NavigationProperty Name="agentCustomer2" Relationship="incprogramsdbModel.FK_agentCustomer_users2" FromRole="users" ToRole="agentCustomer" />
+          <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_users" FromRole="users" ToRole="payOp" />
+          <NavigationProperty Name="payOp1" Relationship="incprogramsdbModel.FK_payOp_users1" FromRole="users" ToRole="payOp" />
+          <NavigationProperty Name="payOp2" Relationship="incprogramsdbModel.FK_payOp_users2" FromRole="users" ToRole="payOp" />
         </EntityType>
         <EntityType Name="versions">
           <Key>
@@ -2162,6 +2301,35 @@
             <End Role="packageUser" EntitySet="packageUser" />
             <End Role="puStatus" EntitySet="puStatus" />
           </AssociationSet>
+          <AssociationSet Name="FK_payOp_countryPackageDate" Association="incprogramsdbModel.FK_payOp_countryPackageDate">
+            <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_customers" Association="incprogramsdbModel.FK_payOp_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_packages" Association="incprogramsdbModel.FK_payOp_packages">
+            <End Role="packages" EntitySet="packages" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users" Association="incprogramsdbModel.FK_payOp_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users1" Association="incprogramsdbModel.FK_payOp_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_payOp_users2" Association="incprogramsdbModel.FK_payOp_users2">
+            <End Role="users" EntitySet="users" />
+            <End Role="payOp" EntitySet="payOp" />
+          </AssociationSet>
+          <EntitySet Name="posInfo" EntityType="incprogramsdbModel.posInfo" />
+          <AssociationSet Name="FK_posInfo_posSerials" Association="incprogramsdbModel.FK_posInfo_posSerials">
+            <End Role="posSerials" EntitySet="posSerials" />
+            <End Role="posInfo" EntitySet="posInfo" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="agentCustomer">
           <Key>
@@ -2248,6 +2416,14 @@
           <Property Name="customerId" Type="Int32" />
           <Property Name="countryPackageId" Type="Int32" />
           <Property Name="totalnet" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
+          <Property Name="packageId" Type="Int32" />
+          <Property Name="expireDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="countryPackageDate" Relationship="incprogramsdbModel.FK_payOp_countryPackageDate" FromRole="payOp" ToRole="countryPackageDate" />
+          <NavigationProperty Name="customers" Relationship="incprogramsdbModel.FK_payOp_customers" FromRole="payOp" ToRole="customers" />
+          <NavigationProperty Name="packages" Relationship="incprogramsdbModel.FK_payOp_packages" FromRole="payOp" ToRole="packages" />
+          <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_payOp_users" FromRole="payOp" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_payOp_users1" FromRole="payOp" ToRole="users" />
+          <NavigationProperty Name="users2" Relationship="incprogramsdbModel.FK_payOp_users2" FromRole="payOp" ToRole="users" />
         </EntityType>
         <Association Name="FK_payOp_packageUser">
           <End Type="incprogramsdbModel.packageUser" Role="packageUser" Multiplicity="0..1" />
@@ -2284,6 +2460,108 @@
             </Principal>
             <Dependent Role="puStatus">
               <PropertyRef Name="packageUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_countryPackageDate">
+          <End Type="incprogramsdbModel.countryPackageDate" Role="countryPackageDate" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="countryPackageDate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="countryPackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_customers">
+          <End Type="incprogramsdbModel.customers" Role="customers" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_packages">
+          <End Type="incprogramsdbModel.packages" Role="packages" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="packages">
+              <PropertyRef Name="packageId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="packageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="createUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users1">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_payOp_users2">
+          <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.payOp" Role="payOp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="payOp">
+              <PropertyRef Name="agentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="posInfo">
+          <Key>
+            <PropertyRef Name="posInfoId" />
+          </Key>
+          <Property Name="posInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="posName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="branchName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="posDeviceCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isBooked" Type="Boolean" Nullable="false" />
+          <Property Name="isActive" Type="Int32" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="serialId" Type="Int32" />
+          <NavigationProperty Name="posSerials" Relationship="incprogramsdbModel.FK_posInfo_posSerials" FromRole="posInfo" ToRole="posSerials" />
+        </EntityType>
+        <Association Name="FK_posInfo_posSerials">
+          <End Type="incprogramsdbModel.posSerials" Role="posSerials" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.posInfo" Role="posInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posSerials">
+              <PropertyRef Name="serialId" />
+            </Principal>
+            <Dependent Role="posInfo">
+              <PropertyRef Name="serialId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2599,6 +2877,8 @@
           <EntitySetMapping Name="payOp">
             <EntityTypeMapping TypeName="incprogramsdbModel.payOp">
               <MappingFragment StoreEntitySet="payOp">
+                <ScalarProperty Name="expireDate" ColumnName="expireDate" />
+                <ScalarProperty Name="packageId" ColumnName="packageId" />
                 <ScalarProperty Name="totalnet" ColumnName="totalnet" />
                 <ScalarProperty Name="countryPackageId" ColumnName="countryPackageId" />
                 <ScalarProperty Name="customerId" ColumnName="customerId" />
@@ -2628,6 +2908,24 @@
                 <ScalarProperty Name="packageUserId" ColumnName="packageUserId" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="stateId" ColumnName="stateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posInfo">
+            <EntityTypeMapping TypeName="incprogramsdbModel.posInfo">
+              <MappingFragment StoreEntitySet="posInfo">
+                <ScalarProperty Name="serialId" ColumnName="serialId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isBooked" ColumnName="isBooked" />
+                <ScalarProperty Name="posDeviceCode" ColumnName="posDeviceCode" />
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="posName" ColumnName="posName" />
+                <ScalarProperty Name="posInfoId" ColumnName="posInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,6 +20,7 @@ namespace Programs_Server
             this.agentPackage = new HashSet<agentPackage>();
             this.countryPackageDate = new HashSet<countryPackageDate>();
             this.packageUser = new HashSet<packageUser>();
+            this.payOp = new HashSet<payOp>();
         }
     
         public int packageId { get; set; }
@@ -53,5 +54,7 @@ namespace Programs_Server
         public virtual versions versions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packageUser> packageUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
     }
 }

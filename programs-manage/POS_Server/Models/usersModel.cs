@@ -29,7 +29,7 @@ namespace Programs_Server.Models
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
         public string code { get; set; }
-        public string hashCode { get; set; }
+    
         public Nullable<bool> isAdmin { get; set; }
         public Nullable<int> groupId { get; set; }
         public Nullable<byte> balanceType { get; set; }

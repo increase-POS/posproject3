@@ -225,6 +225,25 @@
     <Property Name="customerId" Type="int" />
     <Property Name="countryPackageId" Type="int" />
     <Property Name="totalnet" Type="decimal" Precision="20" Scale="3" Nullable="false" />
+    <Property Name="packageId" Type="int" />
+    <Property Name="expireDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="posInfo">
+    <Key>
+      <PropertyRef Name="posInfoId" />
+    </Key>
+    <Property Name="posInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="posName" Type="nvarchar" MaxLength="500" />
+    <Property Name="branchName" Type="nvarchar" MaxLength="500" />
+    <Property Name="posDeviceCode" Type="nvarchar" MaxLength="500" />
+    <Property Name="isBooked" Type="bit" Nullable="false" />
+    <Property Name="isActive" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="notes" Type="nvarchar" MaxLength="500" />
+    <Property Name="serialId" Type="int" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>
@@ -752,6 +771,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_payOp_countryPackageDate">
+    <End Role="countryPackageDate" Type="Self.countryPackageDate" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countryPackageDate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="countryPackageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payOp_customers">
+    <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customers">
+        <PropertyRef Name="custId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payOp_packages">
+    <End Role="packages" Type="Self.packages" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="packages">
+        <PropertyRef Name="packageId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="packageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_payOp_packageUser">
     <End Role="packageUser" Type="Self.packageUser" Multiplicity="0..1" />
     <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
@@ -761,6 +816,54 @@
       </Principal>
       <Dependent Role="payOp">
         <PropertyRef Name="packageUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payOp_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payOp_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_payOp_users2">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="payOp" Type="Self.payOp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="payOp">
+        <PropertyRef Name="agentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_posInfo_posSerials">
+    <End Role="posSerials" Type="Self.posSerials" Multiplicity="0..1" />
+    <End Role="posInfo" Type="Self.posInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="posSerials">
+        <PropertyRef Name="serialId" />
+      </Principal>
+      <Dependent Role="posInfo">
+        <PropertyRef Name="serialId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -898,6 +1001,7 @@
     <EntitySet Name="packages" EntityType="Self.packages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="packageUser" EntityType="Self.packageUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="payOp" EntityType="Self.payOp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="posInfo" EntityType="Self.posInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="puStatus" EntityType="Self.puStatus" Schema="dbo" store:Type="Tables" />
@@ -1047,9 +1151,37 @@
       <End Role="users" EntitySet="users" />
       <End Role="packageUser" EntitySet="packageUser" />
     </AssociationSet>
+    <AssociationSet Name="FK_payOp_countryPackageDate" Association="Self.FK_payOp_countryPackageDate">
+      <End Role="countryPackageDate" EntitySet="countryPackageDate" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payOp_customers" Association="Self.FK_payOp_customers">
+      <End Role="customers" EntitySet="customers" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payOp_packages" Association="Self.FK_payOp_packages">
+      <End Role="packages" EntitySet="packages" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
     <AssociationSet Name="FK_payOp_packageUser" Association="Self.FK_payOp_packageUser">
       <End Role="packageUser" EntitySet="packageUser" />
       <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payOp_users" Association="Self.FK_payOp_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payOp_users1" Association="Self.FK_payOp_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_payOp_users2" Association="Self.FK_payOp_users2">
+      <End Role="users" EntitySet="users" />
+      <End Role="payOp" EntitySet="payOp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_posInfo_posSerials" Association="Self.FK_posInfo_posSerials">
+      <End Role="posSerials" EntitySet="posSerials" />
+      <End Role="posInfo" EntitySet="posInfo" />
     </AssociationSet>
     <AssociationSet Name="FK_posSerials_packageUser" Association="Self.FK_posSerials_packageUser">
       <End Role="packageUser" EntitySet="packageUser" />

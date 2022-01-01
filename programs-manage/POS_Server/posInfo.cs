@@ -12,18 +12,12 @@ namespace Programs_Server
     using System;
     using System.Collections.Generic;
     
-    public partial class posSerials
+    public partial class posInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public posSerials()
-        {
-            this.posInfo = new HashSet<posInfo>();
-        }
-    
-        public int serialId { get; set; }
-        public string serial { get; set; }
+        public int posInfoId { get; set; }
+        public string posName { get; set; }
+        public string branchName { get; set; }
         public string posDeviceCode { get; set; }
-        public Nullable<int> packageUserId { get; set; }
         public bool isBooked { get; set; }
         public Nullable<int> isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
@@ -31,12 +25,8 @@ namespace Programs_Server
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
-        public bool unLimited { get; set; }
+        public Nullable<int> serialId { get; set; }
     
-        public virtual packageUser packageUser { get; set; }
-        public virtual users users { get; set; }
-        public virtual users users1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<posInfo> posInfo { get; set; }
+        public virtual posSerials posSerials { get; set; }
     }
 }

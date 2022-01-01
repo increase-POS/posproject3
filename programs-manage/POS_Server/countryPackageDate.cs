@@ -18,6 +18,7 @@ namespace Programs_Server
         public countryPackageDate()
         {
             this.packageUser = new HashSet<packageUser>();
+            this.payOp = new HashSet<payOp>();
         }
     
         public int Id { get; set; }
@@ -40,5 +41,7 @@ namespace Programs_Server
         public virtual users users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packageUser> packageUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
     }
 }

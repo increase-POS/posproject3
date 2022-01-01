@@ -19,6 +19,7 @@ namespace Programs_Server
         {
             this.packageUser = new HashSet<packageUser>();
             this.agentCustomer = new HashSet<agentCustomer>();
+            this.payOp = new HashSet<payOp>();
         }
     
         public int custId { get; set; }
@@ -50,5 +51,7 @@ namespace Programs_Server
         public virtual ICollection<packageUser> packageUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<agentCustomer> agentCustomer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
     }
 }

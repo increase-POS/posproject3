@@ -230,7 +230,7 @@ namespace Programs_Server.Controllers
                                         agentId = S.agentId,
                                         packageNumber = A.packageNumber,
 
-                                        expireDate = A.expireDate,
+                                        expireDate = S.expireDate,
 
 
                                     }).ToList();

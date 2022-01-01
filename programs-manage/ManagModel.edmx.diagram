@@ -70,6 +70,14 @@
         <AssociationConnector Association="incprogramsdbModel.FK_payOp_packageUser" />
         <EntityTypeShape EntityType="incprogramsdbModel.puStatus" Width="1.5" PointX="12.75" PointY="48.375" />
         <AssociationConnector Association="incprogramsdbModel.FK_puStatus_packageUser" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_countryPackageDate" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_customers" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_packages" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_users" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_users1" />
+        <AssociationConnector Association="incprogramsdbModel.FK_payOp_users2" />
+        <EntityTypeShape EntityType="incprogramsdbModel.posInfo" Width="1.5" PointX="15" PointY="38.5" />
+        <AssociationConnector Association="incprogramsdbModel.FK_posInfo_posSerials" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

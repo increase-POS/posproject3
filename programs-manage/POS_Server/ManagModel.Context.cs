@@ -43,5 +43,6 @@ namespace Programs_Server
         public virtual DbSet<agentCustomer> agentCustomer { get; set; }
         public virtual DbSet<payOp> payOp { get; set; }
         public virtual DbSet<puStatus> puStatus { get; set; }
+        public virtual DbSet<posInfo> posInfo { get; set; }
     }
 }

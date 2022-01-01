@@ -45,6 +45,9 @@ namespace Programs_Server
             this.agentCustomer = new HashSet<agentCustomer>();
             this.agentCustomer1 = new HashSet<agentCustomer>();
             this.agentCustomer2 = new HashSet<agentCustomer>();
+            this.payOp = new HashSet<payOp>();
+            this.payOp1 = new HashSet<payOp>();
+            this.payOp2 = new HashSet<payOp>();
         }
     
         public int userId { get; set; }
@@ -133,5 +136,11 @@ namespace Programs_Server
         public virtual ICollection<agentCustomer> agentCustomer1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<agentCustomer> agentCustomer2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp2 { get; set; }
     }
 }

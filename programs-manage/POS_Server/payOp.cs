@@ -29,7 +29,15 @@ namespace Programs_Server
         public Nullable<int> customerId { get; set; }
         public Nullable<int> countryPackageId { get; set; }
         public decimal totalnet { get; set; }
+        public Nullable<int> packageId { get; set; }
+        public Nullable<System.DateTime> expireDate { get; set; }
     
         public virtual packageUser packageUser { get; set; }
+        public virtual countryPackageDate countryPackageDate { get; set; }
+        public virtual customers customers { get; set; }
+        public virtual packages packages { get; set; }
+        public virtual users users { get; set; }
+        public virtual users users1 { get; set; }
+        public virtual users users2 { get; set; }
     }
 }
