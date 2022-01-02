@@ -2070,6 +2070,7 @@ namespace Programs_Server.Controllers
                                     dbPU.canRenew = true;
                                     // update expiredate
                                     newpay.expireDate = dbPU.expireDate;
+                                    newpay.type = dbPU.type;
                                     payopId = paycntrlr.Save(newpay);
                                     if (payopId > 0)
                                     {
@@ -2089,7 +2090,7 @@ namespace Programs_Server.Controllers
                                     // chang  period 
                                     //change
 
-                                  //  int res = paycntrlr.Save(newpay);
+                                    //  int res = paycntrlr.Save(newpay);
 
                                     dbPU.updateDate = DateTime.Now;
                                     // tmpObject.packageUserId = newObject.packageUserId;
@@ -2128,7 +2129,18 @@ namespace Programs_Server.Controllers
                                         }
                                     }
                                     dbPU.canRenew = true;
-                                    dbPU.type = "chpr";
+                                    if (dbPU.countryPackageId == dbPU.oldCountryPackageId)
+                                    {
+                                        dbPU.type = "rn";
+                                        newpay.type= "rn";
+                                    }
+                                    else
+                                    {
+                                        dbPU.type = "chpr";
+                                        newpay.type = "chpr";
+
+                                    }
+
                                     dbPU.isPayed = true;
                                     // chang salesInvCount to add it on activation
                                     if (tmpPackage.salesInvCount != -1)
@@ -2146,6 +2158,7 @@ namespace Programs_Server.Controllers
                                     dbPU.oldCountryPackageId = dbPU.countryPackageId;
 
                                     newpay.expireDate = dbPU.expireDate;
+
                                     payopId = paycntrlr.Save(newpay);
                                     if (payopId > 0)
                                     {
@@ -2157,7 +2170,7 @@ namespace Programs_Server.Controllers
                                     {
                                         message = "0";
                                     }
-                              
+
 
                                 }
                                 else if (dbPU.packageUserId > 0 && dbPU.oldPackageId != dbPU.packageId && dbPU.type == "chpk" && dbPU.isPayed == false)
@@ -2165,7 +2178,7 @@ namespace Programs_Server.Controllers
                                     // change packege
 
 
-                               //     int res = paycntrlr.Save(newpay);
+                                    //     int res = paycntrlr.Save(newpay);
 
                                     dbPU.updateDate = DateTime.Now;
                                     dbPU.updateUserId = newObject.updateUserId;
