@@ -165,7 +165,7 @@ namespace Programs_Server.Controllers
 
                            isBooked = S.isBooked,
 
-                           isActive = (S.isActive==1)?1:0,
+                           isActive = (S.isActive == 1) ? 1 : 0,
                            //serialId = S.serialId,
                            //serial = S.serial,
                            //posDeviceCode = S.posDeviceCode,
@@ -221,10 +221,10 @@ namespace Programs_Server.Controllers
                 }
                 try
                 {
-                  
 
-                    List= GetByPUId(packageUserId);
-                 
+
+                    List = GetByPUId(packageUserId);
+
                 }
                 catch
                 {
@@ -248,26 +248,26 @@ namespace Programs_Server.Controllers
                 {
                     List = entity.posSerials.ToList();
 
-                    List=List.Where(S=>S.packageUserId==packageUserId).Select(S => new posSerials
-                       {
-                           serialId = S.serialId,
-                           serial = S.serial,
-                           posDeviceCode = S.posDeviceCode,
+                    List = List.Where(S => S.packageUserId == packageUserId).Select(S => new posSerials
+                    {
+                        serialId = S.serialId,
+                        serial = S.serial,
+                        posDeviceCode = S.posDeviceCode,
 
-                           isBooked = S.isBooked,
+                        isBooked = S.isBooked,
 
-                           isActive = S.isActive,
+                        isActive = S.isActive,
 
-                           packageUserId = S.packageUserId,
-                           notes = S.notes,
-                           unLimited = S.unLimited,
-                           createDate = S.createDate,
-                           updateDate = S.updateDate,
+                        packageUserId = S.packageUserId,
+                        notes = S.notes,
+                        unLimited = S.unLimited,
+                        createDate = S.createDate,
+                        updateDate = S.updateDate,
 
-                           createUserId = S.createUserId,
-                           updateUserId = S.updateUserId,
+                        createUserId = S.createUserId,
+                        updateUserId = S.updateUserId,
 
-                       }).ToList();
+                    }).ToList();
 
 
                     return List;
@@ -750,7 +750,7 @@ namespace Programs_Server.Controllers
         }
 
 
-        public int   UpdatebySerial(posSerials newObject)
+        public int UpdatebySerial(posSerials newObject)
         {
             int message = 0;
             //
@@ -760,33 +760,33 @@ namespace Programs_Server.Controllers
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
                     var locationEntity = entity.Set<posSerials>();
-                    if (newObject.serial == null|| newObject.serial == "")
-                    {                       
+                    if (newObject.serial == null || newObject.serial == "")
+                    {
                         message = 0;
                         //
                     }
                     else
                     {
                         var tmpObject = entity.posSerials.Where(p => p.serial == newObject.serial).FirstOrDefault();
-                        if (tmpObject!=null && tmpObject.serialId>0)
+                        if (tmpObject != null && tmpObject.serialId > 0)
                         {
 
-                      
-                     //   tmpObject.updateDate = DateTime.Now;
-                        //  tmpObject.serialId = newObject.serialId;
-                    //    tmpObject.serial = newObject.serial;
-                        tmpObject.posDeviceCode = newObject.posDeviceCode;
-                       // tmpObject.packageUserId = newObject.packageUserId;
-                        tmpObject.isBooked = newObject.isBooked;
-                     //   tmpObject.isActive = newObject.isActive;
 
-                      //  tmpObject.updateUserId = newObject.updateUserId;
-                    //    tmpObject.notes = newObject.notes;
-                       // tmpObject.isActive = newObject.isActive;
-                      //  tmpObject.unLimited = newObject.unLimited;
-                        entity.SaveChanges();
+                            //   tmpObject.updateDate = DateTime.Now;
+                            //  tmpObject.serialId = newObject.serialId;
+                            //    tmpObject.serial = newObject.serial;
+                            tmpObject.posDeviceCode = newObject.posDeviceCode;
+                            // tmpObject.packageUserId = newObject.packageUserId;
+                            tmpObject.isBooked = newObject.isBooked;
+                            //   tmpObject.isActive = newObject.isActive;
 
-                        message = tmpObject.serialId;
+                            //  tmpObject.updateUserId = newObject.updateUserId;
+                            //    tmpObject.notes = newObject.notes;
+                            // tmpObject.isActive = newObject.isActive;
+                            //  tmpObject.unLimited = newObject.unLimited;
+                            entity.SaveChanges();
+
+                            message = tmpObject.serialId;
                         }
                         else
                         {
@@ -805,6 +805,119 @@ namespace Programs_Server.Controllers
                 message = -1;
             }
             return message;
+        }
+
+        public int AddposInfo(posInfo newObject)
+        {
+            int message = 0;
+            //
+
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<posInfo>();
+                    if (newObject.posInfoId == 0)
+                    {
+                        newObject.createDate = DateTime.Now ;
+                        newObject.updateDate = newObject.createDate;
+
+                        locationEntity.Add(newObject);
+                        message= entity.SaveChanges();
+
+                    }
+                    else
+                    {
+                        message = 0;
+                    }
+
+                }
+
+            }
+            catch
+            {
+                message = -1;
+            }
+            return message;
+        }
+        public int deleteInfobySerial(string serial)
+        {
+            int message = 0;
+            //
+
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<posSerials>();
+                    if (serial == null || serial == "")
+                    {
+                        message = 0;
+                        //
+                    }
+                    else
+                    {
+                        var tmpObject = entity.posSerials.Where(p => p.serial == serial).FirstOrDefault();
+                        //delete
+                        var infolist = entity.posInfo.Where(p => p.serialId == tmpObject.serialId).ToList();
+                        if (infolist != null || infolist.Count > 0)
+                        {
+                            entity.posInfo.RemoveRange(infolist);
+                            message= entity.SaveChanges();
+                        }
+                        else
+                        {
+                            message = 0;
+                        }
+
+
+
+                    }
+                    //  en
+
+                    //  entity.SaveChanges();
+
+                }
+
+            }
+            catch
+            {
+                message = -1;
+            }
+            return message;
+        }
+        public posSerials getbySerial(string serial)
+        {
+            int message = 0;
+            //
+            posSerials row = new posSerials();
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<posSerials>();
+                    if (serial == null || serial == "")
+                    {
+                        message = 0;
+                        //
+                    }
+                    else
+                    {
+                        row = entity.posSerials.Where(p => p.serial == serial).FirstOrDefault();
+                    
+
+                    }
+              
+
+                }
+
+            }
+            catch
+            {
+                row = new posSerials();
+                return row;
+            }
+            return row;
         }
 
         [HttpPost]

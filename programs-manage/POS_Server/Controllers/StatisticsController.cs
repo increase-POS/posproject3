@@ -641,7 +641,6 @@ namespace Programs_Server.Controllers
                                         agentIdPo = PA.agentId,
                                         customerIdPo = PA.customerId,
                                         countryPackageIdPo = PA.countryPackageId,
-                                     
 
                                         // packageIdPo = PA.packageId,
                                         createUserIdPo = PA.createUserId,

@@ -2459,17 +2459,42 @@ namespace Programs_Server.Controllers
                 try
                 {
                     posSerialsController pscntrlr = new posSerialsController();
+                    // save data here
 
-
+                    //foreach (PosSerialSend crow in sd.PosSerialSendList)
+                    //{
+                    //    posSerials newObject = new posSerials();
+                    //    newObject.serial = crow.serial;
+                    //    newObject.isBooked = crow.isBooked;
+                    //    newObject.posDeviceCode = crow.posDeviceCode;
+                    //    pscntrlr.UpdatebySerial(newObject);
+                    //}
                     foreach (PosSerialSend crow in sd.PosSerialSendList)
                     {
+
+
                         posSerials newObject = new posSerials();
-                        newObject.serial = crow.serial;
+                        posInfo newinfo = new posInfo();
+
+                        newObject= pscntrlr.getbySerial(crow.serial);
+                       // newObject.serial = crow.serial;
                         newObject.isBooked = crow.isBooked;
                         newObject.posDeviceCode = crow.posDeviceCode;
-                        pscntrlr.UpdatebySerial(newObject);
+        pscntrlr.UpdatebySerial(newObject);
+
+                        //delete info
+                        int resd =   pscntrlr.deleteInfobySerial(crow.serial);
+                        //   add info
+                        newinfo.serialId = newObject.serialId;
+                        newinfo.posName =  crow.posName;
+                        newinfo.branchName = crow.branchName;
+                        newinfo.posDeviceCode = crow.posDeviceCode;
+                        newinfo.isBooked = crow.isBooked;
+                        newinfo.isActive = crow.isActive;
+                        resd = pscntrlr.AddposInfo(newinfo);
+
                     }
-                    // save data here
+               
 
 
                     message = "1";
