@@ -63,9 +63,11 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
 
-                                    <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="False">
+                                    <DockPanel x:Name="dpnl_country" Grid.Row="0" Grid.Column="0" LastChildFill="False">
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
                                                 <ComboBox   x:Name="cb_countries" Padding="10,0,5,0" 
@@ -77,10 +79,10 @@
                                                             SelectionChanged="Cb_countries_SelectionChanged"/>
                                             </Grid>
                                         </Border>
-                                        <CheckBox x:Name="chk_allCountries" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
+                                        <CheckBox x:Name="chk_allCountries" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
 
                                     </DockPanel>
-                                    <DockPanel Grid.Row="0"  Grid.Column="1"  LastChildFill="False">
+                                    <DockPanel Grid.Row="1"  Grid.Column="0"  LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
@@ -93,15 +95,15 @@
                                                             SelectionChanged="Cb_agents_SelectionChanged"/>
                                             </Grid>
                                         </Border>
-                                        <CheckBox x:Name="chk_allAgents" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
+                                        <CheckBox x:Name="chk_allAgents" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
 
                                     </DockPanel>
-                                    <DockPanel Grid.Row="1"  Grid.Column="0" LastChildFill="False">
+                                    <DockPanel Grid.Row="1"  Grid.Column="1" LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
                                                 <ComboBox   x:Name="cb_customers" Padding="10,0,5,0" 
-                                                            TextBlock.Foreground="#4E4E4E"    
+                                                            TextBlock.Foreground="#4E4E4E"   
                                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                                             materialDesign:HintAssist.Hint="Customer ...."    
                                                             VerticalAlignment="Center" BorderThickness="0"
@@ -109,24 +111,53 @@
                                                             SelectionChanged="Cb_customers_SelectionChanged"/>
                                             </Grid>
                                         </Border>
-                                        <CheckBox x:Name="chk_allCustomers" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
+                                        <CheckBox x:Name="chk_allCustomers" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
 
                                     </DockPanel>
-                                    <DockPanel Grid.Row="1" Grid.Column="1"  LastChildFill="False">
+                                    <DockPanel Grid.Row="1" Grid.Column="2"  LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
                                                 <ComboBox   x:Name="cb_packages" Padding="10,0,5,0" 
-                                                            TextBlock.Foreground="#4E4E4E"    
+                                                            TextBlock.Foreground="#4E4E4E"   
                                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                                            materialDesign:HintAssist.Hint="Customer ...."    
+                                                            materialDesign:HintAssist.Hint="Package ...."    
                                                             VerticalAlignment="Center" BorderThickness="0"
                                                             Height="40" 
                                                             SelectionChanged="Cb_packages_SelectionChanged" />
                                             </Grid>
                                         </Border>
-                                        <CheckBox x:Name="chk_allPackages" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
+                                        <CheckBox x:Name="chk_allPackages" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
 
+                                    </DockPanel>
+                                    <DockPanel Grid.Row="0" Grid.Column="3"  LastChildFill="False">
+                                        <DatePicker Name="dp_endDate" 
+                                                SelectedDateFormat="Short" 
+                                                Width="100"
+                                                Margin="5,10,10,5"
+                                                Padding="10,0,5,0"
+                                                Height="40" 
+                                                DockPanel.Dock="Right"
+                                                BorderBrush="#737373"
+                                                BorderThickness="0" 
+                                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                materialDesign:HintAssist.Hint="End Date..."
+                                                SelectedDateChanged="Dp_SelectedDateChanged"></DatePicker>
+
+                                        <DatePicker SelectedDateFormat="Short"
+                                                Name="dp_startDate"
+                                                Width="100"
+                                                Margin="10,10,5,5"
+                                                Padding="10,0,5,0"
+                                                Height="40"
+                                                DockPanel.Dock="Right" 
+                                                BorderBrush="#737373" 
+                                                BorderThickness="0" 
+                                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                                                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                materialDesign:HintAssist.Hint="Start date..."  
+                                                SelectedDateChanged="Dp_SelectedDateChanged"></DatePicker>
                                     </DockPanel>
                                 </Grid>
                             </Grid>
@@ -163,7 +194,7 @@
 
             <Border Grid.Row="2" Background="White"   Margin="5,0,5,0">
                 <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
-                     Name="dgFund" 
+                     Name="dg_book" 
                         AutoGenerateColumns="False" 
                         ColumnWidth="SizeToHeader"
                             AlternatingRowBackground="#f3f3f3" AlternationCount="2">
@@ -176,9 +207,14 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="col_branchName"    Width="*" Header="Branch"  Binding="{Binding Path=branchName}"/>
-                        <DataGridTextColumn x:Name="col_posName"       Width="*" Header="Pos"     Binding="{Binding posName}"/>
-                        <DataGridTextColumn x:Name="col_posBalance"    Width="*" Header="Balance" Binding="{Binding balance }" />
+                        <DataGridTextColumn x:Name="col_country"    Width="*" Header="Country"  Binding="{Binding countryName}"/>
+                        <DataGridTextColumn x:Name="col_agent"      Width="*" Header="Agent"    Binding="{Binding agentAccountName}"/>
+                        <DataGridTextColumn x:Name="col_customer"   Width="*" Header="Customer" Binding="{Binding customerName }" />
+                        <DataGridTextColumn x:Name="col_package"    Width="*" Header="Package"  Binding="{Binding packageName }" />
+                        <DataGridTextColumn x:Name="col_program"    Width="*" Header="Program"  Binding="{Binding programName }" />
+                        <DataGridTextColumn x:Name="col_version"    Width="*" Header="Version"  Binding="{Binding verName }" />
+                        <DataGridTextColumn x:Name="col_price"      Width="*" Header="Price"    Binding="{Binding price }" />
+                        <DataGridTextColumn x:Name="col_currency"   Width="*" Header="Currency" Binding="{Binding currency }" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>

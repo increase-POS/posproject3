@@ -125,9 +125,16 @@ namespace AdministratorApp.Classes
       
         static public async Task fillAgent(ComboBox combo)
         {
-            users = null;
             users = await user.GetAll();
             combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag");
+            combo.SelectedValuePath = "userId";
+            combo.DisplayMemberPath = "name";
+        }
+
+        static public async Task fillAgentByCountry(ComboBox combo , int countryID)
+        {
+            users = await user.GetAll();
+            combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag" && x.countryId == countryID);
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
         }
