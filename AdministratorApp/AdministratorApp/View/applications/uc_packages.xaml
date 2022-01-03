@@ -378,178 +378,219 @@
                     </DockPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_branchCount"  Text="{Binding branchCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="branch count..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="branch count..."  
+                                         Foreground="#4E4E4E"  
+                                         MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"  x:Name="p_error_branchCount"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                    
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                  
                                 </Path>
                             </Grid>
                         </Border>
-                        <Border Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <StackPanel Grid.Column="1" Margin="0,10">
+                            <TextBlock Text="unlimited" Margin="0,0,0,5"/>
+                        <ToggleButton    x:Name="tgl_branch"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28" 
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked" />
+                            
+                        </StackPanel>
+                        <Border Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_storeCount"  Text="{Binding storeCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="store count..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="store count..."  
+                                         Foreground="#4E4E4E"  
+                                         MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"  x:Name="p_error_storeCount"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                     
                                 </Path>
                             </Grid>
                         </Border>
-
+                        <ToggleButton Grid.Column="3"    x:Name="tgl_store"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28"
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_userCount"  Text="{Binding userCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="user count..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="user count..."  
+                                         Foreground="#4E4E4E"  
+                                         MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"  x:Name="p_error_userCount"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                  
                                 </Path>
                             </Grid>
                         </Border>
-                        <Border Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <ToggleButton Grid.Column="1"    x:Name="tgl_user"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28" 
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
+                        <Border Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_posCount"  Text="{Binding posCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="pos count..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="pos count..."  
+                                         Foreground="#4E4E4E"  
+                                         MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"  x:Name="p_error_posCount"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                    
                                 </Path>
                             </Grid>
                         </Border>
-
-                        </Grid>
+                        <ToggleButton Grid.Column="3"    x:Name="tgl_pos"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28"
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
+                    </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_customerCount"  Text="{Binding customerCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="customer count..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="customer count..."  
+                                         Foreground="#4E4E4E"  
+                                         MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_customerCount"
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_customerCount"
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                             </Grid>
                         </Border>
-                        <Border Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <ToggleButton Grid.Column="1"    x:Name="tgl_customer"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28"
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
+                        <Border Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
                                 <TextBox x:Name="tb_vendorCount"  Text="{Binding vendorCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="vendor count..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="vendor count..."  
+                                         Foreground="#4E4E4E"  
+                                         MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
                                          PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown" 
                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_vendorCount"
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_vendorCount"
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                             </Grid>
                         </Border>
-
-                        </Grid>
+                        <ToggleButton Grid.Column="3"    x:Name="tgl_vendor"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28"
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
+                    </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid>
                             <TextBox x:Name="tb_salesInvCount"  Text="{Binding salesInvCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="sales invoice count..."  
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="sales invoice count..."  
                                      Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
+                                     MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" 
                                      PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   x:Name="p_error_salesInvCount" 
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   x:Name="p_error_salesInvCount" 
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                             </Path>
                         </Grid>
                     </Border>
-                    <Border Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
+                        <ToggleButton Grid.Column="1"    x:Name="tgl_saleInv"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28" 
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
+                        <Border Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
                             <TextBox x:Name="tb_itemCount"  Text="{Binding itemCount, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="item count..."  
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="item count..."  
                                      Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
+                                     MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" 
                                      PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"  x:Name="p_error_itemCount"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                             </Path>
                         </Grid>
                     </Border>
+                        <ToggleButton Grid.Column="3"    x:Name="tgl_item"   
+                                      VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="False" 
+                                      Margin="0" Height="13" Width="28"
+                                      Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked" />
                     </Grid>
 
                     <Grid Visibility="Collapsed">

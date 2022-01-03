@@ -159,14 +159,38 @@ namespace AdministratorApp.View.applications
                         package.programId = (int)cb_program.SelectedValue;
                         package.verId = (int)cb_version.SelectedValue;
                         //package.price = decimal.Parse(tb_price.Text);
-                        package.branchCount = int.Parse(tb_branchCount.Text);
-                        package.posCount = int.Parse(tb_posCount.Text);
-                        package.userCount = int.Parse(tb_userCount.Text);
-                        package.vendorCount = int.Parse(tb_vendorCount.Text);
-                        package.customerCount = int.Parse(tb_customerCount.Text);
-                        package.itemCount = int.Parse(tb_itemCount.Text);
-                        package.salesInvCount = int.Parse(tb_salesInvCount.Text);
-                        package.storeCount = int.Parse(tb_storeCount.Text);
+                        if (tgl_branch.IsChecked == true)
+                            package.branchCount = -1;
+                        else
+                            package.branchCount = int.Parse(tb_branchCount.Text);
+                        if (tgl_store.IsChecked == true)
+                            package.storeCount = -1;
+                        else
+                            package.storeCount = int.Parse(tb_storeCount.Text);
+                        if (tgl_pos.IsChecked == true)
+                            package.posCount = -1;
+                        else
+                            package.posCount = int.Parse(tb_posCount.Text);
+                        if (tgl_user.IsChecked == true)
+                            package.userCount = -1;
+                        else
+                            package.userCount = int.Parse(tb_userCount.Text);
+                        if (tgl_vendor.IsChecked == true)
+                            package.vendorCount = -1;
+                        else
+                            package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        if (tgl_customer.IsChecked == true)
+                            package.customerCount = -1;
+                        else
+                            package.customerCount = int.Parse(tb_customerCount.Text);
+                        if (tgl_item.IsChecked == true)
+                            package.itemCount = -1;
+                        else
+                            package.itemCount = int.Parse(tb_itemCount.Text);
+                        if (tgl_saleInv.IsChecked == true)
+                            package.salesInvCount = -1;
+                        else
+                            package.salesInvCount = int.Parse(tb_salesInvCount.Text);
                         //package.islimitDate = (bool)tgl_islimitDate.IsChecked;
                         //if (dp_endDate.SelectedDate != null)
                         //    package.endDate = dp_endDate.SelectedDate.Value;
@@ -208,20 +232,44 @@ namespace AdministratorApp.View.applications
                 HelpClass.StartAwait(grid_main);
                 if (validate())
                 {
-                    package.packageCode = "pk-0000009";
+                    package.packageCode = tb_code.Text.Trim();
                     package.packageName = tb_packageName.Text;
                     package.details = tb_details.Text;
                     package.programId = (int)cb_program.SelectedValue;
                     package.verId = (int)cb_version.SelectedValue;
                     //package.price = decimal.Parse(tb_price.Text);
-                    package.branchCount = int.Parse(tb_branchCount.Text);
-                    package.posCount = int.Parse(tb_posCount.Text);
-                    package.userCount = int.Parse(tb_userCount.Text);
-                    package.vendorCount = int.Parse(tb_vendorCount.Text);
-                    package.customerCount = int.Parse(tb_customerCount.Text);
-                    package.itemCount = int.Parse(tb_itemCount.Text);
-                    package.salesInvCount = int.Parse(tb_salesInvCount.Text);
-                    package.storeCount = int.Parse(tb_storeCount.Text);
+                    if (tgl_branch.IsChecked == true)
+                        package.branchCount = -1;
+                    else
+                        package.branchCount = int.Parse(tb_branchCount.Text);
+                    if (tgl_store.IsChecked == true)
+                        package.storeCount = -1;
+                    else
+                        package.storeCount = int.Parse(tb_storeCount.Text);
+                    if (tgl_pos.IsChecked == true)
+                        package.posCount = -1;
+                    else
+                        package.posCount = int.Parse(tb_posCount.Text);
+                    if (tgl_user.IsChecked == true)
+                        package.userCount = -1;
+                    else
+                        package.userCount = int.Parse(tb_userCount.Text);
+                    if (tgl_vendor.IsChecked == true)
+                        package.vendorCount = -1;
+                    else
+                        package.vendorCount = int.Parse(tb_vendorCount.Text);
+                    if (tgl_customer.IsChecked == true)
+                        package.customerCount = -1;
+                    else
+                        package.customerCount = int.Parse(tb_customerCount.Text);
+                    if (tgl_item.IsChecked == true)
+                        package.itemCount = -1;
+                    else
+                        package.itemCount = int.Parse(tb_itemCount.Text);
+                    if (tgl_saleInv.IsChecked == true)
+                        package.salesInvCount = -1;
+                    else
+                        package.salesInvCount = int.Parse(tb_salesInvCount.Text);
                     //package.islimitDate = (bool)tgl_islimitDate.IsChecked;
                     //if (dp_endDate.SelectedDate != null)
                     //    package.endDate = dp_endDate.SelectedDate.Value;
@@ -632,6 +680,50 @@ namespace AdministratorApp.View.applications
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
+        }
+
+        private void Tgl_Count_Checked(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            string name = ((CheckBox)sender).Name;
+            chkCount(name, true);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private void Tgl_Count_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            string name = ((CheckBox)sender).Name;
+            chkCount(name, true);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+        //int branchCount = 0 , storeCount = 0
+        private void chkCount(string _name, bool isChk)
+        {
+            TextBox tb = new TextBox();
+            switch (_name)
+            {
+                case "tgl_branch":   tb = tb_branchCount;   break;
+                case "tgl_store":    tb = tb_storeCount;    break;
+                case "tgl_user":     tb = tb_userCount;     break;
+                case "tgl_pos":      tb = tb_posCount;      break;
+                case "tgl_customer": tb = tb_customerCount; break;
+                case "tgl_vendor":   tb = tb_vendorCount;   break;
+                case "tgl_saleInv":  tb = tb_salesInvCount; break;
+                case "tgl_item":     tb = tb_itemCount;     break;
+            }
+
+            tb.IsEnabled = !isChk;
         }
     }
 }
