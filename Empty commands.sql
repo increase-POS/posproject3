@@ -1,6 +1,8 @@
 USE [incprogramsdb]
 GO
 delete
+  FROM [incprogramsdb].[dbo].[posInfo]
+delete
   FROM [incprogramsdb].[dbo].[posSerials]
 
   delete

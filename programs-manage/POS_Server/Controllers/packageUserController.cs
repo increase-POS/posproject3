@@ -1729,6 +1729,9 @@ namespace Programs_Server.Controllers
                                     serialmodel.unLimited = true;
                                     serialmodel.isActive = 0;
                                     serialmodel.isBooked = false;
+                                    serialmodel.packageUserId = tmpObject.packageUserId;
+                                    serialmodel.createUserId = tmpObject.updateUserId;
+                                    serialmodel.updateUserId = tmpObject.updateUserId;
                                     string res = serCntrlr.posSerialSave(serialmodel);
                                     int countpos = 0;
 
