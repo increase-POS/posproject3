@@ -22,7 +22,7 @@ namespace AdministratorApp.ApiClasses
         public string serial { get; set; }
         public string posDeviceCode { get; set; }
         public Nullable<int> packageUserId { get; set; }
-        public bool isBooked { get; set; }
+        public Nullable<bool> isBooked { get; set; }
         public int isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -33,7 +33,15 @@ namespace AdministratorApp.ApiClasses
         public string notes { get; set; }
         public string packageSaleCode { get; set; }
 
+        //info
+        public Nullable<int> posInfoId { get; set; }
+        public string posName { get; set; }
+        public string branchName { get; set; }
+        public Nullable<System.DateTime> updateDateinfo { get; set; }
+
+
         private string urimainpath = "posSerials/";
+
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -188,6 +196,28 @@ namespace AdministratorApp.ApiClasses
             parameters.Add("packageUserId", packageUserId.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetByPackUserId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+
+                    list.Add(JsonConvert.DeserializeObject<PosSerials>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+
+            return list;
+
+        }
+
+        public async Task<List<PosSerials>> GetSerialAndPosInfo(int packageUserId)
+        {
+
+            List<PosSerials> list = new List<PosSerials>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("packageUserId", packageUserId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetSerialAndPosInfo", parameters);
 
             foreach (Claim c in claims)
             {
