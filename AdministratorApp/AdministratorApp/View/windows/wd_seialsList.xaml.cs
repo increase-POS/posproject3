@@ -244,6 +244,7 @@ namespace AdministratorApp.View.windows
         async Task<IEnumerable<PosSerials>> RefreshList()
         {
             posSerials = await posSerialModel.GetByPackUserId(packageUserID);
+          //  posSerials = await posSerialModel.GetSerialAndPosInfo(packageUserID);
             return posSerials;
         }
         private void RefreshView()

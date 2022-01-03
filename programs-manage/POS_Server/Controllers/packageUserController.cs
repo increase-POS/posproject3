@@ -2469,6 +2469,12 @@ namespace Programs_Server.Controllers
                     //    newObject.posDeviceCode = crow.posDeviceCode;
                     //    pscntrlr.UpdatebySerial(newObject);
                     //}
+                    //delete old serials
+                    foreach (PosSerialSend crow in sd.PosSerialSendList)
+                    {
+                        int resd = pscntrlr.deleteInfobySerial(crow.serial);
+
+                    }
                     foreach (PosSerialSend crow in sd.PosSerialSendList)
                     {
 
@@ -2483,7 +2489,7 @@ namespace Programs_Server.Controllers
         pscntrlr.UpdatebySerial(newObject);
 
                         //delete info
-                        int resd =   pscntrlr.deleteInfobySerial(crow.serial);
+                     //   int resd =   pscntrlr.deleteInfobySerial(crow.serial);
                         //   add info
                         newinfo.serialId = newObject.serialId;
                         newinfo.posName =  crow.posName;
@@ -2491,7 +2497,8 @@ namespace Programs_Server.Controllers
                         newinfo.posDeviceCode = crow.posDeviceCode;
                         newinfo.isBooked = crow.isBooked;
                         newinfo.isActive = crow.isActive;
-                        resd = pscntrlr.AddposInfo(newinfo);
+                        newinfo.notes = sd.PosSerialSendList.Count.ToString();
+                        int resd = pscntrlr.AddposInfo(newinfo);
 
                     }
                

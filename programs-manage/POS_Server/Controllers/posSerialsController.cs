@@ -237,6 +237,86 @@ namespace Programs_Server.Controllers
 
         }
 
+        [HttpPost]
+        [Route("GetSerialAndPosInfo")]
+        public string GetSerialAndPosInfo(string token)//int serialId
+        {
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int packageUserId = 0;
+                List<posSerialsModel> List = new List<posSerialsModel>();
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "packageUserId")
+                    {
+                        packageUserId = int.Parse(c.Value);
+                    }
+
+                }
+                try
+                {
+                    // List = GetserialsAndInfo(packageUserId);
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        List = (from S in entity.posSerials
+                                join PI in entity.posInfo on S.serialId equals PI.serialId into PIJ
+                                where S.packageUserId == packageUserId
+
+                                from P in PIJ.DefaultIfEmpty()
+                                select new posSerialsModel()
+                                {
+                                    serialId = S.serialId,
+                                    serial = S.serial,
+                                    posDeviceCode = P.posDeviceCode,
+
+                                    isActive = S.isActive,
+
+                                    packageUserId = S.packageUserId,
+                                    notes = S.notes,
+                                    unLimited = S.unLimited,
+                                    createDate = S.createDate,
+                                    updateDate = S.updateDate,
+
+                                    createUserId = S.createUserId,
+                                    updateUserId = S.updateUserId,
+
+                                    posInfoId = P.posInfoId,
+                                    isBooked = P.isBooked,
+                                    posName = P.posName,
+                                    branchName = P.branchName,
+                                    updateDateinfo = P.updateDate,
+
+                                }).ToList();
+
+                        return TokenManager.GenerateToken(List);
+                        // return List;
+
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                 //   return TokenManager.GenerateToken("0");
+                    return TokenManager.GenerateToken(ex.ToString());
+                }
+             //   return TokenManager.GenerateToken(List);
+
+            }
+
+        }
+
 
         public List<posSerials> GetByPUId(int packageUserId)
         {
@@ -278,7 +358,53 @@ namespace Programs_Server.Controllers
                 return List;
             }
         }
+        public List<posSerialsModel> GetserialsAndInfo(int packageUserId)
+        {
+            List<posSerialsModel> List = new List<posSerialsModel>();
+            try
+            {
 
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    List = (from S in entity.posSerials
+                            join PI in entity.posInfo on S.serialId equals PI.serialId into PIJ
+                            where S.packageUserId == packageUserId
+
+                            from P in PIJ.DefaultIfEmpty()
+                            select new posSerialsModel()
+                            {
+                                serialId = S.serialId,
+                                serial = S.serial,
+                                posDeviceCode = P.posDeviceCode,
+
+                                isActive = S.isActive,
+
+                                packageUserId = S.packageUserId,
+                                notes = S.notes,
+                                unLimited = S.unLimited,
+                                createDate = S.createDate,
+                                updateDate = S.updateDate,
+
+                                createUserId = S.createUserId,
+                                updateUserId = S.updateUserId,
+
+                                posInfoId = P.posInfoId,
+                                isBooked = P.isBooked,
+                                posName = P.posName,
+                                branchName = P.branchName,
+                                updateDateinfo = P.updateDate,
+
+                            }).ToList();
+
+
+                    return List;
+                }
+            }
+            catch 
+            {
+                return List;
+            }
+        }
         // add or update location
         [HttpPost]
         [Route("Save")]
@@ -807,6 +933,8 @@ namespace Programs_Server.Controllers
             return message;
         }
 
+
+        // update pos info from customer server
         public int AddposInfo(posInfo newObject)
         {
             int message = 0;
@@ -819,11 +947,11 @@ namespace Programs_Server.Controllers
                     var locationEntity = entity.Set<posInfo>();
                     if (newObject.posInfoId == 0)
                     {
-                        newObject.createDate = DateTime.Now ;
+                        newObject.createDate = DateTime.Now;
                         newObject.updateDate = newObject.createDate;
 
                         locationEntity.Add(newObject);
-                        message= entity.SaveChanges();
+                        message = entity.SaveChanges();
 
                     }
                     else
@@ -863,7 +991,7 @@ namespace Programs_Server.Controllers
                         if (infolist != null || infolist.Count > 0)
                         {
                             entity.posInfo.RemoveRange(infolist);
-                            message= entity.SaveChanges();
+                            message = entity.SaveChanges();
                         }
                         else
                         {
@@ -904,10 +1032,10 @@ namespace Programs_Server.Controllers
                     else
                     {
                         row = entity.posSerials.Where(p => p.serial == serial).FirstOrDefault();
-                    
+
 
                     }
-              
+
 
                 }
 
@@ -919,6 +1047,7 @@ namespace Programs_Server.Controllers
             }
             return row;
         }
+        // end
 
         [HttpPost]
         [Route("UpdateList")]

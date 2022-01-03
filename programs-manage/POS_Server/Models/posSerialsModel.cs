@@ -11,7 +11,7 @@ namespace Programs_Server.Models
         public string serial { get; set; }
         public string posDeviceCode { get; set; }
         public Nullable<int> packageUserId { get; set; }
-        public bool isBooked { get; set; }
+        public Nullable<bool> isBooked { get; set; }
         public Nullable<int> isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -22,6 +22,14 @@ namespace Programs_Server.Models
         public string notes { get; set; }
         public string packageSaleCode { get; set; }
 
+        public bool unLimited { get; set; }
+        //info
+        public Nullable<int> posInfoId { get; set; }
+        public string posName { get; set; }
+        public string branchName { get; set; }
+  
+      
+        public Nullable<System.DateTime> updateDateinfo { get; set; }
 
     }
 }

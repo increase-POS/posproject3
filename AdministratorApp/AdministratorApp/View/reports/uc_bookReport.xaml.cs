@@ -144,10 +144,10 @@ namespace AdministratorApp.View.reports
             )
             &&
             //start date
-            (dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
+            (dp_startDate.SelectedDate != null ? s.updateDatePo >= dp_startDate.SelectedDate : true)
             &&
             //end date            
-            (dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
+            (dp_endDate.SelectedDate != null ? s.updateDatePo <= dp_endDate.SelectedDate : true)
             &&
             //country
             (cb_countries.SelectedIndex != -1 ? s.countryPackageId == (int)cb_countries.SelectedValue : true)
