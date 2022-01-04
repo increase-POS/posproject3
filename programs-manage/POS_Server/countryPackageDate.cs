@@ -34,6 +34,7 @@ namespace Programs_Server
         public Nullable<System.DateTime> updateDate { get; set; }
         public bool islimitDate { get; set; }
         public Nullable<int> isActive { get; set; }
+        public decimal agentPrice { get; set; }
     
         public virtual countriesCodes countriesCodes { get; set; }
         public virtual packages packages { get; set; }

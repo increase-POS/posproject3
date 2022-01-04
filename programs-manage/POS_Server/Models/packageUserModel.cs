@@ -79,6 +79,9 @@ namespace Programs_Server.Models
         public int isActive { get; set; }
         public string posName { get; set; }
         public string branchName { get; set; }
+        public Nullable<int> posSettingId { get; set; }
+        public Nullable<int> posId { get; set; }
+        public bool unLimited { get; set; }
     }
 
 

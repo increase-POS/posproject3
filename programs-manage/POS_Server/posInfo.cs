@@ -26,6 +26,8 @@ namespace Programs_Server
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
         public Nullable<int> serialId { get; set; }
+        public Nullable<int> posSettingId { get; set; }
+        public Nullable<int> posId { get; set; }
     
         public virtual posSerials posSerials { get; set; }
     }

@@ -61,6 +61,7 @@
     <Property Name="updateDate" Type="datetime2" Precision="7" />
     <Property Name="islimitDate" Type="bit" Nullable="false" />
     <Property Name="isActive" Type="int" />
+    <Property Name="agentPrice" Type="decimal" Precision="20" Scale="3" Nullable="false" />
   </EntityType>
   <EntityType Name="customers">
     <Key>
@@ -244,6 +245,8 @@
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
     <Property Name="serialId" Type="int" />
+    <Property Name="posSettingId" Type="int" />
+    <Property Name="posId" Type="int" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>

@@ -63,6 +63,7 @@
     <NavigationProperty Name="users1" Relationship="Self.FK_countryPackageDate_users1" FromRole="countryPackageDate" ToRole="users" />
     <NavigationProperty Name="packageUser" Relationship="Self.FK_packageUser_countryPackageDate" FromRole="countryPackageDate" ToRole="packageUser" />
     <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_countryPackageDate" FromRole="countryPackageDate" ToRole="payOp" />
+    <Property Name="agentPrice" Type="Decimal" Nullable="false" Precision="20" Scale="3" />
   </EntityType>
   <EntityType Name="customers">
     <Key>
@@ -1319,6 +1320,8 @@
     <Property Name="notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="serialId" Type="Int32" />
     <NavigationProperty Name="posSerials" Relationship="incprogramsdbModel.FK_posInfo_posSerials" FromRole="posInfo" ToRole="posSerials" />
+    <Property Name="posSettingId" Type="Int32" />
+    <Property Name="posId" Type="Int32" />
   </EntityType>
   <Association Name="FK_posInfo_posSerials">
     <End Type="incprogramsdbModel.posSerials" Role="posSerials" Multiplicity="0..1" />

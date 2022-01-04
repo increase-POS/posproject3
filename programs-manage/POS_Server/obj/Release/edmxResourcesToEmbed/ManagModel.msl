@@ -38,6 +38,7 @@
     <EntitySetMapping Name="countryPackageDate">
       <EntityTypeMapping TypeName="incprogramsdbModel.countryPackageDate">
         <MappingFragment StoreEntitySet="countryPackageDate">
+          <ScalarProperty Name="agentPrice" ColumnName="agentPrice" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="countryId" ColumnName="countryId" />
           <ScalarProperty Name="packageId" ColumnName="packageId" />
@@ -344,6 +345,8 @@
     <EntitySetMapping Name="posInfo">
       <EntityTypeMapping TypeName="incprogramsdbModel.posInfo">
         <MappingFragment StoreEntitySet="posInfo">
+          <ScalarProperty Name="posId" ColumnName="posId" />
+          <ScalarProperty Name="posSettingId" ColumnName="posSettingId" />
           <ScalarProperty Name="serialId" ColumnName="serialId" />
           <ScalarProperty Name="notes" ColumnName="notes" />
           <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
