@@ -2039,6 +2039,7 @@ namespace Programs_Server.Controllers
                                             dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
 
                                         }
+                                        //date
                                         if (tmpcpd.islimitDate == true)
                                         {
                                             // dbPU.monthCount += tmpcpd.monthCount;
@@ -2053,6 +2054,7 @@ namespace Programs_Server.Controllers
                                         }
 
                                         dbPU.monthCount = 0;
+
                                         //  dbPU.monthCount += tmpcpd.monthCount;//change  on pay
                                     }
                                     else
@@ -2069,6 +2071,24 @@ namespace Programs_Server.Controllers
                                             dbPU.salesInvCount = tmpPackage.salesInvCount;//change  on pay
 
                                         }
+
+                                        // increase expire date
+                                        if (tmpcpd.islimitDate == true)
+                                        {
+                                            // dbPU.monthCount += tmpcpd.monthCount;
+                                            dbPU.monthCount += tmpcpd.monthCount;
+                                            if (dbPU.expireDate != null)
+                                            {
+                                                DateTime dt = (DateTime)dbPU.expireDate;
+                                                dbPU.expireDate = dt.AddMonths(dbPU.monthCount);
+                                                dbPU.monthCount = 0;
+
+                                            }
+                                        }
+
+                                        dbPU.monthCount = 0;
+
+
                                     }
                                     dbPU.canRenew = true;
                                     // update expiredate
@@ -2489,9 +2509,10 @@ namespace Programs_Server.Controllers
                        // newObject.serial = crow.serial;
                         newObject.isBooked = crow.isBooked;
                         newObject.posDeviceCode = crow.posDeviceCode;
+
         pscntrlr.UpdatebySerial(newObject);
 
-                        //delete info
+                       
                      //   int resd =   pscntrlr.deleteInfobySerial(crow.serial);
                         //   add info
                         newinfo.serialId = newObject.serialId;
@@ -2500,7 +2521,9 @@ namespace Programs_Server.Controllers
                         newinfo.posDeviceCode = crow.posDeviceCode;
                         newinfo.isBooked = crow.isBooked;
                         newinfo.isActive = crow.isActive;
-                        newinfo.notes = sd.PosSerialSendList.Count.ToString();
+                        // newinfo.notes = sd.PosSerialSendList.Count.ToString();
+                        newinfo.posSettingId = crow.posSettingId;
+                        newinfo.posId = crow.posId;
                         int resd = pscntrlr.AddposInfo(newinfo);
 
                     }
