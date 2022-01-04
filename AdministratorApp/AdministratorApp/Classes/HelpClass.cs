@@ -27,6 +27,7 @@ namespace AdministratorApp.Classes
 
         static Users userModel = new Users();
         static Customers customerModel = new Customers();
+        static Packages packageModel = new Packages();
 
         public static async Task<string> generateRandomString(int length, string type, string _class, int id)
         {
@@ -51,8 +52,6 @@ namespace AdministratorApp.Classes
             bool iscodeExist = false;
             try
             {
-                List<string> codes = new List<string>();
-
                 if (_class.Equals("Users"))
                 {
                     List<Users> users = await userModel.GetAll();
@@ -71,7 +70,16 @@ namespace AdministratorApp.Classes
                     else
                         iscodeExist = false;
                 }
-                
+                else if (_class.Equals("Packages"))
+                {
+                    List<Packages> packages = await packageModel.GetAll();
+
+                    if (packages.Any(b => b.packageCode == randomNum && b.packageId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+
             }
             catch { }
             return iscodeExist;

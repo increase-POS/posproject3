@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -62,10 +63,8 @@ namespace AdministratorApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "packageName", "program", "version", "price"
-                , "branchCount", "storeCount", "userCount"
-                , "posCount", "customerCount", "vendorCount"
-                , "salesInvCount", "itemCount"};
+              
+                resetRequiredControlList();
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -112,14 +111,14 @@ namespace AdministratorApp.View.applications
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_version, MainWindow.resourcemanager.GetString("trVersionHint"));
 
             txt_packageLimits.Text = MainWindow.resourcemanager.GetString("trPackageLimits");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_branchCount, MainWindow.resourcemanager.GetString("trBranchCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_storeCount, MainWindow.resourcemanager.GetString("trStoreCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userCount, MainWindow.resourcemanager.GetString("trUserCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_posCount, MainWindow.resourcemanager.GetString("trPOSCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerCount, MainWindow.resourcemanager.GetString("trCustomerCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_vendorCount, MainWindow.resourcemanager.GetString("trVendorCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_salesInvCount, MainWindow.resourcemanager.GetString("trSaleInvCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemCount, MainWindow.resourcemanager.GetString("trItemsCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_branchCount, MainWindow.resourcemanager.GetString("trBranches")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_storeCount, MainWindow.resourcemanager.GetString("trStores")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userCount, MainWindow.resourcemanager.GetString("trUsers")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_posCount, MainWindow.resourcemanager.GetString("trPOSs")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_customerCount, MainWindow.resourcemanager.GetString("trCustomers")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_vendorCount, MainWindow.resourcemanager.GetString("trVendors")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_salesInvCount, MainWindow.resourcemanager.GetString("trInvoices")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemCount, MainWindow.resourcemanager.GetString("trItems")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
@@ -148,7 +147,8 @@ namespace AdministratorApp.View.applications
             {
                 HelpClass.StartAwait(grid_main);
                 package = new Packages();
-                if (validate())
+             
+                if(HelpClass.validate(requiredControlList, this))
                 {
                     string isExist = await package.isExistCode(tb_code.Text.Trim());
                     if (isExist == "0")
@@ -158,19 +158,40 @@ namespace AdministratorApp.View.applications
                         package.details = tb_details.Text;
                         package.programId = (int)cb_program.SelectedValue;
                         package.verId = (int)cb_version.SelectedValue;
-                        //package.price = decimal.Parse(tb_price.Text);
-                        package.branchCount = int.Parse(tb_branchCount.Text);
-                        package.posCount = int.Parse(tb_posCount.Text);
-                        package.userCount = int.Parse(tb_userCount.Text);
-                        package.vendorCount = int.Parse(tb_vendorCount.Text);
-                        package.customerCount = int.Parse(tb_customerCount.Text);
-                        package.itemCount = int.Parse(tb_itemCount.Text);
-                        package.salesInvCount = int.Parse(tb_salesInvCount.Text);
-                        package.storeCount = int.Parse(tb_storeCount.Text);
-                        //package.islimitDate = (bool)tgl_islimitDate.IsChecked;
-                        //if (dp_endDate.SelectedDate != null)
-                        //    package.endDate = dp_endDate.SelectedDate.Value;
-                        //else package.endDate = null;
+
+                        if (tgl_branch.IsChecked == true)
+                            package.branchCount = -1;
+                        else
+                            package.branchCount = int.Parse(tb_branchCount.Text);
+                        if (tgl_store.IsChecked == true)
+                            package.storeCount = -1;
+                        else
+                            package.storeCount = int.Parse(tb_storeCount.Text);
+                        if (tgl_pos.IsChecked == true)
+                            package.posCount = -1;
+                        else
+                            package.posCount = int.Parse(tb_posCount.Text);
+                        if (tgl_user.IsChecked == true)
+                            package.userCount = -1;
+                        else
+                            package.userCount = int.Parse(tb_userCount.Text);
+                        if (tgl_vendor.IsChecked == true)
+                            package.vendorCount = -1;
+                        else
+                            package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        if (tgl_customer.IsChecked == true)
+                            package.customerCount = -1;
+                        else
+                            package.customerCount = int.Parse(tb_customerCount.Text);
+                        if (tgl_item.IsChecked == true)
+                            package.itemCount = -1;
+                        else
+                            package.itemCount = int.Parse(tb_itemCount.Text);
+                        if (tgl_saleInv.IsChecked == true)
+                            package.salesInvCount = -1;
+                        else
+                            package.salesInvCount = int.Parse(tb_salesInvCount.Text);
+
                         package.notes = tb_notes.Text;
                         package.isActive = 1;
                         package.createUserId = MainWindow.userLogin.userId;
@@ -183,14 +204,13 @@ namespace AdministratorApp.View.applications
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             Clear();
+                            resetRequiredControlList();
                             await RefreshPackagesList();
                             await Search();
                         }
                     }
                     else
-                    {
-                        MessageBox.Show("exist ");
-                    }
+                        HelpClass.SetValidate(p_error_code , "trDuplicateCodeToolTip");
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -206,40 +226,69 @@ namespace AdministratorApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (validate())
+                if (HelpClass.validate(requiredControlList, this))
                 {
-                    package.packageCode = "pk-0000009";
-                    package.packageName = tb_packageName.Text;
-                    package.details = tb_details.Text;
-                    package.programId = (int)cb_program.SelectedValue;
-                    package.verId = (int)cb_version.SelectedValue;
-                    //package.price = decimal.Parse(tb_price.Text);
-                    package.branchCount = int.Parse(tb_branchCount.Text);
-                    package.posCount = int.Parse(tb_posCount.Text);
-                    package.userCount = int.Parse(tb_userCount.Text);
-                    package.vendorCount = int.Parse(tb_vendorCount.Text);
-                    package.customerCount = int.Parse(tb_customerCount.Text);
-                    package.itemCount = int.Parse(tb_itemCount.Text);
-                    package.salesInvCount = int.Parse(tb_salesInvCount.Text);
-                    package.storeCount = int.Parse(tb_storeCount.Text);
-                    //package.islimitDate = (bool)tgl_islimitDate.IsChecked;
-                    //if (dp_endDate.SelectedDate != null)
-                    //    package.endDate = dp_endDate.SelectedDate.Value;
-                    //else package.endDate = null;
-                    package.notes = tb_notes.Text;
-                    package.isActive = 1;
-                    package.createUserId = MainWindow.userLogin.userId;
-                    package.updateUserId = MainWindow.userLogin.userId;
-
-                    int s = await package.Save(package);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    bool isExist = await HelpClass.isCodeExist(tb_code.Text ,"" , "Packages",package.packageId);
+                   
+                    if (!isExist)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshPackagesList();
-                        await Search();
+                        package.packageCode = tb_code.Text.Trim();
+                        package.packageName = tb_packageName.Text;
+                        package.details = tb_details.Text;
+                        package.programId = (int)cb_program.SelectedValue;
+                        package.verId = (int)cb_version.SelectedValue;
+
+                        if (tgl_branch.IsChecked == true)
+                            package.branchCount = -1;
+                        else
+                            package.branchCount = int.Parse(tb_branchCount.Text);
+                        if (tgl_store.IsChecked == true)
+                            package.storeCount = -1;
+                        else
+                            package.storeCount = int.Parse(tb_storeCount.Text);
+                        if (tgl_pos.IsChecked == true)
+                            package.posCount = -1;
+                        else
+                            package.posCount = int.Parse(tb_posCount.Text);
+                        if (tgl_user.IsChecked == true)
+                            package.userCount = -1;
+                        else
+                            package.userCount = int.Parse(tb_userCount.Text);
+                        if (tgl_vendor.IsChecked == true)
+                            package.vendorCount = -1;
+                        else
+                            package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        if (tgl_customer.IsChecked == true)
+                            package.customerCount = -1;
+                        else
+                            package.customerCount = int.Parse(tb_customerCount.Text);
+                        if (tgl_item.IsChecked == true)
+                            package.itemCount = -1;
+                        else
+                            package.itemCount = int.Parse(tb_itemCount.Text);
+                        if (tgl_saleInv.IsChecked == true)
+                            package.salesInvCount = -1;
+                        else
+                            package.salesInvCount = int.Parse(tb_salesInvCount.Text);
+
+                        package.notes = tb_notes.Text;
+                        package.isActive = 1;
+                        package.createUserId = MainWindow.userLogin.userId;
+                        package.updateUserId = MainWindow.userLogin.userId;
+
+                        int s = await package.Save(package);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            resetRequiredControlList();
+                            await RefreshPackagesList();
+                            await Search();
+                        }
                     }
+                    else
+                        HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -355,7 +404,7 @@ namespace AdministratorApp.View.applications
                     }
                 }
 
-                clearValidate();
+                HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -455,14 +504,17 @@ namespace AdministratorApp.View.applications
             //search
             if (packages is null)
                 await RefreshPackagesList();
+
             searchText = tb_search.Text.ToLower();
             packagesQuery = packages.Where(s => (s.packageCode.ToLower().Contains(searchText) ||
             s.packageName.ToLower().Contains(searchText)
             || s.programName.ToLower().Contains(searchText)
             || s.verName.ToLower().Contains(searchText)
             ) && s.isActive == tgl_packageState);
+
             RefreshPackagesView();
         }
+
         async Task<IEnumerable<Packages>> RefreshPackagesList()
         {
             packages = await package.GetAll();
@@ -479,7 +531,7 @@ namespace AdministratorApp.View.applications
         {
             this.DataContext = new Packages();
             btn_packagePriceDate.IsEnabled = false;
-            clearValidate();
+            HelpClass.clearValidate(requiredControlList,this);
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -487,7 +539,7 @@ namespace AdministratorApp.View.applications
             {
                 //only  digits
                 TextBox textBox = sender as TextBox;
-                HelpClass.InputJustNumber(ref textBox);
+                //HelpClass.InputJustNumber(ref textBox);
                 Regex regex = new Regex("[^0-9]+");
                 e.Handled = regex.IsMatch(e.Text);
             }
@@ -525,9 +577,17 @@ namespace AdministratorApp.View.applications
         
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
+            //try
+            //{
+            //    validate();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
             try
             {
-                validate();
+                HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
             {
@@ -536,9 +596,17 @@ namespace AdministratorApp.View.applications
         }
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
         {
+            //try
+            //{
+            //    validate();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
             try
             {
-                validate();
+                HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
             {
@@ -578,20 +646,20 @@ namespace AdministratorApp.View.applications
             catch { }
             return isValid;
         }
-        void clearValidate()
-        {
-            try
-            {
-                foreach (var control in requiredControlList)
-                {
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    if ( path != null)
-                    HelpClass.clearValidate(path);
-                }
-            }
-            catch { }
-        }
+        //void clearValidate()
+        //{
+        //    try
+        //    {
+        //        foreach (var control in requiredControlList)
+        //        {
+        //            Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+        //                .FirstOrDefault();
+        //            if ( path != null)
+        //            HelpClass.clearValidate(path);
+        //        }
+        //    }
+        //    catch { }
+        //}
         #endregion
         private async void Cb_program_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -632,6 +700,71 @@ namespace AdministratorApp.View.applications
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
+        }
+
+        private void Tgl_Count_Checked(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            string name = ((ToggleButton)sender).Name;
+            chkCount(name, true);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private void Tgl_Count_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            string name = ((ToggleButton)sender).Name;
+            chkCount(name, false);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+        
+        private void chkCount(string _name, bool isChk)
+        {
+            TextBox tb = new TextBox();
+            Path p = new Path();
+            string required ="";
+            switch (_name)
+            {
+                case "tgl_branch":   tb = tb_branchCount;   required = "branchCount";   p = p_error_branchCount; break;
+                case "tgl_store":    tb = tb_storeCount;    required = "storeCount";    p = p_error_storeCount; break;
+                case "tgl_user":     tb = tb_userCount;     required = "userCount";     p = p_error_userCount; break;
+                case "tgl_pos":      tb = tb_posCount;      required = "posCount";      p = p_error_posCount; break;
+                case "tgl_customer": tb = tb_customerCount; required = "customerCount"; p = p_error_customerCount; break;
+                case "tgl_vendor":   tb = tb_vendorCount;   required = "vendorCount";   p = p_error_vendorCount; break;
+                case "tgl_saleInv":  tb = tb_salesInvCount; required = "salesInvCount"; p = p_error_salesInvCount; break;
+                case "tgl_item":     tb = tb_itemCount;     required = "itemCount";     p = p_error_itemCount; break;
+            }
+
+            tb.IsEnabled = !isChk;
+
+            if (isChk)
+                requiredControlList.Remove(required);
+            else
+                if(!requiredControlList.Contains(required))
+                    requiredControlList.Add(required);
+
+
+            tb.Text = "";
+            HelpClass.clearTextBoxValidate(tb , p);
+
+        }
+
+        private void resetRequiredControlList()
+        {
+            requiredControlList = new List<string> {     "code"       ,   "packageName"  , "program"      , "version"
+                                                       , "branchCount",   "storeCount"   , "userCount"
+                                                       , "posCount"   ,   "customerCount", "vendorCount"
+                                                       , "salesInvCount", "itemCount"};
         }
     }
 }

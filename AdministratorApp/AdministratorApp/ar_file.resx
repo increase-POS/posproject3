@@ -2620,4 +2620,7 @@
   <data name="trVersionHint" xml:space="preserve">
     <value>الإصدار...</value>
   </data>
+  <data name="trUserCountHint" xml:space="preserve">
+    <value>عدد المستخدمين</value>
+  </data>
 </root>

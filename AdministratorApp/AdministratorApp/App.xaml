@@ -9,9 +9,12 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
-            <converters:permissionsNameConverter x:Key="permissionsNameConverter"/>
+            <converters:permissionsNameConverter x:Key="permissionsNameConverter"/> 
             <converters:packagePeriodConverter   x:Key="packagePeriodConverter"/>
             <converters:isActiveConverter   x:Key="isActiveConverter"/>
+            <converters:dateFrameConverter x:Key="dateFrameConverter"/>
+            <converters:unlimitedConverter x:Key="unlimitedConverter"/>
+            <converters:countConverter x:Key="countConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /AdministratorApp;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
