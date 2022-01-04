@@ -2635,4 +2635,7 @@ Please add Email in setting</value>
   <data name="trVersionHint" xml:space="preserve">
     <value>Version...</value>
   </data>
+  <data name="trUserCountHint" xml:space="preserve">
+    <value>User count...</value>
+  </data>
 </root>
