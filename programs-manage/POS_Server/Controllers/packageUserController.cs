@@ -1772,7 +1772,7 @@ namespace Programs_Server.Controllers
                                     {
                                         // create new serials count ==oldPackage.posCount
                                         newcount = oldPackage.posCount;
-                                       
+
 
                                     }
                                     else if (oldPackage.posCount < 500)
@@ -1887,7 +1887,7 @@ namespace Programs_Server.Controllers
                                     // equals oldPackage.posCount = tmpPackage.posCount=-1 unlimited
 
 
-                                    serialList = entity.posSerials.Where(p => p.packageUserId == tmpObject.packageUserId ).ToList();
+                                    serialList = entity.posSerials.Where(p => p.packageUserId == tmpObject.packageUserId).ToList();
                                     int oldcount = serialList.Count;
 
                                     foreach (posSerials row in serialList)
@@ -1932,7 +1932,7 @@ namespace Programs_Server.Controllers
 
                                 }
 
-                             
+
 
 
                                 message = tmpObject.packageUserId.ToString();
@@ -2510,7 +2510,7 @@ namespace Programs_Server.Controllers
                                         price = D.price,
                                         monthCount = D.monthCount,
                                         islimitDate = D.islimitDate,
-                                        currency=  N.currency,
+                                        currency = N.currency,
                                     }).ToList();
 
                         var glist = List.GroupBy(X => X.packageUserId).Select(X => new packageUserModel
@@ -2667,6 +2667,296 @@ namespace Programs_Server.Controllers
 
 
 
+
+        [HttpPost]
+        [Route("ActivateServerState")]
+        public string ActivateServerState(string token)
+        {
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+
+                string packageSaleCode = "";
+                string customerServerCode = "";
+                string activeState = "";
+                string Object = "";
+                packagesSend packState = new packagesSend();
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "packageSaleCode")
+                    {
+                        packageSaleCode = c.Value;
+                    }
+                    else if (c.Type == "customerServerCode")
+                    {
+                        customerServerCode = c.Value;
+
+                    }
+                    else if (c.Type == "packState")
+                    {
+
+                        Object = c.Value.Replace("\\", string.Empty);
+                        Object = Object.Trim('"');
+                        packState = JsonConvert.DeserializeObject<packagesSend>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+
+
+                    }
+
+                }
+                try
+                {
+                    packageUser packuserrow = new packageUser();
+                    payOpModel lastpayrow = new payOpModel();
+                    List<PosSerialSend> serialList = new List<PosSerialSend>();
+                    SendDetail senditem = new SendDetail();
+                    packagesSend package = new packagesSend();
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                        //get packageuser row
+                        // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
+                        packuserrow = getPUbycode(packageSaleCode);
+                        if (packuserrow.packageUserId > 0)
+                        {
+                            // return TokenManager.GenerateToken(row.packageUserId);
+                            // get last payed row
+                            lastpayrow = getLastPayOp(packuserrow.packageUserId);
+
+
+                            if (lastpayrow.payOpId > 0)
+                            {
+
+
+                                // check if there are changes
+                                package.activeres = "ch";
+                                if (packState.activeState == "up")
+                                {
+                                    if (packState.pId != lastpayrow.packageId || (packState.pId == lastpayrow.packageId && packState.pcdId != lastpayrow.countryPackageId))
+                                    {
+                                        // changed
+                                        package.activeres = "ch";
+                                    }
+                                    else
+                                    {
+                                        //no  changed
+                                        package.activeres = "noch";
+
+                                    }
+                                }
+                                else if (packState.activeState == "rn")
+                                {
+                                    if (lastpayrow.type == "rn" && lastpayrow.expireDate > packState.expireDate)
+                                    {
+                                        package.activeres = "ch";
+
+                                    }
+                                    else
+                                    {
+                                        package.activeres = "noch";
+                                    }
+
+
+                                }
+                                // end check
+
+
+                                if (packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
+                                {
+
+                                    // chpk not payed yet
+                                    // dont activate until pay
+                                    return TokenManager.GenerateToken("0");
+                                }
+                                else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode))) //&&  row.expireDate==null 
+                                {
+
+                                    //get poserials 
+                                    programsController progcntrlr = new programsController();
+                                    versionsController vercntrlr = new versionsController();
+                                    programs prog = new programs();
+                                    versions ver = new versions();
+                                    packagesModel pack = new packagesModel();
+                                    countryPackageDateController cpdCntrlr = new countryPackageDateController();
+                                    countryPackageDate cpD = new countryPackageDate();
+                                    posSerialsController serialmodel = new posSerialsController();
+
+                                    List<string> serialposlist = new List<string>();
+
+                                    serialList = serialmodel.GetBypackageUserId(packuserrow.packageUserId);
+
+                                    //  serialposlist = serialList.Select(x => x.serial).ToList();
+                                    // get package details
+
+                                    packagesController packmodel = new packagesController();
+
+
+                                    // get last package Id
+                                    package = packmodel.GetByID((int)lastpayrow.packageId);
+                                    pack = packmodel.GetPmByID((int)lastpayrow.packageId);
+                                    prog = progcntrlr.GetByID((int)pack.programId);
+                                    ver = vercntrlr.GetByID((int)pack.verId);
+                                    cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
+
+
+                                    // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
+                                    package.programName = prog.name;
+                                    package.verName = ver.name;
+                                    package.packageSaleCode = packuserrow.packageSaleCode;
+                                    package.expireDate = packuserrow.expireDate;
+                                    package.isOnlineServer = packuserrow.isOnlineServer;
+                                    package.packageNumber = packuserrow.packageNumber;
+                                    package.totalsalesInvCount = packuserrow.totalsalesInvCount;
+                                    package.packageName = pack.packageName;
+                                    //packuserrow.countryPackageId
+                                    package.islimitDate = cpD.islimitDate;
+                                    package.isActive = (int)packuserrow.isActive;
+                                    package.activatedate = DateTime.Now;// save on client if null 
+                                    package.result = 1;                                  //   SendDetail senditem = new SendDetail();
+                                    package.isServerActivated = packuserrow.isServerActivated;
+
+                                    senditem.packageSend = package;
+                                    senditem.PosSerialSendList = serialList;
+
+                                    //    return TokenManager.GenerateToken(senditem);
+
+                                    packuserrow.isServerActivated = true;
+                                    packuserrow.customerServerCode = customerServerCode;
+                                    if (packuserrow.activatedate == null)
+                                    {
+                                        packuserrow.activatedate = DateTime.Now;
+                                    }
+
+                                    packuserrow.totalsalesInvCount = 0;
+                                    packuserrow.canRenew = false;
+
+                                    //  save server hardware key
+                                    int res = Save(packuserrow);
+                                    return TokenManager.GenerateToken(senditem);
+                                }
+                                else
+                                {
+
+                                    // serverID not match or package not active
+                                    serialList = new List<PosSerialSend>();
+                                    package = new packagesSend();
+
+                                    senditem = new SendDetail();
+
+                                    senditem.packageSend = package;
+                                    senditem.PosSerialSendList = serialList;
+                                    if (packuserrow.isActive != 1)
+                                    {
+                                        //package not active
+                                        package.result = -2;
+                                    }
+                                    else if (!(packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode)))
+                                    {
+                                        // serverID not match 
+                                        package.result = -3;
+                                    }
+
+                                    senditem.packageSend = package;
+
+                                    return TokenManager.GenerateToken(senditem);
+
+
+                                    //if (packuserrow.canRenew == true)
+                                    //{
+                                    //    // write code here
+                                    //    //  return TokenManager.GenerateToken(senditem);
+                                    //}
+                                    //else
+                                    //{
+
+                                    //    packagesSend ps = new packagesSend();
+                                    //    ps.posCount = -2;
+                                    //    senditem.packageSend = ps;
+                                    //    //senditem.packageSend.posCount = -2;
+                                    //    //  return TokenManager.GenerateToken(senditem);
+
+                                    //}
+
+
+
+                                }
+
+
+                                //   return TokenManager.GenerateToken(senditem);
+                            }
+                            else
+                            {
+                                // not payed 
+
+                                serialList = new List<PosSerialSend>();
+                                package = new packagesSend();
+
+                                senditem = new SendDetail();
+
+                                senditem.packageSend = package;
+                                senditem.PosSerialSendList = serialList;
+
+                                package.result = -4;
+
+
+
+                                senditem.packageSend = package;
+
+                                return TokenManager.GenerateToken(senditem);
+
+                            }
+                        }
+                        else
+                        {
+                            //serial not found
+                            serialList = new List<PosSerialSend>();
+                            package = new packagesSend();
+
+                            senditem = new SendDetail();
+
+                            senditem.packageSend = package;
+                            senditem.PosSerialSendList = serialList;
+
+                            package.result = -5;
+
+
+
+                            senditem.packageSend = package;
+
+                            return TokenManager.GenerateToken(senditem);
+
+
+                            //senditem = new SendDetail();
+                            //packagesSend ps = new packagesSend();
+                            //ps.posCount = -3;
+                            //senditem.packageSend = ps;
+
+                            //// senditem.packageSend.posCount = -3;
+                            //return TokenManager.GenerateToken(senditem);
+                        }
+
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    //error
+                    return TokenManager.GenerateToken("0");
+                }
+                //   return TokenManager.GenerateToken("00");
+            }
+
+
+
+        }
 
 
     }
