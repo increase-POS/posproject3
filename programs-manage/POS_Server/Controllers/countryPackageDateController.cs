@@ -150,6 +150,7 @@ namespace Programs_Server.Controllers
                            S.updateDate,
                            S.islimitDate,
                            S.isActive,
+                           S.countriesCodes.currency,
 
 
 

@@ -24,7 +24,7 @@ namespace Programs_Server.Models
         public Nullable<int> countryPackageId { get; set; }
         public decimal totalnet { get; set; }//paid
         public Nullable<int> packageId { get; set; }
-
+        public string currency { get; set; }
         public string packageNumber { get; set; }//bookNum
         public Nullable<System.DateTime> expireDate { get; set; }//expireDate
 

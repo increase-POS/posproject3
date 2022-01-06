@@ -1072,7 +1072,6 @@ namespace Programs_Server.Controllers
                     {
                         customerServerCode = c.Value;
 
-
                     }
                     else if (c.Type == "activeState")
                     {
@@ -1095,10 +1094,10 @@ namespace Programs_Server.Controllers
                         packuserrow = getPUbycode(packageSaleCode);
                         if (packuserrow.packageUserId > 0)
                         {
-
                             // return TokenManager.GenerateToken(row.packageUserId);
                             // get last payed row
                             lastpayrow = getLastPayOp(packuserrow.packageUserId);
+
                             if (lastpayrow.payOpId > 0)
                             {
                                 if (packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
@@ -1110,9 +1109,6 @@ namespace Programs_Server.Controllers
                                 }
                                 else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode))) //&&  row.expireDate==null 
                                 {
-
-
-
 
                                     //get poserials 
                                     programsController progcntrlr = new programsController();
@@ -2514,6 +2510,7 @@ namespace Programs_Server.Controllers
                                         price = D.price,
                                         monthCount = D.monthCount,
                                         islimitDate = D.islimitDate,
+                                        currency=  N.currency,
                                     }).ToList();
 
                         var glist = List.GroupBy(X => X.packageUserId).Select(X => new packageUserModel
@@ -2558,6 +2555,7 @@ namespace Programs_Server.Controllers
                             price = X.FirstOrDefault().price,
                             monthCount = X.FirstOrDefault().monthCount,
                             islimitDate = X.FirstOrDefault().islimitDate,
+                            currency = X.FirstOrDefault().currency,
                         }).ToList();
                         return TokenManager.GenerateToken(glist);
 

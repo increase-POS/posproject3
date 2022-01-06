@@ -210,6 +210,9 @@ namespace Programs_Server.Controllers
                                     join A in entity.packageUser on S.packageUserId equals A.packageUserId
                                     join P in entity.packages on A.packageId equals P.packageId
                                     join U in entity.users on A.userId equals U.userId
+                                    join CP in entity.countryPackageDate on S.countryPackageId equals CP.Id
+                                    join C in entity.countriesCodes on CP.countryId equals C.countryId
+
                                     where S.customerId == customerId
                                     select new payOpModel()
                                     {
@@ -229,9 +232,9 @@ namespace Programs_Server.Controllers
                                         customerId = S.customerId,
                                         agentId = S.agentId,
                                         packageNumber = A.packageNumber,
-
+                                        
                                         expireDate = S.expireDate,
-
+                                       currency=C.currency,
 
                                     }).ToList();
 
