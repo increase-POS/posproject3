@@ -362,6 +362,66 @@ namespace Programs_Server.Controllers
           
         }
 
+
+    
+        public users GetByID(int userId)
+        {
+            string message = "";
+
+            users userrow = new users();
+                try
+                {
+                    using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                    {
+                         userrow = entity.users
+                       .Where(u => u.userId == userId)
+                       .Select(S => new users
+                       {
+                           userId =  S.userId,
+                           name =  S.name,
+                           AccountName =  S.AccountName,
+                           lastName =  S.lastName,
+                           company =  S.company,
+                           email =  S.email,
+                           phone =  S.phone,
+                           mobile = S.mobile,
+                           fax =  S.fax,
+                           address =  S.address,
+                           agentLevel =  S.agentLevel,
+                           createDate = S.createDate,
+                           updateDate =  S.updateDate,
+                           code =  S.code,
+                           password =  S.password,
+                           type = S.type,
+                           image = S.image,
+                           notes = S.notes,
+                           balance = S.balance,
+                           createUserId = S.createUserId,
+                           updateUserId =  S.updateUserId,
+                           isActive = S.isActive,
+                           isAdmin = S.isAdmin,
+                           groupId = S.groupId,
+                           balanceType = S.balanceType,
+                           job = S.job,
+                           isOnline = S.isOnline,
+                           countryId = S.countryId,
+
+                       }).FirstOrDefault();
+                        return userrow;
+                    }
+
+                }
+                catch
+                {
+                userrow = new users();
+                return userrow;
+                }
+            
+
+
+
+        }
+
         // add or update location
         [HttpPost]
         [Route("Save")]

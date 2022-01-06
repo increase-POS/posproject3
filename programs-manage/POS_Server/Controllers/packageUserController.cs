@@ -2736,7 +2736,7 @@ namespace Programs_Server.Controllers
 
 
                                 // check if there are changes
-                                package.activeres = "ch";
+                                package.activeres = "noch";
                                 if (packState.activeState == "up")
                                 {
                                     if (packState.pId != lastpayrow.packageId || (packState.pId == lastpayrow.packageId && packState.pcdId != lastpayrow.countryPackageId))
@@ -2768,12 +2768,22 @@ namespace Programs_Server.Controllers
                                 // end check
 
 
-                                if (packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
+                                if ( packuserrow.type == "chpk" && packuserrow.isPayed == false && packuserrow.canRenew == false)
                                 {
 
                                     // chpk not payed yet
                                     // dont activate until pay
-                                    return TokenManager.GenerateToken("0");
+                                    // return TokenManager.GenerateToken("0");
+                                    string res = package.activeres;
+
+                                    package = packState;
+                                    package.activeres = res;
+                                
+                                    package.result = -6; //  // -6 : package changed but not payed
+                                    senditem.packageSend = package;
+
+                                    return TokenManager.GenerateToken(senditem);
+
                                 }
                                 else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode))) //&&  row.expireDate==null 
                                 {
@@ -2787,16 +2797,19 @@ namespace Programs_Server.Controllers
                                     countryPackageDateController cpdCntrlr = new countryPackageDateController();
                                     countryPackageDate cpD = new countryPackageDate();
                                     posSerialsController serialmodel = new posSerialsController();
+                                    users agentmodel = new users();
+                                    customers customerModel = new customers();
+
+                                    usersController agentctrlr = new usersController();
+                                    customersController customerctrlr = new customersController();
 
                                     List<string> serialposlist = new List<string>();
 
                                     serialList = serialmodel.GetBypackageUserId(packuserrow.packageUserId);
-
-                                    //  serialposlist = serialList.Select(x => x.serial).ToList();
+ 
                                     // get package details
 
                                     packagesController packmodel = new packagesController();
-
 
                                     // get last package Id
                                     package = packmodel.GetByID((int)lastpayrow.packageId);
@@ -2804,46 +2817,77 @@ namespace Programs_Server.Controllers
                                     prog = progcntrlr.GetByID((int)pack.programId);
                                     ver = vercntrlr.GetByID((int)pack.verId);
                                     cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
+                                    agentmodel = agentctrlr.GetByID((int)lastpayrow.agentId);
+                                    customerModel = customerctrlr.GetByID((int)lastpayrow.customerId);
+                                    //start
+                                    // check if there are changes
 
-
-                                    // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
-                                    package.programName = prog.name;
-                                    package.verName = ver.name;
-                                    package.packageSaleCode = packuserrow.packageSaleCode;
-                                    package.expireDate = packuserrow.expireDate;
-                                    package.isOnlineServer = packuserrow.isOnlineServer;
-                                    package.packageNumber = packuserrow.packageNumber;
-                                    package.totalsalesInvCount = packuserrow.totalsalesInvCount;
-                                    package.packageName = pack.packageName;
-                                    //packuserrow.countryPackageId
-                                    package.islimitDate = cpD.islimitDate;
-                                    package.isActive = (int)packuserrow.isActive;
-                                    package.activatedate = DateTime.Now;// save on client if null 
-                                    package.result = 1;                                  //   SendDetail senditem = new SendDetail();
-                                    package.isServerActivated = packuserrow.isServerActivated;
-
-                                    senditem.packageSend = package;
-                                    senditem.PosSerialSendList = serialList;
-
-                                    //    return TokenManager.GenerateToken(senditem);
-
-                                    packuserrow.isServerActivated = true;
-                                    packuserrow.customerServerCode = customerServerCode;
-                                    if (packuserrow.activatedate == null)
+                                    if (package.activeres == "ch" || packState.activeState=="all")
                                     {
-                                        packuserrow.activatedate = DateTime.Now;
+                                        //make changes
+                                        // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
+                                        package.programName = prog.name;
+                                        package.verName = ver.name;
+                                        package.packageSaleCode = packuserrow.packageSaleCode;
+                                        package.expireDate = packuserrow.expireDate;
+                                        package.isOnlineServer = packuserrow.isOnlineServer;
+                                        package.packageNumber = packuserrow.packageNumber;
+                                        package.totalsalesInvCount = packuserrow.totalsalesInvCount;
+                                        package.packageName = pack.packageName;
+                                        //packuserrow.countryPackageId
+                                        package.islimitDate = cpD.islimitDate;
+                                        package.isActive = (int)packuserrow.isActive;
+                                        package.activatedate = DateTime.Now;// save on client if null 
+                                        package.result = 1;                                  //   SendDetail senditem = new SendDetail();
+                                        package.isServerActivated = packuserrow.isServerActivated;
+                                        package.customerName = customerModel.custname;
+                                        package.customerLastName = customerModel.lastName;
+                                        package.agentAccountName = agentmodel.AccountName;
+                                        package.agentName = agentmodel.name;
+                                        package.agentLastName = agentmodel.lastName;
+
+                                        senditem.packageSend = package;
+                                        senditem.PosSerialSendList = serialList;
+
+                                        //    return TokenManager.GenerateToken(senditem);
+
+                                        packuserrow.isServerActivated = true;
+                                        packuserrow.customerServerCode = customerServerCode;
+                                        if (packuserrow.activatedate == null)
+                                        {
+                                            packuserrow.activatedate = DateTime.Now;
+                                        }
+
+                                        packuserrow.totalsalesInvCount = 0;
+                                        packuserrow.canRenew = false;
+
+                                        //  save server hardware key
+                                        int res = Save(packuserrow);
+                                        return TokenManager.GenerateToken(senditem);
+
+                                    }
+                                    else   
+                                    {
+
+                                        //nochange 
+
+                                        string res = package.activeres;
+
+                                        package = packState;
+                                        package.activeres = res;
+
+                                        package.result = 2;// no change
+
+                                        senditem.packageSend = package;
+                                        senditem.PosSerialSendList = serialList;
+                                        return TokenManager.GenerateToken(senditem);
+
                                     }
 
-                                    packuserrow.totalsalesInvCount = 0;
-                                    packuserrow.canRenew = false;
-
-                                    //  save server hardware key
-                                    int res = Save(packuserrow);
-                                    return TokenManager.GenerateToken(senditem);
+                                    //end
                                 }
                                 else
                                 {
-
                                     // serverID not match or package not active
                                     serialList = new List<PosSerialSend>();
                                     package = new packagesSend();

@@ -139,7 +139,14 @@ namespace Programs_Server.Models
 
         public string activeState { get; set; }
         public string activeres { get; set; }
-        
+
+        public string customerName { get; set; }// 6- customer Name
+        public string customerLastName { get; set; }// 6- customer LastName
+        public string agentName { get; set; }// 5- Agent name 
+        public string agentAccountName { get; set; }//5- Agent AccountName
+        public string agentLastName { get; set; }//5- Agent LastName
+
+
 
     }
     public class SendDetail

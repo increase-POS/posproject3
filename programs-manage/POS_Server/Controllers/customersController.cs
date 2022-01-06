@@ -144,8 +144,8 @@ namespace Programs_Server.Controllers
 
                            S.custId,
                            S.custname,
-                       // S.custAccountName,
-                       S.lastName,
+                           // S.custAccountName,
+                           S.lastName,
                            S.company,
                            S.email,
                            S.phone,
@@ -156,8 +156,8 @@ namespace Programs_Server.Controllers
                            S.createDate,
                            S.updateDate,
                            S.custCode,
-                       // S.password,
-                       S.image,
+                           // S.password,
+                           S.image,
                            S.notes,
                            S.balance,
                            S.createUserId,
@@ -175,6 +175,63 @@ namespace Programs_Server.Controllers
                     return TokenManager.GenerateToken("0");
                 }
             }
+
+        }
+
+
+
+        public customers GetByID(int custId)//string token
+        {
+            string message = "";
+            customers customerrow = new customers();
+
+
+            try
+            {
+
+
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    customerrow = entity.customers
+                       .Where(u => u.custId == custId)
+                       .Select(S => new customers
+                       {
+
+                           custId = S.custId,
+                           custname = S.custname,
+                           //  custAccountName = S.custAccountName,
+                           lastName = S.lastName,
+                           company = S.company,
+                           email = S.email,
+                           phone = S.phone,
+                           mobile = S.mobile,
+                           fax = S.fax,
+                           address = S.address,
+                           custlevel = S.custlevel,
+                           createDate = S.createDate,
+                           updateDate = S.updateDate,
+                           custCode = S.custCode,
+                           // password = S.password,
+                           image = S.image,
+                           notes = S.notes,
+                           balance = S.balance,
+                           createUserId = S.createUserId,
+                           updateUserId = S.updateUserId,
+
+                           isActive = S.isActive,
+                           countryId = S.countryId,
+                       })
+                       .FirstOrDefault();
+
+                    return customerrow;
+                }
+            }
+            catch
+            {
+                customerrow = new customers();
+                return customerrow;
+            }
+
 
         }
 
@@ -278,7 +335,7 @@ namespace Programs_Server.Controllers
                     catch (Exception ex)
                     {
                         // return TokenManager.GenerateToken("0");
-                    return TokenManager.GenerateToken(ex.ToString());
+                        return TokenManager.GenerateToken(ex.ToString());
                     }
                 }
                 else
@@ -723,7 +780,7 @@ namespace Programs_Server.Controllers
                         List = (from S in entity.customers
                                 join paa in entity.agentCustomer on S.custId equals paa.customerId into ppa
                                 from pa in ppa.DefaultIfEmpty()
-                                where pa.agentId == userId 
+                                where pa.agentId == userId
                                 select new customersModel
 
                                 {
@@ -810,7 +867,7 @@ namespace Programs_Server.Controllers
                       }).FirstOrDefault();
 
                         //   users agent = entity.users.Where(x => x.userId == userId).Select(x => new users {x.userId, x.countryId, }).FirstOrDefault();
-                        int agentcountry =(int) row.countryId;
+                        int agentcountry = (int)row.countryId;
                         var cIds = (from ac in entity.agentCustomer
                                     select new
                                     {
@@ -822,7 +879,7 @@ namespace Programs_Server.Controllers
                         List<int> gropint = cIds.GroupBy(X => X.customerId).Select(X => (int)X.FirstOrDefault().customerId).ToList();
 
                         var customerlist = (from S in entity.customers
-                                            where ( (!gropint.Contains(S.custId))   && S.countryId== agentcountry)
+                                            where ((!gropint.Contains(S.custId)) && S.countryId == agentcountry)
                                             select new customersModel()
                                             {
                                                 custId = S.custId,
@@ -850,13 +907,13 @@ namespace Programs_Server.Controllers
                                                 countryId = S.countryId,
                                             }).ToList();
 
-               
+
                         return TokenManager.GenerateToken(customerlist);
                     }
                 }
                 catch (Exception ex)
                 {
-                   // message = "0";
+                    // message = "0";
                     // return TokenManager.GenerateToken(message);
                     return TokenManager.GenerateToken(ex.ToString());
                 }
