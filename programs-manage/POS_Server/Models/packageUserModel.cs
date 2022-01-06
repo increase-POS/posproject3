@@ -75,7 +75,7 @@ namespace Programs_Server.Models
         public string serial { get; set; }
         public string posDeviceCode { get; set; }
 
-        public bool isBooked { get; set; }
+        public Nullable<bool> isBooked { get; set; }
         public int isActive { get; set; }
         public string posName { get; set; }
         public string branchName { get; set; }
@@ -131,6 +131,15 @@ namespace Programs_Server.Models
         public int result { get; set; }
 
         public string packageNumber { get; set; }
+
+
+
+        public Nullable<int> pId { get; set; }
+        public Nullable<int> pcdId { get; set; }
+
+        public string activeState { get; set; }
+        public string activeres { get; set; }
+        
 
     }
     public class SendDetail

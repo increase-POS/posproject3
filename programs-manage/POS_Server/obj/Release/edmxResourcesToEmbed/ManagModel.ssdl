@@ -237,7 +237,7 @@
     <Property Name="posName" Type="nvarchar" MaxLength="500" />
     <Property Name="branchName" Type="nvarchar" MaxLength="500" />
     <Property Name="posDeviceCode" Type="nvarchar" MaxLength="500" />
-    <Property Name="isBooked" Type="bit" Nullable="false" />
+    <Property Name="isBooked" Type="bit" />
     <Property Name="isActive" Type="int" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />
@@ -256,7 +256,7 @@
     <Property Name="serial" Type="nvarchar" MaxLength="500" />
     <Property Name="posDeviceCode" Type="nvarchar" MaxLength="500" />
     <Property Name="packageUserId" Type="int" />
-    <Property Name="isBooked" Type="bit" Nullable="false" />
+    <Property Name="isBooked" Type="bit" />
     <Property Name="isActive" Type="int" />
     <Property Name="createDate" Type="datetime2" Precision="7" />
     <Property Name="updateDate" Type="datetime2" Precision="7" />

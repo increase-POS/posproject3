@@ -24,7 +24,7 @@ namespace Programs_Server
         public string serial { get; set; }
         public string posDeviceCode { get; set; }
         public Nullable<int> packageUserId { get; set; }
-        public bool isBooked { get; set; }
+        public Nullable<bool> isBooked { get; set; }
         public Nullable<int> isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }

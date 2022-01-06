@@ -253,7 +253,7 @@
     <Property Name="serial" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="posDeviceCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="packageUserId" Type="Int32" />
-    <Property Name="isBooked" Type="Boolean" Nullable="false" />
+    <Property Name="isBooked" Type="Boolean" />
     <Property Name="isActive" Type="Int32" />
     <Property Name="createDate" Type="DateTime" Precision="7" />
     <Property Name="updateDate" Type="DateTime" Precision="7" />
@@ -1311,7 +1311,7 @@
     <Property Name="posName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="branchName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="posDeviceCode" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="isBooked" Type="Boolean" Nullable="false" />
+    <Property Name="isBooked" Type="Boolean" />
     <Property Name="isActive" Type="Int32" />
     <Property Name="createDate" Type="DateTime" Precision="7" />
     <Property Name="updateDate" Type="DateTime" Precision="7" />

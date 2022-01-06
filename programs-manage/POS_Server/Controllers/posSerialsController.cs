@@ -734,12 +734,13 @@ namespace Programs_Server.Controllers
                 }
 
             }
-            catch
+            catch 
             {
                 message = -1;
+                return message;
             }
 
-            return message;
+            return message ;
 
         }
         [HttpPost]
@@ -1053,7 +1054,7 @@ namespace Programs_Server.Controllers
         [Route("UpdateList")]
         public string UpdateList(string token)//string Object
         {
-            string message = "";
+            string message = "0";
 
             token = TokenManager.readToken(HttpContext.Current.Request);
             var strP = TokenManager.GetPrincipal(token);
@@ -1067,7 +1068,8 @@ namespace Programs_Server.Controllers
                 string Object = "";
                 List<posSerials> newList = new List<posSerials>();
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
-                foreach (Claim c in claims)
+               
+                    foreach (Claim c in claims)
                 {
                     if (c.Type == "userId")
                     {
@@ -1081,6 +1083,7 @@ namespace Programs_Server.Controllers
                     }
                 }
 
+
                 try
                 {
 
@@ -1089,7 +1092,7 @@ namespace Programs_Server.Controllers
                     foreach (posSerials row in newList)
                     {
                         row.updateUserId = userId;
-
+                    
                         int id = serialSaveOrUpdate(row);
                         if (id > 0)
                         {
@@ -1102,10 +1105,11 @@ namespace Programs_Server.Controllers
 
                     message = res.ToString();
                 }
-                catch
+                catch  
                 {
                     message = "0";
                     return TokenManager.GenerateToken(message);
+                    //return TokenManager.GenerateToken(ex.ToString());
                 }
                 return TokenManager.GenerateToken(message);
 
