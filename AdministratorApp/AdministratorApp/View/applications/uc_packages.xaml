@@ -346,10 +346,12 @@
                             </Path>
                         </Grid>
                     </Border>
+                    
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                         <Grid   >
                             <ComboBox x:Name="cb_version" Padding="10,5,5,5"  
-                                      SelectedValue="{Binding verId, Mode=OneWay}"      TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                      SelectedValue="{Binding verId, Mode=OneWay}" 
+                                      TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                       materialDesign:HintAssist.Hint="Version..."    
                                       VerticalAlignment="Center" BorderThickness="0"

@@ -35,6 +35,7 @@ namespace AdministratorApp.ApiClasses
         public decimal totalnet { get; set; }
         public string packageNumber { get; set; }//bookNum
         public Nullable<System.DateTime> expireDate { get; set; }//expireDate
+        public string currency { get; set; }
 
         private string urimainpath = "PayOp/";
         /// <summary>

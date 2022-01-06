@@ -203,7 +203,6 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 Clear();
-              
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -232,9 +231,11 @@ namespace AdministratorApp.View.sales
             }
             catch { }
             cb_customer.SelectedIndex = -1;
+            cb_package.ItemsSource = null;
+            cb_period.ItemsSource = null;
             cb_agent.Text = "";
-            cb_package.SelectedIndex = -1;
-            cb_period.SelectedIndex = -1;
+            oldPackageId = 0;
+            oldCountryPackageId = 0;
             cb_package.IsEnabled = false;
             cb_period.IsEnabled = false;
             btn_serials.IsEnabled = false;
@@ -491,7 +492,8 @@ namespace AdministratorApp.View.sales
                     Country country = new Country();
                     List<Country> countries = new List<Country>();
                     cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
-                    txt_price.Text = cpd.price.ToString();
+                    txt_price.Text = cpd.price.ToString()+" "+cpd.currency.ToString();
+                    //txt_price.Text = cpd.price.ToString();
                 }
                 else
                 {

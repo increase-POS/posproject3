@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStyle="None" WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" Margin="0" Height="500" Width="350"
+        ResizeMode="NoResize" Margin="0" Height="500" Width="500"
         Title="wd_serialsList" Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded" MouseDown="Window_MouseDown" KeyDown="HandleKeyPress" Unloaded="Window_Unloaded">
 
@@ -215,7 +215,7 @@
                               ColumnWidth="SizeToHeader">
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn      Width="3*"  Header="Serial"   Binding="{Binding Path=serial}"/>-->
-                            <DataGridTemplateColumn Header="Serial" Width="3*">
+                            <DataGridTemplateColumn Header="Serial" Width="2*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox x:Name="tb_serial"     IsReadOnly="True"    Text="{Binding Path=serial}"
@@ -227,7 +227,29 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridCheckBoxColumn  Width="*"   Header="Active"   Binding="{Binding Path=isActive}"/>
+                            <DataGridTextColumn Width="*"  Header="Branch" Binding="{Binding Path=branchName}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="*" IsReadOnly="True" Header="POS" Binding="{Binding Path=posName}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridCheckBoxColumn x:Name="col_active"  Width="0.5*"   Header="Active"   Binding="{Binding Path=isActive}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>

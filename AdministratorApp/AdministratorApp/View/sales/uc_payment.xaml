@@ -150,7 +150,8 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Paid" Binding="{Binding Path=totalnet}">
+                            <!--Binding="{Binding Path=totalnet}"-->
+                            <DataGridTextColumn Width="*"  Header="Paid"  >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -160,6 +161,12 @@
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="totalnet" />
+                                        <Binding Path="currency" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
 
                         </DataGrid.Columns>

@@ -61,9 +61,17 @@
                         <TextBlock  Grid.Row="3" Grid.Column="0"   x:Name="txt_priceTitle" Text="Price"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />
-                        <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_price" Text="{Binding price, Mode=OneWay}"  Margin="10" 
+                        <!--Text="{Binding price, Mode=OneWay}"-->
+                        <TextBlock  Grid.Row="3"  Grid.Column="1"   x:Name="txt_price"   Margin="10" 
                         HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource MainColor}"
-                                  FontSize="14"  />
+                                  FontSize="14"  >
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} + {1}">
+                                    <Binding Path="price" />
+                                    <Binding Path="currency" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                         <TextBlock  Grid.Row="4" Grid.Column="0"   x:Name="txt_statusTitle" Text="Status"  Margin="10"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#4E4E4E"
                                   FontSize="16"  />

@@ -162,36 +162,75 @@ namespace AdministratorApp.View.applications
                         if (tgl_branch.IsChecked == true)
                             package.branchCount = -1;
                         else
-                            package.branchCount = int.Parse(tb_branchCount.Text);
+                        {
+                            if(tb_branchCount.Text.Equals("0"))
+                                package.branchCount = int.Parse("1");
+                            else
+                                package.branchCount = int.Parse(tb_branchCount.Text);
+                        }
                         if (tgl_store.IsChecked == true)
                             package.storeCount = -1;
                         else
-                            package.storeCount = int.Parse(tb_storeCount.Text);
+                        {
+                            if (tb_storeCount.Text.Equals("0"))
+                                package.storeCount = int.Parse("1");
+                            else
+                                package.storeCount = int.Parse(tb_storeCount.Text);
+                        }
                         if (tgl_pos.IsChecked == true)
                             package.posCount = -1;
                         else
-                            package.posCount = int.Parse(tb_posCount.Text);
+                        {
+                            if (tb_posCount.Text.Equals("0"))
+                                package.posCount = int.Parse("1");
+                            else
+                                package.posCount = int.Parse(tb_posCount.Text);
+                        }
                         if (tgl_user.IsChecked == true)
                             package.userCount = -1;
                         else
-                            package.userCount = int.Parse(tb_userCount.Text);
+                        {
+                            if (tb_userCount.Text.Equals("0"))
+                                package.userCount = int.Parse("1");
+                            else
+                                package.userCount = int.Parse(tb_userCount.Text);
+                        }
                         if (tgl_vendor.IsChecked == true)
                             package.vendorCount = -1;
                         else
-                            package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        {
+                            if (tb_vendorCount.Text.Equals("0"))
+                                package.vendorCount = int.Parse("1");
+                            else
+                                package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        }
                         if (tgl_customer.IsChecked == true)
                             package.customerCount = -1;
                         else
-                            package.customerCount = int.Parse(tb_customerCount.Text);
+                        {
+                            if (tb_customerCount.Text.Equals("0"))
+                                package.customerCount = int.Parse("1");
+                            else
+                                package.customerCount = int.Parse(tb_customerCount.Text);
+                        }
                         if (tgl_item.IsChecked == true)
                             package.itemCount = -1;
                         else
-                            package.itemCount = int.Parse(tb_itemCount.Text);
+                        {
+                            if (tb_itemCount.Text.Equals("0"))
+                                package.itemCount = int.Parse("1");
+                            else
+                                package.itemCount = int.Parse(tb_itemCount.Text);
+                        }
                         if (tgl_saleInv.IsChecked == true)
                             package.salesInvCount = -1;
                         else
-                            package.salesInvCount = int.Parse(tb_salesInvCount.Text);
-
+                        {
+                            if (tb_salesInvCount.Text.Equals("0"))
+                                package.salesInvCount = int.Parse("1");
+                            else
+                                package.salesInvCount = int.Parse(tb_salesInvCount.Text);
+                        }
                         package.notes = tb_notes.Text;
                         package.isActive = 1;
                         package.createUserId = MainWindow.userLogin.userId;
@@ -241,35 +280,75 @@ namespace AdministratorApp.View.applications
                         if (tgl_branch.IsChecked == true)
                             package.branchCount = -1;
                         else
-                            package.branchCount = int.Parse(tb_branchCount.Text);
+                        {
+                            if (tb_branchCount.Text.Equals("0"))
+                                package.branchCount = int.Parse("1");
+                            else
+                                package.branchCount = int.Parse(tb_branchCount.Text);
+                        }
                         if (tgl_store.IsChecked == true)
                             package.storeCount = -1;
                         else
-                            package.storeCount = int.Parse(tb_storeCount.Text);
+                        {
+                            if (tb_storeCount.Text.Equals("0"))
+                                package.storeCount = int.Parse("1");
+                            else
+                                package.storeCount = int.Parse(tb_storeCount.Text);
+                        }
                         if (tgl_pos.IsChecked == true)
                             package.posCount = -1;
                         else
-                            package.posCount = int.Parse(tb_posCount.Text);
+                        {
+                            if (tb_posCount.Text.Equals("0"))
+                                package.posCount = int.Parse("1");
+                            else
+                                package.posCount = int.Parse(tb_posCount.Text);
+                        }
                         if (tgl_user.IsChecked == true)
                             package.userCount = -1;
                         else
-                            package.userCount = int.Parse(tb_userCount.Text);
+                        {
+                            if (tb_userCount.Text.Equals("0"))
+                                package.userCount = int.Parse("1");
+                            else
+                                package.userCount = int.Parse(tb_userCount.Text);
+                        }
                         if (tgl_vendor.IsChecked == true)
                             package.vendorCount = -1;
                         else
-                            package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        {
+                            if (tb_vendorCount.Text.Equals("0"))
+                                package.vendorCount = int.Parse("1");
+                            else
+                                package.vendorCount = int.Parse(tb_vendorCount.Text);
+                        }
                         if (tgl_customer.IsChecked == true)
                             package.customerCount = -1;
                         else
-                            package.customerCount = int.Parse(tb_customerCount.Text);
+                        {
+                            if (tb_customerCount.Text.Equals("0"))
+                                package.customerCount = int.Parse("1");
+                            else
+                                package.customerCount = int.Parse(tb_customerCount.Text);
+                        }
                         if (tgl_item.IsChecked == true)
                             package.itemCount = -1;
                         else
-                            package.itemCount = int.Parse(tb_itemCount.Text);
+                        {
+                            if (tb_itemCount.Text.Equals("0"))
+                                package.itemCount = int.Parse("1");
+                            else
+                                package.itemCount = int.Parse(tb_itemCount.Text);
+                        }
                         if (tgl_saleInv.IsChecked == true)
                             package.salesInvCount = -1;
                         else
-                            package.salesInvCount = int.Parse(tb_salesInvCount.Text);
+                        {
+                            if (tb_salesInvCount.Text.Equals("0"))
+                                package.salesInvCount = int.Parse("1");
+                            else
+                                package.salesInvCount = int.Parse(tb_salesInvCount.Text);
+                        }
 
                         package.notes = tb_notes.Text;
                         package.isActive = 1;
@@ -530,6 +609,7 @@ namespace AdministratorApp.View.applications
         void Clear()
         {
             this.DataContext = new Packages();
+           
             btn_packagePriceDate.IsEnabled = false;
             HelpClass.clearValidate(requiredControlList,this);
         }
@@ -577,14 +657,6 @@ namespace AdministratorApp.View.applications
         
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
-            //try
-            //{
-            //    validate();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
             try
             {
                 HelpClass.validate(requiredControlList, this);
@@ -596,14 +668,6 @@ namespace AdministratorApp.View.applications
         }
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    validate();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
             try
             {
                 HelpClass.validate(requiredControlList, this);
@@ -613,69 +677,20 @@ namespace AdministratorApp.View.applications
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        bool validate()
-        {
-            bool isValid = true;
-            try
-            {
-                foreach (var control in requiredControlList)
-                {
-                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(this).Where(x => x.Name == "tb_" + control)
-                        .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
-                         .FirstOrDefault();
-                    if (textBox != null && path != null)
-                        if (!HelpClass.validateEmpty(textBox.Text, path))
-                            isValid = false;
-                }
-                foreach (var control in requiredControlList)
-                {
-                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(this).Where(x => x.Name == "cb_" + control)
-                        .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-                        .FirstOrDefault();
-                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
-                         .FirstOrDefault();
-                    if (comboBox != null && path != null)
-                        if (!HelpClass.validateEmpty(comboBox.Text, path))
-                            isValid = false;
-                }
-            }
-            catch { }
-            return isValid;
-        }
-        //void clearValidate()
-        //{
-        //    try
-        //    {
-        //        foreach (var control in requiredControlList)
-        //        {
-        //            Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
-        //                .FirstOrDefault();
-        //            if ( path != null)
-        //            HelpClass.clearValidate(path);
-        //        }
-        //    }
-        //    catch { }
-        //}
+      
         #endregion
         private async void Cb_program_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-            //HelpClass.StartAwait(grid_main);
-            if (cb_program.SelectedValue != null)
-                await FillCombo.fillVersionByProgram(cb_version, (int)cb_program.SelectedValue);
-            if (package.verId != null )
-                cb_version.SelectedValue = package.verId;
-            //HelpClass.EndAwait(grid_main);
+                if (cb_program.SelectedValue != null)
+                    await FillCombo.fillVersionByProgram(cb_version, (int)cb_program.SelectedValue);
+                if (package.verId != null )
+                    cb_version.SelectedValue = package.verId;
             }
             catch (Exception ex)
             {
 
-                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -704,28 +719,28 @@ namespace AdministratorApp.View.applications
 
         private void Tgl_Count_Checked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            string name = ((ToggleButton)sender).Name;
-            chkCount(name, true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                string name = ((ToggleButton)sender).Name;
+                chkCount(name, true);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Tgl_Count_Unchecked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            string name = ((ToggleButton)sender).Name;
-            chkCount(name, false);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                string name = ((ToggleButton)sender).Name;
+                chkCount(name, false);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         
         private void chkCount(string _name, bool isChk)

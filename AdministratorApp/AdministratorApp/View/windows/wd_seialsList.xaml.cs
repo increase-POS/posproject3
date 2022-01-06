@@ -74,7 +74,9 @@ namespace AdministratorApp.View.windows
 
                 posSerialsQuery = await RefreshList();
                 RefreshView();
-               
+
+                //dg_serials.CellEditEnding += dg_serials_CellEditEnding;
+
                 HelpClass.EndAwait(grid_serialsList);
             }
             catch (Exception ex)
@@ -83,6 +85,8 @@ namespace AdministratorApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+       
 
         #region save - search - close - refresh
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -92,42 +96,54 @@ namespace AdministratorApp.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            try
+         //try
+         //{
+         //HelpClass.StartAwait(grid_serialsList);
+
+            //List<PosSerials> posSerialsNew = new List<PosSerials>();
+            //foreach (PosSerials row in dg_serials.Items)
+            //{
+            //    if (row.isActive == 1)
+            //        posSerialsNew.Add(row);
+            //}
+            //posSerialsNew = posSerials.ToList();
+            int isActiveCount = posSerials.Count(s => s.isActive == 1);
+
+            PackageUser pu = new PackageUser();
+            PackageUser puModel = new PackageUser();
+            Packages p = new Packages();
+            Packages pModel = new Packages();
+            pu = await puModel.GetByID(packageUserID);
+            p = await pModel.GetByID(pu.packageId.Value);
+            if ((isActiveCount <= p.posCount) || (p.posCount == -1))
             {
-                HelpClass.StartAwait(grid_serialsList);
+                int res = await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
 
-                int isActiveCount = posSerials.Count(s => s.isActive == 1);
-                PackageUser pu = new PackageUser();
-                PackageUser puModel = new PackageUser();
-                Packages p = new Packages();
-                Packages pModel = new Packages();
-                pu = await puModel.GetByID(packageUserID);
-                p = await pModel.GetByID(pu.packageId.Value);
-                if (isActiveCount <= p.posCount)
+                if (res > 0)
                 {
-                    int res = await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
-
-                    if (res >= 0)
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                        this.Close();
-                    }
-                    else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    this.Close();
                 }
                 else
-                {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
-                }
-
-
-                HelpClass.EndAwait(grid_serialsList);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
-            catch (Exception ex)
+            else
             {
-                HelpClass.EndAwait(grid_serialsList);
-                HelpClass.ExceptionMessage(ex, this);
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
             }
+            //List<PosSerials> posSerialsNew = new List<PosSerials>();
+            //posSerialsNew.Add(posSerials.ToList()[0]);
+            //posSerialsNew.Add(posSerials.ToList()[1]);
+            //posSerialsNew[0].isActive = 1;
+            //posSerialsNew[1].isActive = 0;
+            //int res = await posSerialModel.UpdateList(posSerialsNew.ToList(), MainWindow.userID);
+            //    HelpClass.EndAwait(grid_serialsList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_serialsList);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -136,7 +152,9 @@ namespace AdministratorApp.View.windows
             {
                 txtSearch = tb_search.Text;
 
-                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch));
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                                                          || s.posName.Contains(txtSearch)
+                                                          || s.branchName.Contains(txtSearch));
 
                 RefreshView();
             }
@@ -168,6 +186,26 @@ namespace AdministratorApp.View.windows
         #endregion
 
         #region events
+        //private void dg_serials_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        //{
+        //    if (e.EditAction == DataGridEditAction.Commit)
+        //    {
+        //        var column = e.Column as DataGridBoundColumn;
+        //        if (column != null)
+        //        {
+        //            var bindingPath = (column.Binding as Binding).Path.Path;
+        //            if (bindingPath == "isActive")
+        //            {
+        //                int rowIndex = e.Row.GetIndex();
+        //                var el = e.EditingElement as CheckBox;
+        //                MessageBox.Show(el.IsChecked.ToString());
+        //                // rowIndex has the row index
+        //                // bindingPath has the column's binding
+        //                // el.Text has the new, user-entered value
+        //            }
+        //        }
+        //    }
+        //}
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
@@ -233,7 +271,9 @@ namespace AdministratorApp.View.windows
             btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
 
             dg_serials.Columns[0].Header = MainWindow.resourcemanager.GetString("trSerialNum");
-            dg_serials.Columns[1].Header = MainWindow.resourcemanager.GetString("trIsActive");
+            dg_serials.Columns[1].Header = MainWindow.resourcemanager.GetString("trBranch");
+            dg_serials.Columns[2].Header = MainWindow.resourcemanager.GetString("trPOS");
+            dg_serials.Columns[3].Header = MainWindow.resourcemanager.GetString("trIsActive");
 
             tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
@@ -243,8 +283,8 @@ namespace AdministratorApp.View.windows
 
         async Task<IEnumerable<PosSerials>> RefreshList()
         {
-            posSerials = await posSerialModel.GetByPackUserId(packageUserID);
-          //  posSerials = await posSerialModel.GetSerialAndPosInfo(packageUserID);
+            //posSerials = await posSerialModel.GetByPackUserId(packageUserID);
+            posSerials = await posSerialModel.GetSerialAndPosInfo(packageUserID);
             return posSerials;
         }
         private void RefreshView()
