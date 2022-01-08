@@ -81,7 +81,8 @@ namespace AdministratorApp.View.reports
 
         private void translate()
         {
-           
+            btn_book.Content = MainWindow.resourcemanager.GetString("trBook");
+            btn_payments.Content = MainWindow.resourcemanager.GetString("trPayments");
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -123,6 +124,22 @@ namespace AdministratorApp.View.reports
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void Btn_payments_Click(object sender, RoutedEventArgs e)
+        {//payments
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_paymentsReport.Instance);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
         }
     }
 }

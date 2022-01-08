@@ -97,7 +97,8 @@ namespace AdministratorApp.View.reports
                     chk_allAgents.Visibility = Visibility.Hidden;
                 }
 
-                //await Search();
+                await Search();
+
                 //HelpClass.EndAwait(grid_mainGrid);
             //}
             //catch (Exception ex)
@@ -112,11 +113,11 @@ namespace AdministratorApp.View.reports
          //try
          //{
             await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+        //}
+        //catch (Exception ex)
+        //{
+        //    HelpClass.ExceptionMessage(ex, this);
+        //}
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -150,7 +151,7 @@ namespace AdministratorApp.View.reports
             (dp_endDate.SelectedDate != null ? s.updateDatePo <= dp_endDate.SelectedDate : true)
             &&
             //country
-            (cb_countries.SelectedIndex != -1 ? s.countryPackageId == (int)cb_countries.SelectedValue : true)
+            (cb_countries.SelectedIndex != -1 ? s.countryId == (int)cb_countries.SelectedValue : true)
             &&
             //agent
             (cb_agents.SelectedIndex != -1 ? s.userId == (int)cb_agents.SelectedValue : true)
@@ -176,8 +177,8 @@ namespace AdministratorApp.View.reports
         }
         async Task<IEnumerable<BookSts>> RefreshBookSTSList()
         {
-            if(cb_agents.SelectedIndex != -1)
-                bookSts = await statisticsModel.GetByAgentId((int)cb_agents.SelectedValue);
+            bookSts = await statisticsModel.GetAllBooks(); 
+           
             return bookSts;
         }
 
@@ -200,19 +201,30 @@ namespace AdministratorApp.View.reports
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, MainWindow.resourcemanager.GetString("trSearchHint"));
 
-            dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trCountry");
-            dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("trAgent");
-            dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trNO");
+            dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookDate");
+            dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trUpgradeDate");
             dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trPackage");
-            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trProgram");
-            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trVeesion");
-            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trPrice");
-            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trCurrency");
-
+            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
+            dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
+            /*
+             public string packageNumber { get; set; }//1- Book num
+             public Nullable<System.DateTime> bookDate { get; set; }//2- Book Date
+             public Nullable<System.DateTime> createDatePo { get; set; }//3-Upgrade Date
+             public string packageName { get; set; }//4-Package Name
+             public string agentName { get; set; }// 5- Agent name 
+             public string agentAccountName { get; set; }//5- Agent AccountName
+             public string agentLastName { get; set; }//5- Agent LastName
+             public string customerName { get; set; }// 6- customer Name
+             public string customerLastName { get; set; }// 6- customer LastName
+             public decimal Price { get; set; }//7- price
+             */
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
 
         }
         private void chkAll(string _name, bool isChk)
@@ -251,6 +263,25 @@ namespace AdministratorApp.View.reports
         #endregion
 
         #region events
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {//refresh
+         //try
+         //{
+            await RefreshBookSTSList();
+            //if (!MainWindow.userLogin.type.Equals("ag"))
+            //{
+            //    cb_countries.SelectedIndex = -1;
+            //    cb_agents.SelectedIndex = -1;
+            //}
+            cb_customers.SelectedIndex = -1;
+            cb_packages.SelectedIndex = -1;
+            await Search();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
         private async void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {//date
              //try
@@ -273,6 +304,7 @@ namespace AdministratorApp.View.reports
                     cb_agents.IsEnabled = false;
                     cb_agents.SelectedIndex = -1;
                 }
+                await Search();
             //}
             //catch (Exception ex)
             //{
@@ -286,6 +318,8 @@ namespace AdministratorApp.View.reports
             //{
                 if(cb_agents.SelectedIndex != -1)
                     await FillCombo.fillCustomerByAgent(cb_customers, (int)cb_agents.SelectedValue);
+
+                await Search();
             //}
             //catch (Exception ex)
             //{
@@ -299,6 +333,8 @@ namespace AdministratorApp.View.reports
             //{
                 if(cb_customers.SelectedIndex != -1)
                     await FillCombo.fillPackageByCustomer(cb_packages, (int)cb_customers.SelectedValue);
+
+                await Search();
             //}
             //catch (Exception ex)
             //{
@@ -306,9 +342,19 @@ namespace AdministratorApp.View.reports
             //}
         }
 
-        private void Cb_packages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_packages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
+             //try
+             //{
+                if (cb_agents.SelectedIndex != -1)
+                    bookSts = await statisticsModel.GetByAgentId((int)cb_agents.SelectedValue);
 
+                await Search();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Chk_Checked(object sender, RoutedEventArgs e)
@@ -654,7 +700,6 @@ namespace AdministratorApp.View.reports
 
 
         #endregion
-
 
     }
 }
