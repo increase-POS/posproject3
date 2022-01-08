@@ -2638,4 +2638,19 @@ Please add Email in setting</value>
   <data name="trUserCountHint" xml:space="preserve">
     <value>User count...</value>
   </data>
+  <data name="trAgentName" xml:space="preserve">
+    <value>Agent Name</value>
+  </data>
+  <data name="trBookDate" xml:space="preserve">
+    <value>Book Date</value>
+  </data>
+  <data name="trCustomerName" xml:space="preserve">
+    <value>Customer Name</value>
+  </data>
+  <data name="trNO" xml:space="preserve">
+    <value>NO.</value>
+  </data>
+  <data name="trUpgradeDate" xml:space="preserve">
+    <value>Upgrade Date</value>
+  </data>
 </root>

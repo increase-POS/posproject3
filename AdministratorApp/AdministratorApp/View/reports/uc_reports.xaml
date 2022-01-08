@@ -23,11 +23,11 @@
             <Button  Grid.Column="0" x:Name="btn_book"
                      Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
                      Content="Book" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                     Tag="" Click="Btn_book_Click" />
-            <Button  Grid.Column="1"
+                     Tag="book" Click="Btn_book_Click" />
+            <Button  Grid.Column="1" x:Name="btn_payments"
                      Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                     Content="Report2" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
-                     Tag=""/>
+                     Content="Payments" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                     Tag="payments" Click="Btn_payments_Click"  />
             <!--<Button  Grid.Column="2"
                      Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
                      Content="Report3" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"   

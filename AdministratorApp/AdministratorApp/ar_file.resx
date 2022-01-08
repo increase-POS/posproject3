@@ -2623,4 +2623,19 @@
   <data name="trUserCountHint" xml:space="preserve">
     <value>عدد المستخدمين</value>
   </data>
+  <data name="trAgentName" xml:space="preserve">
+    <value>اسم الوكيل</value>
+  </data>
+  <data name="trBookDate" xml:space="preserve">
+    <value>تاريخ الحجز</value>
+  </data>
+  <data name="trCustomerName" xml:space="preserve">
+    <value>اسم الزبون</value>
+  </data>
+  <data name="trNO" xml:space="preserve">
+    <value>الرقم</value>
+  </data>
+  <data name="trUpgradeDate" xml:space="preserve">
+    <value>تاريخ الترقية</value>
+  </data>
 </root>

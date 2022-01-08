@@ -232,7 +232,6 @@ D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csproj.Gene
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.dll
 D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.pdb
-E:\github\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 E:\AdministratorApp 9-12-2021\netoaster\bin\Debug\netoaster.dll
 E:\AdministratorApp 9-12-2021\netoaster\bin\Debug\netoaster.pdb
 E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
