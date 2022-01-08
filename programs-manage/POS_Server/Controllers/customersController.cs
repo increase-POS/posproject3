@@ -192,8 +192,8 @@ namespace Programs_Server.Controllers
 
                 using (incprogramsdbEntities entity = new incprogramsdbEntities())
                 {
-                    customerrow = entity.customers
-                       .Where(u => u.custId == custId)
+                    var customerl = entity.customers.ToList();
+                    customerrow= customerl.Where(u => u.custId == custId)
                        .Select(S => new customers
                        {
 

@@ -2719,6 +2719,8 @@ namespace Programs_Server.Controllers
                     List<PosSerialSend> serialList = new List<PosSerialSend>();
                     SendDetail senditem = new SendDetail();
                     packagesSend package = new packagesSend();
+                    string activeres = "noch";
+
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         //get packageuser row
@@ -2743,11 +2745,13 @@ namespace Programs_Server.Controllers
                                     {
                                         // changed
                                         package.activeres = "ch";
+                                        activeres= "ch";
                                     }
                                     else
                                     {
                                         //no  changed
                                         package.activeres = "noch";
+                                        activeres = "noch";
 
                                     }
                                 }
@@ -2756,11 +2760,13 @@ namespace Programs_Server.Controllers
                                     if (lastpayrow.type == "rn" && lastpayrow.expireDate > packState.expireDate)
                                     {
                                         package.activeres = "ch";
+                                        activeres = "ch";
 
                                     }
                                     else
                                     {
                                         package.activeres = "noch";
+                                        activeres = "noch";
                                     }
 
 
@@ -2774,10 +2780,10 @@ namespace Programs_Server.Controllers
                                     // chpk not payed yet
                                     // dont activate until pay
                                     // return TokenManager.GenerateToken("0");
-                                    string res = package.activeres;
+                                   
 
                                     package = packState;
-                                    package.activeres = res;
+                                    package.activeres = activeres;
                                 
                                     package.result = -6; //  // -6 : package changed but not payed
                                     senditem.packageSend = package;
@@ -2821,8 +2827,8 @@ namespace Programs_Server.Controllers
                                     customerModel = customerctrlr.GetByID((int)lastpayrow.customerId);
                                     //start
                                     // check if there are changes
-
-                                    if (package.activeres == "ch" || packState.activeState=="all")
+                                    package.activeres = activeres;
+                                    if (activeres == "ch" || packState.activeState=="all")
                                     {
                                         //make changes
                                         // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
@@ -2845,6 +2851,10 @@ namespace Programs_Server.Controllers
                                         package.agentAccountName = agentmodel.AccountName;
                                         package.agentName = agentmodel.name;
                                         package.agentLastName = agentmodel.lastName;
+                                        package.pId = lastpayrow.packageId;
+                                        package.pcdId= lastpayrow.countryPackageId;
+                                        package.bookDate = packuserrow.bookDate;
+                                        
 
                                         senditem.packageSend = package;
                                         senditem.PosSerialSendList = serialList;
@@ -2871,10 +2881,10 @@ namespace Programs_Server.Controllers
 
                                         //nochange 
 
-                                        string res = package.activeres;
+                                    
 
                                         package = packState;
-                                        package.activeres = res;
+                                        package.activeres = activeres;
 
                                         package.result = 2;// no change
 
@@ -2891,9 +2901,9 @@ namespace Programs_Server.Controllers
                                     // serverID not match or package not active
                                     serialList = new List<PosSerialSend>();
                                     package = new packagesSend();
-
+                                   
                                     senditem = new SendDetail();
-
+                                    package.activeres = activeres;
                                     senditem.packageSend = package;
                                     senditem.PosSerialSendList = serialList;
                                     if (packuserrow.isActive != 1)
@@ -2943,7 +2953,7 @@ namespace Programs_Server.Controllers
                                 package = new packagesSend();
 
                                 senditem = new SendDetail();
-
+                                package.activeres = activeres;
                                 senditem.packageSend = package;
                                 senditem.PosSerialSendList = serialList;
 
@@ -2964,7 +2974,7 @@ namespace Programs_Server.Controllers
                             package = new packagesSend();
 
                             senditem = new SendDetail();
-
+                            package.activeres = activeres;
                             senditem.packageSend = package;
                             senditem.PosSerialSendList = serialList;
 

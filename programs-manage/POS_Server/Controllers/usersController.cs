@@ -362,19 +362,20 @@ namespace Programs_Server.Controllers
           
         }
 
-
+        // GET api/<controller>
     
+
         public users GetByID(int userId)
         {
             string message = "";
 
-            users userrow = new users();
+          users userrow = new users();
                 try
                 {
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
-                         userrow = entity.users
-                       .Where(u => u.userId == userId)
+                    var userl = entity.users.ToList();
+                     userrow= userl.Where(u => u.userId == userId)
                        .Select(S => new users
                        {
                            userId =  S.userId,
@@ -411,9 +412,10 @@ namespace Programs_Server.Controllers
                     }
 
                 }
-                catch
+                catch (Exception ex)
                 {
-                userrow = new users();
+             userrow = new users();
+                //userrow.name = ex.ToString();
                 return userrow;
                 }
             
