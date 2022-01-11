@@ -33,6 +33,7 @@ namespace AdministratorApp.View.sales
     {
         public Packages package = new Packages();
         public int oldCustomerId , oldAgentId , oldPackageId , oldCountryPackageId;
+        public bool isOnline;
        
         public static List<string> requiredControlList;
 
@@ -67,9 +68,9 @@ namespace AdministratorApp.View.sales
      
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 package = new Packages();
                
@@ -89,7 +90,7 @@ namespace AdministratorApp.View.sales
                 translate();
             #endregion
 
-                requiredControlList = new List<string> { "package", "customer", "period" };
+                requiredControlList = new List<string> { "package", "customer", "isOnline" ,"period" };
 
                 if (MainWindow.userLogin.type.Equals("ag"))
                 {
@@ -119,18 +120,35 @@ namespace AdministratorApp.View.sales
                         cb_package.SelectedValue = oldPackageId;
                         cb_period.SelectedValue = oldCountryPackageId;
                     }
+                    cb_isOnline.SelectedValue = isOnline.ToString();/////???????????
+                    if (isOnline)
+                    {
+                        txt_offlineActivation.Visibility = Visibility.Collapsed;
+                        btn_download.Visibility = Visibility.Collapsed;
+                        txt_activationCodeTitle.Visibility = Visibility.Visible;
+                        tb_activationCode.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        txt_offlineActivation.Visibility = Visibility.Visible;
+                        btn_download.Visibility = Visibility.Visible;
+                        txt_activationCodeTitle.Visibility = Visibility.Collapsed;
+                        tb_activationCode.Visibility = Visibility.Collapsed;
+                    }
                 }
                 cb_agent.Text = agent.accountName;
 
-                HelpClass.EndAwait(grid_main);
-            }
-                catch (Exception ex)
-                {
+                FillCombo.fillServerState(cb_isOnline);
 
-                    HelpClass.EndAwait(grid_main);
-                    HelpClass.ExceptionMessage(ex, this);
-            }
+                //HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
+
         private void translate()
         {
             txt_title.Text = MainWindow.resourcemanager.GetString("trSales");
@@ -139,6 +157,7 @@ namespace AdministratorApp.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_package, MainWindow.resourcemanager.GetString("trPackageHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_agent, MainWindow.resourcemanager.GetString("trAgentHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_isOnline, MainWindow.resourcemanager.GetString("trServerState")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_period, MainWindow.resourcemanager.GetString("trPeriod"));
 
             txt_packageDetails.Text = MainWindow.resourcemanager.GetString("trPackageDetails");
@@ -161,6 +180,8 @@ namespace AdministratorApp.View.sales
             txt_posCountNameTitle.Text = MainWindow.resourcemanager.GetString("trPOSs");
             txt_vendorCountNameTitle.Text = MainWindow.resourcemanager.GetString("trVendors");
             txt_itemCountNameTitle.Text = MainWindow.resourcemanager.GetString("trItems");
+
+            txt_offlineActivation.Text = MainWindow.resourcemanager.GetString("trOfflineActivation");
         }
 
         #region events
@@ -178,13 +199,18 @@ namespace AdministratorApp.View.sales
                     this.DataContext = package;
                     if (package != null)
                     {
-                        await FillCombo.fillPeriod(cb_period , (int)cb_customer.SelectedValue , (int)cb_package.SelectedValue);
-                        #region fill period 
+                        try
+                        {
+                            await FillCombo.fillPeriod(cb_period, (int)cb_customer.SelectedValue, (int)cb_package.SelectedValue);
 
-                        if (oldPackageId != 0)
-                            cb_period.SelectedValue = oldCountryPackageId;
-                       
-                        #endregion
+                            #region fill period 
+
+                            if (oldPackageId != 0)
+                                cb_period.SelectedValue = oldCountryPackageId;
+
+                            #endregion
+                        }
+                        catch { }
                     }
 
                 }
@@ -231,6 +257,7 @@ namespace AdministratorApp.View.sales
             }
             catch { }
             cb_customer.SelectedIndex = -1;
+            cb_isOnline.SelectedIndex = -1;
             cb_package.ItemsSource = null;
             cb_period.ItemsSource = null;
             cb_agent.Text = "";
@@ -316,12 +343,12 @@ namespace AdministratorApp.View.sales
                     packuser.canRenew = true;
                     packuser.packageSaleCode = packuser.packageSaleCode;
                     packuser.notes = "";
-                    packuser.isOnlineServer = null;
+                    packuser.isOnlineServer =  bool.Parse(cb_isOnline.SelectedValue.ToString());
                     packuser.countryPackageId = (int)cb_period.SelectedValue;
                     packuser.oldPackageId = oldPackageId;
                     packuser.oldCountryPackageId = oldCountryPackageId;
 
-                if (packuser.packageUserId == 0) pop = "trPopAddBook";
+                    if (packuser.packageUserId == 0) pop = "trPopAddBook";
                     else pop = "trPopUpgradeSucceed";
 
                     msg = await packuserModel.packageBook(packuser);
@@ -338,29 +365,12 @@ namespace AdministratorApp.View.sales
 
                 HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        //private async void Cb_agent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{//select agent
-        //    try
-        //    {
-        //        if (cb_agent.SelectedIndex != -1)
-        //        {
-        //            await FillCombo.fillAgentPackage(cb_package, (int)cb_agent.SelectedValue);
-        //            //if(customerId != 0) cb_package.SelectedValue = packageId;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-
-        //}
 
         private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
         {//upgrade
@@ -469,12 +479,11 @@ namespace AdministratorApp.View.sales
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
+                catch (Exception ex)
+                {
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -493,11 +502,44 @@ namespace AdministratorApp.View.sales
                     List<Country> countries = new List<Country>();
                     cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
                     txt_price.Text = cpd.price.ToString()+" "+cpd.currency.ToString();
-                    //txt_price.Text = cpd.price.ToString();
                 }
                 else
                 {
                     txt_price.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Cb_isOnline_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (cb_isOnline.SelectedValue.ToString().Equals("false"))
+                {
+                    if (oldPackageId != 0)
+                    {
+                        btn_download.Visibility = Visibility.Visible;
+                        txt_offlineActivation.Visibility = Visibility.Visible;
+                        txt_activationCodeTitle.Visibility = Visibility.Collapsed;
+                        tb_activationCode.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        btn_download.Visibility = Visibility.Collapsed;
+                        txt_offlineActivation.Visibility = Visibility.Collapsed;
+                        txt_activationCodeTitle.Visibility = Visibility.Visible;
+                        tb_activationCode.Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    btn_download.Visibility = Visibility.Collapsed;
+                    txt_offlineActivation.Visibility = Visibility.Collapsed;
+                    txt_activationCodeTitle.Visibility = Visibility.Visible;
+                    tb_activationCode.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception ex)
@@ -553,10 +595,7 @@ namespace AdministratorApp.View.sales
                     cb_period.ItemsSource = countryPackageDates;
                     if(oldCustomerId != 0) cb_period.SelectedValue = oldCountryPackageId;
                 #endregion
-
-            }
-
-
+                }
             }
             catch (Exception ex)
             {
@@ -683,6 +722,23 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
 
+        }
+
+        private void Btn_download_Click(object sender, RoutedEventArgs e)
+        {//offline activation
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_offlineActivation w = new wd_offlineActivation();
+                //w.packageUserID = packuser.packageUserId;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         //ReportCls reportclass = new ReportCls();

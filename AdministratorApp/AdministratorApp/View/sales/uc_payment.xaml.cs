@@ -156,7 +156,9 @@ namespace AdministratorApp.View.sales
         void Clear()
         {
             cb_customer.SelectedIndex = -1;
-           
+            dg_payments.ItemsSource = null;
+            grid_packageDetails.DataContext = null;
+
             clearValidate();
         }
 
@@ -529,7 +531,6 @@ namespace AdministratorApp.View.sales
                     await Search();
                 }
 
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -648,7 +649,7 @@ namespace AdministratorApp.View.sales
                     uc_sale.Instance.packuser = packageUser;
                     uc_sale.Instance.btn_serials.IsEnabled = true;
                     uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
-
+                    uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
                 }
 
                 HelpClass.EndAwait(grid_main);

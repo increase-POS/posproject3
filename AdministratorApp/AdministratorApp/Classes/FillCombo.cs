@@ -277,5 +277,34 @@ namespace AdministratorApp.Classes
 
         #endregion
 
+        #region fill server state
+        static public void fillServerState(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trOnline")    , Value = "true" },
+                new { Text = MainWindow.resourcemanager.GetString("trOffline")   , Value = "false" }
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+
+        #endregion
+        #region fill offline activation 
+        static public void fillOfflineActivation(ComboBox combo)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trExtend")    , Value = "0" },
+                new { Text = MainWindow.resourcemanager.GetString("trUpgrade")   , Value = "1" }
+                 };
+            combo.DisplayMemberPath = "Text";
+            combo.SelectedValuePath = "Value";
+            combo.ItemsSource = typelist;
+
+        }
+
+        #endregion
+
     }
 }

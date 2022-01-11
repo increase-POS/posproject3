@@ -75,7 +75,12 @@ namespace AdministratorApp.View.windows
                 posSerialsQuery = await RefreshList();
                 RefreshView();
 
-                //dg_serials.CellEditEnding += dg_serials_CellEditEnding;
+               //< Button Grid.Column = "2" x: Name = "btn_activePage" Click = "Btn_activePage_Click"
+               //                     Height = "25" Width = "25" Content = "2" Padding = "0"
+               //                       Background = "#178DD2" BorderThickness = "0" />
+
+
+
 
                 HelpClass.EndAwait(grid_serialsList);
             }

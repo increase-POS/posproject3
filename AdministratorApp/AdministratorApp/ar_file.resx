@@ -2638,4 +2638,19 @@
   <data name="trUpgradeDate" xml:space="preserve">
     <value>تاريخ الترقية</value>
   </data>
+  <data name="trOffline" xml:space="preserve">
+    <value>غير متصل بالإنترنت</value>
+  </data>
+  <data name="trOnline" xml:space="preserve">
+    <value>متصل بالإنترنت</value>
+  </data>
+  <data name="trServerState" xml:space="preserve">
+    <value>حالة المخدم</value>
+  </data>
+  <data name="trExtend" xml:space="preserve">
+    <value>تمديد</value>
+  </data>
+  <data name="trOfflineActivation" xml:space="preserve">
+    <value>التفعيل دون اتصال</value>
+  </data>
 </root>

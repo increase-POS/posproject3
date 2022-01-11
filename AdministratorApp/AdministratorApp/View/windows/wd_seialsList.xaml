@@ -82,6 +82,7 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
                 <Grid   >
                     <Grid.ColumnDefinitions>
@@ -253,7 +254,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
-
+                <WrapPanel Grid.Row="4" x:Name="pnl_pagination" Orientation="Horizontal">
+                    
+                </WrapPanel>
                 <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5"
                         Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
                         Background="#178DD2" BorderBrush="{x:Null}"  />

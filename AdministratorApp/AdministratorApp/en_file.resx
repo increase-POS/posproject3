@@ -2653,4 +2653,19 @@ Please add Email in setting</value>
   <data name="trUpgradeDate" xml:space="preserve">
     <value>Upgrade Date</value>
   </data>
+  <data name="trOffline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="trOnline" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="trServerState" xml:space="preserve">
+    <value>Server state</value>
+  </data>
+  <data name="trExtend" xml:space="preserve">
+    <value>Extend</value>
+  </data>
+  <data name="trOfflineActivation" xml:space="preserve">
+    <value>Offline Activation</value>
+  </data>
 </root>
