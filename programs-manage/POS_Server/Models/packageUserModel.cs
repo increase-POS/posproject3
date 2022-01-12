@@ -87,7 +87,8 @@ namespace Programs_Server.Models
 
     public class packagesSend
     {
-   
+        public Nullable<int> packageUserId { get; set; }
+      
         public string packageName { get; set; }
      
         public int branchCount { get; set; }
@@ -135,7 +136,7 @@ namespace Programs_Server.Models
 
 
         public Nullable<int> pId { get; set; }
-        public Nullable<int> pcdId { get; set; }
+        public Nullable<int> pcdId { get; set; }//package country id
 
         public string activeState { get; set; }
         public string activeres { get; set; }
@@ -153,8 +154,6 @@ namespace Programs_Server.Models
         public string packuserType { get; set; }
         public string activeApp { get; set; }
 
-
-
     }
     public class SendDetail
     {
@@ -162,4 +161,6 @@ namespace Programs_Server.Models
 
         public packagesSend packageSend;
     }
+
+
 }

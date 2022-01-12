@@ -336,7 +336,7 @@ namespace Programs_Server.Controllers
                            customerCount = S.customerCount,
                            itemCount = S.itemCount,
                            salesInvCount = S.salesInvCount,
-                           // programId = S.programId,
+                           //programId = S.programId,
                            programName = S.programs.name,
                            //verId = S.verId,
                            verName = S.versions.name,
