@@ -130,9 +130,27 @@ namespace AdministratorApp.View.windows
             try
             {
                 if (cb_type.SelectedValue.ToString() == "0")
-                    btn_upload.Visibility = Visibility.Collapsed;
+                {
+                    try
+                    {
+                        grid_btns.ColumnDefinitions.RemoveAt(1);
+                    }
+                    catch
+                    { }
+                        btn_upload.Visibility = Visibility.Collapsed;
+                }
                 else
+                {
+                    try
+                    {
+                        ColumnDefinition cd = new ColumnDefinition();
+                        cd.Width = new GridLength(1, GridUnitType.Star);
+                        grid_btns.ColumnDefinitions.Add(cd);
+                    }
+                    catch
+                    { }
                     btn_upload.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception ex)
             {

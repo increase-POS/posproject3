@@ -117,7 +117,7 @@
                     </Path.ToolTip>
                 </Path>
 
-                <Grid Grid.Row="5" >
+                <Grid x:Name="grid_btns" Grid.Row="5" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
