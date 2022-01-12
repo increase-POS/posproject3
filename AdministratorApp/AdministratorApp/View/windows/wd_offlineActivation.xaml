@@ -108,7 +108,7 @@
                           LostFocus="Tb_validateEmptyLostFocus" 
                           BorderBrush="#737373" BorderThickness="0"   >
                 </ComboBox>
-                <Path Fill="#E81123" x:Name="p_errorType" Stretch="Fill" Margin="5,5,15,5"
+                <Path Fill="#E81123" x:Name="p_error_type" Stretch="Fill" Margin="5,5,15,5"
                       HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2"  Visibility="Collapsed"   
                       VerticalAlignment="Center" Width="15"  Height="15"
                       Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -124,11 +124,11 @@
                     </Grid.ColumnDefinitions>
                     <Button  Grid.Column="0"   Content="download" materialDesign:ButtonAssist.CornerRadius="7"
                           Margin="10,2.5" x:Name="btn_download" 
-                          Background="#178DD2" BorderBrush="{x:Null}" 
+                          Background="#178DD2" BorderBrush="{x:Null}" Click="Btn_download_Click" 
                           />
                     <Button   Grid.Column="1"    Content="upload" materialDesign:ButtonAssist.CornerRadius="7"
                           Margin="10,2.5" x:Name="btn_upload" 
-                          Background="#178DD2" BorderBrush="{x:Null}" 
+                          Background="#178DD2" BorderBrush="{x:Null}" Click="Btn_upload_Click" 
                           />
                 </Grid>
             </Grid>

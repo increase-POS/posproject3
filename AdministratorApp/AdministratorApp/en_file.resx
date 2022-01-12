@@ -2668,4 +2668,10 @@ Please add Email in setting</value>
   <data name="trOfflineActivation" xml:space="preserve">
     <value>Offline Activation</value>
   </data>
+  <data name="trDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="trUpload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
 </root>
