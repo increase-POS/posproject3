@@ -471,7 +471,7 @@ namespace Programs_Server.Controllers
                             tmpObject.monthCount = newObject.monthCount;
                             tmpObject.activatedate = newObject.activatedate;
                             tmpObject.isServerActivated = newObject.isServerActivated;
-                            //tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
+                            tmpObject.oldCountryPackageId = newObject.oldCountryPackageId;
                             //  tmpObject.countryPackageId = newObject.countryPackageId;
                             //  tmpObject.isPayed = newObject.isPayed;
 
@@ -963,6 +963,7 @@ namespace Programs_Server.Controllers
                                         totalsalesInvCount = S.totalsalesInvCount,
                                         activatedate = S.activatedate,
                                         isServerActivated = S.isServerActivated,
+                                        oldCountryPackageId=S.oldCountryPackageId,
 
                                         //islimitDate = D.islimitDate,
 
@@ -2791,7 +2792,7 @@ namespace Programs_Server.Controllers
                                     return TokenManager.GenerateToken(senditem);
 
                                 }
-                                else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode))) //&&  row.expireDate==null 
+                                else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode && packState.isServerActivated== true))) //&&  row.expireDate==null 
                                 {
 
                                     //get poserials 
@@ -2854,7 +2855,14 @@ namespace Programs_Server.Controllers
                                         package.pId = lastpayrow.packageId;
                                         package.pcdId= lastpayrow.countryPackageId;
                                         package.bookDate = packuserrow.bookDate;
-                                        
+
+                                        package.poId = lastpayrow.payOpId;
+                                        package.pocrDate = lastpayrow.createDate;
+                                        package.notes = packuserrow.notes;
+                                        package.upnum = packState.upnum;
+                                        package.packuserType = packuserrow.type;
+
+                                        package.activeApp = packState.activeApp;
 
                                         senditem.packageSend = package;
                                         senditem.PosSerialSendList = serialList;
@@ -2870,7 +2878,7 @@ namespace Programs_Server.Controllers
 
                                         packuserrow.totalsalesInvCount = 0;
                                         packuserrow.canRenew = false;
-
+                                       
                                         //  save server hardware key
                                         int res = Save(packuserrow);
                                         return TokenManager.GenerateToken(senditem);

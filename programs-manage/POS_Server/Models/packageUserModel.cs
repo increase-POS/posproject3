@@ -146,6 +146,13 @@ namespace Programs_Server.Models
         public string agentAccountName { get; set; }//5- Agent AccountName
         public string agentLastName { get; set; }//5- Agent LastName
 
+        public Nullable<System.DateTime> pocrDate { get; set; }
+        public Nullable<int> poId { get; set; }
+        public string notes { get; set; }
+        public string upnum { get; set; }
+        public string packuserType { get; set; }
+        public string activeApp { get; set; }
+
 
 
     }

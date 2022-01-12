@@ -1005,7 +1005,7 @@ namespace AdministratorApp.Classes
         //    string userName = invoice.uuserName + " " + invoice.uuserLast;
 
         //    //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
-            
+
         //    decimal disval = calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
         //  decimal manualdisval = calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
         //    invoice.discountValue = disval+ manualdisval;
@@ -1107,13 +1107,46 @@ namespace AdministratorApp.Classes
         ///
 
 
+
         public bool encodefile(string source, string dest)
         {
             try
             {
-              
+
                 byte[] arr = File.ReadAllBytes(source);
-              
+
+                arr = Encrypt(arr);
+
+                File.WriteAllBytes(dest, arr);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+        public static string Encrypt(string Text)
+        {
+            byte[] b = ConvertToBytes(Text);
+            b = Encrypt(b);
+            return ConvertToText(b);
+        }
+        private static byte[] ConvertToBytes(string text)
+        {
+            return System.Text.Encoding.Unicode.GetBytes(text);
+        }
+        private static string ConvertToText(byte[] ByteAarry)
+        {
+            return System.Text.Encoding.Unicode.GetString(ByteAarry);
+        }
+        public bool encodestring(string sourcetext, string dest)
+        {
+            try
+            {
+                byte[] arr = ConvertToBytes(sourcetext);
+                //  byte[] arr = File.ReadAllBytes(source);
+
                 arr = Encrypt(arr);
 
                 File.WriteAllBytes(dest, arr);
@@ -1126,7 +1159,6 @@ namespace AdministratorApp.Classes
 
         }
 
-   
 
         public static byte[] Encrypt(byte[] ordinary)
         {
@@ -1166,17 +1198,17 @@ namespace AdministratorApp.Classes
         }
         public void DelFile(string fileName)
         {
-          
-                bool inuse = false;
 
-                inuse = IsFileInUse(fileName);
-                if (inuse == false)
-                {
-                    File.Delete(fileName);
-                }
+            bool inuse = false;
 
-         
-           
+            inuse = IsFileInUse(fileName);
+            if (inuse == false)
+            {
+                File.Delete(fileName);
+            }
+
+
+
 
 
 
@@ -1202,6 +1234,68 @@ namespace AdministratorApp.Classes
 
             return false;
         }
+        public static byte[] Decrypt(byte[] Encrypted)
+        {
+            BitArray enc = ToBits(Encrypted);
+            BitArray XorH = SubBits(enc, 0, enc.Length / 2);
+            XorH = XorH.Not();
+            BitArray RHH = SubBits(enc, enc.Length / 2, enc.Length / 2);
+            RHH = RHH.Not();
+            BitArray LHH = XorH.Xor(RHH);
+            BitArray bits = ConcateBits(LHH, RHH);
+            byte[] decr = new byte[bits.Length / 8];
+            bits.CopyTo(decr, 0);
+            return decr;
+        }
+        public static string Decrypt(string EncryptedText)
+        {
+            byte[] b = ConvertToBytes(EncryptedText);
+            b = Decrypt(b);
+            return ConvertToText(b);
+        }
+        public static string DeCompressThenDecrypt(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            text = Encoding.UTF8.GetString(bytes);
+
+            return (Decrypt(text));
+        }
+        //////////
+        public static bool decodefile(string Source, string DestPath)
+        {
+            try
+            {
+                byte[] restorearr = File.ReadAllBytes(Source);
+
+                restorearr = Decrypt(restorearr);
+                File.WriteAllBytes(DestPath, restorearr);
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static string decodetoString(string Source)
+        {
+            try
+            {
+                byte[] restorearr = File.ReadAllBytes(Source);
+
+                restorearr = Decrypt(restorearr);
+                return ConvertToText(restorearr);
+                // File.WriteAllBytes(DestPath, restorearr);
+
+
+            }
+            catch
+            {
+                return "0";
+            }
+        }
+
 
 
         //////////

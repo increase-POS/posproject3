@@ -377,5 +377,51 @@ namespace AdministratorApp.ApiClasses
 
         }
 
+
+        public async Task<SendDetail> ActivateServerOffline(int packageUserId, string activeState)
+        {
+            SendDetail item = new SendDetail();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("packageUserId", packageUserId.ToString());
+            parameters.Add("activeState", activeState);
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "ActivateServerOffline", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<SendDetail>(c.Value, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+
+                }
+            }
+            return item;
+
+        }
+
+
+        public async Task<int> OfflineUpload(SendDetail SendDetaildata, string activeState)
+        {
+            int item = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            var myContent3 = JsonConvert.SerializeObject(SendDetaildata);
+            parameters.Add("object", myContent3);
+            parameters.Add("activeState", activeState);
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Activate/OfflineUpload", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = int.Parse(c.Value);
+                }
+            }
+            return item;
+        }
+
+
     }
 }
