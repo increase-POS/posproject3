@@ -120,7 +120,7 @@ namespace AdministratorApp.View.sales
                         cb_package.SelectedValue = oldPackageId;
                         cb_period.SelectedValue = oldCountryPackageId;
                     }
-                    cb_isOnline.SelectedValue = isOnline.ToString();/////???????????
+                    cb_isOnline.SelectedValue = isOnline;
                     if (isOnline)
                     {
                         txt_offlineActivation.Visibility = Visibility.Collapsed;
@@ -190,8 +190,8 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            try
-            {
+            //try
+            //{
                 if (cb_package.SelectedIndex != -1)
                 {
                     package = cb_package.SelectedItem as Packages;
@@ -215,11 +215,11 @@ namespace AdministratorApp.View.sales
 
                 }
 
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -321,9 +321,9 @@ namespace AdministratorApp.View.sales
         #endregion
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//book
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 int msg = 0;
 
@@ -363,13 +363,13 @@ namespace AdministratorApp.View.sales
                     }
                 }
 
-                HelpClass.EndAwait(grid_main);
-            }
-                catch (Exception ex)
-                {
-                    HelpClass.EndAwait(grid_main);
-                    HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //    catch (Exception ex)
+            //    {
+            //        HelpClass.EndAwait(grid_main);
+            //        HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
@@ -465,8 +465,8 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            try
-            {
+            //try
+            //{
                 if (cb_customer.SelectedIndex != -1)
                 {
                     cb_package.IsEnabled = true;
@@ -474,15 +474,19 @@ namespace AdministratorApp.View.sales
 
                     if (MainWindow.userLogin.type != "ag")
                     {
-                        await FillCombo.fillPackageByCustomer(cb_package, (int)cb_customer.SelectedValue);
-                        cb_package.SelectedValue = oldPackageId;
+                        try
+                        {
+                            await FillCombo.fillPackageByCustomer(cb_package, (int)cb_customer.SelectedValue);
+                            cb_package.SelectedValue = oldPackageId;
+                        }
+                        catch { }
                     }
                 }
-            }
-                catch (Exception ex)
-                {
-                    HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //    catch (Exception ex)
+            //    {
+            //        HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -492,8 +496,8 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_period_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select period
-            try
-            {
+            //try
+            //{
                 if (cb_period.SelectedIndex != -1)
                 {
                     Country cModel = new Country();
@@ -507,24 +511,34 @@ namespace AdministratorApp.View.sales
                 {
                     txt_price.Text = "";
                 }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private void Cb_isOnline_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                if (cb_isOnline.SelectedValue.ToString().Equals("false"))
+            //try
+            //{
+                if (cb_isOnline.SelectedIndex != -1)
                 {
-                    if (oldPackageId != 0)
+                    if (cb_isOnline.SelectedValue.ToString().Equals("False"))
                     {
-                        btn_download.Visibility = Visibility.Visible;
-                        txt_offlineActivation.Visibility = Visibility.Visible;
-                        txt_activationCodeTitle.Visibility = Visibility.Collapsed;
-                        tb_activationCode.Visibility = Visibility.Collapsed;
+                        if (oldPackageId != 0)
+                        {
+                            btn_download.Visibility = Visibility.Visible;
+                            txt_offlineActivation.Visibility = Visibility.Visible;
+                            txt_activationCodeTitle.Visibility = Visibility.Collapsed;
+                            tb_activationCode.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            btn_download.Visibility = Visibility.Collapsed;
+                            txt_offlineActivation.Visibility = Visibility.Collapsed;
+                            txt_activationCodeTitle.Visibility = Visibility.Visible;
+                            tb_activationCode.Visibility = Visibility.Visible;
+                        }
                     }
                     else
                     {
@@ -534,18 +548,11 @@ namespace AdministratorApp.View.sales
                         tb_activationCode.Visibility = Visibility.Visible;
                     }
                 }
-                else
-                {
-                    btn_download.Visibility = Visibility.Collapsed;
-                    txt_offlineActivation.Visibility = Visibility.Collapsed;
-                    txt_activationCodeTitle.Visibility = Visibility.Visible;
-                    tb_activationCode.Visibility = Visibility.Visible;
-                }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         public async Task fillInputs(Packages _package , int agentID , int custID)

@@ -507,7 +507,6 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Threadi
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Antlr3.Runtime.dll
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\WebGrease.dll
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Antlr3.Runtime.pdb
-E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_permissions.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_usersList.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Antlr3.Runtime.dll
@@ -529,7 +528,6 @@ E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.CodeDom
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\System.Threading.Tasks.Extensions.xml
-E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_permissions.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_usersList.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\settings\uc_settings.baml
@@ -727,3 +725,8 @@ E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\w
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_customers.baml
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_newCustomer.baml
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_seialsList.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_offlineActivation.g.cs
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_offlineActivation.baml
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Reports\Sale\Book\Serials\En\serials.rdlc
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\RdlCompile.cache
+E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\RdlCompile.compiled

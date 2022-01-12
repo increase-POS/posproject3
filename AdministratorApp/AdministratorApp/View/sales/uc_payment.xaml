@@ -361,8 +361,8 @@
                         <Button Grid.Column="1" Grid.Row="0" x:Name="btn_upgrade"  IsEnabled="False"
                                 materialDesign:ButtonAssist.CornerRadius="10"     HorizontalAlignment="Right"
                                 Padding="2" Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
-                                Margin="0 5 15 5"  Width="35" Height="35" Click="Btn_upgrade_Click"  
-                                >
+                                Margin="0 5 15 5"  Width="35" Height="35" 
+                                Click="Btn_upgrade_Click">
                             <materialDesign:PackIcon Foreground="White" Kind="Upload"   Width="25" Height="25"/>
                         </Button>
 

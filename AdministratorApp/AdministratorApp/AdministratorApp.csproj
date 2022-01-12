@@ -188,10 +188,12 @@
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\BooleanReverseConverter.cs" />
     <Compile Include="converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="converters\countConverter.cs" />
     <Compile Include="converters\dateFrameConverter.cs" />
     <Compile Include="converters\isActiveConverter.cs" />
     <Compile Include="converters\packagePeriodConverter.cs" />
     <Compile Include="converters\permissionsNameConverter.cs" />
+    <Compile Include="converters\unlimitedConverter.cs" />
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>
@@ -263,6 +265,9 @@
     </Compile>
     <Compile Include="View\windows\wd_newCustomer.xaml.cs">
       <DependentUpon>wd_newCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_offlineActivation.xaml.cs">
+      <DependentUpon>wd_offlineActivation.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_seialsList.xaml.cs">
       <DependentUpon>wd_seialsList.xaml</DependentUpon>
@@ -386,6 +391,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_newCustomer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_offlineActivation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

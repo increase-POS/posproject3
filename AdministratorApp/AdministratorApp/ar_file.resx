@@ -2653,4 +2653,10 @@
   <data name="trOfflineActivation" xml:space="preserve">
     <value>التفعيل دون اتصال</value>
   </data>
+  <data name="trDownload" xml:space="preserve">
+    <value>تحميل</value>
+  </data>
+  <data name="trUpload" xml:space="preserve">
+    <value>رفع</value>
+  </data>
 </root>

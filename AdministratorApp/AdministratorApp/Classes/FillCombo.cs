@@ -281,8 +281,8 @@ namespace AdministratorApp.Classes
         static public void fillServerState(ComboBox combo)
         {
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trOnline")    , Value = "true" },
-                new { Text = MainWindow.resourcemanager.GetString("trOffline")   , Value = "false" }
+                new { Text = MainWindow.resourcemanager.GetString("trOnline")    , Value = "True" },
+                new { Text = MainWindow.resourcemanager.GetString("trOffline")   , Value = "False" }
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";
@@ -291,6 +291,7 @@ namespace AdministratorApp.Classes
         }
 
         #endregion
+
         #region fill offline activation 
         static public void fillOfflineActivation(ComboBox combo)
         {

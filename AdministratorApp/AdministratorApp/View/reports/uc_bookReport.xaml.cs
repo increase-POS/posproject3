@@ -1,11 +1,13 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
 using LiveCharts;
+using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -172,7 +174,7 @@ namespace AdministratorApp.View.reports
             dg_book.ItemsSource = bookStsQuery;
             txt_count.Text = bookStsQuery.Count().ToString();
             fillColumnChart();
-            fillPieChart();
+            //fillPieChart();
             fillRowChart();
         }
         async Task<IEnumerable<BookSts>> RefreshBookSTSList()
@@ -389,92 +391,81 @@ namespace AdministratorApp.View.reports
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
-            List<decimal> balances = new List<decimal>();
+            List<int> countLst = new List<int>();
 
-            //var result = balancesQuery.GroupBy(s => s.posId).Select(s => new
-            //{
-            //    posId = s.Key,
-            //});
+            var result = bookStsQuery.GroupBy(s => s.packageId).Select(s => new
+            {
+                packageId = s.Key,
+                count = s.Count()
+            });
 
-            //var tempName = balancesQuery.GroupBy(s => s.posName + "/" + s.branchName).Select(s => new
-            //{
-            //    posName = s.Key
-            //});
-            //names.AddRange(tempName.Select(nn => nn.posName));
+            var tempName = bookStsQuery.GroupBy(s => s.packageName).Select(s => new
+            {
+                packageName = s.Key
+            });
+            names.AddRange(tempName.Select(nn => nn.packageName));
 
-            //var tempBalance = balancesQuery.GroupBy(s => s.balance).Select(s => new
-            //{
-            //    balance = s.Key
-            //});
-            //balances.AddRange(tempBalance.Select(nn => decimal.Parse(SectionData.DecTostring(nn.balance.Value))));
+            countLst.AddRange(result.Select(nn => nn.count));
 
             //List<string> lable = new List<string>();
-            //SeriesCollection columnChartData = new SeriesCollection();
-            //List<decimal> cS = new List<decimal>();
+            SeriesCollection columnChartData = new SeriesCollection();
+            List<int> cS = new List<int>();
 
-            //List<string> titles = new List<string>()
-            //{
-            //   MainWindow.resourcemanager.GetString("tr_Balance")
-            //};
-            //int x = 6;
-            //if (names.Count() <= 6) x = names.Count();
+            List<string> titles = new List<string>()
+            {
+               MainWindow.resourcemanager.GetString("trPackages")
+            };
+            int x = 6;
+            if (names.Count() <= 6) x = names.Count();
 
-            //for (int i = 0; i < x; i++)
-            //{
-            //    cS.Add(balances.ToList().Skip(i).FirstOrDefault());
-            //    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            //}
+            for (int i = 0; i < x; i++)
+            {
+                cS.Add(countLst.ToList().Skip(i).FirstOrDefault());
+                axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+            }
 
-            //if (names.Count() > 6)
-            //{
-            //    decimal balanceSum = 0;
-            //    for (int i = 6; i < names.Count(); i++)
-            //        balanceSum = balanceSum + balances.ToList().Skip(i).FirstOrDefault();
+            if (names.Count() > 6)
+            {
+                int countSum = 0;
+                for (int i = 6; i < names.Count(); i++)
+                    countSum = countSum + countLst.ToList().Skip(i).FirstOrDefault();
 
-            //    if (balanceSum != 0)
-            //        cS.Add(balanceSum);
+                if (countSum != 0)
+                    cS.Add(countSum);
 
-            //    axcolumn.Labels.Add(MainWindow.resourcemanager.GetString("trOthers"));
-            //}
+                axcolumn.Labels.Add(MainWindow.resourcemanager.GetString("trOthers"));
+            }
 
-            //columnChartData.Add(
-            //new StackedColumnSeries
-            //{
-            //    Values = cS.AsChartValues(),
-            //    Title = titles[0],
-            //    DataLabels = true,
-            //});
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = cS.AsChartValues(),
+                Title = titles[0],
+                DataLabels = true,
+            });
 
-            //DataContext = this;
-            //cartesianChart.Series = columnChartData;
+            DataContext = this;
+            cartesianChart.Series = columnChartData;
         }
 
         private void fillPieChart()
         {
-            List<string> titles = new List<string>();
-            IEnumerable<int> x = null;
-            IEnumerable<decimal> balances = null;
+            #region
+            //List<string> titles = new List<string>();
+            //List<int> x = new List<int>();
+            //titles.Clear();
 
-            titles.Clear();
-
-            //var titleTemp = balancesQuery.GroupBy(m => m.branchName);
+            //var titleTemp = bookStsQuery.GroupBy(m => m.agentName +" "+m.agentLastName);
             //titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //var result = balancesQuery.GroupBy(s => s.branchId)
-            //            .Select(
-            //                g => new
-            //                {
-            //                    branchId = g.Key,
-            //                    balance = g.Sum(s => s.balance),
-            //                    count = g.Count()
-            //                });
-            //balances = result.Select(m => decimal.Parse(SectionData.DecTostring(m.balance.Value)));
+            //var result = bookStsQuery.GroupBy(s => new { s.agentId , s.packageId}).Select(s => new { agentId = s.Key ,  packageId = s.Key.packageId , count = s.Count()});
+            //var result1 = result.GroupBy(s => s.agentId).Select(s => new {count = s.Sum(p => p.count) });
+            ////x.AddRange(result1.ToList());
 
             //SeriesCollection piechartData = new SeriesCollection();
-            //for (int i = 0; i < balances.Count(); i++)
+            //for (int i = 0; i < titles.Count(); i++)
             //{
-            //    List<decimal> final = new List<decimal>();
-            //    List<string> lable = new List<string>();
-            //    final.Add(balances.ToList().Skip(i).FirstOrDefault());
+            //    List<int> final = new List<int>();
+            //    final.Add(x.ToList().Skip(i).FirstOrDefault());
             //    piechartData.Add(
             //      new PieSeries
             //      {
@@ -485,6 +476,66 @@ namespace AdministratorApp.View.reports
             //  );
             //}
             //chart1.Series = piechartData;
+            #endregion
+
+            List<string> titles = new List<string>();
+            List<int> x = null;
+
+            titles.Clear();
+            var temp = bookStsQuery;
+            int count = 0;
+
+            var titleTemp = temp.GroupBy(m => m.agentName+" "+m.agentLastName);
+            titles.AddRange(titleTemp.Select(jj => jj.Key));
+
+            var result = temp.GroupBy(s => new { s.agentId, s.packageId }).Select(s => new
+            {
+                agentId = s.Key.agentId,
+                packageId = s.Key.packageId,
+                //profit = s.Sum(p => p.invoiceProfit)
+                count = s.Count()
+            }) ;
+            //x = result.Select(m => decimal.Parse(SectionData.DecTostring(m.profit)));
+            //for (int i = 0; i < titles.Count() ; i++)
+            //{
+            //    x.Add(result.Count());
+            //}
+            count = x.Count();
+
+            SeriesCollection piechartData = new SeriesCollection();
+
+            int xCount = 6;
+            if (count < 6) xCount = count;
+
+
+            for (int i = 0; i < xCount; i++)
+            {
+                List<decimal> final = new List<decimal>();
+                final.Add(x.ToList().Skip(i).FirstOrDefault());
+                piechartData.Add(
+                 new PieSeries
+                 {
+                     Values = final.AsChartValues(),
+                     Title = titles.Skip(i).FirstOrDefault(),
+                     DataLabels = true,
+                 }
+             );
+            }
+            if (count > 6)
+            {
+                List<decimal> final = new List<decimal>();
+                final.Add(x.ToList().Skip(6).FirstOrDefault());
+                piechartData.Add(
+                new PieSeries
+                {
+                    Values = final.AsChartValues(),
+                    Title = MainWindow.resourcemanager.GetString("trOthers"),
+                    DataLabels = true,
+                }
+            );
+            }
+
+            chart1.Series = piechartData;
         }
         private void fillRowChart()
         {
@@ -493,48 +544,135 @@ namespace AdministratorApp.View.reports
             List<int> ids = new List<int>();
             List<int> otherIds = new List<int>();
 
-            //List<ItemUnitInvoiceProfit> resultList = new List<ItemUnitInvoiceProfit>();
-            //SeriesCollection rowChartData = new SeriesCollection();
+            List<BookSts> resultList = new List<BookSts>();
+            SeriesCollection rowChartData = new SeriesCollection();
 
-            //if (selectedTab == 0)
-            //{
-            //    var tempName = profitsQuery.GroupBy(s => new { s.branchCreatorId }).Select(s => new
-            //    {
-            //        id = s.Key,
-            //        name = s.FirstOrDefault().branchCreatorName
-            //    });
-            //    names.AddRange(tempName.Select(nn => nn.name.ToString()));
-            //    ids.AddRange(tempName.Select(mm => mm.id.branchCreatorId.Value));
-            //}
-            //else if (selectedTab == 1)
-            //{
-            //    var tempName = profitsQuery.GroupBy(s => new { s.ITitemId }).Select(s => new
-            //    {
-            //        id = s.Key,
-            //        name = s.FirstOrDefault().ITitemName
-            //    });
-            //    names.AddRange(tempName.Select(nn => nn.name.ToString()));
-            //    ids.AddRange(tempName.Select(mm => mm.id.ITitemId.Value));
-            //}
+           
+                var tempName = bookStsQuery.GroupBy(s => new { s.customerId }).Select(s => new
+                {
+                    id = s.Key,
+                    name = s.FirstOrDefault().customerName+" "+s.FirstOrDefault().customerLastName
+                });
+                names.AddRange(tempName.Select(nn => nn.name.ToString()));
+                ids.AddRange(tempName.Select(mm => mm.id.customerId.Value));
 
-            ////LineSeries[] ls = new LineSeries[names.Count];
-            //int x = 6;
-            //if (names.Count() < 6) x = names.Count();
-            //for (int i = 0; i < x; i++)
-            //{
+            //LineSeries[] ls = new LineSeries[names.Count];
+            int x = 6;
+            if (names.Count() < 6) x = names.Count();
+            for (int i = 0; i < x; i++)
+            {
 
-            //    drawPoints(names[i], ids[i], rowChartData, 'n', otherIds);
-            //}
-            ////others
-            //if (names.Count() > 6)
-            //{
-            //    for (int i = names.Count - x; i < names.Count; i++)
-            //        otherIds.Add(ids[i]);
-            //    drawPoints(MainWindow.resourcemanager.GetString("trOthers"), 0, rowChartData, 'o', otherIds);
-            //}
-            ////rowChartData.AddRange(ls);
-            //DataContext = this;
-            //rowChart.Series = rowChartData;
+                drawPoints(names[i], ids[i], rowChartData, 'n', otherIds);
+            }
+            //others
+            if (names.Count() > 6)
+            {
+                for (int i = names.Count - x; i < names.Count; i++)
+                    otherIds.Add(ids[i]);
+                drawPoints(MainWindow.resourcemanager.GetString("trOthers"), 0, rowChartData, 'o', otherIds);
+            }
+            //rowChartData.AddRange(ls);
+            DataContext = this;
+            rowChart.Series = rowChartData;
+
+        }
+
+        private void drawPoints(string name, int id, SeriesCollection rowChartData, char ch, List<int> otherIds)
+        {
+            int endYear = DateTime.Now.Year;
+            int startYear = endYear - 1;
+            int startMonth = DateTime.Now.Month;
+            int endMonth = startMonth;
+            if (dp_startDate.SelectedDate != null && dp_endDate.SelectedDate != null)
+            {
+                startYear = dp_startDate.SelectedDate.Value.Year;
+                endYear = dp_endDate.SelectedDate.Value.Year;
+                startMonth = dp_startDate.SelectedDate.Value.Month;
+                endMonth = dp_endDate.SelectedDate.Value.Month;
+            }
+            SeriesCollection columnChartData = new SeriesCollection();
+            List<int> countLst = new List<int>();
+
+            if (endYear - startYear <= 1)
+            {
+                for (int year = startYear; year <= endYear; year++)
+                {
+                    for (int month = startMonth; month <= 12; month++)
+                    {
+                        var firstOfThisMonth = new DateTime(year, month, 1);
+                        var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
+
+                        if (ch == 'n')
+                        {
+                            var drawProfit = bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisMonth && c.bookDate <= firstOfNextMonth && c.customerId.Value == id)
+                                                            .Select(b => b.customerName+" "+b.customerLastName).Count();
+
+                            countLst.Add(drawProfit);
+                        }
+                        else if (ch == 'o')
+                        {
+                            int sum = 0;
+                            for (int i = 0; i < otherIds.Count; i++)
+                            {
+                                var drawCount = bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisMonth && c.bookDate <= firstOfNextMonth && c.customerId.Value == otherIds[i])
+                                                            .Select(b => b.customerName + " " + b.customerLastName).Count();
+                                sum = sum + drawCount;
+                            }
+                            countLst.Add(sum);
+                        }
+                       
+                        MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
+
+                        if (year == endYear && month == endMonth)
+                        {
+                            break;
+                        }
+                        if (month == 12)
+                        {
+                            startMonth = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int year = startYear; year <= endYear; year++)
+                {
+                    var firstOfThisYear = new DateTime(year, 1, 1);
+                    var firstOfNextMYear = firstOfThisYear.AddYears(1);
+                 
+                    if (ch == 'n')
+                    {
+                        var drawCount= bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisYear && c.bookDate <= firstOfNextMYear && c.customerId.Value == id)
+                                                        .Select(b => b.customerName + " " + b.customerLastName).Count();
+
+                        countLst.Add(drawCount);
+                    }
+                    else if (ch == 'o')
+                    {
+                        int sum = 0;
+                        for (int i = 0; i < otherIds.Count; i++)
+                        {
+                            var drawCount = bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisYear && c.bookDate <= firstOfNextMYear && c.customerId.Value == id)
+                                                        .Select(b => b.customerName + " " + b.customerLastName).Count();
+
+                            sum = sum + drawCount;
+                        }
+                        countLst.Add(sum);
+                    }
+                  
+                    MyAxis.Labels.Add(year.ToString());
+                }
+            }
+
+            rowChartData.Add(
+                        new LineSeries
+                        {
+                            Values = countLst.AsChartValues(),
+                            Title = name
+                        });
+
         }
         #endregion
 

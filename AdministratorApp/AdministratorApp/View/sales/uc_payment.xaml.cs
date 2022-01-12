@@ -650,7 +650,12 @@ namespace AdministratorApp.View.sales
                     uc_sale.Instance.btn_serials.IsEnabled = true;
                     uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
                     uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
+                    HelpClass.clearValidate(uc_sale.requiredControlList, this);
+
                 }
+
+                Clear();
+                ClearPackageUser();
 
                 HelpClass.EndAwait(grid_main);
             }
