@@ -3380,38 +3380,56 @@ namespace Programs_Server.Controllers
                                     package.pId = lastpayrow.packageId;
                                     package.pcdId = lastpayrow.countryPackageId;
                                     package.bookDate = packuserrow.bookDate;
+                                    package.isBooked = packuserrow.isBooked;
+
+                                    package.isPayed = packuserrow.isPayed;
 
                                     package.activeres = "noch";
-                                    package.activeState = activeState;
+                                  
                                     package.type = lastpayrow.type;
 
+                                   
+                              
+                                   
+                                    package.notes = packuserrow.notes;
+                                    package.pocrDate = lastpayrow.createDate;
+                                    package.poId = lastpayrow.payOpId;
+                                    package.upnum = "";
+
+                                    package.packuserType = packuserrow.type;
+                                    package.packageUserId = packuserrow.packageUserId;
+                              
+                                   
+                              
+                                    package.upnum = "";
+
+
+
+
+                                    //    return TokenManager.GenerateToken(senditem);
+
+                                    package.isServerActivated = true;
+                                //    packuserrow.customerServerCode = customerServerCode;
+                               
+                                    //'
+                                    //if (packuserrow.isServerActivated == false)
+                                    //{
+                                    //    package.activatedate = DateTime.Now;// save on client if null 
+                                    
+                                    //}
+                                    //else
+                                    //{
+                                    //    package.activatedate = packuserrow.activatedate;
+                                    //}
 
                                     senditem.packageSend = package;
                                     senditem.PosSerialSendList = serialList;
 
-                                    //    return TokenManager.GenerateToken(senditem);
-
-                                    packuserrow.isServerActivated = true;
-                                    packuserrow.customerServerCode = customerServerCode;
-                               
-                                    //'
-                                    if (packuserrow.isServerActivated == false)
-                                    {
-                                        package.activatedate = DateTime.Now;// save on client if null 
-                                    
-                                    }
-                                    else
-                                    {
-                                        package.activatedate = packuserrow.activatedate;
-                                    }
-
-
-
-                                    packuserrow.totalsalesInvCount = 0;
-                                    packuserrow.canRenew = false;
+                                   // packuserrow.totalsalesInvCount = 0;
+                                   // packuserrow.canRenew = false;
 
                                     //  save server hardware key
-                                    int res = Save(packuserrow);
+                                  //  int res = Save(packuserrow);// dont change until upload return file from customer server 
 
 
                                     return TokenManager.GenerateToken(senditem);
@@ -3496,7 +3514,7 @@ namespace Programs_Server.Controllers
 
                     package.packuserType = packuserrow.type;
                     package.packageUserId = packuserrow.packageUserId;
-                    package.packageName = packuserrow.notes;
+                 //   package.packageName = pack.packageName;
                     package.pocrDate = lastpayrow.createDate;
                     package.poId = lastpayrow.payOpId;
                     package.upnum = "";
