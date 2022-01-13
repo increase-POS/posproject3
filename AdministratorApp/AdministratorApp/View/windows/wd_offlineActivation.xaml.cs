@@ -198,7 +198,7 @@ namespace AdministratorApp.View.windows
                 SendDetail sd = new SendDetail();
                 sd = await pumodel.ActivateServerOffline(packageUser.packageUserId, activeState);
                 packagesSend packtemp = new packagesSend();
-                //if (sd.packageSend.result > 0)
+                if (sd.packageSend.result > 0)
                 {
                     //encode
                     string myContent = JsonConvert.SerializeObject(sd);
@@ -225,11 +225,11 @@ namespace AdministratorApp.View.windows
                         }
                     }
                 }
-                //else
-                //{
-                //    //error
-                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                //}
+                else
+                {
+                    //error
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                }
 
 
                 HelpClass.EndAwait(grid_main);
