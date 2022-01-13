@@ -1034,7 +1034,7 @@ namespace Programs_Server.Controllers
                                         totalsalesInvCount = S.totalsalesInvCount,
                                         activatedate = S.activatedate,
                                         isServerActivated = S.isServerActivated,
-                                       oldCountryPackageId= S.oldCountryPackageId,
+                                        oldCountryPackageId = S.oldCountryPackageId,
                                         //islimitDate = D.islimitDate,
 
 
@@ -2854,7 +2854,7 @@ namespace Programs_Server.Controllers
                             {
 
                                 //// check if same method metho is 
-                                if (packuserrow.isOnlineServer == packState.isOnlineServer || (packState.isServerActivated == false && packState.activatedate == null))
+                                if (packuserrow.isOnlineServer == packState.isOnlineServer || (packState.isServerActivated == false))
                                 {
                                     //    // same method or first time
 
@@ -2865,16 +2865,16 @@ namespace Programs_Server.Controllers
                                         //if (packuserfile.activeState == activeState || (packState.isServerActivated == false && packState.activatedate == null))
                                         //{
 
-                                            //            // check if the command is same as the activate file or first time 
+                                        //            // check if the command is same as the activate file or first time 
 
-                                            //            //ssss
+                                        //            //ssss
 
-                                            // 
-                                            // check if there are changes
-                                            package.activeres = "noch";
+                                        // 
+                                        // check if there are changes
+                                        package.activeres = "noch";
                                         if (packState.activeState == "up")
                                         {
-                                            if (packState.pId != lastpayrow.packageId || (packState.pId == lastpayrow.packageId && packState.pcdId != lastpayrow.countryPackageId))
+                                            if (packState.pId != lastpayrow.packageId || (packState.pId == lastpayrow.packageId && packState.pcdId != lastpayrow.countryPackageId|| packState.isServerActivated == false))
                                             {
                                                 // changed
                                                 package.activeres = "ch";
@@ -2904,6 +2904,11 @@ namespace Programs_Server.Controllers
 
 
                                         }
+                                        //if (packState.isServerActivated == false)
+                                        //{
+                                        //    package.activeres = "ch";
+                                        //    activeres = "ch";
+                                        //}
                                         // end check
 
 
@@ -2927,10 +2932,10 @@ namespace Programs_Server.Controllers
                                         else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode && packState.isServerActivated == true))) //&&  row.expireDate==null 
 
 
-                                                {
+                                        {
 
-                                                    //get poserials 
-                                                    programsController progcntrlr = new programsController();
+                                            //get poserials 
+                                            programsController progcntrlr = new programsController();
                                             versionsController vercntrlr = new versionsController();
                                             programs prog = new programs();
                                             versions ver = new versions();
@@ -2974,13 +2979,23 @@ namespace Programs_Server.Controllers
                                                 package.isOnlineServer = packuserrow.isOnlineServer;
                                                 package.packageNumber = packuserrow.packageNumber;
                                                 package.totalsalesInvCount = packuserrow.totalsalesInvCount;
-                                                package.packageName = pack.packageName;
+                                             
                                                 //packuserrow.countryPackageId
                                                 package.islimitDate = cpD.islimitDate;
                                                 package.isActive = (int)packuserrow.isActive;
-                                                package.activatedate = DateTime.Now;// save on client if null 
+
+                                                if (packState.isServerActivated == false)
+                                                {
+                                                    package.activatedate = DateTime.Now;// save on client if null 
+                                                    package.customerServerCode = packState.customerServerCode;
+                                                }
+                                                else
+                                                {
+                                                    package.activatedate = packuserrow.activatedate;
+                                                }
+
                                                 package.result = 1;                                  //   SendDetail senditem = new SendDetail();
-                                                package.isServerActivated = packuserrow.isServerActivated;
+                                                package.isServerActivated = true;
                                                 package.customerName = customerModel.custname;
                                                 package.customerLastName = customerModel.lastName;
                                                 package.agentAccountName = agentmodel.AccountName;
@@ -2992,11 +3007,15 @@ namespace Programs_Server.Controllers
                                                 package.type = lastpayrow.type;
 
                                                 package.packuserType = packuserrow.type;
-                                                package.packageUserId = packuserrow.packageUserId; 
-                                                package.packageName = packuserrow.notes;
+                                                package.packageUserId = packuserrow.packageUserId;
+                                                package.packageName = pack.packageName;
+                                                package.notes = packuserrow.notes;
                                                 package.pocrDate = lastpayrow.createDate;
                                                 package.poId = lastpayrow.payOpId;
                                                 package.upnum = "";
+
+                                                package.activeState = packState.activeState;
+                                               
 
 
                                                 senditem.packageSend = package;
@@ -3006,10 +3025,9 @@ namespace Programs_Server.Controllers
 
                                                 packuserrow.isServerActivated = true;
                                                 packuserrow.customerServerCode = customerServerCode;
-                                                if (packuserrow.activatedate == null)
-                                                {
+                                              
                                                     packuserrow.activatedate = package.activatedate;
-                                                }
+                                               
 
                                                 packuserrow.totalsalesInvCount = 0;
                                                 packuserrow.canRenew = false;
@@ -3194,7 +3212,7 @@ namespace Programs_Server.Controllers
                     senditem.packageSend = ps;
 
                     return TokenManager.GenerateToken(senditem);
-                   
+
                 }
                 //   return TokenManager.GenerateToken("00");
             }
@@ -3367,10 +3385,19 @@ namespace Programs_Server.Controllers
 
                                     packuserrow.isServerActivated = true;
                                     packuserrow.customerServerCode = customerServerCode;
-                                    if (packuserrow.activatedate == null)
+                               
+                                    //'
+                                    if (packuserrow.isServerActivated == false)
                                     {
-                                        packuserrow.activatedate = package.activatedate;
+                                        package.activatedate = DateTime.Now;// save on client if null 
+                                    
                                     }
+                                    else
+                                    {
+                                        package.activatedate = packuserrow.activatedate;
+                                    }
+
+
 
                                     packuserrow.totalsalesInvCount = 0;
                                     packuserrow.canRenew = false;
@@ -3379,7 +3406,7 @@ namespace Programs_Server.Controllers
                                     int res = Save(packuserrow);
 
 
-                                    //   return TokenManager.GenerateToken(senditem);
+                                    return TokenManager.GenerateToken(senditem);
 
                                     //}
                                     //else
@@ -3476,7 +3503,7 @@ namespace Programs_Server.Controllers
                 catch (Exception ex)
                 {
                     //error
-                   
+
                     SendDetail senditem = new SendDetail();
 
                     packagesSend ps = new packagesSend();
@@ -3484,7 +3511,7 @@ namespace Programs_Server.Controllers
                     senditem.packageSend = ps;
 
                     return TokenManager.GenerateToken(senditem);
-                    
+
                 }
                 //   return TokenManager.GenerateToken("00");
             }
