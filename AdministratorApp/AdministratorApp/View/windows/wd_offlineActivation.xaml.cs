@@ -1,4 +1,8 @@
-﻿using AdministratorApp.Classes;
+﻿using AdministratorApp.ApiClasses;
+using AdministratorApp.Classes;
+using Microsoft.Win32;
+using netoaster;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +32,8 @@ namespace AdministratorApp.View.windows
         }
 
         public static List<string> requiredControlList;
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        public PackageUser packageUser = new PackageUser();
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {//mouse down
             try
@@ -76,6 +82,8 @@ namespace AdministratorApp.View.windows
                 }
                 translat();
                 #endregion
+
+                PackageUser pu = packageUser;
 
                 FillCombo.fillOfflineActivation(cb_type);
 
@@ -177,11 +185,51 @@ namespace AdministratorApp.View.windows
             this.Close();
         }
 
-        private void Btn_download_Click(object sender, RoutedEventArgs e)
+        private async void Btn_download_Click(object sender, RoutedEventArgs e)
         {//download
             try
             {
                 HelpClass.StartAwait(grid_main);
+
+                string activeState = "rn";//rn OR up  from buton
+
+                PackageUser pumodel = new PackageUser();
+                ReportCls rc = new ReportCls();
+                SendDetail sd = new SendDetail();
+                sd = await pumodel.ActivateServerOffline(packageUser.packageUserId, activeState);
+                packagesSend packtemp = new packagesSend();
+                //if (sd.packageSend.result > 0)
+                {
+                    //encode
+                    string myContent = JsonConvert.SerializeObject(sd);
+
+                    saveFileDialog.Filter = "File|*.ac;";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string DestPath = saveFileDialog.FileName;
+
+
+                        bool res = false;
+
+                        res = rc.encodestring(myContent, DestPath);
+                        // rc.DelFile(pdfpath);
+                        //  rc.decodefile(DestPath,@"D:\stringlist.txt");
+                        if (res)
+                        {
+                            //done
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                }
+                //else
+                //{
+                //    //error
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                //}
 
 
                 HelpClass.EndAwait(grid_main);
@@ -191,14 +239,56 @@ namespace AdministratorApp.View.windows
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            
+
         }
 
-        private void Btn_upload_Click(object sender, RoutedEventArgs e)
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        string activeState = "";
+        private async void Btn_upload_Click(object sender, RoutedEventArgs e)
         {//upload
             try
             {
                 HelpClass.StartAwait(grid_main);
 
+                PackageUser pumodel = new PackageUser();
+                activeState = "up";
+                string filepath = "";
+                openFileDialog.Filter = "INC|*.ac; ";
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    filepath = openFileDialog.FileName;
+
+                    // bool resr = ReportCls.decodefile(filepath, @"D:\stringlist.txt");//comment
+                    SendDetail dc = new SendDetail();
+                    string objectstr = "";
+
+                    objectstr = ReportCls.decodetoString(filepath);
+
+                    dc = JsonConvert.DeserializeObject<SendDetail>(objectstr, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                    int res = await pumodel.OfflineUpload(dc, activeState);
+                    if (res > 0)
+                    {
+                        if (res == 1)
+                        {
+                            // update done
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreDoneSuccessfuly"), animation: ToasterAnimation.FadeIn);
+
+                        }
+                        else if (res == 2)
+                        {
+                            //no update
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    else
+                    {
+                        // error
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
+
+                    }
+                }
 
                 HelpClass.EndAwait(grid_main);
             }

@@ -737,7 +737,7 @@ namespace AdministratorApp.View.sales
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_offlineActivation w = new wd_offlineActivation();
-                //w.packageUserID = packuser.packageUserId;
+                w.packageUser = packuser;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
 
