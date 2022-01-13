@@ -174,7 +174,7 @@ namespace AdministratorApp.View.reports
             dg_book.ItemsSource = bookStsQuery;
             txt_count.Text = bookStsQuery.Count().ToString();
             fillColumnChart();
-            //fillPieChart();
+            fillPieChart();
             fillRowChart();
         }
         async Task<IEnumerable<BookSts>> RefreshBookSTSList()
@@ -450,36 +450,8 @@ namespace AdministratorApp.View.reports
 
         private void fillPieChart()
         {
-            #region
-            //List<string> titles = new List<string>();
-            //List<int> x = new List<int>();
-            //titles.Clear();
-
-            //var titleTemp = bookStsQuery.GroupBy(m => m.agentName +" "+m.agentLastName);
-            //titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //var result = bookStsQuery.GroupBy(s => new { s.agentId , s.packageId}).Select(s => new { agentId = s.Key ,  packageId = s.Key.packageId , count = s.Count()});
-            //var result1 = result.GroupBy(s => s.agentId).Select(s => new {count = s.Sum(p => p.count) });
-            ////x.AddRange(result1.ToList());
-
-            //SeriesCollection piechartData = new SeriesCollection();
-            //for (int i = 0; i < titles.Count(); i++)
-            //{
-            //    List<int> final = new List<int>();
-            //    final.Add(x.ToList().Skip(i).FirstOrDefault());
-            //    piechartData.Add(
-            //      new PieSeries
-            //      {
-            //          Values = final.AsChartValues(),
-            //          Title = titles.Skip(i).FirstOrDefault(),
-            //          DataLabels = true,
-            //      }
-            //  );
-            //}
-            //chart1.Series = piechartData;
-            #endregion
-
             List<string> titles = new List<string>();
-            List<int> x = null;
+            IEnumerable<int> x = null;
 
             titles.Clear();
             var temp = bookStsQuery;
@@ -488,20 +460,18 @@ namespace AdministratorApp.View.reports
             var titleTemp = temp.GroupBy(m => m.agentName+" "+m.agentLastName);
             titles.AddRange(titleTemp.Select(jj => jj.Key));
 
-            var result = temp.GroupBy(s => new { s.agentId, s.packageId }).Select(s => new
+            var result = temp.GroupBy(s => new { s.agentId , s.packageId}).Select(s => new
             {
                 agentId = s.Key.agentId,
-                packageId = s.Key.packageId,
-                //profit = s.Sum(p => p.invoiceProfit)
                 count = s.Count()
-            }) ;
-            //x = result.Select(m => decimal.Parse(SectionData.DecTostring(m.profit)));
-            //for (int i = 0; i < titles.Count() ; i++)
-            //{
-            //    x.Add(result.Count());
-            //}
-            count = x.Count();
+            });
+            
+            var result1 = result.GroupBy(s => s.agentId).Select(m => new {count = m.Count() });
 
+            x = result1.Select(m => m.count);
+
+            count = titles.Count();
+            
             SeriesCollection piechartData = new SeriesCollection();
 
             int xCount = 6;
