@@ -326,6 +326,9 @@
     <Compile Include="puStatus.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="users.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>

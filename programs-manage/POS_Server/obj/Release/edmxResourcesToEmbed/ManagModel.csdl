@@ -1098,6 +1098,7 @@
       <End Role="posSerials" EntitySet="posSerials" />
       <End Role="posInfo" EntitySet="posInfo" />
     </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="incprogramsdbModel.sysdiagrams" />
   </EntityContainer>
   <EntityType Name="agentCustomer">
     <Key>
@@ -1335,4 +1336,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

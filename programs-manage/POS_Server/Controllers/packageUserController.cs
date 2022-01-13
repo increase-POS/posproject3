@@ -2874,7 +2874,7 @@ namespace Programs_Server.Controllers
                                         package.activeres = "noch";
                                         if (packState.activeState == "up")
                                         {
-                                            if (packState.pId != lastpayrow.packageId || (packState.pId == lastpayrow.packageId && packState.pcdId != lastpayrow.countryPackageId|| packState.isServerActivated == false))
+                                            if (packState.pId != lastpayrow.packageId || (packState.pId == lastpayrow.packageId && packState.pcdId != lastpayrow.countryPackageId || packState.isServerActivated == false))
                                             {
                                                 // changed
                                                 package.activeres = "ch";
@@ -2979,7 +2979,7 @@ namespace Programs_Server.Controllers
                                                 package.isOnlineServer = packuserrow.isOnlineServer;
                                                 package.packageNumber = packuserrow.packageNumber;
                                                 package.totalsalesInvCount = packuserrow.totalsalesInvCount;
-                                             
+
                                                 //packuserrow.countryPackageId
                                                 package.islimitDate = cpD.islimitDate;
                                                 package.isActive = (int)packuserrow.isActive;
@@ -3015,7 +3015,7 @@ namespace Programs_Server.Controllers
                                                 package.upnum = "";
 
                                                 package.activeState = packState.activeState;
-                                               
+
 
 
                                                 senditem.packageSend = package;
@@ -3025,9 +3025,9 @@ namespace Programs_Server.Controllers
 
                                                 packuserrow.isServerActivated = true;
                                                 packuserrow.customerServerCode = customerServerCode;
-                                              
-                                                    packuserrow.activatedate = package.activatedate;
-                                               
+
+                                                packuserrow.activatedate = package.activatedate;
+
 
                                                 packuserrow.totalsalesInvCount = 0;
                                                 packuserrow.canRenew = false;
@@ -3132,8 +3132,13 @@ namespace Programs_Server.Controllers
                                 else
                                 {
                                     // method not match // online or offline
-                                    package.result = -7;
+                                    senditem = new SendDetail();
+                                    //  senditem =null;
+                                    serialList = new List<PosSerialSend>();
+                                    package.result = -10;
+                                    // package.notes = "noooooooooooood";
                                     senditem.packageSend = package;
+                                    senditem.PosSerialSendList = serialList;
                                     return TokenManager.GenerateToken(senditem);
 
                                 }
@@ -3213,11 +3218,14 @@ namespace Programs_Server.Controllers
 
                     return TokenManager.GenerateToken(senditem);
 
+
+                    //   return TokenManager.GenerateToken("00");
+
+
+                    //
                 }
-                //   return TokenManager.GenerateToken("00");
+
             }
-
-
 
         }
 
