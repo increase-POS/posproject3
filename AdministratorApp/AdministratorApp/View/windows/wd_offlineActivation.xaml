@@ -119,8 +119,8 @@
 
                 <Grid x:Name="grid_btns" Grid.Row="5" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition x:Name="col_download" Width="*"/>
+                        <ColumnDefinition x:Name="col_upload" Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button  Grid.Column="0"   Content="download" materialDesign:ButtonAssist.CornerRadius="7"
                           Margin="10,2.5" x:Name="btn_download" 

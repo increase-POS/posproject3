@@ -296,8 +296,8 @@ namespace AdministratorApp.Classes
         static public void fillOfflineActivation(ComboBox combo)
         {
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trExtend")    , Value = "0" },
-                new { Text = MainWindow.resourcemanager.GetString("trUpgrade")   , Value = "1" }
+                new { Text = MainWindow.resourcemanager.GetString("trExtend")    , Value = "rn" },
+                new { Text = MainWindow.resourcemanager.GetString("trUpgrade")   , Value = "up" }
                  };
             combo.DisplayMemberPath = "Text";
             combo.SelectedValuePath = "Value";

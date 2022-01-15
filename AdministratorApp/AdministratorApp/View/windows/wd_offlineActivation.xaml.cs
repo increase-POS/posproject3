@@ -137,27 +137,30 @@ namespace AdministratorApp.View.windows
         {
             try
             {
-                if (cb_type.SelectedValue.ToString() == "0")
+                if (cb_type.SelectedValue.ToString() == "rn")
                 {
-                    try
-                    {
-                        grid_btns.ColumnDefinitions.RemoveAt(1);
-                    }
-                    catch
-                    { }
-                        btn_upload.Visibility = Visibility.Collapsed;
+                    //try
+                    //{
+                    //grid_btns.ColumnDefinitions.RemoveAt(1);
+                    //}
+                    //catch
+                    //{ }
+                    //btn_upload.Visibility = Visibility.Collapsed;
+                    col_upload.Width = new GridLength(0);
+
                 }
                 else
                 {
-                    try
-                    {
-                        ColumnDefinition cd = new ColumnDefinition();
-                        cd.Width = new GridLength(1, GridUnitType.Star);
-                        grid_btns.ColumnDefinitions.Add(cd);
-                    }
-                    catch
-                    { }
-                    btn_upload.Visibility = Visibility.Visible;
+                    //try
+                    //{
+                    //    ColumnDefinition cd = new ColumnDefinition();
+                    //    cd.Width = new GridLength(1, GridUnitType.Star);
+                    //    grid_btns.ColumnDefinitions.Add(cd);
+                    //}
+                    //catch
+                    //{ }
+                    //btn_upload.Visibility = Visibility.Visible;
+                    col_upload.Width = col_download.Width; ;
                 }
             }
             catch (Exception ex)
@@ -191,48 +194,51 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                string activeState = "rn";//rn OR up  from buton
-
-                PackageUser pumodel = new PackageUser();
-                ReportCls rc = new ReportCls();
-                SendDetail sd = new SendDetail();
-                sd = await pumodel.ActivateServerOffline(packageUser.packageUserId, activeState);
-                packagesSend packtemp = new packagesSend();
-                if (sd.packageSend.result > 0)
+                HelpClass.validateWindow(requiredControlList, this);
+                if (cb_type.SelectedIndex != -1)
                 {
-                    //encode
-                    string myContent = JsonConvert.SerializeObject(sd);
+                    //string activeState = "rn";//rn OR up  from buton
+                    string activeState = cb_type.SelectedValue.ToString();
 
-                    saveFileDialog.Filter = "File|*.ac;";
-                    if (saveFileDialog.ShowDialog() == true)
+                    PackageUser pumodel = new PackageUser();
+                    ReportCls rc = new ReportCls();
+                    SendDetail sd = new SendDetail();
+                    sd = await pumodel.ActivateServerOffline(packageUser.packageUserId, activeState);
+                    packagesSend packtemp = new packagesSend();
+                    if (sd.packageSend.result > 0)
                     {
-                        string DestPath = saveFileDialog.FileName;
+                        //encode
+                        string myContent = JsonConvert.SerializeObject(sd);
 
-
-                        bool res = false;
-
-                        res = rc.encodestring(myContent, DestPath);
-                        // rc.DelFile(pdfpath);
-                        //  rc.decodefile(DestPath,@"D:\stringlist.txt");
-                        if (res)
+                        saveFileDialog.Filter = "File|*.ac;";
+                        if (saveFileDialog.ShowDialog() == true)
                         {
-                            //done
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                        }
-                        else
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            string DestPath = saveFileDialog.FileName;
+
+                            bool res = false;
+
+                            res = rc.encodestring(myContent, DestPath);
+                            // rc.DelFile(pdfpath);
+                            //  rc.decodefile(DestPath,@"D:\stringlist.txt");
+                            if (res)
+                            {
+                                //done
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                            }
+                            else
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    //error
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                }
+                    else
+                    {
+                        //error
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
 
-
-                HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {
@@ -251,45 +257,49 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.StartAwait(grid_main);
 
-                PackageUser pumodel = new PackageUser();
-                activeState = "up";
-                string filepath = "";
-                openFileDialog.Filter = "INC|*.ac; ";
-
-                if (openFileDialog.ShowDialog() == true)
+                HelpClass.validateWindow(requiredControlList, this);
+                if (cb_type.SelectedIndex != -1)
                 {
-                    filepath = openFileDialog.FileName;
+                    PackageUser pumodel = new PackageUser();
+                    //activeState = "up";
+                    activeState = cb_type.SelectedValue.ToString();
+                    string filepath = "";
+                    openFileDialog.Filter = "INC|*.ac; ";
 
-                    // bool resr = ReportCls.decodefile(filepath, @"D:\stringlist.txt");//comment
-                    SendDetail dc = new SendDetail();
-                    string objectstr = "";
-
-                    objectstr = ReportCls.decodetoString(filepath);
-
-                    dc = JsonConvert.DeserializeObject<SendDetail>(objectstr, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-                    int res = await pumodel.OfflineUpload(dc, activeState);
-                    if (res > 0)
+                    if (openFileDialog.ShowDialog() == true)
                     {
-                        if (res == 1)
-                        {
-                            // update done
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreDoneSuccessfuly"), animation: ToasterAnimation.FadeIn);
+                        filepath = openFileDialog.FileName;
 
-                        }
-                        else if (res == 2)
+                        // bool resr = ReportCls.decodefile(filepath, @"D:\stringlist.txt");//comment
+                        SendDetail dc = new SendDetail();
+                        string objectstr = "";
+
+                        objectstr = ReportCls.decodetoString(filepath);
+
+                        dc = JsonConvert.DeserializeObject<SendDetail>(objectstr, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+                        int res = await pumodel.OfflineUpload(dc, activeState);
+                        if (res > 0)
                         {
-                            //no update
+                            if (res == 1)
+                            {
+                                // update done
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreDoneSuccessfuly"), animation: ToasterAnimation.FadeIn);
+
+                            }
+                            else if (res == 2)
+                            {
+                                //no update
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
+                            }
+                        }
+                        else
+                        {
+                            // error
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
-                    else
-                    {
-                        // error
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
 
+                        }
                     }
                 }
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
