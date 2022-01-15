@@ -452,7 +452,7 @@ namespace AdministratorApp.ApiClasses
         }
 
 
-        public async Task<int> OfflineUpload(SendDetail SendDetaildata, string activeState)
+        public async Task<int> updatecustomerdata(SendDetail SendDetaildata, string activeState)
         {
             int item = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -461,7 +461,7 @@ namespace AdministratorApp.ApiClasses
             parameters.Add("object", myContent3);
             parameters.Add("activeState", activeState);
             //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Activate/OfflineUpload", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "updatecustomerdata", parameters);
 
             foreach (Claim c in claims)
             {

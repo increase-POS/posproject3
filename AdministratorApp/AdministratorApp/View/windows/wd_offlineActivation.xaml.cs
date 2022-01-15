@@ -263,34 +263,57 @@ namespace AdministratorApp.View.windows
                     PackageUser pumodel = new PackageUser();
                     //activeState = "up";
                     activeState = cb_type.SelectedValue.ToString();
-                    string filepath = "";
-                    openFileDialog.Filter = "INC|*.ac; ";
 
-                    if (openFileDialog.ShowDialog() == true)
+                    if (activeState == "up")
                     {
-                        filepath = openFileDialog.FileName;
+                        string filepath = "";
+                        openFileDialog.Filter = "INC|*.ac; ";
 
-                        // bool resr = ReportCls.decodefile(filepath, @"D:\stringlist.txt");//comment
-                        SendDetail dc = new SendDetail();
-                        string objectstr = "";
-
-                        objectstr = ReportCls.decodetoString(filepath);
-
-                        dc = JsonConvert.DeserializeObject<SendDetail>(objectstr, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-                        int res = await pumodel.OfflineUpload(dc, activeState);
-                        if (res > 0)
+                        if (openFileDialog.ShowDialog() == true)
                         {
-                            if (res == 1)
+                            filepath = openFileDialog.FileName;
+
+                            // bool resr = ReportCls.decodefile(filepath, @"D:\stringlist.txt");//comment
+                            SendDetail dc = new SendDetail();
+                            string objectstr = "";
+
+                            objectstr = ReportCls.decodetoString(filepath);
+
+                            dc = JsonConvert.DeserializeObject<SendDetail>(objectstr, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+
+                            if (dc.packageSend.packageUserId== packageUser.packageUserId)
                             {
-                                // update done
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreDoneSuccessfuly"), animation: ToasterAnimation.FadeIn);
+                                int res = await pumodel.updatecustomerdata(dc, activeState);
+
+                             //   MessageBox.Show(res.ToString());
+                                if (res > 0)
+                                {
+                                    if (res == 1)
+                                    {
+                                        // update done
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreDoneSuccessfuly"), animation: ToasterAnimation.FadeIn);
+
+                                    }
+                                    //else if (res == 2)
+                                    //{
+                                    //    //no update
+                                    //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
+                                    //}
+                                }
+                                else
+                                {
+                                    // error
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
+
+                                }
+                            }
+                            else{
+
+                                // The File dosn't belong to this Package 
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete")+ "The File dosn't belong to this Package", animation: ToasterAnimation.FadeIn);
 
                             }
-                            else if (res == 2)
-                            {
-                                //no update
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trRestoreNotComplete"), animation: ToasterAnimation.FadeIn);
-                            }
+
                         }
                         else
                         {
@@ -299,6 +322,10 @@ namespace AdministratorApp.View.windows
 
                         }
                     }
+                   
+
+
+
                 }
                 HelpClass.EndAwait(grid_main);
             }

@@ -3385,12 +3385,12 @@ namespace Programs_Server.Controllers
                                     package.isPayed = packuserrow.isPayed;
 
                                     package.activeres = "noch";
-                                  
+
                                     package.type = lastpayrow.type;
 
-                                   
-                              
-                                   
+
+
+
                                     package.notes = packuserrow.notes;
                                     package.pocrDate = lastpayrow.createDate;
                                     package.poId = lastpayrow.payOpId;
@@ -3398,9 +3398,9 @@ namespace Programs_Server.Controllers
 
                                     package.packuserType = packuserrow.type;
                                     package.packageUserId = packuserrow.packageUserId;
-                              
-                                   
-                              
+                                    package.customerServerCode = packuserrow.customerServerCode;
+
+
                                     package.upnum = "";
 
 
@@ -3409,27 +3409,27 @@ namespace Programs_Server.Controllers
                                     //    return TokenManager.GenerateToken(senditem);
 
                                     package.isServerActivated = true;
-                                //    packuserrow.customerServerCode = customerServerCode;
-                               
+                                    //    packuserrow.customerServerCode = customerServerCode;
+
                                     //'
                                     //if (packuserrow.isServerActivated == false)
                                     //{
                                     //    package.activatedate = DateTime.Now;// save on client if null 
-                                    
+
                                     //}
                                     //else
                                     //{
                                     //    package.activatedate = packuserrow.activatedate;
                                     //}
-
+                                    package.activeState = activeState;
                                     senditem.packageSend = package;
                                     senditem.PosSerialSendList = serialList;
 
-                                   // packuserrow.totalsalesInvCount = 0;
-                                   // packuserrow.canRenew = false;
+                                    // packuserrow.totalsalesInvCount = 0;
+                                    // packuserrow.canRenew = false;
 
                                     //  save server hardware key
-                                  //  int res = Save(packuserrow);// dont change until upload return file from customer server 
+                                    //  int res = Save(packuserrow);// dont change until upload return file from customer server 
 
 
                                     return TokenManager.GenerateToken(senditem);
@@ -3514,7 +3514,7 @@ namespace Programs_Server.Controllers
 
                     package.packuserType = packuserrow.type;
                     package.packageUserId = packuserrow.packageUserId;
-                 //   package.packageName = pack.packageName;
+                    //   package.packageName = pack.packageName;
                     package.pocrDate = lastpayrow.createDate;
                     package.poId = lastpayrow.payOpId;
                     package.upnum = "";
@@ -3545,6 +3545,225 @@ namespace Programs_Server.Controllers
 
 
         }
+
+        // save return data from customer
+
+        [HttpPost]
+        [Route("updatecustomerdata")]
+        public string updatecustomerdata(string token)
+        {
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                string message = "0";
+                string activeState = "";
+                SendDetail sd = new SendDetail();
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+
+                foreach (Claim c in claims)
+                {
+
+
+                    if (c.Type == "object")
+                    {
+                        sd = JsonConvert.DeserializeObject<SendDetail>(c.Value, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
+
+                    }
+                    else if (c.Type == "activeState")
+                    {
+                        activeState = c.Value;
+
+                    }
+
+                }
+                try
+                {
+
+                    posSerialsController pscntrlr = new posSerialsController();
+                    payOpModel lastpayrow = new payOpModel();
+                    // save data here
+                    // packageuser update
+                    packageUser puDB = new packageUser();
+                    puDB = GetByID((int)sd.packageSend.packageUserId);
+                    if (activeState == "up" || sd.packageSend.activeApp == "all")
+                    {
+
+
+                        if (puDB.packageUserId > 0)
+                        {
+                            if (puDB.isServerActivated == false)
+                            {
+                                puDB.customerServerCode = sd.packageSend.customerServerCode;
+                                puDB.activatedate = sd.packageSend.activatedate;
+                                puDB.isServerActivated = true;
+                                // puDB.canRenew = false;
+                                int res = Save(puDB);
+                                res = updateposInfolist(sd.PosSerialSendList);
+                                return TokenManager.GenerateToken("1");
+                            }
+                            else
+                            {
+
+                                // not first time
+                                if (puDB.isOnlineServer == sd.packageSend.isOnlineServer)
+                                {
+                                    lastpayrow = getLastPayOp(puDB.packageUserId);
+                                    //    // same method or first time
+
+                                    //    // check if current activate(upgrade or extend) is newr than the exist or first time
+                                    if (lastpayrow.createDate <= sd.packageSend.pocrDate && lastpayrow.payOpId == sd.packageSend.poId)
+                                    {
+
+                                        if (puDB.customerServerCode == sd.packageSend.customerServerCode)
+                                        {
+                                            //this is last returned data
+
+                                            // puDB.customerServerCode = sd.packageSend.customerServerCode;
+                                            //  puDB.activatedate = sd.packageSend.activatedate;
+                                            // puDB.isServerActivated = true;
+                                            // puDB.canRenew = false;
+                                            // int res = Save(puDB);
+
+                                            //  nochange just save serials
+                                            int res = updateposInfolist(sd.PosSerialSendList);
+                                            return TokenManager.GenerateToken("1");
+
+                                        }
+                                        else
+                                        {
+                                            // serverId not matched
+                                            return TokenManager.GenerateToken("-3");
+
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        //there  are other changes from last returned data
+                                        return TokenManager.GenerateToken("-6");
+
+                                    }
+                                }
+                                else
+                                {
+                                    //the method is changed
+                                    return TokenManager.GenerateToken("-10");
+                                }
+
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            // noId exist
+                            return TokenManager.GenerateToken("-5");
+
+                        }
+                    }
+                
+                    else
+                    {
+                        //the active state not match
+                        return TokenManager.GenerateToken("-9");
+                    }
+                
+                // serial update
+                //delete old serials
+                //foreach (PosSerialSend crow in sd.PosSerialSendList)
+                //{
+                //    int resd = pscntrlr.deleteInfobySerial(crow.serial);
+
+                //}
+                //foreach (PosSerialSend crow in sd.PosSerialSendList)
+                //{
+
+
+                //    posSerials newObject = new posSerials();
+                //    posInfo newinfo = new posInfo();
+
+                //    newObject = pscntrlr.getbySerial(crow.serial);
+                //    // newObject.serial = crow.serial;
+                //    newObject.isBooked = crow.isBooked;
+                //    newObject.posDeviceCode = crow.posDeviceCode;
+
+                //    pscntrlr.UpdatebySerial(newObject);
+
+
+                //    //   int resd =   pscntrlr.deleteInfobySerial(crow.serial);
+                //    //   add info
+                //    newinfo.serialId = newObject.serialId;
+                //    newinfo.posName = crow.posName;
+                //    newinfo.branchName = crow.branchName;
+                //    newinfo.posDeviceCode = crow.posDeviceCode;
+                //    newinfo.isBooked = crow.isBooked;
+                //    newinfo.isActive = crow.isActive;
+                //    // newinfo.notes = sd.PosSerialSendList.Count.ToString();
+                //    newinfo.posSettingId = crow.posSettingId;
+                //    newinfo.posId = crow.posId;
+                //    int resd = pscntrlr.AddposInfo(newinfo);
+
+                //}
+
+
+            }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+        }
+                public int updateposInfolist(List<PosSerialSend> PosSerialSendList)
+                {
+                    int res = 0;
+                    posSerialsController pscntrlr = new posSerialsController();
+                    foreach (PosSerialSend crow in PosSerialSendList)
+                    {
+                        int resd = pscntrlr.deleteInfobySerial(crow.serial);
+
+                    }
+                    foreach (PosSerialSend crow in PosSerialSendList)
+                    {
+
+
+                        posSerials newObject = new posSerials();
+                        posInfo newinfo = new posInfo();
+
+                        newObject = pscntrlr.getbySerial(crow.serial);
+                        // newObject.serial = crow.serial;
+                        newObject.isBooked = crow.isBooked;
+                        newObject.posDeviceCode = crow.posDeviceCode;
+
+                        pscntrlr.UpdatebySerial(newObject);
+
+
+                        //   int resd =   pscntrlr.deleteInfobySerial(crow.serial);
+                        //   add info
+                        newinfo.serialId = newObject.serialId;
+                        newinfo.posName = crow.posName;
+                        newinfo.branchName = crow.branchName;
+                        newinfo.posDeviceCode = crow.posDeviceCode;
+                        newinfo.isBooked = crow.isBooked;
+                        newinfo.isActive = crow.isActive;
+                        // newinfo.notes = sd.PosSerialSendList.Count.ToString();
+                        newinfo.posSettingId = crow.posSettingId;
+                        newinfo.posId = crow.posId;
+                        int resd = pscntrlr.AddposInfo(newinfo);
+                        res = resd;
+
+                    }
+                    return res;
+
+                }
+
+
 
     }
 }
