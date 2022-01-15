@@ -316,11 +316,13 @@ namespace AdministratorApp.View.reports
 
         private async void Cb_agents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select agent
-            //try
-            //{
-                if(cb_agents.SelectedIndex != -1)
+         //try
+         //{
+            if (cb_agents.SelectedIndex != -1)
+            {
+                if(MainWindow.userLogin.type.Equals("ag"))
                     await FillCombo.fillCustomerByAgent(cb_customers, (int)cb_agents.SelectedValue);
-
+            }
                 await Search();
             //}
             //catch (Exception ex)
@@ -476,7 +478,6 @@ namespace AdministratorApp.View.reports
 
             int xCount = 6;
             if (count < 6) xCount = count;
-
 
             for (int i = 0; i < xCount; i++)
             {

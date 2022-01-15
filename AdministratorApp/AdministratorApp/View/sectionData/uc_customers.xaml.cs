@@ -164,6 +164,7 @@ namespace AdministratorApp.View.sectionData
                     customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
+                    customer.balance = 0;
 
                     int s =await customer.Save(customer);
                     if (s <= 0)
@@ -217,6 +218,7 @@ namespace AdministratorApp.View.sectionData
                     customer.notes = tb_notes.Text;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
+                    customer.balance = 0;
                     
                     int s = await customer.Save(customer);
                     if (s <= 0)
@@ -628,14 +630,14 @@ namespace AdministratorApp.View.sectionData
                         await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
                     }
                 }
-                HelpClass.EndAwait(grid_main);
-            }
+            HelpClass.EndAwait(grid_main);
+        }
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
-            }
         }
+    }
 
         #endregion
 
