@@ -66,6 +66,8 @@ namespace Programs_Server.Models
         public Nullable<System.DateTime> activatedate { get; set; }
         public bool isServerActivated { get; set; }
         public bool islimitDate { get; set; }
+
+        public string confirmStat { get; set; }
     }
 
   
@@ -153,6 +155,7 @@ namespace Programs_Server.Models
         public string upnum { get; set; }
         public string packuserType { get; set; }
         public string activeApp { get; set; }
+        public string confirmStat { get; set; }
 
     }
     public class SendDetail

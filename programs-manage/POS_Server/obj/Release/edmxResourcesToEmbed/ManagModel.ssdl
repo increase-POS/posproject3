@@ -206,6 +206,7 @@
     <Property Name="activatedate" Type="datetime2" Precision="7" />
     <Property Name="isServerActivated" Type="bit" Nullable="false" />
     <Property Name="oldCountryPackageId" Type="int" />
+    <Property Name="confirmStat" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="payOp">
     <Key>

@@ -153,6 +153,8 @@ namespace AdministratorApp.ApiClasses
         public int branchCount { get; set; }
         public int programId { get; set; }
         public int verId { get; set; }
+        public string confirmStat { get; set; }
+
 
         private string urimainpath = "packageUser/";
         /// <summary>

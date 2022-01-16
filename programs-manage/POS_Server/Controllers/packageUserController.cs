@@ -3361,17 +3361,16 @@ namespace Programs_Server.Controllers
                                     package.programName = prog.name;
                                     package.verName = ver.name;
                                     package.packageSaleCode = packuserrow.packageSaleCode;
-                                    package.expireDate = packuserrow.expireDate;
+                                  
                                     package.isOnlineServer = packuserrow.isOnlineServer;
                                     package.packageNumber = packuserrow.packageNumber;
                                     package.totalsalesInvCount = packuserrow.totalsalesInvCount;
                                     package.packageName = pack.packageName;
                                     //packuserrow.countryPackageId
-                                    package.islimitDate = cpD.islimitDate;
-                                    package.isActive = (int)packuserrow.isActive;
+                                  
                                     package.activatedate = DateTime.Now;// save on client if null 
                                     package.result = 1;                                  //   SendDetail senditem = new SendDetail();
-                                    package.isServerActivated = packuserrow.isServerActivated;
+                                
                                     package.customerName = customerModel.custname;
                                     package.customerLastName = customerModel.lastName;
                                     package.agentAccountName = agentmodel.AccountName;
@@ -3408,7 +3407,7 @@ namespace Programs_Server.Controllers
 
                                     //    return TokenManager.GenerateToken(senditem);
 
-                                    package.isServerActivated = true;
+                                  //  package.isServerActivated = true;
                                     //    packuserrow.customerServerCode = customerServerCode;
 
                                     //'
@@ -3422,6 +3421,23 @@ namespace Programs_Server.Controllers
                                     //    package.activatedate = packuserrow.activatedate;
                                     //}
                                     package.activeState = activeState;
+
+                                    if (packuserrow.isServerActivated==false)
+                                    {
+                                        //first activate
+                                        package.isServerActivated = packuserrow.isServerActivated;
+                                        package.expireDate = packuserrow.bookDate;
+                                        package.islimitDate = true;
+                                        package.isActive = 0;
+                                    }
+                                    else
+                                    {
+
+                                        package.isServerActivated = packuserrow.isServerActivated;
+                                        package.expireDate = packuserrow.expireDate;
+                                        package.islimitDate = cpD.islimitDate;
+                                        package.isActive = (int)packuserrow.isActive;
+                                    }
                                     senditem.packageSend = package;
                                     senditem.PosSerialSendList = serialList;
 
@@ -3590,21 +3606,29 @@ namespace Programs_Server.Controllers
                     // packageuser update
                     packageUser puDB = new packageUser();
                     puDB = GetByID((int)sd.packageSend.packageUserId);
+                    lastpayrow = getLastPayOp(puDB.packageUserId);
                     if (activeState == "up" || sd.packageSend.activeApp == "all")
                     {
 
 
                         if (puDB.packageUserId > 0)
                         {
-                            if (puDB.isServerActivated == false)
+                            if (puDB.isServerActivated == false && puDB.packageUserId==sd.packageSend.packageUserId 
+                                && puDB.isOnlineServer == sd.packageSend.isOnlineServer 
+                                && (sd.packageSend.customerServerCode!=null && sd.packageSend.customerServerCode!=""))
+                          
+                                //&& lastpayrow.createDate <= sd.packageSend.pocrDate && lastpayrow.payOpId == sd.packageSend.poId
                             {
                                 puDB.customerServerCode = sd.packageSend.customerServerCode;
                                 puDB.activatedate = sd.packageSend.activatedate;
                                 puDB.isServerActivated = true;
+
                                 // puDB.canRenew = false;
+
                                 int res = Save(puDB);
                                 res = updateposInfolist(sd.PosSerialSendList);
                                 return TokenManager.GenerateToken("1");
+
                             }
                             else
                             {
@@ -3612,7 +3636,7 @@ namespace Programs_Server.Controllers
                                 // not first time
                                 if (puDB.isOnlineServer == sd.packageSend.isOnlineServer)
                                 {
-                                    lastpayrow = getLastPayOp(puDB.packageUserId);
+                                  
                                     //    // same method or first time
 
                                     //    // check if current activate(upgrade or extend) is newr than the exist or first time
@@ -3630,6 +3654,8 @@ namespace Programs_Server.Controllers
                                             // int res = Save(puDB);
 
                                             //  nochange just save serials
+
+
                                             int res = updateposInfolist(sd.PosSerialSendList);
                                             return TokenManager.GenerateToken("1");
 

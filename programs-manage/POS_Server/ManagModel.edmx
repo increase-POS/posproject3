@@ -211,6 +211,7 @@
           <Property Name="activatedate" Type="datetime2" Precision="7" />
           <Property Name="isServerActivated" Type="bit" Nullable="false" />
           <Property Name="oldCountryPackageId" Type="int" />
+          <Property Name="confirmStat" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -1491,6 +1492,7 @@
           <Property Name="activatedate" Type="DateTime" Precision="7" />
           <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
           <Property Name="oldCountryPackageId" Type="Int32" />
+          <Property Name="confirmStat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -2773,6 +2775,7 @@
           <EntitySetMapping Name="packageUser">
             <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
               <MappingFragment StoreEntitySet="packageUser">
+                <ScalarProperty Name="confirmStat" ColumnName="confirmStat" />
                 <ScalarProperty Name="oldCountryPackageId" ColumnName="oldCountryPackageId" />
                 <ScalarProperty Name="isServerActivated" ColumnName="isServerActivated" />
                 <ScalarProperty Name="activatedate" ColumnName="activatedate" />
