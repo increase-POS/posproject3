@@ -92,6 +92,8 @@ namespace AdministratorApp.View.sales
 
                 requiredControlList = new List<string> { "package", "customer", "isOnline" ,"period" };
 
+                FillCombo.fillServerState(cb_isOnline);
+
                 if (MainWindow.userLogin.type.Equals("ag"))
                 {
                     await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId);
@@ -138,7 +140,6 @@ namespace AdministratorApp.View.sales
                 }
                 cb_agent.Text = agent.accountName;
 
-                FillCombo.fillServerState(cb_isOnline);
 
                 //HelpClass.EndAwait(grid_main);
             //}
@@ -256,6 +257,7 @@ namespace AdministratorApp.View.sales
                 this.DataContext = new Packages();
             }
             catch { }
+            packuser = new PackageUser();
             cb_customer.SelectedIndex = -1;
             cb_isOnline.SelectedIndex = -1;
             cb_package.ItemsSource = null;
@@ -328,7 +330,6 @@ namespace AdministratorApp.View.sales
                 int msg = 0;
 
                 string pop = "";
-               
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
