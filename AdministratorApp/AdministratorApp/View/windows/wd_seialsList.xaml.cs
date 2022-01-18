@@ -30,7 +30,6 @@ namespace AdministratorApp.View.windows
     /// </summary>
     public partial class wd_seialsList : Window
     {
-        PosSerials posSerial = new PosSerials();
         PosSerials posSerialModel = new PosSerials();
         IEnumerable<PosSerials> posSerialsQuery;
         IEnumerable<PosSerials> posSerials;
@@ -40,6 +39,13 @@ namespace AdministratorApp.View.windows
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        PackageUser pu = new PackageUser();
+        PackageUser puModel = new PackageUser();
+        Packages p = new Packages();
+        Packages pModel = new Packages();
+        int isActiveCount = 0;
+
         public wd_seialsList()
         {
             try
@@ -73,14 +79,17 @@ namespace AdministratorApp.View.windows
                 #endregion
 
                 posSerialsQuery = await RefreshList();
+
+                isActiveCount = posSerials.Count(s => s.isActive == 1);
+               
+                pu = await puModel.GetByID(packageUserID);
+                p = await pModel.GetByID(pu.packageId.Value);
+
                 RefreshView();
 
                //< Button Grid.Column = "2" x: Name = "btn_activePage" Click = "Btn_activePage_Click"
                //                     Height = "25" Width = "25" Content = "2" Padding = "0"
                //                       Background = "#178DD2" BorderThickness = "0" />
-
-
-
 
                 HelpClass.EndAwait(grid_serialsList);
             }
@@ -101,54 +110,47 @@ namespace AdministratorApp.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-         //try
-         //{
-         //HelpClass.StartAwait(grid_serialsList);
-
-            //List<PosSerials> posSerialsNew = new List<PosSerials>();
-            //foreach (PosSerials row in dg_serials.Items)
-            //{
-            //    if (row.isActive == 1)
-            //        posSerialsNew.Add(row);
-            //}
-            //posSerialsNew = posSerials.ToList();
-            int isActiveCount = posSerials.Count(s => s.isActive == 1);
-
-            PackageUser pu = new PackageUser();
-            PackageUser puModel = new PackageUser();
-            Packages p = new Packages();
-            Packages pModel = new Packages();
-            pu = await puModel.GetByID(packageUserID);
-            p = await pModel.GetByID(pu.packageId.Value);
-            if ((isActiveCount <= p.posCount) || (p.posCount == -1))
+            try
             {
-                int res = await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
+                HelpClass.StartAwait(grid_serialsList);
 
-                if (res > 0)
+                //List<PosSerials> posSerialsNew = new List<PosSerials>();
+                //foreach (PosSerials row in dg_serials.Items)
+                //{
+                //    if (row.isActive == 1)
+                //        posSerialsNew.Add(row);
+                //}
+                //posSerialsNew = posSerials.ToList();
+                
+                if ((isActiveCount <= p.posCount) || (p.posCount == -1))
                 {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                    this.Close();
+                    int res = await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
+
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        this.Close();
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
                 else
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
+                }
+                //List<PosSerials> posSerialsNew = new List<PosSerials>();
+                //posSerialsNew.Add(posSerials.ToList()[0]);
+                //posSerialsNew.Add(posSerials.ToList()[1]);
+                //posSerialsNew[0].isActive = 1;
+                //posSerialsNew[1].isActive = 0;
+                //int res = await posSerialModel.UpdateList(posSerialsNew.ToList(), MainWindow.userID);
+                HelpClass.EndAwait(grid_serialsList);
             }
-            else
+            catch (Exception ex)
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.ExceptionMessage(ex, this);
             }
-            //List<PosSerials> posSerialsNew = new List<PosSerials>();
-            //posSerialsNew.Add(posSerials.ToList()[0]);
-            //posSerialsNew.Add(posSerials.ToList()[1]);
-            //posSerialsNew[0].isActive = 1;
-            //posSerialsNew[1].isActive = 0;
-            //int res = await posSerialModel.UpdateList(posSerialsNew.ToList(), MainWindow.userID);
-            //    HelpClass.EndAwait(grid_serialsList);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_serialsList);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
         }
 
         private void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -288,7 +290,6 @@ namespace AdministratorApp.View.windows
 
         async Task<IEnumerable<PosSerials>> RefreshList()
         {
-            //posSerials = await posSerialModel.GetByPackUserId(packageUserID);
             posSerials = await posSerialModel.GetSerialAndPosInfo(packageUserID);
             return posSerials;
         }
@@ -396,12 +397,19 @@ namespace AdministratorApp.View.windows
             }
 
         }
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        private async void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
             try
             {
                 HelpClass.StartAwait(grid_serialsList);
 
+                PackageUser puModel = new PackageUser();
+                PackageUser pu = await puModel.GetByID(packageUserID);
+                string customer = pu.customerName +" "+pu.customerLastName;
+                string package = pu.packageName;
+                string key = pu.packageSaleCode;
+                string agent = pu.userName + " " + pu.userLastName;
+                string s = "";
                 #region
                 Thread t1 = new Thread(() =>
                 {
@@ -429,5 +437,43 @@ namespace AdministratorApp.View.windows
         }
 
         #endregion
+
+        private void Chk_allSerials_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                foreach (var s in posSerialsQuery)
+                {
+                    isActiveCount = posSerialsQuery.Count(c => c.isActive == 1);
+                    if ((isActiveCount <= p.posCount) || (p.posCount == -1))
+                    {
+                        s.isActive = 1;
+                        dg_serials.ItemsSource = posSerialsQuery;
+                        dg_serials.Items.Refresh();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chk_allSerials_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            { 
+                foreach (var s in posSerialsQuery)
+                {
+                    s.isActive = 0;
+                    dg_serials.ItemsSource = posSerialsQuery;
+                    dg_serials.Items.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }
