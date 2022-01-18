@@ -412,9 +412,10 @@
                                 </Path>
                             </Grid>
                         </Border>
+                        <!--IsChecked="{Binding Path= branchCount,Converter={StaticResource unlimitedConverter},Mode=TwoWay}"-->
                         <StackPanel Grid.Column="1" Margin="0,10,0,0">
                             <TextBlock Text="unlimited" Margin="0,0,0,5"/>
-                            <ToggleButton    x:Name="tgl_branch"   IsChecked="{Binding Path= branchCount,Converter={StaticResource unlimitedConverter}}"
+                            <ToggleButton    x:Name="tgl_branch"  
                                       VerticalAlignment="Center" Padding="10,15,5,5" 
                                       Margin="0" Height="13" Width="28" 
                                       Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked" />
@@ -473,9 +474,10 @@
                                 </Path>
                             </Grid>
                         </Border>
+                        <!--IsChecked="{Binding Path= userCount,Converter={StaticResource unlimitedConverter}}"-->
                         <StackPanel Grid.Column="1"  Margin="0,10">
                             <TextBlock Text="unlimited" Margin="0,0,0,5"/>
-                            <ToggleButton    x:Name="tgl_user"   IsChecked="{Binding Path= userCount,Converter={StaticResource unlimitedConverter}}"
+                            <ToggleButton    x:Name="tgl_user"   
                                       VerticalAlignment="Center" Padding="10,15,5,5"  
                                       Margin="0" Height="13" Width="28" 
                                       Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
@@ -532,9 +534,10 @@
                                 </Path>
                             </Grid>
                         </Border>
+                        <!--IsChecked="{Binding Path= customerCount,Converter={StaticResource unlimitedConverter}}"-->
                         <StackPanel Grid.Column="1"  Margin="0,10">
                             <TextBlock Text="unlimited" Margin="0,0,0,5"/>
-                            <ToggleButton   x:Name="tgl_customer"   IsChecked="{Binding Path= customerCount,Converter={StaticResource unlimitedConverter}}"
+                            <ToggleButton   x:Name="tgl_customer"   
                                       VerticalAlignment="Center" Padding="10,15,5,5" 
                                       Margin="0" Height="13" Width="28"
                                       Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>
@@ -590,9 +593,10 @@
                             </Path>
                         </Grid>
                     </Border>
+                        <!--IsChecked="{Binding Path= salesInvCount,Converter={StaticResource unlimitedConverter}}"-->
                         <StackPanel Grid.Column="1"  Margin="0,10">
                             <TextBlock Text="unlimited" Margin="0,0,0,5"/>
-                            <ToggleButton   x:Name="tgl_saleInv"   IsChecked="{Binding Path= salesInvCount,Converter={StaticResource unlimitedConverter}}"
+                            <ToggleButton   x:Name="tgl_saleInv"   
                                       VerticalAlignment="Center" Padding="10,15,5,5" 
                                       Margin="0" Height="13" Width="28" 
                                       Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked"/>

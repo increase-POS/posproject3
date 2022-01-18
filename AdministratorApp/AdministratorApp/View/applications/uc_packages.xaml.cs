@@ -469,6 +469,41 @@ namespace AdministratorApp.View.applications
                     {
                         btn_packagePriceDate.IsEnabled = true;
 
+                        #region toggels
+                        if (package.branchCount == -1)
+                            tgl_branch.IsChecked = true;
+                        else
+                            tgl_branch.IsChecked = false;
+                        if (package.userCount == -1)
+                            tgl_user.IsChecked = true;
+                        else
+                            tgl_user.IsChecked = false;
+                        if (package.customerCount == -1)
+                            tgl_customer.IsChecked = true;
+                        else
+                            tgl_customer.IsChecked = false;
+                        if (package.salesInvCount == -1)
+                            tgl_saleInv.IsChecked = true;
+                        else
+                            tgl_saleInv.IsChecked = false;
+                        if (package.storeCount == -1)
+                            tgl_store.IsChecked = true;
+                        else
+                            tgl_store.IsChecked = false;
+                        if (package.posCount == -1)
+                            tgl_pos.IsChecked = true;
+                        else
+                            tgl_pos.IsChecked = false;
+                        if (package.vendorCount == -1)
+                            tgl_vendor.IsChecked = true;
+                        else
+                            tgl_vendor.IsChecked = false;
+                        if (package.itemCount == -1)
+                            tgl_item.IsChecked = true;
+                        else
+                            tgl_item.IsChecked = false;
+                        #endregion
+
                         #region delete
                         if (package.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -609,7 +644,8 @@ namespace AdministratorApp.View.applications
         void Clear()
         {
             this.DataContext = new Packages();
-           
+            tgl_branch.IsChecked = false;
+            tgl_user.IsChecked = false;
             btn_packagePriceDate.IsEnabled = false;
             HelpClass.clearValidate(requiredControlList,this);
         }
