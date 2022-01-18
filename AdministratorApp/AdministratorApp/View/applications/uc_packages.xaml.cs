@@ -646,6 +646,12 @@ namespace AdministratorApp.View.applications
             this.DataContext = new Packages();
             tgl_branch.IsChecked = false;
             tgl_user.IsChecked = false;
+            tgl_customer.IsChecked = false;
+            tgl_saleInv.IsChecked = false;
+            tgl_store.IsChecked = false;
+            tgl_pos.IsChecked = false;
+            tgl_vendor.IsChecked = false;
+            tgl_item.IsChecked = false;
             btn_packagePriceDate.IsEnabled = false;
             HelpClass.clearValidate(requiredControlList,this);
         }

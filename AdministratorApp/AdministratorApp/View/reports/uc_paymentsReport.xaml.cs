@@ -193,13 +193,13 @@ namespace AdministratorApp.View.reports
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, MainWindow.resourcemanager.GetString("trSearchHint"));
 
-            dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trNO");
-            dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookDate");
-            dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trUpgradeDate");
-            dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trPackage");
-            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
-            dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
-            dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
+            //dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trNO");
+            //dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookDate");
+            //dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trUpgradeDate");
+            //dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trPackage");
+            //dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
+            //dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            //dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
             /*
              public string packageNumber { get; set; }//1- Book num
              public Nullable<System.DateTime> bookDate { get; set; }//2- Book Date

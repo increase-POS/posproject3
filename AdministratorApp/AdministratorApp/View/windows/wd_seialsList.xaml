@@ -79,7 +79,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="55"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="45"/>
                     <RowDefinition Height="45"/>
@@ -156,58 +156,12 @@
                 </Grid>
                 <Line Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Stretch="Fill" Stroke="#DFDFDF"  X2="1"  Margin="1,1,1,1"
                           VerticalAlignment="Bottom"/>
-                <!--<TextBlock Text="Serials" x:Name="txt_allSerials" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Foreground="#999999" FontWeight="SemiBold"  FontSize="16" Visibility="Collapsed"/>-->
+                <!--<Border Grid.Row="2"  Margin="10"   BorderBrush="#999999" BorderThickness="1">-->
+                    <CheckBox x:Name="chk_allSerials" Grid.Row="2"  Margin="10" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  
+                              Content="Select All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allSerials_Checked" Unchecked="Chk_allSerials_Unchecked"
+                              />
+                <!--</Border>-->
 
-                <Border BorderThickness="0,0,0,1" BorderBrush="#178DD2" Margin="10,0,10,0" Width="auto"
-                     Grid.Row="2"   HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <StackPanel  Orientation="Horizontal" >
-                        <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
-                                Padding="0" Height="35" BorderBrush="{x:Null}" Click="Btn_pdf_Click" 
-                                >
-                            <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
-                                                     Width="22" Height="22">
-                                <materialDesign:PackIcon.ToolTip>
-                                    <ToolTip x:Name="tt_report"  
-                                              Placement="left" 
-                                              HorizontalOffset="5"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="20"/>
-                                </materialDesign:PackIcon.ToolTip>
-                            </materialDesign:PackIcon>
-                        </Button>
-                       
-                       
-                        <Button  Background="{x:Null}" Margin="5,0,5,0" Padding="0" Height="35"   
-                                 x:Name="btn_exportToExcel" BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click"
-                                 >
-                            <Path Fill="#378500" Stretch="Fill"
-                          Width="20" Height="20" 
-                           FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
-	                     M0,2.889v20.223L15,26V0L0,2.889z M9.488,18.08l-1.745-3.299c-0.066-0.123-0.134-0.349-0.205-0.678   H7.511C7.478,14.258,7.4,14.494,7.277,14.81l-1.751,3.27H2.807l3.228-5.064L3.082,7.951h2.776l1.448,3.037   c0.113,0.24,0.214,0.525,0.304,0.854h0.028c0.057-0.198,0.163-0.492,0.318-0.883l1.61-3.009h2.542l-3.037,5.022l3.122,5.107 
-                          L9.488,18.08L9.488,18.08z"  >
-                                <Path.ToolTip>
-                                    <ToolTip x:Name="tt_excel"  
-                                              Placement="left" 
-                                              HorizontalOffset="35"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="20"/>
-                                </Path.ToolTip>
-                            </Path>
-                        </Button>
-                        <TextBlock   Background="{x:Null}" x:Name="txt_count"    Margin="0,0,0,0" 
-                            Padding="10"   Text="0" Foreground="#378500"  >
-                            <TextBlock.ToolTip>
-                                <ToolTip x:Name="tt_count" 
-                                              Placement="left" 
-                                              HorizontalOffset="35"
-                                              PlacementRectangle="50,25,0,0"
-                                              VerticalOffset="20"/>
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-
-                    </StackPanel >
-                </Border>
                 <Border Grid.Row="3"  Margin="10"   BorderBrush="#999999" BorderThickness="1">
                     <DataGrid x:Name="dg_serials"  Background="White"
                               Visibility="Visible" HorizontalContentAlignment="Center"
@@ -253,6 +207,55 @@
                             <DataGridCheckBoxColumn x:Name="col_active"  Width="0.5*"   Header="Active"   Binding="{Binding Path=isActive}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                </Border>
+                <Border BorderThickness="0,0,0,1" BorderBrush="#178DD2" Margin="10,0,10,0" Width="auto"
+                     Grid.Row="4"   HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <StackPanel  Orientation="Horizontal" >
+                        <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
+                                Padding="0" Height="35" BorderBrush="{x:Null}" Click="Btn_pdf_Click" 
+                                >
+                            <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
+                                                     Width="22" Height="22">
+                                <materialDesign:PackIcon.ToolTip>
+                                    <ToolTip x:Name="tt_report"  
+                                              Placement="left" 
+                                              HorizontalOffset="5"
+                                              PlacementRectangle="50,0,0,0"
+                                              VerticalOffset="20"/>
+                                </materialDesign:PackIcon.ToolTip>
+                            </materialDesign:PackIcon>
+                        </Button>
+
+
+                        <Button  Background="{x:Null}" Margin="5,0,5,0" Padding="0" Height="35"   
+                                 x:Name="btn_exportToExcel" BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click"
+                                 >
+                            <Path Fill="#378500" Stretch="Fill"
+                          Width="20" Height="20" 
+                           FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
+	                     M0,2.889v20.223L15,26V0L0,2.889z M9.488,18.08l-1.745-3.299c-0.066-0.123-0.134-0.349-0.205-0.678   H7.511C7.478,14.258,7.4,14.494,7.277,14.81l-1.751,3.27H2.807l3.228-5.064L3.082,7.951h2.776l1.448,3.037   c0.113,0.24,0.214,0.525,0.304,0.854h0.028c0.057-0.198,0.163-0.492,0.318-0.883l1.61-3.009h2.542l-3.037,5.022l3.122,5.107 
+                          L9.488,18.08L9.488,18.08z"  >
+                                <Path.ToolTip>
+                                    <ToolTip x:Name="tt_excel"  
+                                              Placement="left" 
+                                              HorizontalOffset="35"
+                                              PlacementRectangle="50,0,0,0"
+                                              VerticalOffset="20"/>
+                                </Path.ToolTip>
+                            </Path>
+                        </Button>
+                        <TextBlock   Background="{x:Null}" x:Name="txt_count"    Margin="0,0,0,0" 
+                            Padding="10"   Text="0" Foreground="#378500"  >
+                            <TextBlock.ToolTip>
+                                <ToolTip x:Name="tt_count" 
+                                              Placement="left" 
+                                              HorizontalOffset="35"
+                                              PlacementRectangle="50,25,0,0"
+                                              VerticalOffset="20"/>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+
+                    </StackPanel >
                 </Border>
                 <WrapPanel Grid.Row="4" x:Name="pnl_pagination" Orientation="Horizontal">
                     
