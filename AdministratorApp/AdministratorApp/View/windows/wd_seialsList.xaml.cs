@@ -328,11 +328,36 @@ namespace AdministratorApp.View.windows
             addpath = @"\Reports\Sale\Book\Serials\En\serials.rdlc";
          
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            PackageUser puModel = new PackageUser();
+            Customers cuModel = new Customers();
+            Users agModel = new Users();
+
+            puModel = await puModel.GetByID(packageUserID);
+            cuModel = await cuModel.GetByID((int)puModel.customerId);
+            agModel= await agModel.GetByID((int)puModel.userId);
+            string serkey = puModel.packageSaleCode;
+            string agentname = "";
+            if (agModel.userId==3)
+            {
+                agentname = "Increase";
+            }
+            else
+            {
+                 agentname = agModel.name + " " + agModel.lastName;
+            }
+          
+
+        
 
             //ReportCls.checkLang();
             //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             Title = "Serials";
             paramarr.Add(new ReportParameter("trTitle", Title));
+
+            paramarr.Add(new ReportParameter("Agent", agentname));
+            paramarr.Add(new ReportParameter("Customer", cuModel.custname +" "+ cuModel.lastName));
+            paramarr.Add(new ReportParameter("serverKey", serkey));
+
             List<PosSerials> repserialList = new List<PosSerials>();
 
             repserialList = await posSerialModel.GetByPackUserId(packageUserID);
