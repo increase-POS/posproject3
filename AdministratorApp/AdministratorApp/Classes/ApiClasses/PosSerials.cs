@@ -15,7 +15,18 @@ using Newtonsoft.Json.Converters;
 
 namespace AdministratorApp.ApiClasses
 {
-    public class PosSerials
+
+    public class PosSerialsUpdate
+    {
+
+        public int serialId { get; set; }
+    
+        public int isActive { get; set; }
+
+   
+
+    }
+        public class PosSerials
     {
 
         public int serialId { get; set; }
@@ -161,7 +172,30 @@ namespace AdministratorApp.ApiClasses
             //    return obj;
             //}
         }
+        //GetBySID
 
+        //public async Task<PosSerials> GetBySID(int serialId)
+        //{
+
+        //    PosSerials item = new PosSerials();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("serialId", serialId.ToString());
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "GetBySID", parameters);
+
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            item = JsonConvert.DeserializeObject<PosSerials>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+        //            break;
+        //        }
+        //    }
+
+        //    return item;
+
+          
+        //}
         public async Task<int> Delete(int serialId, int userId, bool final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -232,21 +266,40 @@ namespace AdministratorApp.ApiClasses
 
         }
 
-        public async Task<int> UpdateList(List<PosSerials> newList, int userId)
+        public async Task<int> UpdateList(List<PosSerialsUpdate> newList, int userId)
         {
 
+            //Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("userId", userId.ToString());
+
+            //var list = JsonConvert.SerializeObject(newList);
+            //parameters.Add("newlistobject", list);
+            ////#################
+            //string method = urimainpath + "UpdateList";
+            //int res = await APIResult.post(method, parameters);
+            
+            //return res;
+
+
+            int res = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("userId", userId.ToString());
 
             var list = JsonConvert.SerializeObject(newList);
             parameters.Add("newlistobject", list);
             //#################
-            string method = urimainpath + "UpdateList";
-            int res = await APIResult.post(method, parameters);
-            
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "UpdateList", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    res = int.Parse(c.Value);
+
+                }
+            }
+
             return res;
-
-
 
         }
 

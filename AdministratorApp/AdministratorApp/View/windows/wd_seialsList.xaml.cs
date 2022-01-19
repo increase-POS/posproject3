@@ -114,6 +114,8 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.StartAwait(grid_serialsList);
 
+             
+
                 //List<PosSerials> posSerialsNew = new List<PosSerials>();
                 //foreach (PosSerials row in dg_serials.Items)
                 //{
@@ -121,10 +123,19 @@ namespace AdministratorApp.View.windows
                 //        posSerialsNew.Add(row);
                 //}
                 //posSerialsNew = posSerials.ToList();
-                
+
                 if ((isActiveCount <= p.posCount) || (p.posCount == -1))
                 {
-                    int res = await posSerialModel.UpdateList(posSerials.ToList(), MainWindow.userID);
+                   List< PosSerialsUpdate> uplist = new List<PosSerialsUpdate>();
+
+                    foreach (PosSerials srow in posSerials)
+                    {
+                        PosSerialsUpdate uprow = new PosSerialsUpdate();
+                        uprow.serialId =srow.serialId ;
+                        uprow.isActive = srow.isActive;
+                        uplist.Add(uprow);
+                    }
+                    int res = await posSerialModel.UpdateList(uplist.ToList(), MainWindow.userID);
 
                     if (res > 0)
                     {

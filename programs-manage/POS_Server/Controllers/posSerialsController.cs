@@ -128,11 +128,11 @@ namespace Programs_Server.Controllers
                            S.createUserId,
                            S.updateUserId,
                            S.notes,
-
+                           S.unLimited,
 
                        })
                                    .FirstOrDefault();
-
+    
 
                         return TokenManager.GenerateToken(row);
                     }
@@ -146,6 +146,54 @@ namespace Programs_Server.Controllers
 
         }
 
+        [HttpPost]
+        [Route("GetBySID")]
+        public string GetBySID(string token)//int serialId
+        {
+
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int serialId = 0;
+
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "serialId")
+                    {
+                        serialId = int.Parse(c.Value);
+                    }
+
+
+                }
+                try
+                {
+                    posSerials row = new posSerials();
+
+                    row= getbySerialId(serialId);
+
+                        return TokenManager.GenerateToken(row);
+                    
+                }
+                catch (Exception ex)
+                {
+                    posSerials row = new posSerials();
+                    row.serial = ex.ToString();
+                    return TokenManager.GenerateToken(row);
+                }
+            }
+
+
+        }
 
         public List<PosSerialSend> GetBypackageUserId(int packageUserId)
         {
@@ -1048,6 +1096,58 @@ namespace Programs_Server.Controllers
             }
             return row;
         }
+
+        public posSerials getbySerialId(int serialId)
+        {
+            int message = 0;
+            //
+            posSerials row = new posSerials();
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    var locationEntity = entity.Set<posSerials>();
+                    if (serialId == null || serialId == 0)
+                    {
+                        message = 0;
+                        //
+                    }
+                    else
+                    {
+                        var rowl = entity.posSerials.ToList();
+                        row = rowl.Where(p => p.serialId == serialId)
+                        .Select(S => new posSerials
+                         {
+                          serialId=   S.serialId,
+                            serial=  S.serial,
+                            posDeviceCode= S.posDeviceCode,
+                            packageUserId=   S.packageUserId,
+                            isBooked= S.isBooked,
+                            isActive=  S.isActive,
+                            createDate=  S.createDate,
+                            updateDate=  S.updateDate,
+
+                            createUserId= S.createUserId,
+                            updateUserId=   S.updateUserId,
+                            notes= S.notes,
+                            unLimited=   S.unLimited,
+
+                        }).FirstOrDefault();
+
+
+                    }
+
+
+                }
+
+            }
+            catch
+            {
+                row = new posSerials();
+                return row;
+            }
+            return row;
+        }
         // end
 
         [HttpPost]
@@ -1055,7 +1155,7 @@ namespace Programs_Server.Controllers
         public string UpdateList(string token)//string Object
         {
             string message = "0";
-
+            try { 
             token = TokenManager.readToken(HttpContext.Current.Request);
             var strP = TokenManager.GetPrincipal(token);
             if (strP != "0") //invalid authorization
@@ -1091,9 +1191,15 @@ namespace Programs_Server.Controllers
 
                     foreach (posSerials row in newList)
                     {
-                        row.updateUserId = userId;
-                    
-                        int id = serialSaveOrUpdate(row);
+                            posSerials dbrow = new posSerials();
+                            dbrow = getbySerialId(row.serialId);
+                            dbrow.updateUserId = userId;
+                            dbrow.isActive = row.isActive;
+
+                            int id = serialSaveOrUpdate(dbrow);
+
+
+
                         if (id > 0)
                         {
                             res++;
@@ -1114,7 +1220,11 @@ namespace Programs_Server.Controllers
                 return TokenManager.GenerateToken(message);
 
             }
-        }
+        } catch (Exception ex )
+            {
+                return TokenManager.GenerateToken(ex.ToString());
+            }
+}
       
     }
 }

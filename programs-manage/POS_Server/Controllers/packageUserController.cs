@@ -3610,7 +3610,6 @@ namespace Programs_Server.Controllers
                     if (activeState == "up" || sd.packageSend.activeApp == "all")
                     {
 
-
                         if (puDB.packageUserId > 0)
                         {
                             if (puDB.isServerActivated == false && puDB.packageUserId==sd.packageSend.packageUserId 
