@@ -409,7 +409,6 @@ namespace AdministratorApp.View.reports
 
             countLst.AddRange(result.Select(nn => nn.count));
 
-            //List<string> lable = new List<string>();
             SeriesCollection columnChartData = new SeriesCollection();
             List<int> cS = new List<int>();
 

@@ -110,8 +110,8 @@ namespace AdministratorApp.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            try
-            {
+            //try
+            //{
                 HelpClass.StartAwait(grid_serialsList);
 
              
@@ -149,19 +149,14 @@ namespace AdministratorApp.View.windows
                 {
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
                 }
-                //List<PosSerials> posSerialsNew = new List<PosSerials>();
-                //posSerialsNew.Add(posSerials.ToList()[0]);
-                //posSerialsNew.Add(posSerials.ToList()[1]);
-                //posSerialsNew[0].isActive = 1;
-                //posSerialsNew[1].isActive = 0;
-                //int res = await posSerialModel.UpdateList(posSerialsNew.ToList(), MainWindow.userID);
-                HelpClass.EndAwait(grid_serialsList);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_serialsList);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+
+            //    HelpClass.EndAwait(grid_serialsList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_serialsList);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -171,8 +166,8 @@ namespace AdministratorApp.View.windows
                 txtSearch = tb_search.Text;
 
                 posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
-                                                          || s.posName.Contains(txtSearch)
-                                                          || s.branchName.Contains(txtSearch));
+                                                          || (s.posName    != null ? s.posName.Contains(txtSearch)    : false)
+                                                          || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
 
                 RefreshView();
             }
@@ -297,6 +292,8 @@ namespace AdministratorApp.View.windows
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+
+            chk_allSerials.Content = MainWindow.resourcemanager.GetString("trAll");
         }
 
         async Task<IEnumerable<PosSerials>> RefreshList()

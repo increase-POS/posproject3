@@ -1,9 +1,13 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
+using LiveCharts;
+using LiveCharts.Helpers;
+using LiveCharts.Wpf;
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -162,7 +166,7 @@ namespace AdministratorApp.View.reports
         void RefreshpaymentStsView()
         {
             dg_book.ItemsSource = paymentStsQuery;
-            txt_count.Text = paymentStsQuery.Count().ToString();
+            txt_count.Text = dg_book.Items.Count.ToString();
             fillColumnChart();
             fillPieChart();
             fillRowChart();
@@ -378,154 +382,305 @@ namespace AdministratorApp.View.reports
         #region charts
         private void fillColumnChart()
         {
-            axcolumn.Labels = new List<string>();
-            List<string> names = new List<string>();
-            List<decimal> balances = new List<decimal>();
+            //axcolumn.Labels = new List<string>();
+            //List<string> names = new List<string>();
+            //List<PaymentsSts> resultList = new List<PaymentsSts>();
 
-            //var result = balancesQuery.GroupBy(s => s.posId).Select(s => new
+           
+            //resultList = res.GroupBy(x => new { x.customerId , x.packageId }).Select(x => new PaymentsSts
             //{
-            //    posId = s.Key,
-            //});
+            //    customerId = x.FirstOrDefault().customerId,
+            //    customerName = x.FirstOrDefault().customerName + " " + x.FirstOrDefault().customerLastName,
+            //    packageId = x.FirstOrDefault().packageId,
+            //    totalnet = x.FirstOrDefault().totalnet
+            //    totalnet = x.Sum(g => (decimal)g.totalnet)
+            //}
+            //).ToList();
 
-            //var tempName = balancesQuery.GroupBy(s => s.posName + "/" + s.branchName).Select(s => new
+            //var tempName = res.GroupBy(s => new { s.customerId }).Select(s => new
             //{
-            //    posName = s.Key
+            //    customerName = s.FirstOrDefault().customerName,
             //});
-            //names.AddRange(tempName.Select(nn => nn.posName));
+            //names.AddRange(tempName.Select(nn => nn.customerName));
 
-            //var tempBalance = balancesQuery.GroupBy(s => s.balance).Select(s => new
-            //{
-            //    balance = s.Key
-            //});
-            //balances.AddRange(tempBalance.Select(nn => decimal.Parse(SectionData.DecTostring(nn.balance.Value))));
-
-            //List<string> lable = new List<string>();
             //SeriesCollection columnChartData = new SeriesCollection();
-            //List<decimal> cS = new List<decimal>();
+            //List<decimal> paid = new List<decimal>();
 
-            //List<string> titles = new List<string>()
+            //for (int i = 0; i < xCount; i++)
             //{
-            //   MainWindow.resourcemanager.GetString("tr_Balance")
-            //};
-            //int x = 6;
-            //if (names.Count() <= 6) x = names.Count();
+            //}
+            //    int xCount = 6;
+            //if (names.Count() <= 6)
+            //    xCount = names.Count();
+            //for (int i = 0; i < xCount; i++)
+            //{
+            //    paid.Add(resultList.ToList().Skip(i).FirstOrDefault().totalnet);
 
-            //for (int i = 0; i < x; i++)
-            //{
-            //    cS.Add(balances.ToList().Skip(i).FirstOrDefault());
             //    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             //}
+            ////   if (resultList.Count() > 6)
+            ////   {
+            ////       decimal cashSum = 0, cardSum = 0, docSum = 0, chequeSum = 0, balanceSum = 0, invoiceSum = 0;
+            ////       for (int i = 6; i < resultList.Count; i++)
+            ////       {
+            ////           cashSum = cashSum + resultList.ToList().Skip(i).FirstOrDefault().cashTotal;
+            ////           cardSum = cardSum + resultList.ToList().Skip(i).FirstOrDefault().cardTotal;
+            ////           docSum = docSum + resultList.ToList().Skip(i).FirstOrDefault().docTotal;
+            ////           chequeSum = chequeSum + resultList.ToList().Skip(i).FirstOrDefault().chequeTotal;
+            ////           invoiceSum = invoiceSum + resultList.ToList().Skip(i).FirstOrDefault().invoiceTotal;
+            ////       }
+            ////       if (!((cashSum == 0) && (cardSum == 0) && (docSum == 0) && (chequeSum == 0) && (chequeSum == 0) && (balanceSum == 0) && (invoiceSum == 0)))
+            ////       {
+            ////           cash.Add(cashSum);
+            ////           card.Add(cardSum);
+            ////           doc.Add(docSum);
+            ////           cheque.Add(chequeSum);
+            ////           invoice.Add(invoiceSum);
 
-            //if (names.Count() > 6)
-            //{
-            //    decimal balanceSum = 0;
-            //    for (int i = 6; i < names.Count(); i++)
-            //        balanceSum = balanceSum + balances.ToList().Skip(i).FirstOrDefault();
+            ////           axcolumn.Labels.Add(MainWindow.resourcemanager.GetString("trOthers"));
+            ////       }
+            ////   }
+            ////   columnChartData.Add(
+            ////   new StackedColumnSeries
+            ////   {
+            ////       Values = cash.AsChartValues(),
+            ////       DataLabels = true,
+            ////       Title = MainWindow.resourcemanager.GetString("trCash")
+            ////   });
+            ////   columnChartData.Add(
+            ////   new StackedColumnSeries
+            ////   {
+            ////       Values = card.AsChartValues(),
+            ////       DataLabels = true,
+            ////       Title = MainWindow.resourcemanager.GetString("trAnotherPaymentMethods")
+            ////   });
+            ////   columnChartData.Add(
+            ////   new StackedColumnSeries
+            ////   {
+            ////       Values = doc.AsChartValues(),
+            ////       DataLabels = true,
+            ////       Title = MainWindow.resourcemanager.GetString("trDocument")
+            ////   });
+            ////   columnChartData.Add(
+            ////new StackedColumnSeries
+            ////{
+            ////    Values = cheque.AsChartValues(),
+            ////    DataLabels = true,
+            ////    Title = MainWindow.resourcemanager.GetString("trCheque")
+            ////});
 
-            //    if (balanceSum != 0)
-            //        cS.Add(balanceSum);
+            ////   columnChartData.Add(
+            ////new StackedColumnSeries
+            ////{
+            ////    Values = invoice.AsChartValues(),
+            ////    DataLabels = true,
+            ////    Title = MainWindow.resourcemanager.GetString("trInv")
+            ////});
 
-            //    axcolumn.Labels.Add(MainWindow.resourcemanager.GetString("trOthers"));
-            //}
-
-            //columnChartData.Add(
-            //new StackedColumnSeries
-            //{
-            //    Values = cS.AsChartValues(),
-            //    Title = titles[0],
-            //    DataLabels = true,
-            //});
-
-            //DataContext = this;
-            //cartesianChart.Series = columnChartData;
+            ////   DataContext = this;
+            ////   cartesianChart.Series = columnChartData;
         }
 
         private void fillPieChart()
         {
             List<string> titles = new List<string>();
             IEnumerable<int> x = null;
-            IEnumerable<decimal> balances = null;
 
             titles.Clear();
+            int count = 0;
 
-            //var titleTemp = balancesQuery.GroupBy(m => m.branchName);
-            //titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //var result = balancesQuery.GroupBy(s => s.branchId)
-            //            .Select(
-            //                g => new
-            //                {
-            //                    branchId = g.Key,
-            //                    balance = g.Sum(s => s.balance),
-            //                    count = g.Count()
-            //                });
-            //balances = result.Select(m => decimal.Parse(SectionData.DecTostring(m.balance.Value)));
+            var result = paymentStsQuery.GroupBy(s => new { s.customerId }).Select(s => new
+            {
+                customerId = s.Key.customerId,
+                customerName = s.FirstOrDefault().customerName+" "+ s.FirstOrDefault().customerLastName,
+                count = s.Count()
+            });
+            titles.AddRange(result.Select(jj => jj.customerName));
 
-            //SeriesCollection piechartData = new SeriesCollection();
-            //for (int i = 0; i < balances.Count(); i++)
-            //{
-            //    List<decimal> final = new List<decimal>();
-            //    List<string> lable = new List<string>();
-            //    final.Add(balances.ToList().Skip(i).FirstOrDefault());
-            //    piechartData.Add(
-            //      new PieSeries
-            //      {
-            //          Values = final.AsChartValues(),
-            //          Title = titles.Skip(i).FirstOrDefault(),
-            //          DataLabels = true,
-            //      }
-            //  );
-            //}
-            //chart1.Series = piechartData;
+            x = result.Select(m => m.count);
+
+            count = titles.Count();
+
+            SeriesCollection piechartData = new SeriesCollection();
+
+            int xCount = 6;
+            if (count < 6) xCount = count;
+
+            for (int i = 0; i < xCount; i++)
+            {
+                List<decimal> final = new List<decimal>();
+                final.Add(x.ToList().Skip(i).FirstOrDefault());
+                piechartData.Add(
+                 new PieSeries
+                 {
+                     Values = final.AsChartValues(),
+                     Title = titles.Skip(i).FirstOrDefault(),
+                     DataLabels = true,
+                 }
+             );
+            }
+            if (count > 6)
+            {
+                List<decimal> final = new List<decimal>();
+                final.Add(x.ToList().Skip(6).FirstOrDefault());
+                piechartData.Add(
+                new PieSeries
+                {
+                    Values = final.AsChartValues(),
+                    Title = MainWindow.resourcemanager.GetString("trOthers"),
+                    DataLabels = true,
+                }
+            );
+            }
+
+            chart1.Series = piechartData;
         }
         private void fillRowChart()
         {
+            int endYear = DateTime.Now.Year;
+            int startYear = endYear - 1;
+            int startMonth = DateTime.Now.Month;
+            int endMonth = startMonth;
+            if (dp_startDate.SelectedDate != null && dp_endDate.SelectedDate != null)
+            {
+                startYear  = dp_startDate.SelectedDate.Value.Year;
+                endYear    = dp_endDate.SelectedDate.Value.Year;
+                startMonth = dp_startDate.SelectedDate.Value.Month;
+                endMonth   = dp_endDate.SelectedDate.Value.Month;
+            }
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
             List<int> ids = new List<int>();
-            List<int> otherIds = new List<int>();
+            List<PaymentsSts> resultList = new List<PaymentsSts>();
 
-            //List<ItemUnitInvoiceProfit> resultList = new List<ItemUnitInvoiceProfit>();
-            //SeriesCollection rowChartData = new SeriesCollection();
+            SeriesCollection rowChartData = new SeriesCollection();
+            var temp = paymentStsQuery.GroupBy(s => new { s.agentId }).Select(s => new
+            {
+                Date = s.FirstOrDefault().updateDatePo,///////////?????????????????????????
+                Name = s.FirstOrDefault().agentName +" "+ s.FirstOrDefault().agentLastName,
+                Id = s.FirstOrDefault().agentId
+            });
+            names.AddRange(temp.Select(nn => nn.Name.ToString()));
+            ids.AddRange(temp.Select(nn => nn.Id.Value));
 
-            //if (selectedTab == 0)
-            //{
-            //    var tempName = profitsQuery.GroupBy(s => new { s.branchCreatorId }).Select(s => new
-            //    {
-            //        id = s.Key,
-            //        name = s.FirstOrDefault().branchCreatorName
-            //    });
-            //    names.AddRange(tempName.Select(nn => nn.name.ToString()));
-            //    ids.AddRange(tempName.Select(mm => mm.id.branchCreatorId.Value));
-            //}
-            //else if (selectedTab == 1)
-            //{
-            //    var tempName = profitsQuery.GroupBy(s => new { s.ITitemId }).Select(s => new
-            //    {
-            //        id = s.Key,
-            //        name = s.FirstOrDefault().ITitemName
-            //    });
-            //    names.AddRange(tempName.Select(nn => nn.name.ToString()));
-            //    ids.AddRange(tempName.Select(mm => mm.id.ITitemId.Value));
-            //}
+            int xCount = 6;
+            if (temp.Count() < 6) xCount = temp.Count();
+            for (int i = 0; i < xCount; i++)
+            {
+                #region
+                SeriesCollection columnChartData = new SeriesCollection();
+                List<decimal> paySum = new List<decimal>();
 
-            ////LineSeries[] ls = new LineSeries[names.Count];
-            //int x = 6;
-            //if (names.Count() < 6) x = names.Count();
-            //for (int i = 0; i < x; i++)
-            //{
+                if (endYear - startYear <= 1)
+                {
+                    for (int year = startYear; year <= endYear; year++)
+                    {
+                        for (int month = startMonth; month <= 12; month++)
+                        {
+                            var firstOfThisMonth = new DateTime(year, month, 1);
+                            var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
+                            var drawSum = paymentStsQuery.ToList().Where(c => c.updateDatePo > firstOfThisMonth && c.updateDatePo <= firstOfNextMonth && c.agentId == ids[i]).Select(c => c.totalnet).Sum();
 
-            //    drawPoints(names[i], ids[i], rowChartData, 'n', otherIds);
-            //}
-            ////others
-            //if (names.Count() > 6)
-            //{
-            //    for (int i = names.Count - x; i < names.Count; i++)
-            //        otherIds.Add(ids[i]);
-            //    drawPoints(MainWindow.resourcemanager.GetString("trOthers"), 0, rowChartData, 'o', otherIds);
-            //}
-            ////rowChartData.AddRange(ls);
-            //DataContext = this;
-            //rowChart.Series = rowChartData;
+                            paySum.Add(drawSum);
+
+                            MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
+
+                            if (year == endYear && month == endMonth)
+                            {
+                                break;
+                            }
+                            if (month == 12)
+                            {
+                                startMonth = 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int year = startYear; year <= endYear; year++)
+                    {
+                        var firstOfThisYear = new DateTime(year, 1, 1);
+                        var firstOfNextMYear = firstOfThisYear.AddYears(1);
+                        var drawSum = paymentStsQuery.ToList().Where(c => c.updateDatePo > firstOfThisYear && c.updateDatePo <= firstOfNextMYear).Select(c => c.totalnet).Sum();
+
+                        paySum.Add(drawSum);
+                        MyAxis.Labels.Add(year.ToString());
+                    }
+                }
+                rowChartData.Add(
+                new LineSeries
+                {
+                    Values = paySum.AsChartValues(),
+                    //Title = MainWindow.resourcemanager.GetString("trPayments")
+                    Title = names[i]
+
+                });
+                #endregion
+            }
+            if (temp.Count() > 6)
+            {
+                
+                #region
+                SeriesCollection columnChartData = new SeriesCollection();
+                List<decimal> paySum = new List<decimal>();
+                decimal drawSum = 0;
+                if (endYear - startYear <= 1)
+                    {
+                        for (int year = startYear; year <= endYear; year++)
+                        {
+                            for (int month = startMonth; month <= 12; month++)
+                            {
+                                for (int i = 6; i < temp.Count(); i++)
+                                {
+                                    var firstOfThisMonth = new DateTime(year, month, 1);
+                                    var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
+                                    drawSum = paymentStsQuery.ToList().Where(c => c.updateDatePo > firstOfThisMonth && c.updateDatePo <= firstOfNextMonth && c.agentId == ids[i]).Select(c => c.totalnet).Sum();
+                                }
+                                paySum.Add(drawSum);
+                                MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
+
+                                if (year == endYear && month == endMonth)
+                                {
+                                    break;
+                                }
+                                if (month == 12)
+                                {
+                                    startMonth = 1;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int year = startYear; year <= endYear; year++)
+                        {
+                            for (int i = 6; i < temp.Count(); i++)
+                            {
+                                var firstOfThisYear = new DateTime(year, 1, 1);
+                                var firstOfNextMYear = firstOfThisYear.AddYears(1);
+                                drawSum = paymentStsQuery.ToList().Where(c => c.updateDatePo > firstOfThisYear && c.updateDatePo <= firstOfNextMYear).Select(c => c.totalnet).Sum();
+                            }
+                            paySum.Add(drawSum);
+                            MyAxis.Labels.Add(year.ToString());
+                        }
+                    }
+
+
+                rowChartData.Add(
+                new LineSeries
+                {
+                    Values = paySum.AsChartValues(),
+                    Title = MainWindow.resourcemanager.GetString("trOthers")
+                }
+                );
+                    #endregion
+
+            }
+            DataContext = this;
+            rowChart.Series = rowChartData;
         }
         #endregion
 
