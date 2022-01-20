@@ -248,7 +248,7 @@
                     </DataGrid.Resources>
                     
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="*"  Header="Process Num" Binding="{Binding Path=packageCode}">
+                        <DataGridTextColumn Width="*"  Header="Process Num" Binding="{Binding Path=codePo}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
@@ -270,7 +270,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="*"  Header="Process Date" Binding="{Binding Path=updateDate,Converter={StaticResource dateFrameConverter }}">
+                        <DataGridTextColumn Width="*"  Header="Process Date" Binding="{Binding Path=updateDatePo,Converter={StaticResource dateFrameConverter }}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>

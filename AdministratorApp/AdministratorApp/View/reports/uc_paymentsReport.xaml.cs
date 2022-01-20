@@ -197,25 +197,15 @@ namespace AdministratorApp.View.reports
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, MainWindow.resourcemanager.GetString("trSearchHint"));
 
-            //dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trNO");
-            //dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookDate");
-            //dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trUpgradeDate");
-            //dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trPackage");
-            //dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
-            //dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
-            //dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
-            /*
-             public string packageNumber { get; set; }//1- Book num
-             public Nullable<System.DateTime> bookDate { get; set; }//2- Book Date
-             public Nullable<System.DateTime> createDatePo { get; set; }//3-Upgrade Date
-             public string packageName { get; set; }//4-Package Name
-             public string agentName { get; set; }// 5- Agent name 
-             public string agentAccountName { get; set; }//5- Agent AccountName
-             public string agentLastName { get; set; }//5- Agent LastName
-             public string customerName { get; set; }// 6- customer Name
-             public string customerLastName { get; set; }// 6- customer LastName
-             public decimal Price { get; set; }//7- price
-             */
+            dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcess");//Process Num
+            dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("tr_Book");//booked Num
+            dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trProcessDate");
+            dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trExpireDate");
+            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
+            dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
+            dg_book.Columns[7].Header = MainWindow.resourcemanager.GetString("trPayments");
+
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
@@ -260,225 +250,188 @@ namespace AdministratorApp.View.reports
         #region events
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-         //try
-         //{
-            await RefreshPaymentSTSList();
-            //if (!MainWindow.userLogin.type.Equals("ag"))
-            //{
-            //    cb_countries.SelectedIndex = -1;
-            //    cb_agents.SelectedIndex = -1;
-            //}
-            cb_customers.SelectedIndex = -1;
-            cb_packages.SelectedIndex = -1;
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                await RefreshPaymentSTSList();
+                //if (!MainWindow.userLogin.type.Equals("ag"))
+                //{
+                //    cb_countries.SelectedIndex = -1;
+                //    cb_agents.SelectedIndex = -1;
+                //}
+                cb_customers.SelectedIndex = -1;
+                cb_packages.SelectedIndex = -1;
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {//date
-         //try
-         //{
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Cb_countries_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select country
-         //try
-         //{
-            if (cb_countries.SelectedIndex != -1)
-                await FillCombo.fillAgentByCountry(cb_agents, (int)cb_countries.SelectedValue);
-            else
+            try
             {
-                cb_agents.IsEnabled = false;
-                cb_agents.SelectedIndex = -1;
+                if (cb_countries.SelectedIndex != -1)
+                await FillCombo.fillAgentByCountry(cb_agents, (int)cb_countries.SelectedValue);
+                else
+                {
+                    cb_agents.IsEnabled = false;
+                    cb_agents.SelectedIndex = -1;
+                }
+                await Search();
             }
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_agents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select agent
-         //try
-         //{
-            if (cb_agents.SelectedIndex != -1)
+            try
+            {
+                if (cb_agents.SelectedIndex != -1)
                 await FillCombo.fillCustomerByAgent(cb_customers, (int)cb_agents.SelectedValue);
 
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-         //try
-         //{
-            if (cb_customers.SelectedIndex != -1)
+            try
+            {
+                if (cb_customers.SelectedIndex != -1)
                 await FillCombo.fillPackageByCustomer(cb_packages, (int)cb_customers.SelectedValue);
 
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_packages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
-         //try
-         //{
-            if (cb_agents.SelectedIndex != -1)
+            try
+            {
+                if (cb_agents.SelectedIndex != -1)
                 paymentSts = await statisticsModel.GetPaymentsByAgentId((int)cb_agents.SelectedValue);
 
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Chk_Checked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            string name = ((CheckBox)sender).Name;
-            chkAll(name, true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                string name = ((CheckBox)sender).Name;
+                chkAll(name, true);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Chk_Unchecked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            string name = ((CheckBox)sender).Name;
-            chkAll(name, false);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                string name = ((CheckBox)sender).Name;
+                chkAll(name, false);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
 
         #region charts
         private void fillColumnChart()
         {
-            //axcolumn.Labels = new List<string>();
-            //List<string> names = new List<string>();
-            //List<PaymentsSts> resultList = new List<PaymentsSts>();
+            axcolumn.Labels = new List<string>();
+            List<string> names = new List<string>();
+            List<int> ids = new List<int>();
+            List<int> packIds = new List<int>();
 
+            var tempName = paymentStsQuery.GroupBy(s => new { s.customerId }).Select(s => new
+            {
+                customerId = s.FirstOrDefault().customerId,
+                customerName = s.FirstOrDefault().customerName + " " + s.FirstOrDefault().customerLastName
+            });
+            names.AddRange(tempName.Select(nn => nn.customerName));
+            ids.AddRange(tempName.Select(nn => nn.customerId.Value));
+
+            var tempPackage = paymentStsQuery.GroupBy(s => new { s.packageId }).Select(s => new
+            {
+                packageId = s.FirstOrDefault().packageId,
+                packageName = s.FirstOrDefault().packageName
+            });
+            packIds.AddRange(tempPackage.Select(nn => nn.packageId.Value));
            
-            //resultList = res.GroupBy(x => new { x.customerId , x.packageId }).Select(x => new PaymentsSts
-            //{
-            //    customerId = x.FirstOrDefault().customerId,
-            //    customerName = x.FirstOrDefault().customerName + " " + x.FirstOrDefault().customerLastName,
-            //    packageId = x.FirstOrDefault().packageId,
-            //    totalnet = x.FirstOrDefault().totalnet
-            //    totalnet = x.Sum(g => (decimal)g.totalnet)
-            //}
-            //).ToList();
+            List<PaymentsSts> resultList = new List<PaymentsSts>();
 
-            //var tempName = res.GroupBy(s => new { s.customerId }).Select(s => new
-            //{
-            //    customerName = s.FirstOrDefault().customerName,
-            //});
-            //names.AddRange(tempName.Select(nn => nn.customerName));
+            resultList = paymentStsQuery.GroupBy(x => new { x.customerId, x.packageId }).Select(x => new PaymentsSts
+            {
+                customerId = x.FirstOrDefault().customerId,
+                customerName = x.FirstOrDefault().customerName + " " + x.FirstOrDefault().customerLastName,
+                packageId = x.FirstOrDefault().packageId,
+                totalnet = x.Sum(g => (decimal)g.totalnet)
+            }
+            ).ToList();
 
-            //SeriesCollection columnChartData = new SeriesCollection();
-            //List<decimal> paid = new List<decimal>();
+            SeriesCollection columnChartData = new SeriesCollection();
 
-            //for (int i = 0; i < xCount; i++)
-            //{
-            //}
-            //    int xCount = 6;
-            //if (names.Count() <= 6)
-            //    xCount = names.Count();
-            //for (int i = 0; i < xCount; i++)
-            //{
-            //    paid.Add(resultList.ToList().Skip(i).FirstOrDefault().totalnet);
+            int xCount = 6;
+            if (names.Count() <= 6)
+                xCount = names.Count();
 
-            //    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            //}
-            ////   if (resultList.Count() > 6)
-            ////   {
-            ////       decimal cashSum = 0, cardSum = 0, docSum = 0, chequeSum = 0, balanceSum = 0, invoiceSum = 0;
-            ////       for (int i = 6; i < resultList.Count; i++)
-            ////       {
-            ////           cashSum = cashSum + resultList.ToList().Skip(i).FirstOrDefault().cashTotal;
-            ////           cardSum = cardSum + resultList.ToList().Skip(i).FirstOrDefault().cardTotal;
-            ////           docSum = docSum + resultList.ToList().Skip(i).FirstOrDefault().docTotal;
-            ////           chequeSum = chequeSum + resultList.ToList().Skip(i).FirstOrDefault().chequeTotal;
-            ////           invoiceSum = invoiceSum + resultList.ToList().Skip(i).FirstOrDefault().invoiceTotal;
-            ////       }
-            ////       if (!((cashSum == 0) && (cardSum == 0) && (docSum == 0) && (chequeSum == 0) && (chequeSum == 0) && (balanceSum == 0) && (invoiceSum == 0)))
-            ////       {
-            ////           cash.Add(cashSum);
-            ////           card.Add(cardSum);
-            ////           doc.Add(docSum);
-            ////           cheque.Add(chequeSum);
-            ////           invoice.Add(invoiceSum);
+            for (int j = 0; j < packIds.Count; j++)
+            {
+                List<decimal> paid = new List<decimal>();
 
-            ////           axcolumn.Labels.Add(MainWindow.resourcemanager.GetString("trOthers"));
-            ////       }
-            ////   }
-            ////   columnChartData.Add(
-            ////   new StackedColumnSeries
-            ////   {
-            ////       Values = cash.AsChartValues(),
-            ////       DataLabels = true,
-            ////       Title = MainWindow.resourcemanager.GetString("trCash")
-            ////   });
-            ////   columnChartData.Add(
-            ////   new StackedColumnSeries
-            ////   {
-            ////       Values = card.AsChartValues(),
-            ////       DataLabels = true,
-            ////       Title = MainWindow.resourcemanager.GetString("trAnotherPaymentMethods")
-            ////   });
-            ////   columnChartData.Add(
-            ////   new StackedColumnSeries
-            ////   {
-            ////       Values = doc.AsChartValues(),
-            ////       DataLabels = true,
-            ////       Title = MainWindow.resourcemanager.GetString("trDocument")
-            ////   });
-            ////   columnChartData.Add(
-            ////new StackedColumnSeries
-            ////{
-            ////    Values = cheque.AsChartValues(),
-            ////    DataLabels = true,
-            ////    Title = MainWindow.resourcemanager.GetString("trCheque")
-            ////});
+                for (int i = 0; i < xCount; i++)
+                {
+                    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
 
-            ////   columnChartData.Add(
-            ////new StackedColumnSeries
-            ////{
-            ////    Values = invoice.AsChartValues(),
-            ////    DataLabels = true,
-            ////    Title = MainWindow.resourcemanager.GetString("trInv")
-            ////});
+                    int cusId = ids[i], pId = packIds[j];
 
-            ////   DataContext = this;
-            ////   cartesianChart.Series = columnChartData;
+                    paid.Add(resultList.Where(nn => nn.packageId == pId && nn.customerId == cusId).Select(nn => nn.totalnet).FirstOrDefault());
+                }
+
+                columnChartData.Add(
+                new StackedColumnSeries
+                {
+                    Values = paid.AsChartValues(),
+                    DataLabels = true,
+                    Title = tempPackage.Select(nn => nn.packageName).Skip(j).FirstOrDefault()
+                });
+            }
+            DataContext = this;
+            cartesianChart.Series = columnChartData;
         }
 
         private void fillPieChart()

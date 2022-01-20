@@ -2659,4 +2659,19 @@
   <data name="trUpload" xml:space="preserve">
     <value>رفع</value>
   </data>
+  <data name="trExpireDate" xml:space="preserve">
+    <value>تاريخ انتهاء الصلاحية</value>
+  </data>
+  <data name="trProcess" xml:space="preserve">
+    <value>العملية</value>
+  </data>
+  <data name="tr_Book" xml:space="preserve">
+    <value>الحجز</value>
+  </data>
+  <data name="trSelectAll" xml:space="preserve">
+    <value>اختيار الكل</value>
+  </data>
+  <data name="trUnSelectAll" xml:space="preserve">
+    <value>إلغاء اختيار الكل</value>
+  </data>
 </root>

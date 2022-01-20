@@ -2677,4 +2677,19 @@ Please add Email in setting</value>
   <data name="String1" xml:space="preserve">
     <value />
   </data>
+  <data name="trExpireDate" xml:space="preserve">
+    <value>Expired Date</value>
+  </data>
+  <data name="trProcess" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="tr_Book" xml:space="preserve">
+    <value>Book</value>
+  </data>
+  <data name="trSelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="trUnSelectAll" xml:space="preserve">
+    <value>Unselect All</value>
+  </data>
 </root>

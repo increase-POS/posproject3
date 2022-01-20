@@ -110,11 +110,9 @@ namespace AdministratorApp.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            //try
-            //{
+            try
+            {
                 HelpClass.StartAwait(grid_serialsList);
-
-             
 
                 //List<PosSerials> posSerialsNew = new List<PosSerials>();
                 //foreach (PosSerials row in dg_serials.Items)
@@ -133,6 +131,7 @@ namespace AdministratorApp.View.windows
                         PosSerialsUpdate uprow = new PosSerialsUpdate();
                         uprow.serialId =srow.serialId ;
                         uprow.isActive = srow.isActive;
+                        //if(srow.isActive ==1)
                         uplist.Add(uprow);
                     }
                     int res = await posSerialModel.UpdateList(uplist.ToList(), MainWindow.userID);
@@ -150,13 +149,13 @@ namespace AdministratorApp.View.windows
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
                 }
 
-            //    HelpClass.EndAwait(grid_serialsList);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_serialsList);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_serialsList);
+            }
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_serialsList);
+                    HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -293,7 +292,7 @@ namespace AdministratorApp.View.windows
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
-            chk_allSerials.Content = MainWindow.resourcemanager.GetString("trAll");
+            chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
         }
 
         async Task<IEnumerable<PosSerials>> RefreshList()
@@ -450,6 +449,7 @@ namespace AdministratorApp.View.windows
         {
             try
             {
+                chk_allSerials.Content = MainWindow.resourcemanager.GetString("trUnSelectAll");
                 foreach (var s in posSerialsQuery)
                 {
                     isActiveCount = posSerialsQuery.Count(c => c.isActive == 1);
@@ -470,7 +470,9 @@ namespace AdministratorApp.View.windows
         private void Chk_allSerials_Unchecked(object sender, RoutedEventArgs e)
         {
             try
-            { 
+            {
+                chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
+
                 foreach (var s in posSerialsQuery)
                 {
                     s.isActive = 0;

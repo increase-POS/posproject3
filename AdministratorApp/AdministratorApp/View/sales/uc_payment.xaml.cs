@@ -578,6 +578,8 @@ namespace AdministratorApp.View.sales
                 {
                     tb_discount.Text = "0";
 
+                    tb_discount.IsEnabled = true;
+
                     btn_upgrade.IsEnabled = true;
 
                     packageUser = cb_packageNumber.SelectedItem as PackageUser;

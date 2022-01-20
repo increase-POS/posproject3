@@ -34,7 +34,10 @@ namespace AdministratorApp.Classes
         static public async Task fillBookNum(ComboBox combo , int customerId)
         {
             packageUsers = await packageUser.GetByCustomerId(customerId);
-
+            foreach (var i in packageUsers)
+            {
+                i.packageNumber = i.packageNumber + "     " + i.packageName;
+            }
             combo.ItemsSource = packageUsers.Where(x => x.isActive == 1 );
             combo.SelectedValuePath = "packageUserId";
             combo.DisplayMemberPath = "packageNumber";
