@@ -137,6 +137,8 @@ namespace AdministratorApp.View.sales
                         txt_activationCodeTitle.Visibility = Visibility.Collapsed;
                         tb_activationCode.Visibility = Visibility.Collapsed;
                     }
+                    tgl_isActive.IsChecked = Convert.ToBoolean(packuser.isActive);
+                    tgl_device.IsChecked = Convert.ToBoolean(packuser.canChngSer);
                 }
                 cb_agent.Text = agent.accountName;
 
@@ -155,6 +157,7 @@ namespace AdministratorApp.View.sales
             txt_title.Text = MainWindow.resourcemanager.GetString("trSales");
             txt_saleDetails.Text = MainWindow.resourcemanager.GetString("trSaleDetails");
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_package, MainWindow.resourcemanager.GetString("trPackageHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_agent, MainWindow.resourcemanager.GetString("trAgentHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, MainWindow.resourcemanager.GetString("trCustomerHint"));
@@ -167,6 +170,9 @@ namespace AdministratorApp.View.sales
             txt_priceTitle.Text = MainWindow.resourcemanager.GetString("trPrice");
             txt_statusTitle.Text = MainWindow.resourcemanager.GetString("trStatus");
             txt_serialsTitle.Text = MainWindow.resourcemanager.GetString("trSerials");
+
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_device.Text = MainWindow.resourcemanager.GetString("trChangeDevice");
 
             txt_programDetails.Text = MainWindow.resourcemanager.GetString("trProgramDetails");
             txt_programTitle.Text = MainWindow.resourcemanager.GetString("trProgram");
@@ -341,13 +347,18 @@ namespace AdministratorApp.View.sales
                         packuser.isActive = 1;
                     else
                         packuser.isActive = 0;
+                    if (tgl_device.IsChecked == true)
+                        packuser.canChngSer = 1;
+                    else
+                        packuser.canChngSer = 0;
+                    
                     packuser.canRenew = true;
                     packuser.packageSaleCode = packuser.packageSaleCode;
                     packuser.notes = "";
                     packuser.isOnlineServer =  bool.Parse(cb_isOnline.SelectedValue.ToString());
                     packuser.countryPackageId = (int)cb_period.SelectedValue;
                     packuser.oldPackageId = oldPackageId;
-                    packuser.oldCountryPackageId = oldCountryPackageId;
+                    packuser.oldCountryPackageId = oldCountryPackageId; 
 
                     if (packuser.packageUserId == 0) pop = "trPopAddBook";
                     else pop = "trPopUpgradeSucceed";
@@ -482,7 +493,11 @@ namespace AdministratorApp.View.sales
                         }
                         catch { }
                     }
-                }
+                    else
+                    {
+                        await FillCombo.fillAgentPackage(cb_package, MainWindow.userLogin.userId);
+                    }
+                 }
             //}
             //    catch (Exception ex)
             //    {

@@ -165,6 +165,7 @@ namespace AdministratorApp.View.sales
         void ClearPackageUser()
         {
             cb_packageNumber.SelectedIndex = -1;
+            txt_packageNumberTitle.Text = "";
 
             tb_discount.Text = "0";
             tb_discount.IsEnabled = false;
@@ -219,7 +220,6 @@ namespace AdministratorApp.View.sales
         {//refresh
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 
                 await RefreshPayOpList();
@@ -229,7 +229,6 @@ namespace AdministratorApp.View.sales
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -258,6 +257,7 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 Clear();
+                ClearPackageUser();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -269,9 +269,6 @@ namespace AdministratorApp.View.sales
             }
         }
       
-        #region Refresh & Search
-        
-        #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
       
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -520,8 +517,11 @@ namespace AdministratorApp.View.sales
                 if (cb_customer.SelectedIndex != -1)
                 {
                     //this.DataContext = cb_customer.SelectedItem as PayOp;
-
-                    await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
+                    if (!MainWindow.userLogin.type.Equals("ag"))
+                        await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
+                    else
+                        await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue , MainWindow.userLogin.userId);
+                    
                     if (cb_packageNumber.Items.Count > 0)
                         btn_upgrade.IsEnabled = true;
                     else
@@ -586,6 +586,10 @@ namespace AdministratorApp.View.sales
 
                     txt_period.Visibility = Visibility.Visible;
 
+                    int index = packageUser.packageNumber.IndexOf("     ");
+                    string s = packageUser.packageNumber.Substring(0 , index);
+                    txt_packageNumberTitle.Text = s;
+
                     grid_packageDetails.DataContext = packageUser;
                     grid_payDetails.DataContext = packageUser;
 
@@ -593,28 +597,6 @@ namespace AdministratorApp.View.sales
                     if (packageUser != null)
                     {
                         txt_total.Text = txt_price.Text;
-                        #region
-                        //txt_packageNumberTitle.Text = packageUser.packageNumber;
-                        //txt_packageName.Text = packageUser.packageName;
-                        //CountryPackageDate cpd = new CountryPackageDate();
-                        //CountryPackageDate cpdModel = new CountryPackageDate();
-                        //cpd = await cpdModel.GetByID(packageUser.countryPackageId.Value);
-                        //txt_period.Text = HelpClass.getPeriod(cpd);
-                        //txt_expirDate.Text = packageUser.expireDate.ToString();
-                        //txt_price.Text = packageUser.price.ToString();
-                        //txt_moneyCode.Text = packageUser.currency;
-                        //txt_discount.Text = tb_discount.Text;
-                        //txt_expirDate.Text = packageUser.expireDate.ToString();
-                        //txt_moneyCode1.Text = packageUser.currency;
-                        //int discount = 0;
-                        //try
-                        //{
-                        //    discount = int.Parse(tb_discount.Text);
-                        //}
-                        //catch { discount = 0; }
-                        //txt_total.Text = (float.Parse(txt_price.Text) - discount).ToString();
-                        //txt_moneyCode3.Text = packageUser.currency;
-                        #endregion
                     }
                     #endregion
 

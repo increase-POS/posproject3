@@ -2692,4 +2692,7 @@ Please add Email in setting</value>
   <data name="trUnSelectAll" xml:space="preserve">
     <value>Unselect All</value>
   </data>
+  <data name="trChangeDevice" xml:space="preserve">
+    <value>Change device</value>
+  </data>
 </root>

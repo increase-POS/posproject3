@@ -2674,4 +2674,7 @@
   <data name="trUnSelectAll" xml:space="preserve">
     <value>إلغاء اختيار الكل</value>
   </data>
+  <data name="trChangeDevice" xml:space="preserve">
+    <value>تغيير الجهاز</value>
+  </data>
 </root>

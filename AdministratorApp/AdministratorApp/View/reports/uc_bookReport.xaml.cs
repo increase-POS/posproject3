@@ -60,9 +60,9 @@ namespace AdministratorApp.View.reports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-                //HelpClass.StartAwait(grid_mainGrid);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -80,46 +80,53 @@ namespace AdministratorApp.View.reports
 
                 if (!MainWindow.userLogin.type.Equals("ag"))
                 {
-                    cb_countries.Visibility = Visibility.Visible;
+                    dpnl_country.Visibility = Visibility.Visible;
+                    bdr_country.Visibility = Visibility.Collapsed;
                     await FillCombo.fillCountriesNames(cb_countries);
-                    cb_agents.IsEnabled = true;
+                    bdr_agent.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     dpnl_country.Visibility = Visibility.Collapsed;
+                    bdr_country.Visibility = Visibility.Visible;
+                    tb_country.Text = await HelpClass.getCountry(MainWindow.userLogin.countryId.Value);
+
+                    dpnl_agent.Visibility = Visibility.Collapsed;
+                    bdr_agent.Visibility = Visibility.Visible;
+                    tb_agent.Text = MainWindow.userLogin.accountName;
+
                     var typelist = new[] {
                                             new { Text  = MainWindow.userLogin.accountName ,
-                                                  Value = MainWindow.userLogin.userId        }
+                                                  Value = MainWindow.userLogin.userId  }
                                          };
                     cb_agents.DisplayMemberPath = "Text";
                     cb_agents.SelectedValuePath = "Value";
                     cb_agents.ItemsSource = typelist;
                     cb_agents.SelectedIndex = 0;
-                    cb_agents.IsEnabled = false;
-                    chk_allAgents.Visibility = Visibility.Hidden;
+                   
                 }
 
                 await Search();
 
-                //HelpClass.EndAwait(grid_mainGrid);
-            //}
-            //catch (Exception ex)
-            //{
-                //HelpClass.EndAwait(grid_mainGrid);
-                //HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
-         //try
-         //{
-            await Search();
-        //}
-        //catch (Exception ex)
-        //{
-        //    HelpClass.ExceptionMessage(ex, this);
-        //}
+            try
+            {
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -168,7 +175,6 @@ namespace AdministratorApp.View.reports
             RefreshbookStsView();
         }
 
-        
         void RefreshbookStsView()
         {
             dg_book.ItemsSource = bookStsQuery;
@@ -179,8 +185,11 @@ namespace AdministratorApp.View.reports
         }
         async Task<IEnumerable<BookSts>> RefreshBookSTSList()
         {
-            bookSts = await statisticsModel.GetAllBooks(); 
-           
+            if (!MainWindow.userLogin.type.Equals("ag"))
+                bookSts = await statisticsModel.GetAllBooks();
+            else
+                bookSts = await statisticsModel.GetByAgentId(MainWindow.userLogin.userId);
+
             return bookSts;
         }
 
@@ -189,7 +198,9 @@ namespace AdministratorApp.View.reports
             txt_tabTitle.Text = MainWindow.resourcemanager.GetString("trBook");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_countries, MainWindow.resourcemanager.GetString("trCountryHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_country, MainWindow.resourcemanager.GetString("trCountryHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_agents, MainWindow.resourcemanager.GetString("trAgentHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_agent, MainWindow.resourcemanager.GetString("trAgentHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customers, MainWindow.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_packages, MainWindow.resourcemanager.GetString("trPackageHint"));
 
@@ -210,18 +221,7 @@ namespace AdministratorApp.View.reports
             dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
             dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
             dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
-            /*
-             public string packageNumber { get; set; }//1- Book num
-             public Nullable<System.DateTime> bookDate { get; set; }//2- Book Date
-             public Nullable<System.DateTime> createDatePo { get; set; }//3-Upgrade Date
-             public string packageName { get; set; }//4-Package Name
-             public string agentName { get; set; }// 5- Agent name 
-             public string agentAccountName { get; set; }//5- Agent AccountName
-             public string agentLastName { get; set; }//5- Agent LastName
-             public string customerName { get; set; }// 6- customer Name
-             public string customerLastName { get; set; }// 6- customer LastName
-             public decimal Price { get; set; }//7- price
-             */
+           
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
@@ -267,124 +267,136 @@ namespace AdministratorApp.View.reports
         #region events
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-         //try
-         //{
-            await RefreshBookSTSList();
-            //if (!MainWindow.userLogin.type.Equals("ag"))
-            //{
-            //    cb_countries.SelectedIndex = -1;
-            //    cb_agents.SelectedIndex = -1;
-            //}
-            cb_customers.SelectedIndex = -1;
-            cb_packages.SelectedIndex = -1;
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                await RefreshBookSTSList();
+                //if (!MainWindow.userLogin.type.Equals("ag"))
+                //{
+                //    cb_countries.SelectedIndex = -1;
+                //    cb_agents.SelectedIndex = -1;
+                //}
+                cb_customers.SelectedIndex = -1;
+                cb_packages.SelectedIndex = -1;
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {//date
-             //try
-             //{
-            await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Cb_countries_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select country
-            //try
-            //{
-                if(cb_countries.SelectedIndex != -1)
+            try
+            {
+                if (cb_countries.SelectedIndex != -1)
                     await FillCombo.fillAgentByCountry(cb_agents, (int)cb_countries.SelectedValue);
                 else
                 {
                     cb_agents.IsEnabled = false;
                     cb_agents.SelectedIndex = -1;
+                    //dpnl_agent.Visibility = Visibility.Collapsed;
+                    //bdr_agent.Visibility = Visibility.Visible;
+                    //tb_agent.Text = MainWindow.userLogin.accountName;
                 }
                 await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_agents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select agent
-         //try
-         //{
-            if (cb_agents.SelectedIndex != -1)
+            try
             {
-                if(MainWindow.userLogin.type.Equals("ag"))
-                    await FillCombo.fillCustomerByAgent(cb_customers, (int)cb_agents.SelectedValue);
-            }
+                if (cb_agents.SelectedIndex != -1)
+                {
+                    if ((int)cb_agents.SelectedValue == 3)
+                        await FillCombo.fillCustomer(cb_customers);
+                    else
+                        await FillCombo.fillCustomerByAgent(cb_customers, (int)cb_agents.SelectedValue);
+                }
                 await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            //try
-            //{
-                if(cb_customers.SelectedIndex != -1)
-                    await FillCombo.fillPackageByCustomer(cb_packages, (int)cb_customers.SelectedValue);
-
+            try
+            {
+                if (cb_customers.SelectedIndex != -1)
+                {
+                    cb_packages.ItemsSource = bookStsQuery.Where(b => b.customerId == (int)cb_customers.SelectedValue).GroupBy(p => p.packageId);
+                    cb_packages.SelectedValuePath = "packageId";
+                    cb_packages.DisplayMemberPath = "packageName";
+                    cb_packages.SelectedIndex = -1;
+                    //await FillCombo.fillPackageByCustomer(cb_packages, (int)cb_customers.SelectedValue);
+                }
                 await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Cb_packages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
-             //try
-             //{
+            try
+            {
                 if (cb_agents.SelectedIndex != -1)
                     bookSts = await statisticsModel.GetByAgentId((int)cb_agents.SelectedValue);
 
                 await Search();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Chk_Checked(object sender, RoutedEventArgs e)
+        private async void Chk_Checked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            string name = ((CheckBox)sender).Name;
-            chkAll(name, true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                string name = ((CheckBox)sender).Name;
+                chkAll(name, true);
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Chk_Unchecked(object sender, RoutedEventArgs e)
+        private async void Chk_Unchecked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            string name = ((CheckBox)sender).Name;
-            chkAll(name, false);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                string name = ((CheckBox)sender).Name;
+                chkAll(name, false);
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
 
