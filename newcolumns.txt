@@ -1,0 +1,7 @@
+   
+[packageUser]
+
+
+canChngSer	int	Checked
+
+   public Nullable<int> canChngSer { get; set; }

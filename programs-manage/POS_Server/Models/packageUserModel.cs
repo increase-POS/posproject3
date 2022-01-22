@@ -68,6 +68,7 @@ namespace Programs_Server.Models
         public bool islimitDate { get; set; }
 
         public string confirmStat { get; set; }
+        public Nullable<int> canChngSer { get; set; }
     }
 
   
@@ -156,6 +157,7 @@ namespace Programs_Server.Models
         public string packuserType { get; set; }
         public string activeApp { get; set; }
         public string confirmStat { get; set; }
+        public Nullable<int> canChngSer { get; set; }
 
     }
     public class SendDetail

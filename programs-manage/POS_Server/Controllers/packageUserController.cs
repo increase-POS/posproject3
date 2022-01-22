@@ -70,6 +70,7 @@ namespace Programs_Server.Controllers
                                         isOnlineServer = S.isOnlineServer,
                                         countryPackageId = S.countryPackageId,
                                         canRenew = S.canRenew,
+                                      canChngSer=S.canChngSer,
                                     }).ToList();
                         /*
 
@@ -175,7 +176,7 @@ namespace Programs_Server.Controllers
                                        islimitDate = D.islimitDate,
                                        price = D.price,
                                        currency = N.currency,
-
+                                       canChngSer = S.canChngSer,
 
                                    }).FirstOrDefault();
 
@@ -245,7 +246,7 @@ namespace Programs_Server.Controllers
                          isServerActivated = S.isServerActivated,
 
                          oldCountryPackageId = S.oldCountryPackageId,
-
+                         canChngSer = S.canChngSer,
                      }).FirstOrDefault();
 
                     return row;
@@ -399,7 +400,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
                                 tmpObject.countryPackageId = newObject.countryPackageId;
                                 tmpObject.canRenew = newObject.canRenew;
-
+                                tmpObject.canChngSer = newObject.canChngSer;
 
                                 entity.SaveChanges();
 
@@ -1035,6 +1036,8 @@ namespace Programs_Server.Controllers
                                         activatedate = S.activatedate,
                                         isServerActivated = S.isServerActivated,
                                         oldCountryPackageId = S.oldCountryPackageId,
+                                        canChngSer=S.canChngSer,
+
                                         //islimitDate = D.islimitDate,
 
 
@@ -1717,6 +1720,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.updateUserId = newObject.updateUserId;
                                 // tmpObject.bookDate = newObject.bookDate;
                                 tmpObject.isActive = newObject.isActive;
+                                tmpObject.canChngSer = newObject.canChngSer;
                                 //   tmpObject.expireDate = newObject.expireDate;//on pay
 
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
@@ -1777,6 +1781,7 @@ namespace Programs_Server.Controllers
                                 tmpObject.salesInvCount = 0;
 
                                 tmpObject.isActive = newObject.isActive;
+                                tmpObject.canChngSer = newObject.canChngSer;
                                 // tmpObject.expireDate = newObject.expireDate;//old -change on pay
                                 tmpObject.isOnlineServer = newObject.isOnlineServer;
 
@@ -1811,6 +1816,7 @@ namespace Programs_Server.Controllers
                                         row.updateDate = tmpObject.updateDate;
                                         row.updateUserId = tmpObject.updateUserId;
                                         entity.SaveChanges();
+
                                     }
 
 
@@ -2219,7 +2225,6 @@ namespace Programs_Server.Controllers
                                     dbPU.totalsalesInvCount = tmpPackage.salesInvCount;// change on activat to 0
                                                                                        //   dbPU.monthCount = tmpcpd.monthCount;//change  on pay  then change on activat to 0
                                                                                        //  puEntity.Add(newObject);
-
                                     dbPU.oldCountryPackageId = dbPU.countryPackageId;
                                     entity.SaveChanges();
 
@@ -2628,6 +2633,7 @@ namespace Programs_Server.Controllers
                                         monthCount = D.monthCount,
                                         islimitDate = D.islimitDate,
                                         currency = N.currency,
+                                        canChngSer=PU.canChngSer,
                                     }).ToList();
 
                         var glist = List.GroupBy(X => X.packageUserId).Select(X => new packageUserModel
@@ -2673,6 +2679,7 @@ namespace Programs_Server.Controllers
                             monthCount = X.FirstOrDefault().monthCount,
                             islimitDate = X.FirstOrDefault().islimitDate,
                             currency = X.FirstOrDefault().currency,
+                            canChngSer = X.FirstOrDefault().canChngSer,
                         }).ToList();
                         return TokenManager.GenerateToken(glist);
 
@@ -3438,6 +3445,7 @@ namespace Programs_Server.Controllers
                                         package.islimitDate = cpD.islimitDate;
                                         package.isActive = (int)packuserrow.isActive;
                                     }
+                                    package.canChngSer =  packuserrow.canChngSer;
                                     senditem.packageSend = package;
                                     senditem.PosSerialSendList = serialList;
 

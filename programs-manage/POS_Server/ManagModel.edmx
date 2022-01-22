@@ -212,6 +212,7 @@
           <Property Name="isServerActivated" Type="bit" Nullable="false" />
           <Property Name="oldCountryPackageId" Type="int" />
           <Property Name="confirmStat" Type="nvarchar" MaxLength="10" />
+          <Property Name="canChngSer" Type="int" />
         </EntityType>
         <EntityType Name="payOp">
           <Key>
@@ -1493,6 +1494,7 @@
           <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
           <Property Name="oldCountryPackageId" Type="Int32" />
           <Property Name="confirmStat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="canChngSer" Type="Int32" />
         </EntityType>
         <EntityType Name="posSerials">
           <Key>
@@ -2775,6 +2777,7 @@
           <EntitySetMapping Name="packageUser">
             <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
               <MappingFragment StoreEntitySet="packageUser">
+                <ScalarProperty Name="canChngSer" ColumnName="canChngSer" />
                 <ScalarProperty Name="confirmStat" ColumnName="confirmStat" />
                 <ScalarProperty Name="oldCountryPackageId" ColumnName="oldCountryPackageId" />
                 <ScalarProperty Name="isServerActivated" ColumnName="isServerActivated" />

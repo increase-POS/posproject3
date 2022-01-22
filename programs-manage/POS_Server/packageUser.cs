@@ -51,6 +51,7 @@ namespace Programs_Server
         public bool isServerActivated { get; set; }
         public Nullable<int> oldCountryPackageId { get; set; }
         public string confirmStat { get; set; }
+        public Nullable<int> canChngSer { get; set; }
     
         public virtual countryPackageDate countryPackageDate { get; set; }
         public virtual customers customers { get; set; }
