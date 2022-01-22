@@ -81,9 +81,15 @@
                                             </Grid>
                                         </Border>
                                         <CheckBox x:Name="chk_allCountries" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
-
                                     </DockPanel>
-                                    <DockPanel Grid.Row="1"  Grid.Column="0"  LastChildFill="False">
+                                    <Border Grid.Row="0" Grid.Column="0" x:Name="bdr_country" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}" Visibility="Collapsed">
+                                        <TextBox x:Name="tb_country"    Padding="10,0,5,0" Grid.Row="0" Grid.Column="0"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             BorderThickness="0"   materialDesign:HintAssist.Hint="Country..."    
+                                             Foreground="#4E4E4E"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                             Height="40"   Margin="4,0" IsEnabled="False" />
+                                    </Border>
+                                    <DockPanel x:Name="dpnl_agent" Grid.Row="1"  Grid.Column="0"  LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
@@ -97,8 +103,14 @@
                                             </Grid>
                                         </Border>
                                         <CheckBox x:Name="chk_allAgents" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
-
                                     </DockPanel>
+                                    <Border x:Name="bdr_agent" Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}" Visibility="Collapsed">
+                                        <TextBox x:Name="tb_agent"    Padding="10,0,5,0" 
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             BorderThickness="0"   materialDesign:HintAssist.Hint="Agent..."    
+                                             Foreground="#4E4E4E"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                             Height="40"   Margin="4,0" IsEnabled="False" />
+                                    </Border>
                                     <DockPanel Grid.Row="1"  Grid.Column="1" LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">

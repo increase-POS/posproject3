@@ -726,123 +726,138 @@ namespace AdministratorApp.Classes
                 _str = MainWindow.resourcemanager.GetString("trSettings");
                 #endregion
            
-                #region  storage
-                if (str == "locations")
-                _str = MainWindow.resourcemanager.GetString("trLocation");
-                else if (str == "section")
-                _str = MainWindow.resourcemanager.GetString("trSection");
-                else if (str == "reciptOfInvoice")
-                _str = MainWindow.resourcemanager.GetString("trInvoice");
-                else if (str == "itemsStorage")
-                _str = MainWindow.resourcemanager.GetString("trStorage");
-                else if (str == "importExport")
-                _str = MainWindow.resourcemanager.GetString("trMovements");
-                else if (str == "itemsDestroy")
-                _str = MainWindow.resourcemanager.GetString("trDestructive");
-                else if (str == "shorstre")
-                _str = MainWindow.resourcemanager.GetString("trShorstre");
-                else if (str == "inventory")
-                _str = MainWindow.resourcemanager.GetString("trStocktaking");
-                else if (str == "storageStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  Account
-                else if (str == "posAccounting")
-                _str = MainWindow.resourcemanager.GetString("trPOS");
-                else if (str == "payments")
-                _str = MainWindow.resourcemanager.GetString("trPayments");
-                else if (str == "received")
-                _str = MainWindow.resourcemanager.GetString("trReceived");
-                else if (str == "bonds")
-                _str = MainWindow.resourcemanager.GetString("trBonds");
-                else if (str == "banksAccounting")
-                _str = MainWindow.resourcemanager.GetString("trBanks");
-                else if (str == "ordersAccounting")
-                _str = MainWindow.resourcemanager.GetString("trOrders");
-                else if (str == "subscriptions")
-                _str = MainWindow.resourcemanager.GetString("trSubscriptions");
-                else if (str == "accountsStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  catalog
-                else if (str == "categories")
-                _str = MainWindow.resourcemanager.GetString("trCategories");
-                else if (str == "item")
-                _str = MainWindow.resourcemanager.GetString("trItems");
-                else if (str == "properties")
-                _str = MainWindow.resourcemanager.GetString("trProperties");
-                else if (str == "units")
-                _str = MainWindow.resourcemanager.GetString("trUnits");
-                else if (str == "storageCost")
-                _str = MainWindow.resourcemanager.GetString("trStorageCost");
-                #endregion
-                #region  purchase
-                if (str == "payInvoice")
-                _str = MainWindow.resourcemanager.GetString("trInvoice");
-                else if (str == "purchaseOrder")
-                _str = MainWindow.resourcemanager.GetString("trOrders");
-                else if (str == "purchaseStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  sales
-                if (str == "reciptInvoice")
-                _str = MainWindow.resourcemanager.GetString("trInvoice");
-                else if (str == "coupon")
-                _str = MainWindow.resourcemanager.GetString("trCoupon");
-                else if (str == "offer")
-                _str = MainWindow.resourcemanager.GetString("trOffer");
-                else if (str == "package")
-                _str = MainWindow.resourcemanager.GetString("trPackage");
-                else if (str == "quotation")
-                _str = MainWindow.resourcemanager.GetString("trQuotations");
-                else if (str == "salesOrders")
-                _str = MainWindow.resourcemanager.GetString("trOrders");
-                else if (str == "medals")
-                _str = MainWindow.resourcemanager.GetString("trMedals");
-                else if (str == "membership")
-                _str = MainWindow.resourcemanager.GetString("trMembership");
-                else if (str == "salesStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  HelpClass
-                if (str == "suppliers")
-                _str = MainWindow.resourcemanager.GetString("trSuppliers");
-                else if (str == "customers")
-                _str = MainWindow.resourcemanager.GetString("trCustomers");
-                else if (str == "users")
-                _str = MainWindow.resourcemanager.GetString("trUsers");
-                else if (str == "branches")
-                _str = MainWindow.resourcemanager.GetString("trBranches");
-                else if (str == "stores")
-                _str = MainWindow.resourcemanager.GetString("trStores");
-                else if (str == "pos")
-                _str = MainWindow.resourcemanager.GetString("trPOS");
-                else if (str == "banks")
-                _str = MainWindow.resourcemanager.GetString("trBanks");
-                else if (str == "cards")
-                _str = MainWindow.resourcemanager.GetString("trCard");
-                else if (str == "shippingCompany")
-                _str = MainWindow.resourcemanager.GetString("trShippingCompanies");
-                #endregion
-                #region  settings
-                if (str == "general")
-                _str = MainWindow.resourcemanager.GetString("trGeneral");
-                else if (str == "reportsSettings")
-                _str = MainWindow.resourcemanager.GetString("trReports");
-                else if (str == "permissions")
-                _str = MainWindow.resourcemanager.GetString("trPermission");
-                else if (str == "emailsSetting")
-                _str = MainWindow.resourcemanager.GetString("trEmail");
-                else if (str == "emailTemplates")
-                _str = MainWindow.resourcemanager.GetString("trEmailTemplates");
-                #endregion
+            #region  storage
+            if (str == "locations")
+            _str = MainWindow.resourcemanager.GetString("trLocation");
+            else if (str == "section")
+            _str = MainWindow.resourcemanager.GetString("trSection");
+            else if (str == "reciptOfInvoice")
+            _str = MainWindow.resourcemanager.GetString("trInvoice");
+            else if (str == "itemsStorage")
+            _str = MainWindow.resourcemanager.GetString("trStorage");
+            else if (str == "importExport")
+            _str = MainWindow.resourcemanager.GetString("trMovements");
+            else if (str == "itemsDestroy")
+            _str = MainWindow.resourcemanager.GetString("trDestructive");
+            else if (str == "shorstre")
+            _str = MainWindow.resourcemanager.GetString("trShorstre");
+            else if (str == "inventory")
+            _str = MainWindow.resourcemanager.GetString("trStocktaking");
+            else if (str == "storageStatistic")
+            _str = MainWindow.resourcemanager.GetString("trStatistic");
+            #endregion
+
+            #region  Account
+            else if (str == "posAccounting")
+            _str = MainWindow.resourcemanager.GetString("trPOS");
+            else if (str == "payments")
+            _str = MainWindow.resourcemanager.GetString("trPayments");
+            else if (str == "received")
+            _str = MainWindow.resourcemanager.GetString("trReceived");
+            else if (str == "bonds")
+            _str = MainWindow.resourcemanager.GetString("trBonds");
+            else if (str == "banksAccounting")
+            _str = MainWindow.resourcemanager.GetString("trBanks");
+            else if (str == "ordersAccounting")
+            _str = MainWindow.resourcemanager.GetString("trOrders");
+            else if (str == "subscriptions")
+            _str = MainWindow.resourcemanager.GetString("trSubscriptions");
+            else if (str == "accountsStatistic")
+            _str = MainWindow.resourcemanager.GetString("trStatistic");
+            #endregion
+
+            #region  catalog
+            else if (str == "categories")
+            _str = MainWindow.resourcemanager.GetString("trCategories");
+            else if (str == "item")
+            _str = MainWindow.resourcemanager.GetString("trItems");
+            else if (str == "properties")
+            _str = MainWindow.resourcemanager.GetString("trProperties");
+            else if (str == "units")
+            _str = MainWindow.resourcemanager.GetString("trUnits");
+            else if (str == "storageCost")
+            _str = MainWindow.resourcemanager.GetString("trStorageCost");
+            #endregion
+
+            #region  purchase
+            if (str == "payInvoice")
+            _str = MainWindow.resourcemanager.GetString("trInvoice");
+            else if (str == "purchaseOrder")
+            _str = MainWindow.resourcemanager.GetString("trOrders");
+            else if (str == "purchaseStatistic")
+            _str = MainWindow.resourcemanager.GetString("trStatistic");
+            #endregion
+
+            #region  sales
+            if (str == "reciptInvoice")
+            _str = MainWindow.resourcemanager.GetString("trInvoice");
+            else if (str == "coupon")
+            _str = MainWindow.resourcemanager.GetString("trCoupon");
+            else if (str == "offer")
+            _str = MainWindow.resourcemanager.GetString("trOffer");
+            else if (str == "package")
+            _str = MainWindow.resourcemanager.GetString("trPackage");
+            else if (str == "quotation")
+            _str = MainWindow.resourcemanager.GetString("trQuotations");
+            else if (str == "salesOrders")
+            _str = MainWindow.resourcemanager.GetString("trOrders");
+            else if (str == "medals")
+            _str = MainWindow.resourcemanager.GetString("trMedals");
+            else if (str == "membership")
+            _str = MainWindow.resourcemanager.GetString("trMembership");
+            else if (str == "salesStatistic")
+            _str = MainWindow.resourcemanager.GetString("trStatistic");
+            #endregion
+
+            #region  HelpClass
+            if (str == "suppliers")
+            _str = MainWindow.resourcemanager.GetString("trSuppliers");
+            else if (str == "customers")
+            _str = MainWindow.resourcemanager.GetString("trCustomers");
+            else if (str == "users")
+            _str = MainWindow.resourcemanager.GetString("trUsers");
+            else if (str == "branches")
+            _str = MainWindow.resourcemanager.GetString("trBranches");
+            else if (str == "stores")
+            _str = MainWindow.resourcemanager.GetString("trStores");
+            else if (str == "pos")
+            _str = MainWindow.resourcemanager.GetString("trPOS");
+            else if (str == "banks")
+            _str = MainWindow.resourcemanager.GetString("trBanks");
+            else if (str == "cards")
+            _str = MainWindow.resourcemanager.GetString("trCard");
+            else if (str == "shippingCompany")
+            _str = MainWindow.resourcemanager.GetString("trShippingCompanies");
+            #endregion
+
+            #region  settings
+            if (str == "general")
+            _str = MainWindow.resourcemanager.GetString("trGeneral");
+            else if (str == "reportsSettings")
+            _str = MainWindow.resourcemanager.GetString("trReports");
+            else if (str == "permissions")
+            _str = MainWindow.resourcemanager.GetString("trPermission");
+            else if (str == "emailsSetting")
+            _str = MainWindow.resourcemanager.GetString("trEmail");
+            else if (str == "emailTemplates")
+            _str = MainWindow.resourcemanager.GetString("trEmailTemplates");
+            #endregion
            
 
             return _str;
             
         }
-         
-    }
 
-    
+        static public async Task<string> getCountry(int ID)
+        {
+            string country = "";
+            Country countryModel = new Country();
+            List<Country> countries =  await countryModel.GetAll();
+            country = countries.Where(c => c.countryId == ID).Select(c => new { country = c.name}).FirstOrDefault().country;
+            return country;
+        }
+
+
+        }
+
 }

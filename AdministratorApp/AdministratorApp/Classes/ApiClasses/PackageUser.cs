@@ -154,7 +154,7 @@ namespace AdministratorApp.ApiClasses
         public int programId { get; set; }
         public int verId { get; set; }
         public string confirmStat { get; set; }
-
+        public Nullable<int> canChngSer { get; set; }
 
         private string urimainpath = "packageUser/";
         /// <summary>

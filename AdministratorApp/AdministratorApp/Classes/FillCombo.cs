@@ -43,6 +43,19 @@ namespace AdministratorApp.Classes
             combo.DisplayMemberPath = "packageNumber";
             combo.SelectedIndex = -1;
         }
+        static public async Task fillBookNumAgent(ComboBox combo, int customerId , int agentId)
+        {
+            packageUsers = await packageUser.GetByCustomerId(customerId);
+            packageUsers = packageUsers.Where(p => p.userId == agentId);
+            foreach (var i in packageUsers)
+            {
+                i.packageNumber = i.packageNumber + "     " + i.packageName;
+            }
+            combo.ItemsSource = packageUsers.Where(x => x.isActive == 1);
+            combo.SelectedValuePath = "packageUserId";
+            combo.DisplayMemberPath = "packageNumber";
+            combo.SelectedIndex = -1;
+        }
 
         static public async Task fillPackage(ComboBox combo)
         {
