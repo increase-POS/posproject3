@@ -175,6 +175,7 @@
     <EntitySetMapping Name="packageUser">
       <EntityTypeMapping TypeName="incprogramsdbModel.packageUser">
         <MappingFragment StoreEntitySet="packageUser">
+          <ScalarProperty Name="canChngSer" ColumnName="canChngSer" />
           <ScalarProperty Name="confirmStat" ColumnName="confirmStat" />
           <ScalarProperty Name="oldCountryPackageId" ColumnName="oldCountryPackageId" />
           <ScalarProperty Name="isServerActivated" ColumnName="isServerActivated" />

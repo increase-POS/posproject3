@@ -245,6 +245,7 @@
     <Property Name="isServerActivated" Type="Boolean" Nullable="false" />
     <Property Name="oldCountryPackageId" Type="Int32" />
     <Property Name="confirmStat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="canChngSer" Type="Int32" />
   </EntityType>
   <EntityType Name="posSerials">
     <Key>

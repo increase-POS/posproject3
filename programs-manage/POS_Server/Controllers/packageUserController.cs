@@ -2813,6 +2813,7 @@ namespace Programs_Server.Controllers
                 string activeState = "";
                 string Object = "";
                 packagesSend packState = new packagesSend();
+                payOpController pocntrlr = new payOpController();
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                 foreach (Claim c in claims)
                 {
@@ -2840,6 +2841,7 @@ namespace Programs_Server.Controllers
                 {
                     packageUser packuserrow = new packageUser();
                     payOpModel lastpayrow = new payOpModel();
+                    payOpModel packstatepayop = new payOpModel();
                     List<PosSerialSend> serialList = new List<PosSerialSend>();
                     SendDetail senditem = new SendDetail();
                     packagesSend package = new packagesSend();
@@ -2850,6 +2852,9 @@ namespace Programs_Server.Controllers
                         //get packageuser row
                         // List<packageUser> list = entity.packageUser.Where(u => u.packageSaleCode == packageSaleCode).ToList();
                         packuserrow = getPUbycode(packageSaleCode);
+                    
+                       
+                        packstatepayop = pocntrlr.getbyId((int)packState.poId);
                         if (packuserrow.packageUserId > 0)
                         {
                             // return TokenManager.GenerateToken(row.packageUserId);
@@ -2866,7 +2871,8 @@ namespace Programs_Server.Controllers
                                     //    // same method or first time
 
                                     //    // check if current activate(upgrade or extend) is newr than the exist or first time
-                                    if ((lastpayrow.createDate > packState.pocrDate && lastpayrow.payOpId != packState.poId) || (packState.isServerActivated == false && packState.activatedate == null))
+                                    if ((lastpayrow.createDate > packState.pocrDate && lastpayrow.payOpId != packState.poId) || (packState.isServerActivated == false && packState.activatedate == null)
+                                        || (packuserrow.canChngSer == 1 && packuserrow.packageUserId == packstatepayop.packageUserId))
                                     {
 
                                         //if (packuserfile.activeState == activeState || (packState.isServerActivated == false && packState.activatedate == null))
@@ -2936,7 +2942,8 @@ namespace Programs_Server.Controllers
                                             return TokenManager.GenerateToken(senditem);
 
                                         }
-                                        else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode && packState.isServerActivated == true))) //&&  row.expireDate==null 
+                                        else if (packuserrow.isActive == 1 && (packuserrow.isServerActivated == false || (packuserrow.isServerActivated == true && packuserrow.customerServerCode == customerServerCode && packState.isServerActivated == true))
+                                            ||(packuserrow.canChngSer==1 && packuserrow.packageUserId== packstatepayop.packageUserId)) 
 
 
                                         {
@@ -2975,8 +2982,12 @@ namespace Programs_Server.Controllers
                                             //start
                                             // check if there are changes
                                             package.activeres = activeres;
-                                            if (activeres == "ch" || packState.activeState == "all")
+                                            if (activeres == "ch" || packState.activeState == "all" 
+                                                ||  (packuserrow.canChngSer == 1 && packuserrow.packageUserId == packstatepayop.packageUserId)) 
+
+
                                             {
+                                                //(packuserrow.canChngSer == 1 && packuserrow.packageUserId == packstatepayop.packageUserId) for change server
                                                 //make changes
                                                 // if(pack.isActive==1 && prog.isActive==1 && ver.isActive==1){
                                                 package.programName = prog.name;
@@ -3000,7 +3011,13 @@ namespace Programs_Server.Controllers
                                                 {
                                                     package.activatedate = packuserrow.activatedate;
                                                 }
+                                                if (packuserrow.canChngSer == 1 && packuserrow.packageUserId == packstatepayop.packageUserId)
 
+                                                {
+                                                    //store new server id
+                                                    package.customerServerCode = customerServerCode;
+                                                }
+                                          
                                                 package.result = 1;                                  //   SendDetail senditem = new SendDetail();
                                                 package.isServerActivated = true;
                                                 package.customerName = customerModel.custname;
@@ -3038,6 +3055,16 @@ namespace Programs_Server.Controllers
 
                                                 packuserrow.totalsalesInvCount = 0;
                                                 packuserrow.canRenew = false;
+                                                if (packState.isServerActivated == false)
+                                                {
+                                                    packuserrow.customerServerCode = packState.customerServerCode;
+
+                                                }
+                                                else if (packuserrow.canChngSer == 1 && packuserrow.packageUserId == packstatepayop.packageUserId)
+                                                {
+                                                    packuserrow.customerServerCode = customerServerCode;
+                                                }
+                                                packuserrow.canChngSer = 0;
 
                                                 //  save server hardware key
                                                 int res = Save(packuserrow);

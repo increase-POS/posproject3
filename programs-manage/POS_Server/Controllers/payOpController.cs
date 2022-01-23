@@ -588,5 +588,60 @@ namespace Programs_Server.Controllers
             }
         }
 
+        public payOpModel getbyId(int payOpId)
+        {
+            payOpModel lastpayrow = new payOpModel();
+            if (payOpId<=0) {
+                return lastpayrow;
+            }
+            else
+            {
+
+       
+         
+            try
+            {
+                using (incprogramsdbEntities entity = new incprogramsdbEntities())
+                {
+                    lastpayrow = (from S in entity.payOp
+                              
+                                  where S.payOpId == payOpId
+                                  select new payOpModel()
+                                  {
+                                      payOpId = S.payOpId,
+                                      Price = S.Price,
+                                      code = S.code,
+                                      type = S.type,
+                                      packageUserId = S.packageUserId,
+                                      createUserId = S.createUserId,
+                                      updateUserId = S.updateUserId,
+                                      createDate = S.createDate,
+                                      updateDate = S.updateDate,
+                                      notes = S.notes,
+                                      totalnet = S.totalnet,
+                                      countryPackageId = S.countryPackageId,// from payed row
+                                      discountValue = S.discountValue,
+                                      customerId = S.customerId,
+                                      agentId = S.agentId,
+                                      packageNumber = A.packageNumber,
+
+
+                                  }).OrderBy(x => x.updateDate).ToList().Last();
+
+                    return lastpayrow;
+
+                }
+
+
+
+            }
+            catch
+            {
+                lastpayrow = new payOpModel();
+                return lastpayrow;
+            }
+            }
+        }
+
     }
 }

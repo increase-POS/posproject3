@@ -207,6 +207,7 @@
     <Property Name="isServerActivated" Type="bit" Nullable="false" />
     <Property Name="oldCountryPackageId" Type="int" />
     <Property Name="confirmStat" Type="nvarchar" MaxLength="10" />
+    <Property Name="canChngSer" Type="int" />
   </EntityType>
   <EntityType Name="payOp">
     <Key>
