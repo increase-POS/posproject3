@@ -2677,4 +2677,16 @@
   <data name="trChangeDevice" xml:space="preserve">
     <value>تغيير الجهاز</value>
   </data>
+  <data name="trLast" xml:space="preserve">
+    <value>الأخير</value>
+  </data>
+  <data name="trNext" xml:space="preserve">
+    <value>التالي</value>
+  </data>
+  <data name="trPage" xml:space="preserve">
+    <value>الصفحة</value>
+  </data>
+  <data name="trPrevious" xml:space="preserve">
+    <value>السابق</value>
+  </data>
 </root>

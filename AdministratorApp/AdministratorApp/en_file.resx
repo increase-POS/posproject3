@@ -2695,4 +2695,16 @@ Please add Email in setting</value>
   <data name="trChangeDevice" xml:space="preserve">
     <value>Change device</value>
   </data>
+  <data name="trLast" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="trNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="trPage" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="trPrevious" xml:space="preserve">
+    <value>Previous</value>
+  </data>
 </root>

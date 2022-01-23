@@ -487,12 +487,12 @@
                     </Border>
                     
                     <Border x:Name="bdr_agent" Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
-                        <Grid   >
+                        <Grid >
                             <TextBox x:Name="cb_agent"    Padding="10,0,5,0" 
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0"   materialDesign:HintAssist.Hint="Discount..."    
+                                     BorderThickness="0"   materialDesign:HintAssist.Hint="Agent..."    
                                      Foreground="#4E4E4E"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     MaxLength="9"    Height="40"   Margin="4,0" IsReadOnly="True"/>
+                                     MaxLength="9"    Height="40"   Margin="4,0" IsEnabled="False"/>
 
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_agent"
                                   HorizontalAlignment="Right" Visibility="Collapsed"   

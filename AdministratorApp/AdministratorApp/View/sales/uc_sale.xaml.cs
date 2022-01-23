@@ -142,7 +142,6 @@ namespace AdministratorApp.View.sales
                 }
                 cb_agent.Text = agent.accountName;
 
-
                 //HelpClass.EndAwait(grid_main);
             //}
             //catch (Exception ex)
@@ -268,7 +267,6 @@ namespace AdministratorApp.View.sales
             cb_isOnline.SelectedIndex = -1;
             cb_package.ItemsSource = null;
             cb_period.ItemsSource = null;
-            cb_agent.Text = "";
             oldPackageId = 0;
             oldCountryPackageId = 0;
             cb_package.IsEnabled = false;

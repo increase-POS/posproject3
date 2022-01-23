@@ -46,6 +46,10 @@ namespace AdministratorApp.View.windows
         Packages pModel = new Packages();
         int isActiveCount = 0;
 
+        //pagination
+        int pageIndex = 0 , pageCount = 0;
+        List<Button> btnList = new List<Button>();
+
         public wd_seialsList()
         {
             try
@@ -60,9 +64,9 @@ namespace AdministratorApp.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_serialsList);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_serialsList);
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -85,22 +89,147 @@ namespace AdministratorApp.View.windows
                 pu = await puModel.GetByID(packageUserID);
                 p = await pModel.GetByID(pu.packageId.Value);
 
+                pageIndex = 1;
+
                 RefreshView();
 
-               //< Button Grid.Column = "2" x: Name = "btn_activePage" Click = "Btn_activePage_Click"
-               //                     Height = "25" Width = "25" Content = "2" Padding = "0"
-               //                       Background = "#178DD2" BorderThickness = "0" />
+                #region pagination
+               
+                //1 button
+                Button btn_one = new Button();
+                btn_one.Width = 25;
+                btn_one.Height = 25;
+                btn_one.Content = "1";
+                btn_one.Padding = new Thickness(0);
+                btn_one.Margin = new Thickness(10,0,5,0);
+                btn_one.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
+                btn_one.BorderThickness = new Thickness(0);
+                btn_one.VerticalAlignment = VerticalAlignment.Center;
+                btn_one.HorizontalAlignment = HorizontalAlignment.Center;
+                btn_one.Tag = 1;
+                btn_one.Click += this.pageClick;
+                btnList.Add(btn_one);
 
-                HelpClass.EndAwait(grid_serialsList);
+                pnl_pagination.Children.Add(btn_one);
+
+                pageCount = posSerialsQuery.Count() / 5;
+
+                if (posSerialsQuery.Count() > 5)
+                {
+                    //btn_lastPage.IsEnabled = true;
+                   
+                    int btnCount = 3;
+                    if (pageCount < 3) btnCount = pageCount;
+                    for (int i = 0; i < btnCount-1 ; i++)
+                    {
+                        //2 button
+                        Button btn_next = new Button();
+                        btn_next.Width = 25;
+                        btn_next.Height = 25;
+                        btn_next.Content = (i+2).ToString();
+                        btn_next.Margin = new Thickness(10, 0, 5, 0);
+                        btn_next.Padding = new Thickness(0);
+                        btn_next.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFDFDF"));
+                        btn_next.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#686868"));
+                        btn_next.BorderThickness = new Thickness(0);
+                        btn_next.VerticalAlignment = VerticalAlignment.Center;
+                        btn_next.HorizontalAlignment = HorizontalAlignment.Center;
+                        btn_next.Tag = i + 2;
+                        btn_next.Click += this.pageClick;
+                        btnList.Add(btn_next);
+
+                        pnl_pagination.Children.Add(btn_next);
+                    }
+                }
+           
+                if (pageCount > 3)
+                    btn_nextPage.IsEnabled = true;
+                #endregion
+
+            //    HelpClass.EndAwait(grid_serialsList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_serialsList);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+        private void Btn_firstPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (pageIndex != 1)
+                {
+                    //(sender as Button).Tag = pageIndex--;
+                    pageClick(sender, e);
+                }
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_nextPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (pageIndex != pageCount)
+                {
+                    //(sender as Button).Tag = pageIndex++;
+                    pageClick(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-       
+        private void Btn_lastPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                (sender as Button).Tag = pageCount;
+                pageClick(sender, e);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void pageClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((sender as Button).Name.ToString().Equals("btn_nextPage"))
+                    pageIndex++;
+                else if ((sender as Button).Name.ToString().Equals("btn_firstPage"))
+                    pageIndex--;
+                else
+                    pageIndex = Convert.ToInt32((sender as Button).Tag);
+
+                if(!(((sender as Button).Name.ToString().Equals("btn_firstPage")) || ((sender as Button).Name.ToString().Equals("btn_nextPage")) || ((sender as Button).Name.ToString().Equals("btn_lastPage"))))
+                    (sender as Button).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
+
+                foreach (Button b in btnList)
+                {
+                    if (b.Tag != (sender as Button).Tag)
+                    {
+                        b.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFDFDF"));
+                        b.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#686868"));
+                    }
+                }
+
+                RefreshView();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
 
         #region save - search - close - refresh
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -293,6 +422,11 @@ namespace AdministratorApp.View.windows
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
             chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
+
+            tt_first.Content = MainWindow.resourcemanager.GetString("trPrevious");
+            tt_next.Content = MainWindow.resourcemanager.GetString("trNext");
+            tt_last.Content = MainWindow.resourcemanager.GetString("trLast");
+
         }
 
         async Task<IEnumerable<PosSerials>> RefreshList()
@@ -302,8 +436,19 @@ namespace AdministratorApp.View.windows
         }
         private void RefreshView()
         {
-            dg_serials.ItemsSource = posSerialsQuery;
-            txt_count.Text = dg_serials.Items.Count.ToString();
+            List<PosSerials> posSerialsQueryPage = new List<PosSerials>();
+            int index = (pageIndex - 1) * 5;
+            int i = 0;
+            while(i < 5)
+            {
+                i++;
+                PosSerials serial = posSerialsQuery.ToList()[index];
+                posSerialsQueryPage.Add(serial);
+                index++;
+            }
+            dg_serials.ItemsSource = posSerialsQueryPage;
+            //txt_count.Text = dg_serials.Items.Count.ToString();
+            txt_count.Text = MainWindow.resourcemanager.GetString("trPage")+" "+ pageIndex.ToString();
         }
         #endregion
 
@@ -467,6 +612,7 @@ namespace AdministratorApp.View.windows
             }
         }
 
+      
         private void Chk_allSerials_Unchecked(object sender, RoutedEventArgs e)
         {
             try
@@ -485,5 +631,7 @@ namespace AdministratorApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+       
     }
 }
