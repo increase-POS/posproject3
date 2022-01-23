@@ -265,13 +265,15 @@ namespace AdministratorApp.View.reports
             try
             {
                 await RefreshPaymentSTSList();
-                //if (!MainWindow.userLogin.type.Equals("ag"))
-                //{
-                //    cb_countries.SelectedIndex = -1;
-                //    cb_agents.SelectedIndex = -1;
-                //}
+
+                if (!MainWindow.userLogin.type.Equals("ag"))
+                {
+                    cb_countries.SelectedIndex = -1;
+                    cb_agents.SelectedIndex = -1;
+                }
                 cb_customers.SelectedIndex = -1;
                 cb_packages.SelectedIndex = -1;
+
                 await Search();
             }
             catch (Exception ex)
@@ -295,10 +297,13 @@ namespace AdministratorApp.View.reports
             try
             {
                 if (cb_countries.SelectedIndex != -1)
-                await FillCombo.fillAgentByCountry(cb_agents, (int)cb_countries.SelectedValue);
+                {
+                    dpnl_agent.IsEnabled = false;
+                    await FillCombo.fillAgentByCountry(cb_agents, (int)cb_countries.SelectedValue);
+                }
                 else
                 {
-                    cb_agents.IsEnabled = false;
+                    dpnl_agent.IsEnabled = false;
                     cb_agents.SelectedIndex = -1;
                 }
                 await Search();
@@ -315,10 +320,16 @@ namespace AdministratorApp.View.reports
             {
                 if (cb_agents.SelectedIndex != -1)
                 {
-                    if((int)cb_agents.SelectedValue == 3)
+                    dpnl_customer.IsEnabled = true;
+                    if ((int)cb_agents.SelectedValue == 3)
                         await FillCombo.fillCustomer(cb_customers);
                     else
                         await FillCombo.fillCustomerByAgent(cb_customers, (int)cb_agents.SelectedValue);
+                }
+                else
+                {
+                    dpnl_customer.IsEnabled = false;
+                    cb_customers.SelectedIndex = -1;
                 }
 
                 await Search();
@@ -335,13 +346,18 @@ namespace AdministratorApp.View.reports
             {
                 if (cb_customers.SelectedIndex != -1)
                 {
+                    dpnl_package.IsEnabled = true;
                     cb_packages.ItemsSource = paymentStsQuery.Where(b => b.customerId == (int)cb_customers.SelectedValue).GroupBy(p => p.packageId);
                     cb_packages.SelectedValuePath = "packageId";
                     cb_packages.DisplayMemberPath = "packageName";
                     cb_packages.SelectedIndex = -1;
                     //await FillCombo.fillPackageByCustomer(cb_packages, (int)cb_customers.SelectedValue);
                 }
-
+                else
+                {
+                    dpnl_package.IsEnabled = false;
+                    cb_packages.SelectedIndex = -1;
+                }
                 await Search();
             }
             catch (Exception ex)
@@ -354,8 +370,8 @@ namespace AdministratorApp.View.reports
         {//select package
             try
             {
-                if (cb_agents.SelectedIndex != -1)
-                paymentSts = await statisticsModel.GetPaymentsByAgentId((int)cb_agents.SelectedValue);
+                if (cb_packages.SelectedIndex != -1)
+                    paymentSts = await statisticsModel.GetPaymentsByAgentId((int)cb_agents.SelectedValue);
 
                 await Search();
             }
