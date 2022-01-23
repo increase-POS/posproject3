@@ -111,7 +111,7 @@
                                              Foreground="#4E4E4E"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                              Height="40"   Margin="4,0" IsEnabled="False" />
                                     </Border>
-                                    <DockPanel Grid.Row="1"  Grid.Column="1" LastChildFill="False">
+                                    <DockPanel x:Name="dpnl_customer" Grid.Row="1"  Grid.Column="1" LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
@@ -127,7 +127,7 @@
                                         <CheckBox x:Name="chk_allCustomers" DockPanel.Dock="Right" Background="{StaticResource MainColorBlue}" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_Checked" Unchecked="Chk_Unchecked"/>
 
                                     </DockPanel>
-                                    <DockPanel Grid.Row="1" Grid.Column="2"  LastChildFill="False">
+                                    <DockPanel x:Name="dpnl_package" Grid.Row="1" Grid.Column="2"  LastChildFill="False">
 
                                         <Border CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                                             <Grid >
