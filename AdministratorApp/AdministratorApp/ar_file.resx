@@ -2689,4 +2689,7 @@
   <data name="trPrevious" xml:space="preserve">
     <value>السابق</value>
   </data>
+  <data name="trOf" xml:space="preserve">
+    <value>من</value>
+  </data>
 </root>

@@ -49,6 +49,7 @@ namespace AdministratorApp.View.windows
         //pagination
         int pageIndex = 0 , pageCount = 0;
         List<Button> btnList = new List<Button>();
+        int itemsPerPage = 20;
 
         public wd_seialsList()
         {
@@ -80,8 +81,20 @@ namespace AdministratorApp.View.windows
                     grid_serialsList.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translat();
-                #endregion
+            #endregion
 
+                #region fill user type
+                var typelist = new[] {
+                new { Text = "20"    , Value = "20" },
+                new { Text = "50"    , Value = "50" },
+                new { Text = "100"   , Value = "100"}
+                    };
+                cb_itemPerPage.DisplayMemberPath = "Text";
+                cb_itemPerPage.SelectedValuePath = "Value";
+                cb_itemPerPage.ItemsSource = typelist;
+            #endregion
+
+            chk_allSerials.IsChecked = false;
                 posSerialsQuery = await RefreshList();
 
                 isActiveCount = posSerials.Count(s => s.isActive == 1);
@@ -90,6 +103,10 @@ namespace AdministratorApp.View.windows
                 p = await pModel.GetByID(pu.packageId.Value);
 
                 pageIndex = 1;
+
+                cb_itemPerPage.SelectedIndex = 0;
+
+                pageCount = posSerialsQuery.Count() / itemsPerPage;
 
                 RefreshView();
 
@@ -112,9 +129,8 @@ namespace AdministratorApp.View.windows
 
                 pnl_pagination.Children.Add(btn_one);
 
-                pageCount = posSerialsQuery.Count() / 5;
 
-                if (posSerialsQuery.Count() > 5)
+                if (posSerialsQuery.Count() > itemsPerPage)
                 {
                     //btn_lastPage.IsEnabled = true;
                    
@@ -158,6 +174,8 @@ namespace AdministratorApp.View.windows
         {
             try
             {
+                //HelpClass.StartAwait(grid_serialsList);
+
                 if (pageIndex != 1)
                 {
                     //(sender as Button).Tag = pageIndex--;
@@ -166,6 +184,8 @@ namespace AdministratorApp.View.windows
             }
             catch (Exception ex)
             {
+                //HelpClass.EndAwait(grid_serialsList);
+
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -175,6 +195,8 @@ namespace AdministratorApp.View.windows
         {
             try
             {
+                //HelpClass.StartAwait(grid_serialsList);
+
                 if (pageIndex != pageCount)
                 {
                     //(sender as Button).Tag = pageIndex++;
@@ -183,6 +205,8 @@ namespace AdministratorApp.View.windows
             }
             catch (Exception ex)
             {
+                //HelpClass.EndAwait(grid_serialsList);
+
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -191,11 +215,15 @@ namespace AdministratorApp.View.windows
         {
             try
             {
+                //HelpClass.StartAwait(grid_serialsList);
+
                 (sender as Button).Tag = pageCount;
                 pageClick(sender, e);
             }
             catch (Exception ex)
             {
+                //HelpClass.EndAwait(grid_serialsList);
+
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -203,6 +231,7 @@ namespace AdministratorApp.View.windows
         {
             try
             {
+
                 if ((sender as Button).Name.ToString().Equals("btn_nextPage"))
                     pageIndex++;
                 else if ((sender as Button).Name.ToString().Equals("btn_firstPage"))
@@ -434,21 +463,34 @@ namespace AdministratorApp.View.windows
             posSerials = await posSerialModel.GetSerialAndPosInfo(packageUserID);
             return posSerials;
         }
+        List<PosSerials> posSerialsQueryPage = new List<PosSerials>();
+
         private void RefreshView()
         {
-            List<PosSerials> posSerialsQueryPage = new List<PosSerials>();
-            int index = (pageIndex - 1) * 5;
+            posSerialsQueryPage = new List<PosSerials>();
+           
+            int index = (pageIndex - 1) * itemsPerPage;
             int i = 0;
-            while(i < 5)
+
+            while (i < itemsPerPage)
             {
                 i++;
-                PosSerials serial = posSerialsQuery.ToList()[index];
-                posSerialsQueryPage.Add(serial);
-                index++;
+                try
+                {
+                    PosSerials serial = posSerialsQuery.ToList()[index];
+                    posSerialsQueryPage.Add(serial);
+                    index++;
+                }
+                catch { }
             }
-            dg_serials.ItemsSource = posSerialsQueryPage;
-            //txt_count.Text = dg_serials.Items.Count.ToString();
-            txt_count.Text = MainWindow.resourcemanager.GetString("trPage")+" "+ pageIndex.ToString();
+
+            if (posSerialsQueryPage.Count > 0)
+            {
+                dg_serials.ItemsSource = posSerialsQueryPage;
+                //txt_count.Text = dg_serials.Items.Count.ToString();
+                txt_count.Text = MainWindow.resourcemanager.GetString("trPage") + " " + pageIndex.ToString() + " " +
+                                 MainWindow.resourcemanager.GetString("trOf")   + " " + pageCount.ToString();
+            }
         }
         #endregion
 
@@ -592,44 +634,63 @@ namespace AdministratorApp.View.windows
 
         private void Chk_allSerials_Checked(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 chk_allSerials.Content = MainWindow.resourcemanager.GetString("trUnSelectAll");
-                foreach (var s in posSerialsQuery)
+                isActiveCount = posSerialsQueryPage.Count(c => c.isActive == 1);
+
+                foreach (var s in posSerialsQueryPage)
                 {
-                    isActiveCount = posSerialsQuery.Count(c => c.isActive == 1);
                     if ((isActiveCount <= p.posCount) || (p.posCount == -1))
                     {
                         s.isActive = 1;
-                        dg_serials.ItemsSource = posSerialsQuery;
-                        dg_serials.Items.Refresh();
+                    dg_serials.ItemsSource = posSerialsQueryPage;
+                    dg_serials.Items.Refresh();
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                //RefreshView();
+                //dg_serials.Items.Refresh();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+       
+        private void Cb_itemPerPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //try
+            //{
+                itemsPerPage = int.Parse(cb_itemPerPage.SelectedValue.ToString());
+                pageCount = posSerialsQuery.Count() / itemsPerPage;
+                pageIndex = 1;
+                RefreshView();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
-      
         private void Chk_allSerials_Unchecked(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
 
-                foreach (var s in posSerialsQuery)
+                foreach (var s in posSerialsQueryPage)
                 {
                     s.isActive = 0;
-                    dg_serials.ItemsSource = posSerialsQuery;
-                    dg_serials.Items.Refresh();
-                }
+                dg_serials.ItemsSource = posSerialsQueryPage;
+                dg_serials.Items.Refresh();
             }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                //RefreshView();
+                //dg_serials.Items.Refresh();
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
        

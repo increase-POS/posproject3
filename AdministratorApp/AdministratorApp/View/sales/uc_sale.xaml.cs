@@ -97,14 +97,22 @@ namespace AdministratorApp.View.sales
                 if (MainWindow.userLogin.type.Equals("ag"))
                 {
                     await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId);
-                    agent = await userModel.GetByID(MainWindow.userLogin.userId);
+                    try
+                    {
+                        agent = await userModel.GetByID(MainWindow.userLogin.userId);
+                    }
+                    catch { agent = await userModel.GetByID(MainWindow.userLogin.userId); }
                     await FillCombo.fillAgentPackage(cb_package , MainWindow.userLogin.userId);
                     cb_package.IsEnabled = true;
                 }
                 else
                 {
                     await FillCombo.fillCustomer(cb_customer);
-                    agent = await userModel.GetByID(3);
+                    try
+                    {
+                        agent = await userModel.GetByID(3);
+                    }
+                    catch { agent = await userModel.GetByID(3); }
                     cb_agent.Visibility = Visibility.Collapsed;
                 }
                 if (oldPackageId == 0)

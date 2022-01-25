@@ -298,7 +298,7 @@ namespace AdministratorApp.View.reports
             {
                 if (cb_countries.SelectedIndex != -1)
                 {
-                    dpnl_agent.IsEnabled = false;
+                    dpnl_agent.IsEnabled = true;
                     await FillCombo.fillAgentByCountry(cb_agents, (int)cb_countries.SelectedValue);
                 }
                 else
