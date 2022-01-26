@@ -623,7 +623,7 @@ namespace Programs_Server.Controllers
                                       discountValue = S.discountValue,
                                       customerId = S.customerId,
                                       agentId = S.agentId,
-                                      packageNumber = A.packageNumber,
+                                     // packageNumber = S.packageNumber,
 
 
                                   }).OrderBy(x => x.updateDate).ToList().Last();

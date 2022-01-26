@@ -59,7 +59,7 @@ namespace Programs_Server.Controllers
                     using (incprogramsdbEntities entity = new incprogramsdbEntities())
                     {
                         var List = (from PU in entity.packageUser
-                                    join PA in entity.payOp on PU.packageUserId equals PA.packageUserId
+                                   join PA in entity.payOp on PU.packageUserId equals PA.packageUserId
                                     join D in entity.countryPackageDate on PA.countryPackageId equals D.Id
 
                                     join N in entity.countriesCodes on D.countryId equals N.countryId
@@ -122,8 +122,6 @@ namespace Programs_Server.Controllers
                                         //updateDate = PU.updateDate,
                                         //createUserId = PU.createUserId,
                                         //updateUserId = PU.updateUserId,
-
-
                                         expireDate = PA.expireDate,
                                         isOnlineServer = PU.isOnlineServer,
                                         countryPackageId = PU.countryPackageId,
@@ -157,10 +155,7 @@ namespace Programs_Server.Controllers
                                         // packageIdPo = PA.packageId,
                                         createUserIdPo = PA.createUserId,
                                         updateUserIdPo = PA.updateUserId,
-
                                         updateDatePo = PA.updateDate,
-
-
                                     }).ToList();
 
                         //var glist = List.GroupBy(X => X.payOpId).Select(X => new BookStsModel

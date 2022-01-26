@@ -548,6 +548,7 @@ namespace Programs_Server.Controllers
                             //  tmpObject.isPayed = newObject.isPayed;
 
                             tmpObject.canRenew = newObject.canRenew;
+                            tmpObject.canChngSer = newObject.canChngSer;
                             entity.SaveChanges();
 
                             message = tmpObject.packageUserId;
@@ -2884,6 +2885,7 @@ namespace Programs_Server.Controllers
 
                                         // 
                                         // check if there are changes
+
                                         package.activeres = "noch";
                                         if (packState.activeState == "up")
                                         {
@@ -3089,6 +3091,13 @@ namespace Programs_Server.Controllers
 
                                                 senditem.packageSend = package;
                                                 senditem.PosSerialSendList = serialList;
+
+                                                if (packuserrow.canChngSer == 1)
+                                                {
+                                                    packuserrow.canChngSer = 0;
+                                                    int res = Save(packuserrow);
+
+                                                }
                                                 return TokenManager.GenerateToken(senditem);
 
                                             }
@@ -3158,7 +3167,7 @@ namespace Programs_Server.Controllers
                                     else
                                     {
                                         // the current updat is newr than the offline update
-                                        package.result = -8;
+                                        package.result = -18;
                                         senditem.packageSend = package;
                                         return TokenManager.GenerateToken(senditem);
                                     }
