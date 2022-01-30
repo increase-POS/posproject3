@@ -2790,9 +2790,6 @@ namespace Programs_Server.Controllers
         }
 
 
-
-
-
         [HttpPost]
         [Route("ActivateServerState")]
         public string ActivateServerState(string token)
@@ -2981,6 +2978,14 @@ namespace Programs_Server.Controllers
                                             cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
                                             agentmodel = agentctrlr.GetByID((int)lastpayrow.agentId);
                                             customerModel = customerctrlr.GetByID((int)lastpayrow.customerId);
+                                            if (agentmodel.userId == 3)
+                                            {
+
+                                                agentmodel.name = "Increase";
+                                                agentmodel.lastName = "";
+                                                agentmodel.AccountName = "Increase";
+
+                                            }
                                             //start
                                             // check if there are changes
                                             package.activeres = activeres;
@@ -3394,6 +3399,14 @@ namespace Programs_Server.Controllers
                                     cpD = cpdCntrlr.GetByID((int)lastpayrow.countryPackageId);
                                     agentmodel = agentctrlr.GetByID((int)lastpayrow.agentId);
                                     customerModel = customerctrlr.GetByID((int)lastpayrow.customerId);
+                                    if (agentmodel.userId == 3)
+                                    {
+
+                                        agentmodel.name = "Increase";
+                                        agentmodel.lastName = "";
+                                        agentmodel.AccountName = "Increase";
+
+                                    }
                                     //start
                                     // check if there are changes
 
