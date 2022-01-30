@@ -124,7 +124,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="Name" Binding="{Binding Path=custname}">
+                            <DataGridTextColumn Width="*"  Header="Name" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -134,6 +134,12 @@
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="custname" />
+                                        <Binding Path="lastName" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
                             <DataGridTextColumn Width="*"  Header="Mobile" Binding="{Binding Path=mobile}">
                                 <DataGridTextColumn.ElementStyle>

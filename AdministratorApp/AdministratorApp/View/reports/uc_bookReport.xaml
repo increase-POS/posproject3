@@ -249,10 +249,10 @@
 
             <Border Grid.Row="2" Background="White"   Margin="5,0,5,0">
                 <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
-                     Name="dg_book" 
-                        AutoGenerateColumns="False" 
-                        ColumnWidth="SizeToHeader"
-                            AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                           Name="dg_book" 
+                           AutoGenerateColumns="False" 
+                           ColumnWidth="SizeToHeader"
+                           AlternatingRowBackground="#f3f3f3" AlternationCount="2" MouseDoubleClick="Dg_book_MouseDoubleClick">
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -267,8 +267,9 @@
                         <DataGridTextColumn x:Name="col_upgradeDate" Width="*" Header="Upgrade Date" Binding="{Binding createDatePo ,Converter={StaticResource dateFrameConverter}}" />
                         <DataGridTextColumn x:Name="col_package"     Width="*" Header="Package"      Binding="{Binding packageName }" />
                         <DataGridTextColumn x:Name="col_agent"       Width="*" Header="Agent"        >
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding StringFormat="{}{0} {1}">
+                            <DataGridTextColumn.Binding >
+                                <MultiBinding Converter="{StaticResource agentNameConverter}" >
+                                    <Binding Path="agentId" />
                                     <Binding Path="agentName" />
                                     <Binding Path="agentLastName" />
                                 </MultiBinding>

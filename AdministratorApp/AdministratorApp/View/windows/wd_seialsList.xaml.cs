@@ -94,7 +94,7 @@ namespace AdministratorApp.View.windows
                 cb_itemPerPage.ItemsSource = typelist;
             #endregion
 
-            chk_allSerials.IsChecked = false;
+                chk_allSerials.IsChecked = false;
                 posSerialsQuery = await RefreshList();
 
                 isActiveCount = posSerials.Count(s => s.isActive == 1);

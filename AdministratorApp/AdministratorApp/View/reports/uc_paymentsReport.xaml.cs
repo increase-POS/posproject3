@@ -1,5 +1,6 @@
 ﻿using AdministratorApp.ApiClasses;
 using AdministratorApp.Classes;
+using AdministratorApp.View.sales;
 using LiveCharts;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
@@ -90,7 +91,7 @@ namespace AdministratorApp.View.reports
                     tb_agent.Text = MainWindow.userLogin.accountName;
 
                     var typelist = new[] {
-                                                new { Text  = MainWindow.userLogin.accountName ,
+                                                new { Text  = MainWindow.userLogin.name+" "+MainWindow.userLogin.lastName ,
                                                       Value = MainWindow.userLogin.userId  }
                                              };
                     cb_agents.DisplayMemberPath = "Text";
@@ -837,8 +838,56 @@ namespace AdministratorApp.View.reports
             }
 
         }
+
         #endregion
 
-      
+        private async void Dg_book_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                PaymentsSts payment = dg_book.SelectedItem as PaymentsSts;
+                if (payment.packageUserId > 0)
+                {
+                    PackageUser puModel = new PackageUser();
+                    PackageUser packageUser = await puModel.GetByID(payment.packageUserId);
+
+                    Packages pModel = new Packages();
+                    Packages package = await pModel.GetByID(payment.packageId.Value);
+
+                    if (packageUser.packageId > 0)
+                    {
+                        MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
+                        uc_sales.Instance.isPayment = true;
+                        //uc_sales.Instance.Window_Loaded(null, null);
+                        uc_sales.Instance.Btn_packageUser_Click(uc_sales.Instance.btn_packageUser, null);
+                        uc_payment.Instance.UserControl_Loaded(null, null);
+                        uc_payment.Instance.isFirstTime = false;
+                        uc_payment.Instance.cusID = payment.customerId.Value;
+                        uc_payment.Instance.packuserID = payment.packageUserId;
+
+                        //uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
+                        //uc_sale.Instance.oldAgentId = packageUser.userId.Value;
+                        //uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
+                        //uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
+                        //uc_sale.Instance.packuser = packageUser;
+                        //uc_sale.Instance.btn_serials.IsEnabled = true;
+                        //uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
+                        //uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
+                        HelpClass.clearValidate(uc_payment.requiredControlList, this);
+                    }
+                }
+                //Clear();
+                //ClearPackageUser();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

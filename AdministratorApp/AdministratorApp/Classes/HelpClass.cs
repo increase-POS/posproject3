@@ -4,6 +4,7 @@ using MaterialDesignThemes.Wpf;
 using netoaster;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,9 +34,7 @@ namespace AdministratorApp.Classes
         {
             Random random = new Random(); string returnStr = "";
             const string chars = "abcdefghijklmnopqrstuvwxyz";
-            //return new string(Enumerable.Repeat(chars, length)
-            //  .Select(s => s[random.Next(s.Length)]).ToArray());
-
+           
             string str  = new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
 
@@ -857,6 +856,28 @@ namespace AdministratorApp.Classes
             return country;
         }
 
+        static public string setDateFormat(DateTime value)
+        {
+            DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
+            DateTime date;
+            if (value is DateTime)
+                date = (DateTime)value;
+            else return value.ToString();
+
+            switch (MainWindow.dateFormat)
+            {
+                case "ShortDatePattern":
+                    return date.ToString(@"dd/MM/yyyy");
+                case "LongDatePattern":
+                    return date.ToString(@"dddd, MMMM d, yyyy");
+                case "MonthDayPattern":
+                    return date.ToString(@"MMMM dd");
+                case "YearMonthPattern":
+                    return date.ToString(@"MMMM yyyy");
+                default:
+                    return date.ToString(@"dd/MM/yyyy");
+            }
+        }
 
         }
 

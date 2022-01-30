@@ -9,6 +9,8 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:unlimitedCountConverter x:Key="unlimitedCountConverter"/>
+            <converters:agentNameConverter x:Key="agentNameConverter"/>
             <converters:permissionsNameConverter x:Key="permissionsNameConverter"/> 
             <converters:packagePeriodConverter   x:Key="packagePeriodConverter"/>
             <converters:isActiveConverter   x:Key="isActiveConverter"/>
