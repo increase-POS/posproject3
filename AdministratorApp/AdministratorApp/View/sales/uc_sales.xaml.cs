@@ -69,7 +69,7 @@ namespace AdministratorApp.View.sales
                 #endregion
 
                 //if (!isPayment)
-                //    Btn_sale_Click(btn_sale, null);
+                Btn_sale_Click(btn_sale, null);
                 //else
                 //    isPayment = false;
 
