@@ -26,6 +26,8 @@ namespace Programs_Server.Models
         public string userLastName { get; set; }
         public string customerName { get; set; }// 6- customer Name
         public string customerLastName { get; set; }// 6- customer LastName
+        public string customerCompany { get; set; }
+        
         public Nullable<int> customerCountryId { get; set; }
         public string customerCountry { get; set; }
         public Nullable<int> countryPackageId { get; set; }
@@ -126,6 +128,7 @@ namespace Programs_Server.Models
         public string userLastName { get; set; }
         public string customerName { get; set; }// 6- customer Name
         public string customerLastName { get; set; }// 6- customer LastName
+        public string customerCompany { get; set; }
         public Nullable<int> customerCountryId { get; set; }
         public string customerCountry { get; set; }
         public Nullable<int> countryPackageId { get; set; }

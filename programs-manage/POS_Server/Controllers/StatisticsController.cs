@@ -93,7 +93,7 @@ namespace Programs_Server.Controllers
                                         customerId = PA.customerId,
                                         customerName = C.custname,
                                         customerLastName = C.lastName,
-                                      
+                                        customerCompany=C.company,
                                         //  customerCountryId=CC.countryId
                                         Price = PA.Price,
                                         currency = N.currency,
@@ -333,6 +333,7 @@ namespace Programs_Server.Controllers
                                         customerId = PA.customerId,
                                         customerName = C.custname,
                                         customerLastName = C.lastName,
+                                        customerCompany = C.company,
                                         Price = PA.Price,
                                         currency = N.currency,
 
@@ -574,7 +575,7 @@ namespace Programs_Server.Controllers
                                         customerId = PA.customerId,
                                         customerName = C.custname,
                                         customerLastName = C.lastName,
-
+                                        customerCompany = C.company,
                                         //  customerCountryId=CC.countryId
                                         Price = PA.Price,
                                         currency = N.currency,
@@ -734,6 +735,7 @@ namespace Programs_Server.Controllers
                                         customerId = PA.customerId,
                                         customerName = C.custname,
                                         customerLastName = C.lastName,
+                                        customerCompany = C.company,
                                         Price = PA.Price,
                                         currency = N.currency,
 
