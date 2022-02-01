@@ -124,7 +124,7 @@
                                 Width="*">
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding StringFormat="{}{0} - {1} {2}">
-                                        <Binding Path="custCode" />
+                                        <Binding Path="company" />
                                         <Binding Path="custname" />
                                         <Binding Path="lastName" />
                                     </MultiBinding>
@@ -231,7 +231,7 @@
                                 Width="*">
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding StringFormat="{}{0} - {1} {2}">
-                                        <Binding Path="custCode" />
+                                        <Binding Path="company" />
                                         <Binding Path="custname" />
                                         <Binding Path="lastName" />
                                     </MultiBinding>

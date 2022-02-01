@@ -62,7 +62,7 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "custname", "lastName",  "mobile" , "country" };
+                requiredControlList = new List<string> { "custname", "lastName",  "mobile" , "company" , "country" };
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -121,7 +121,8 @@ namespace AdministratorApp.View.sectionData
 
             dg_customer.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
             dg_customer.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_customer.Columns[2].Header = MainWindow.resourcemanager.GetString("trMobile");
+            dg_customer.Columns[2].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_customer.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
@@ -158,7 +159,7 @@ namespace AdministratorApp.View.sectionData
                         customer.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
                     if (cb_custlevel.SelectedValue != null)
                         customer.custlevel = cb_custlevel.SelectedValue.ToString();
-                    customer.company = tb_company.Text;
+                    customer.company = tb_company.Text.Trim();
                     customer.address = tb_address.Text;
                     customer.notes = tb_notes.Text;
                     customer.isActive = 1;
@@ -213,7 +214,7 @@ namespace AdministratorApp.View.sectionData
                         customer.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
                     if (cb_custlevel.SelectedValue != null)
                         customer.custlevel = cb_custlevel.SelectedValue.ToString();
-                    customer.company = tb_company.Text;
+                    customer.company = tb_company.Text.Trim();
                     customer.address = tb_address.Text;
                     customer.notes = tb_notes.Text;
                     customer.createUserId = MainWindow.userLogin.userId;
@@ -464,7 +465,8 @@ namespace AdministratorApp.View.sectionData
             searchText = tb_search.Text.ToLower();
             customersQuery = customers.Where(s => (s.custCode.ToLower().Contains(searchText) ||
             s.custname.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
+            s.mobile.ToLower().Contains(searchText) ||
+            s.company.ToLower().Contains(searchText)
             ) && s.isActive == tgl_customerState);
             RefreshCustomersView();
         }

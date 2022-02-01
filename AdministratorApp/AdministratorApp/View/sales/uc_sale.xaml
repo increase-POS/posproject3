@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="AdministratorApp.View.sales.uc_sale"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:dotNetKitControls="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -429,13 +430,35 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ComboBox   x:Name="cb_customer" Padding="10,5,5,5"  Grid.Column="0"
+                            <!--<ComboBox   x:Name="cb_customer" Padding="10,5,5,5"  Grid.Column="0"
                                         TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Top" BorderThickness="0" Height="40" 
+                                        
+                                        IsTextSearchEnabled="True"
+                                        IsEditable="True"
+                                        
                                         LostFocus="validateEmpty_LostFocus" 
-                                        SelectionChanged="Cb_customer_SelectionChanged"/>
+                                        SelectionChanged="Cb_customer_SelectionChanged"/>-->
+                            <dotNetKitControls:AutoCompleteComboBox   
+                                        x:Name="cb_customer" Padding="10,5,5,5"  Grid.Column="0"
+                                        TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                        materialDesign:HintAssist.Hint="Customer..."    
+                                        VerticalAlignment="Top" BorderThickness="0" Height="40" 
+                                        
+                                        IsTextSearchEnabled="True"
+                                        IsEditable="True"
+                                        
+                                        LostFocus="validateEmpty_LostFocus" 
+                                        SelectionChanged="Cb_customer_SelectionChanged">
+                                <dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
+                            </dotNetKitControls:AutoCompleteComboBox>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_customer"
                                   HorizontalAlignment="Right" Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15" Grid.Column="0"

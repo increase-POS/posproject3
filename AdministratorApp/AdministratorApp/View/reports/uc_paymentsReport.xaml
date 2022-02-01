@@ -121,6 +121,10 @@
                                                             materialDesign:HintAssist.Hint="Customer ...."    
                                                             VerticalAlignment="Center" BorderThickness="0"
                                                             Height="40" 
+                                                            
+                                                            IsTextSearchEnabled="True"
+                                                            IsEditable="True"
+                                                            
                                                             SelectionChanged="Cb_customers_SelectionChanged"/>
                                             </Grid>
                                         </Border>
@@ -249,7 +253,8 @@
                      Name="dg_book" 
                         AutoGenerateColumns="False" 
                         ColumnWidth="SizeToHeader"
-                            AlternatingRowBackground="#f3f3f3" AlternationCount="2" MouseDoubleClick="Dg_book_MouseDoubleClick">
+                            AlternatingRowBackground="#f3f3f3" AlternationCount="2" 
+                           MouseDoubleClick="Dg_book_MouseDoubleClick">
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -313,13 +318,13 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn x:Name="col_customer"    Width="*" Header="Customer"      >
-                            <DataGridTextColumn.Binding>
+                        <DataGridTextColumn x:Name="col_customer"    Width="*" Header="Customer"  Binding="{Binding Path=customerCompany}"    >
+                            <!--<DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="customerName" />
                                     <Binding Path="customerLastName" />
                                 </MultiBinding>
-                            </DataGridTextColumn.Binding>
+                            </DataGridTextColumn.Binding>-->
                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_price"       Width="*" Header="Price"         >
                             <DataGridTextColumn.Binding>

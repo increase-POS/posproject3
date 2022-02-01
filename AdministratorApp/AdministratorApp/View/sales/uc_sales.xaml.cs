@@ -69,10 +69,12 @@ namespace AdministratorApp.View.sales
                 #endregion
 
                 //if (!isPayment)
-                Btn_sale_Click(btn_sale, null);
+                //    Btn_sale_Click(btn_sale, null);
                 //else
+                //{
                 //    isPayment = false;
-
+                //    Btn_packageUser_Click(btn_packageUser, null);
+                //}
                 HelpClass.EndAwait(grid_mainGrid);
             }
             catch (Exception ex)
@@ -129,7 +131,6 @@ namespace AdministratorApp.View.sales
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_payment.Instance);
                 grid_main.Children.Add(uc_payment.Instance);
             }
             catch (Exception ex)

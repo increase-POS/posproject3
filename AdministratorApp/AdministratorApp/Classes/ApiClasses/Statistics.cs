@@ -33,8 +33,9 @@ namespace AdministratorApp.ApiClasses
         public bool canDelete { get; set; }
         public string userName { get; set; }
         public string userLastName { get; set; }
-        public string customerName { get; set; }// 6- customer Name
-        public string customerLastName { get; set; }// 6- customer LastName
+        public string customerName { get; set; }
+        public string customerLastName { get; set; }
+        public string customerCompany { get; set; } //6-customer
         public Nullable<int> customerCountryId { get; set; }
         public string customerCountry { get; set; }
         public Nullable<int> countryPackageId { get; set; }
@@ -133,8 +134,9 @@ namespace AdministratorApp.ApiClasses
         public bool canDelete { get; set; }
         public string userName { get; set; }
         public string userLastName { get; set; }
-        public string customerName { get; set; }// 6- customer Name
-        public string customerLastName { get; set; }// 6- customer LastName
+        public string customerName { get; set; }
+        public string customerLastName { get; set; }
+        public string customerCompany { get; set; }//6- customer
         public Nullable<int> customerCountryId { get; set; }
         public string customerCountry { get; set; }
         public Nullable<int> countryPackageId { get; set; }

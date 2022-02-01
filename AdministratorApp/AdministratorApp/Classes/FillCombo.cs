@@ -41,7 +41,7 @@ namespace AdministratorApp.Classes
             combo.ItemsSource = packageUsers.Where(x => x.isActive == 1 );
             combo.SelectedValuePath = "packageUserId";
             combo.DisplayMemberPath = "packageNumber";
-            combo.SelectedIndex = -1;
+            //combo.SelectedIndex = -1;
         }
         static public async Task fillBookNumAgent(ComboBox combo, int customerId , int agentId)
         {
@@ -54,7 +54,7 @@ namespace AdministratorApp.Classes
             combo.ItemsSource = packageUsers.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "packageUserId";
             combo.DisplayMemberPath = "packageNumber";
-            combo.SelectedIndex = -1;
+            //combo.SelectedIndex = -1;
         }
 
         static public async Task fillPackage(ComboBox combo)
@@ -169,24 +169,26 @@ namespace AdministratorApp.Classes
         static public async Task fillCustomer(ComboBox combo)
         {
             customers = await customer.GetAll();
-            foreach (var c in customers)
-            {
-                c.custname = c.custCode + " " + c.custname + " " + c.lastName;
-            }
+            //foreach (var c in customers)
+            //{
+            //    c.custname = c.custCode + " " + c.custname + " " + c.lastName;
+            //}
             combo.ItemsSource = customers.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "custId";
-            combo.DisplayMemberPath = "custname";
+            //combo.DisplayMemberPath = "custname";
+            combo.DisplayMemberPath = "company";
         }
         static public async Task fillCustomerByAgent(ComboBox combo , int agentID)
         {
             customers = await customer.GetCustomersByAgent(agentID);
-            foreach(var c in customers)
-            {
-                c.custname = c.custCode + " " + c.custname + " " + c.lastName;
-            }
+            //foreach(var c in customers)
+            //{
+            //    c.custname = c.custCode + " " + c.custname + " " + c.lastName;
+            //}
             combo.ItemsSource = customers.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "custId";
-            combo.DisplayMemberPath = "custname";
+            //combo.DisplayMemberPath = "custname";
+            combo.DisplayMemberPath = "company";
         }
 
         #region Countries

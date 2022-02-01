@@ -843,9 +843,9 @@ namespace AdministratorApp.View.reports
 
         private async void Dg_book_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 PaymentsSts payment = dg_book.SelectedItem as PaymentsSts;
                 if (payment.packageUserId > 0)
@@ -858,36 +858,27 @@ namespace AdministratorApp.View.reports
 
                     if (packageUser.packageId > 0)
                     {
-                        MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
                         uc_sales.Instance.isPayment = true;
-                        //uc_sales.Instance.Window_Loaded(null, null);
-                        uc_sales.Instance.Btn_packageUser_Click(uc_sales.Instance.btn_packageUser, null);
-                        uc_payment.Instance.UserControl_Loaded(null, null);
                         uc_payment.Instance.isFirstTime = false;
+                        MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
+                        uc_sales.Instance.Window_Loaded(null, null);
+                        uc_sales.Instance.Btn_packageUser_Click(uc_sales.Instance.btn_packageUser, null);
                         uc_payment.Instance.cusID = payment.customerId.Value;
                         uc_payment.Instance.packuserID = payment.packageUserId;
-
-                        //uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
-                        //uc_sale.Instance.oldAgentId = packageUser.userId.Value;
-                        //uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
-                        //uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
-                        //uc_sale.Instance.packuser = packageUser;
-                        //uc_sale.Instance.btn_serials.IsEnabled = true;
-                        //uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
-                        //uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
-                        HelpClass.clearValidate(uc_payment.requiredControlList, this);
+                        uc_payment.Instance.discount_ = payment.discountValue;
+                        uc_payment.Instance.UserControl_Loaded(null, null);
                     }
                 }
                 //Clear();
                 //ClearPackageUser();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
     }
 }

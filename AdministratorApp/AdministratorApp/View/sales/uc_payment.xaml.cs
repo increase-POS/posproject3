@@ -61,15 +61,16 @@ namespace AdministratorApp.View.sales
         IEnumerable<PayOp> payOpQuery;
         PayOp payOp = new PayOp();
         decimal totalNet = 0;
-        int discount = 0;
+        decimal discount = 0;
         public bool isFirstTime = true;
-        public int cusID = 0 , packuserID = 0;
+        public int cusID = 0, packuserID = 0;
+        public decimal discount_ = 0;
         string searchText = "";
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "customer" , "packageNumber" };
 
@@ -96,18 +97,51 @@ namespace AdministratorApp.View.sales
                     Clear();
                 else
                 {
-                    isFirstTime = true;
                     cb_customer.SelectedValue = cusID;
+                    if (!MainWindow.userLogin.type.Equals("ag"))
+                        try { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
+                        catch { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
+                    else
+                        try { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
+                        catch { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
                     cb_packageNumber.SelectedValue = packuserID;
+
+                    tb_discount.IsEnabled = true;
+
+                    btn_upgrade.IsEnabled = true;
+
+                    packageUser = cb_packageNumber.SelectedItem as PackageUser;
+
+                    txt_period.Visibility = Visibility.Visible;
+
+                    int index = packageUser.packageNumber.IndexOf("     ");
+                    string s = packageUser.packageNumber.Substring(0, index);
+                    txt_packageNumberTitle.Text = s;
+
+                    grid_packageDetails.DataContext = packageUser;
+                    grid_payDetails.DataContext = packageUser;
+
+                    tb_discount.Text = discount_.ToString();
+
+
+                    #region fill Package details
+                    if (packageUser != null)
+                    {
+                        txt_total.Text = txt_price.Text;
+                    }
+                    #endregion
+
+                    isFirstTime = true;
+
                 }
                 HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         #region methods
@@ -515,21 +549,22 @@ namespace AdministratorApp.View.sales
         PayOp payOpModel = new PayOp();
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
-                cb_packageNumber.SelectedItem = null;
-                cb_packageNumber.IsEnabled = true;
-                tb_discount.IsEnabled = true;
-                if (cb_customer.SelectedIndex != -1)
+                if ((cb_customer.SelectedIndex != -1)&&(isFirstTime))
                 {
+                    cb_packageNumber.SelectedItem = null;
+                    cb_packageNumber.IsEnabled = true;
+                    tb_discount.IsEnabled = true;
                     //this.DataContext = cb_customer.SelectedItem as PayOp;
                     if (!MainWindow.userLogin.type.Equals("ag"))
                         await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
                     else
                         await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue , MainWindow.userLogin.userId);
                     
+
                     if (cb_packageNumber.Items.Count > 0)
                         btn_upgrade.IsEnabled = true;
                     else
@@ -539,13 +574,13 @@ namespace AdministratorApp.View.sales
                     await Search();
                 }
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
        
@@ -578,11 +613,11 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_packageNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+                //HelpClass.StartAwait(grid_main);
 
-                if (cb_packageNumber.SelectedIndex != -1)
+                if ((cb_packageNumber.SelectedIndex != -1)&&(isFirstTime))
                 {
                     tb_discount.Text = "0";
 
@@ -611,13 +646,13 @@ namespace AdministratorApp.View.sales
                     await RefreshPayOpList();
                     await Search();
                 }
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_upgrade_Click(object sender, RoutedEventArgs e)
@@ -709,8 +744,8 @@ namespace AdministratorApp.View.sales
             try
             {
 
-                if(!tb_discount.Text.Equals(""))
-                    discount = int.Parse(tb_discount.Text);
+                if (!tb_discount.Text.Equals(""))
+                    discount = decimal.Parse(tb_discount.Text);
 
                 txt_discount.Text = discount.ToString();
                 

@@ -122,6 +122,10 @@
                                                             materialDesign:HintAssist.Hint="Customer ...."    
                                                             VerticalAlignment="Center" BorderThickness="0"
                                                             Height="40" 
+                                                            
+                                                            IsTextSearchEnabled="True"
+                                                            IsEditable="True"
+                                                            
                                                             SelectionChanged="Cb_customers_SelectionChanged"/>
                                             </Grid>
                                         </Border>
@@ -275,13 +279,13 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn x:Name="col_customer"    Width="*" Header="Customer"      >
-                            <DataGridTextColumn.Binding>
+                        <DataGridTextColumn x:Name="col_customer"    Width="*" Header="Customer"  Binding="{Binding customerCompany }"    >
+                            <!--<DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="customerName" />
                                     <Binding Path="customerLastName" />
                                 </MultiBinding>
-                            </DataGridTextColumn.Binding>
+                            </DataGridTextColumn.Binding>-->
                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_price"       Width="*" Header="Price"         >
                             <DataGridTextColumn.Binding>

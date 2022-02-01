@@ -293,6 +293,10 @@
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Center" BorderThickness="0"
                                         Height="40" 
+                                        
+                                        IsTextSearchEnabled="True"
+                                        IsEditable="True"
+                                        
                                         SelectionChanged="Cb_customer_SelectionChanged" 
                                         LostFocus="validateEmpty_LostFocus"/>
                             <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_customer"
