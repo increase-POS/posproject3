@@ -52,15 +52,10 @@ namespace AdministratorApp.ApiClasses
         public int customerCount { get; set; }
         public int itemCount { get; set; }
         public int salesInvCount { get; set; }
-
         public string programName { get; set; }
-
         public string verName { get; set; }
-
         public int isActive { get; set; }
-
         public string packageCode { get; set; }
-
         public int storeCount { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
         public bool islimitDate { get; set; }

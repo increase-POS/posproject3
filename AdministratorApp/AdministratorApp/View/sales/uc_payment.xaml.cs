@@ -62,9 +62,10 @@ namespace AdministratorApp.View.sales
         PayOp payOp = new PayOp();
         decimal totalNet = 0;
         int discount = 0;
-
+        public bool isFirstTime = true;
+        public int cusID = 0 , packuserID = 0;
         string searchText = "";
-        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
@@ -91,7 +92,14 @@ namespace AdministratorApp.View.sales
                 else
                     await FillCombo.fillCustomer(cb_customer);
 
-                Clear();
+                if (isFirstTime)
+                    Clear();
+                else
+                {
+                    isFirstTime = true;
+                    cb_customer.SelectedValue = cusID;
+                    cb_packageNumber.SelectedValue = packuserID;
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

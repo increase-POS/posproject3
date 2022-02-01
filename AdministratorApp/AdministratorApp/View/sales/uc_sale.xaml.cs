@@ -68,9 +68,10 @@ namespace AdministratorApp.View.sales
      
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //    HelpClass.StartAwait(grid_main);
+
 
                 package = new Packages();
                
@@ -88,7 +89,7 @@ namespace AdministratorApp.View.sales
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-            #endregion
+                #endregion
 
                 requiredControlList = new List<string> { "package", "customer", "isOnline" ,"period" };
 
@@ -122,9 +123,21 @@ namespace AdministratorApp.View.sales
                 }
                 else
                 {
+                    #region expired date
+                    string color = "#2491EA";
+                    if (packuser.expireDate.Value < DateTime.Now)
+                        color = "#FF0000";
+                    txt_date.Text = HelpClass.setDateFormat(packuser.expireDate.Value);
+                    txt_date.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                    #endregion
+
                     btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
                     cb_customer.SelectedValue = oldCustomerId;
-                    agent = await userModel.GetByID(MainWindow.userLogin.userId);
+                    try
+                    {
+                        agent = await userModel.GetByID(MainWindow.userLogin.userId);
+                    }
+                    catch { agent = await userModel.GetByID(MainWindow.userLogin.userId); }
                     if (MainWindow.userLogin.type.Equals("ag"))
                     {
                         cb_package.SelectedValue = oldPackageId;
@@ -148,7 +161,8 @@ namespace AdministratorApp.View.sales
                     tgl_isActive.IsChecked = Convert.ToBoolean(packuser.isActive);
                     tgl_device.IsChecked = Convert.ToBoolean(packuser.canChngSer);
                 }
-                cb_agent.Text = agent.accountName;
+
+                cb_agent.Text = agent.name+" "+agent.lastName;
 
                 //HelpClass.EndAwait(grid_main);
             //}
@@ -177,6 +191,7 @@ namespace AdministratorApp.View.sales
             txt_priceTitle.Text = MainWindow.resourcemanager.GetString("trPrice");
             txt_statusTitle.Text = MainWindow.resourcemanager.GetString("trStatus");
             txt_serialsTitle.Text = MainWindow.resourcemanager.GetString("trSerials");
+            txt_dateTitle.Text = MainWindow.resourcemanager.GetString("trExpirationDate");
 
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_device.Text = MainWindow.resourcemanager.GetString("trChangeDevice");
@@ -281,6 +296,7 @@ namespace AdministratorApp.View.sales
             cb_period.IsEnabled = false;
             btn_serials.IsEnabled = false;
             tb_activationCode.Text = "";
+            txt_date.Text = "";
             btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -522,11 +538,12 @@ namespace AdministratorApp.View.sales
             //{
                 if (cb_period.SelectedIndex != -1)
                 {
-                    Country cModel = new Country();
                     CountryPackageDate cpd = new CountryPackageDate();
-                    Country country = new Country();
-                    List<Country> countries = new List<Country>();
-                    cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
+                    try
+                    {
+                        cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
+                    }
+                    catch { cpd = await cpdModel.GetByID((int)cb_period.SelectedValue); }
                     txt_price.Text = cpd.price.ToString()+" "+cpd.currency.ToString();
                 }
                 else

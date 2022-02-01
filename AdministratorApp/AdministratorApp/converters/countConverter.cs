@@ -12,7 +12,7 @@ namespace AdministratorApp.converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
+            //trUnLimited
             if (value.ToString().Equals("-1"))
                 value = "";
             else if (value.ToString().Equals("0"))

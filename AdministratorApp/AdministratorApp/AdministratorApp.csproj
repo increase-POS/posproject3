@@ -186,6 +186,7 @@
     <Compile Include="Classes\printClass\ReportCls.cs" />
     <Compile Include="Classes\printClass\rptSectionData.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
+    <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\BooleanReverseConverter.cs" />
     <Compile Include="converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="converters\countConverter.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="converters\packagePeriodConverter.cs" />
     <Compile Include="converters\permissionsNameConverter.cs" />
     <Compile Include="converters\unlimitedConverter.cs" />
+    <Compile Include="converters\unlimitedCountConverter.cs" />
     <Compile Include="View\applications\uc_applications.xaml.cs">
       <DependentUpon>uc_applications.xaml</DependentUpon>
     </Compile>

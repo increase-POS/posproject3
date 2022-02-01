@@ -150,6 +150,13 @@ namespace AdministratorApp.Classes
         static public async Task fillAgentByCountry(ComboBox combo , int countryID)
         {
             users = await user.GetAll();
+            foreach(var a in users)
+            {
+                if (a.userId == 3)
+                    a.name = "Increase";
+                else
+                a.name = a.name + " " + a.lastName;
+            }
             combo.ItemsSource = users.Where(x => x.isActive == 1 && x.type == "ag" && x.countryId == countryID);
             combo.SelectedValuePath = "userId";
             combo.DisplayMemberPath = "name";
@@ -162,6 +169,10 @@ namespace AdministratorApp.Classes
         static public async Task fillCustomer(ComboBox combo)
         {
             customers = await customer.GetAll();
+            foreach (var c in customers)
+            {
+                c.custname = c.custCode + " " + c.custname + " " + c.lastName;
+            }
             combo.ItemsSource = customers.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "custId";
             combo.DisplayMemberPath = "custname";
@@ -169,6 +180,10 @@ namespace AdministratorApp.Classes
         static public async Task fillCustomerByAgent(ComboBox combo , int agentID)
         {
             customers = await customer.GetCustomersByAgent(agentID);
+            foreach(var c in customers)
+            {
+                c.custname = c.custCode + " " + c.custname + " " + c.lastName;
+            }
             combo.ItemsSource = customers.Where(x => x.isActive == 1);
             combo.SelectedValuePath = "custId";
             combo.DisplayMemberPath = "custname";

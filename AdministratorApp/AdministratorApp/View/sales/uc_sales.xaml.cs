@@ -23,6 +23,7 @@ namespace AdministratorApp.View.sales
     /// </summary>
     public partial class uc_sales : UserControl
     {
+        public bool isPayment = false;
         private static uc_sales _instance;
         public static uc_sales Instance
         {
@@ -67,7 +68,10 @@ namespace AdministratorApp.View.sales
                 translate();
                 #endregion
 
-                Btn_sale_Click(btn_sale , null);
+                //if (!isPayment)
+                Btn_sale_Click(btn_sale, null);
+                //else
+                //    isPayment = false;
 
                 HelpClass.EndAwait(grid_mainGrid);
             }
@@ -118,13 +122,14 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_packageUser_Click(object sender, RoutedEventArgs e)
+        public void Btn_packageUser_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Button button = sender as Button;
                 colorButtonRefreash(button.Tag.ToString());
                 grid_main.Children.Clear();
+                grid_main.Children.Add(uc_payment.Instance);
                 grid_main.Children.Add(uc_payment.Instance);
             }
             catch (Exception ex)

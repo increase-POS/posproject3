@@ -125,10 +125,11 @@
                             </DataGridTextColumn>
 
                             <DataGridTextColumn Header="Name" Width="*">
-                                <DataGridTextColumn.Binding>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="name"></Binding>
-                                        <Binding Path="lastName"></Binding>
+                                <DataGridTextColumn.Binding >
+                                    <MultiBinding Converter="{StaticResource agentNameConverter}" >
+                                        <Binding Path="userId" />
+                                        <Binding Path="name" />
+                                        <Binding Path="lastName" />
                                     </MultiBinding>
                                 </DataGridTextColumn.Binding>
                                 <DataGridTextColumn.ElementStyle>
