@@ -689,7 +689,6 @@ E:\AdministratorApp 9-12-2021\AdministratorApp\obj\Debug\AdministratorApp.csproj
 E:\AdministratorApp 9-12-2021\AdministratorApp\obj\Debug\AdministratorApp.exe
 E:\AdministratorApp 9-12-2021\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.g.cs
 E:\AdministratorApp 9-12-2021\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.baml
-E:\github\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Microsoft.SqlServer.Types.dll
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.g.cs
 E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.baml
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_countryPackageDate.g.cs
@@ -728,3 +727,5 @@ E:\github\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\w
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_offlineActivation.g.cs
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\obj\Debug\View\windows\wd_offlineActivation.baml
 E:\GitHub\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Reports\Sale\Book\Serials\En\serials.rdlc
+E:\github\posproject3\AdministratorApp\AdministratorApp\bin\Debug\DotNetKit.Wpf.AutoCompleteComboBox.dll
+E:\github\posproject3\AdministratorApp\AdministratorApp\bin\Debug\DotNetKit.Wpf.AutoCompleteComboBox.xml
