@@ -788,19 +788,7 @@ namespace AdministratorApp.View.sales
             }
         }
 
-        string _prevText = string.Empty;
-        private void cb_customer_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            foreach (var item in cb_customer.Items)
-            {
-                if (item.ToString().StartsWith(cb_customer.Text))
-                {
-                    _prevText = cb_customer.Text;
-                    return;
-                }
-            }
-            cb_customer.Text = _prevText;
-        }
+      
 
         //ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();

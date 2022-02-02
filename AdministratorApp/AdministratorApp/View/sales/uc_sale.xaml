@@ -441,6 +441,9 @@
                                         
                                         LostFocus="validateEmpty_LostFocus" 
                                         SelectionChanged="Cb_customer_SelectionChanged"/>-->
+                            <!--ItemsSource="{Binding customers}"
+                                        SelectedItem="{Binding company}"
+                                        SelectedValue="{Binding custId}"-->
                             <dotNetKitControls:AutoCompleteComboBox   
                                         x:Name="cb_customer" Padding="10,5,5,5"  Grid.Column="0"
                                         TextBlock.Foreground="#4E4E4E"    Margin="4,0"
@@ -450,9 +453,7 @@
                                         
                                         SelectedValuePath="custId"
                                         TextSearch.TextPath="company"
-                                        ItemsSource="{Binding customers}"
-                                        SelectedItem="{Binding company}"
-                                        SelectedValue="{Binding custId}"
+                                        
                                         
                                         LostFocus="validateEmpty_LostFocus" 
                                         SelectionChanged="Cb_customer_SelectionChanged">
