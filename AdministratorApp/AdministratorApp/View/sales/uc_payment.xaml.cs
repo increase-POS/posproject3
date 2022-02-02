@@ -657,9 +657,9 @@ namespace AdministratorApp.View.sales
 
         private async void Btn_upgrade_Click(object sender, RoutedEventArgs e)
         {//upgrade
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 if (packageUser.packageId > 0)
                 {
@@ -678,19 +678,18 @@ namespace AdministratorApp.View.sales
                     uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
                     uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
                     HelpClass.clearValidate(uc_sale.requiredControlList, this);
-
                 }
 
                 Clear();
                 ClearPackageUser();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_pay_Click(object sender, RoutedEventArgs e)

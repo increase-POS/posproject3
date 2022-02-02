@@ -675,6 +675,7 @@ namespace AdministratorApp
                 openVisible(button.Tag.ToString());
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_sales.Instance);
+                uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale , null);
             }
             catch (Exception ex)
             {

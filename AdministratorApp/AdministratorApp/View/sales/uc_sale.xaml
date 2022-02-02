@@ -448,8 +448,11 @@
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Top" BorderThickness="0" Height="40" 
                                         
-                                        IsTextSearchEnabled="True"
-                                        IsEditable="True"
+                                        SelectedValuePath="custId"
+                                        TextSearch.TextPath="company"
+                                        ItemsSource="{Binding customers}"
+                                        SelectedItem="{Binding company}"
+                                        SelectedValue="{Binding custId}"
                                         
                                         LostFocus="validateEmpty_LostFocus" 
                                         SelectionChanged="Cb_customer_SelectionChanged">
