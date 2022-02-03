@@ -81,7 +81,7 @@ namespace AdministratorApp.View.windows
                     grid_serialsList.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translat();
-            #endregion
+                #endregion
 
                 #region fill user type
                 var typelist = new[] {
@@ -102,192 +102,37 @@ namespace AdministratorApp.View.windows
                 pu = await puModel.GetByID(packageUserID);
                 p = await pModel.GetByID(pu.packageId.Value);
 
-                pageIndex = 1;
-                pageIndexCurrent = 1;
-
                 cb_itemPerPage.SelectedIndex = 0;
 
-                pageCount = posSerialsQuery.Count() / itemsPerPage;
 
                 RefreshView();
 
+                #region pagination
                 btnList.Add(btn_firstPage);
                 btnList.Add(btn_prevPage);
                 btnList.Add(btn_curPage);
                 btnList.Add(btn_nextPage);
                 btnList.Add(btn_lastPage);
 
-                #region pagination
+                pageIndex = 1;
+                pageIndexCurrent = 1;
+                pageCount = posSerialsQuery.Count() / itemsPerPage;
 
-            //    for(int i = pageCount - 2; i <= pageCount && i > 0; i++)
-            //    {
-            //        Button btn = new Button();
-            //        btn.Width = 25;
-            //        btn.Height = 25;
-            //        btn.Content = i;
-            //        btn.Padding = new Thickness(0);
-            //        btn.Margin = new Thickness(10, 0, 5, 0);
-            //        btn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFDFDF"));
-            //        btn.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#686868"));
-            //        btn.BorderThickness = new Thickness(0);
-            //        btn.VerticalAlignment = VerticalAlignment.Center;
-            //        btn.HorizontalAlignment = HorizontalAlignment.Center;
-            //        btn.Tag = i;
-            //        btn.Click += this.pageClick;
-            //        btnList.Add(btn);
+                if (pageCount == 1)
+                { btn_curPage.IsEnabled = false; btn_nextPage.IsEnabled = false; btn_lastPage.IsEnabled = false; }
+                else if (pageCount == 2)
+                { btn_nextPage.IsEnabled = false; }
+                #endregion
 
-            //        pnl_pagination.Children.Add(btn);
-            //    }
-            //    Btn_firstPage_Click(btn_firstPage, null);
-
-            //    ////one button
-            //    //Button btn_one = new Button();
-            //    //btn_one.Width = 25;
-            //    //btn_one.Height = 25;
-            //    //btn_one.Content = "1";
-            //    //btn_one.Padding = new Thickness(0);
-            //    //btn_one.Margin = new Thickness(10,0,5,0);
-            //    //btn_one.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
-            //    //btn_one.BorderThickness = new Thickness(0);
-            //    //btn_one.VerticalAlignment = VerticalAlignment.Center;
-            //    //btn_one.HorizontalAlignment = HorizontalAlignment.Center;
-            //    //btn_one.Tag = 1;
-            //    //btn_one.Click += this.pageClick;
-            //    //btnList.Add(btn_one);
-
-            ////pnl_pagination.Children.Add(btn_one);
-
-
-            ////if (posSerialsQuery.Count() > itemsPerPage)
-            ////{
-            ////    int btnCount = 3;
-            ////    if (pageCount < 3) btnCount = pageCount;
-            ////    for (int i = 0; i < btnCount-1 ; i++)
-            ////    {
-            ////        //2 button
-            ////        Button btn_next = new Button();
-            ////        btn_next.Width = 25;
-            ////        btn_next.Height = 25;
-            ////        btn_next.Content = (i+2).ToString();
-            ////        btn_next.Margin = new Thickness(10, 0, 5, 0);
-            ////        btn_next.Padding = new Thickness(0);
-            ////        btn_next.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFDFDF"));
-            ////        btn_next.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#686868"));
-            ////        btn_next.BorderThickness = new Thickness(0);
-            ////        btn_next.VerticalAlignment = VerticalAlignment.Center;
-            ////        btn_next.HorizontalAlignment = HorizontalAlignment.Center;
-            ////        btn_next.Tag = i + 2;
-            ////        btn_next.Click += this.pageClick;
-            ////        btnList.Add(btn_next);
-
-            ////        pnl_pagination.Children.Add(btn_next);
-            ////    }
-            ////}
-
-            ////if (pageCount > 3)
-            ////    btn_nextPage.IsEnabled = true;
-            #endregion
-
-            //    HelpClass.EndAwait(grid_serialsList);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_serialsList);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
-        }
-        //private void Btn_firstPage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        //HelpClass.StartAwait(grid_serialsList);
-
-        //        //if (pageIndex != 1)
-        //        //{
-        //        //    //(sender as Button).Tag = pageIndex--;
-        //        //    pageClick(sender, e);
-        //        //}
-        //        pageIndex = 1;
-        //        (sender as Button).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
-        //        pageClick(sender, e);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //HelpClass.EndAwait(grid_serialsList);
-
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-
-        //}
-
-        //private void Btn_nextPage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        //HelpClass.StartAwait(grid_serialsList);
-
-        //        if (pageIndex != pageCount)
-        //        {
-        //            //(sender as Button).Tag = pageIndex++;
-        //            pageClick(sender, e);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //HelpClass.EndAwait(grid_serialsList);
-
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
-
-        //private void Btn_lastPage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        //HelpClass.StartAwait(grid_serialsList);
-
-        //        (sender as Button).Tag = pageCount;
-        //        pageClick(sender, e);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //HelpClass.EndAwait(grid_serialsList);
-
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
-        //private void pageClick(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-
-        //        //if ((sender as Button).Name.ToString().Equals("btn_nextPage"))
-        //        //    pageIndex++;
-        //        //else if ((sender as Button).Name.ToString().Equals("btn_firstPage"))
-        //        //    pageIndex--;
-        //        //else
-        //        //    pageIndex = Convert.ToInt32((sender as Button).Tag);
-
-        //        //if(!(((sender as Button).Name.ToString().Equals("btn_firstPage")) || ((sender as Button).Name.ToString().Equals("btn_nextPage")) || ((sender as Button).Name.ToString().Equals("btn_lastPage"))))
-        //        //    (sender as Button).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
-
-        //        //foreach (Button b in btnList)
-        //        //{
-        //        //    if (b.Tag != (sender as Button).Tag)
-        //        //    {
-        //        //        b.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFDFDF"));
-        //        //        b.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#686868"));
-        //        //    }
-        //        //}
-
-        //        RefreshView();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
-
+                //    HelpClass.EndAwait(grid_serialsList);
+                //}
+                //catch (Exception ex)
+                //{
+                //    HelpClass.EndAwait(grid_serialsList);
+                //    HelpClass.ExceptionMessage(ex, this);
+                //}
+            }
+        
         #region pagination
         private void Btn_firstPage_Click(object sender, RoutedEventArgs e)
         {
@@ -302,21 +147,6 @@ namespace AdministratorApp.View.windows
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-        private void Btn_Page_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            (sender as Button).Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
-            clearOtherButtons(sender);
-            pageIndex = Convert.ToInt32((sender as Button).Content);
-            RefreshViewButtons();
-            RefreshView();
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
         }
 
         private void Btn_prevPage_Click(object sender, RoutedEventArgs e)
@@ -457,22 +287,34 @@ namespace AdministratorApp.View.windows
 
         private void Tb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //try
-            //{
-            //    if (int.Parse(tb_page.Text) <= pageCount)
-            //    {
-            //        pageIndex = int.Parse(tb_page.Text);
-            //        btn_curPage.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
-            //        clearOtherButtons(btn_curPage);
-            //        if (pageIndex < pageCount)
-            //            RefreshViewButtons();
-            //        RefreshView();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+            try
+            {
+                if (int.Parse(tb_page.Text) <= pageCount)
+                {
+                    pageIndex = int.Parse(tb_page.Text);
+                    ////btn_curPage.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
+                    ////clearOtherButtons(btn_curPage);
+                    ////if (pageIndex == 1) Btn_firstPage_Click(btn_firstPage, null);
+                    ////else if (pageIndex == pageCount) Btn_lastPage_Click(btn_lastPage, null);
+                    ////else
+                    //    Btn_curPage_Click(btn_curPage , null);
+                    ////if ((pageIndex < pageCount-2 )&&(pageIndex >2))
+                    ////RefreshViewButtons();
+                    ////RefreshView();
+                    ///
+                    btn_curPage.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#178DD2"));
+                    clearOtherButtons(sender);
+                    if (!((pageIndex == 2) || (pageIndex == pageCount - 1)))
+                    {
+                        RefreshViewButtons();
+                    }
+                    RefreshView();
+                }
+            }
+            catch (Exception ex)
+            {
 
-            //}
+            }
         }
         #endregion
         #region save - search - close - refresh
@@ -667,9 +509,9 @@ namespace AdministratorApp.View.windows
 
             chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
 
-            //tt_first.Content = MainWindow.resourcemanager.GetString("trPrevious");
-            //tt_next.Content = MainWindow.resourcemanager.GetString("trNext");
-            //tt_last.Content = MainWindow.resourcemanager.GetString("trLast");
+            tt_first.Content = MainWindow.resourcemanager.GetString("trFirst");
+            tt_last.Content = MainWindow.resourcemanager.GetString("trLast");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_page, "...");
 
         }
 

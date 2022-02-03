@@ -265,7 +265,7 @@
                             </Path>
                         </Button>
                         <TextBlock   Background="{x:Null}" x:Name="txt_count"    Margin="0,0,0,0" 
-                            Padding="10"   Text="0" Foreground="#378500"  >
+                            Padding="10"   Text="0" Foreground="#378500"  Visibility="Collapsed">
                             <TextBlock.ToolTip>
                                 <ToolTip x:Name="tt_count" 
                                               Placement="left" 
@@ -349,9 +349,9 @@
                                 </Path>
                             </Button>
                         <!--<Border BorderThickness="0,0,0,1" BorderBrush="#178DD2" Margin="10,0,10,0" Width="auto"-->
-                        <TextBox x:Name="tb_page"    Padding="10,0,5,0" Grid.Column="5"
+                        <TextBox x:Name="tb_page"    Padding="10,0,5,0" Grid.Column="5" Visibility="Collapsed"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     BorderThickness="0"   Width="50"  
+                                     BorderThickness="0"   Width="50" 
                                      Foreground="#4E4E4E"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" 
                                      PreviewTextInput="Number_PreviewTextInput" 
