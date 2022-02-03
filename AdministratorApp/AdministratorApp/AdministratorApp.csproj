@@ -173,6 +173,7 @@
     <Compile Include="Classes\ApiClasses\PosSerials.cs" />
     <Compile Include="Classes\ApiClasses\Programs.cs" />
     <Compile Include="Classes\ApiClasses\Statistics.cs" />
+    <Compile Include="Classes\ApiClasses\SysEmails.cs" />
     <Compile Include="Classes\ApiClasses\Users.cs" />
     <Compile Include="Classes\ApiClasses\UsersLogs.cs" />
     <Compile Include="Classes\ApiClasses\versions.cs" />
@@ -246,6 +247,15 @@
     </Compile>
     <Compile Include="View\sectionData\uc_users.xaml.cs">
       <DependentUpon>uc_users.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\emailGeneral\uc_emailGeneral.xaml.cs">
+      <DependentUpon>uc_emailGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\emailGeneral\uc_emailsSetting.xaml.cs">
+      <DependentUpon>uc_emailsSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\emailGeneral\uc_emailTemplates.xaml.cs">
+      <DependentUpon>uc_emailTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
@@ -364,6 +374,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\uc_users.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\settings\emailGeneral\uc_emailGeneral.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\settings\emailGeneral\uc_emailsSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\settings\emailGeneral\uc_emailTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
