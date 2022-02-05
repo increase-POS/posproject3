@@ -1,4 +1,4 @@
-﻿
+﻿D:\myproj\posproject3\AdministratorApp\AdministratorApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\App.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\MainWindow.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\applications\uc_applications.xaml;;
@@ -17,6 +17,9 @@ FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_age
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_customers.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_sectionData.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\sectionData\uc_users.xaml;;
+FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\settings\emailGeneral\uc_emailGeneral.xaml;;
+FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\settings\emailGeneral\uc_emailsSetting.xaml;;
+FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\settings\emailGeneral\uc_emailTemplates.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\settings\uc_settings.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_acceptCancelPopup.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_agentPackages.xaml;;
@@ -26,6 +29,7 @@ FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_custome
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_logIn.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_newCustomer.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_offlineActivation.xaml;;
+FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_previewPdf.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_seialsList.xaml;;
 FD:\myproj\posproject3\AdministratorApp\AdministratorApp\View\windows\wd_usersList.xaml;;
 

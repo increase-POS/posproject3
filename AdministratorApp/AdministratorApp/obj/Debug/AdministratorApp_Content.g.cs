@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/report/tmp.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/setting/emptylogo.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/setting/tmp.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/book/serials/en/serials.rdlc")]
@@ -15,5 +16,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/statisticreports/en/enbook.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/statisticreports/ar/arpayments.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/statisticreports/en/enpayments.rdlc")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/payments/ar/arpayments.rdlc")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/payments/en/enpayments.rdlc")]
 
 

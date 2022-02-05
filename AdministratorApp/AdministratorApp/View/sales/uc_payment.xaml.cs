@@ -21,6 +21,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using AdministratorApp.View.windows;
 
 namespace AdministratorApp.View.sales
 {
@@ -186,7 +188,7 @@ namespace AdministratorApp.View.sales
             {
                 foreach (var control in requiredControlList)
                 {
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                    System.Windows.Shapes.Path path = FindControls.FindVisualChildren<System.Windows.Shapes.Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     if (path != null)
                         HelpClass.clearValidate(path);
@@ -231,7 +233,7 @@ namespace AdministratorApp.View.sales
                 {
                     TextBox textBox = FindControls.FindVisualChildren<TextBox>(this).Where(x => x.Name == "tb_" + control)
                         .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                    System.Windows.Shapes.Path path = FindControls.FindVisualChildren<System.Windows.Shapes.Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
                          .FirstOrDefault();
@@ -243,7 +245,7 @@ namespace AdministratorApp.View.sales
                 {
                     ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(this).Where(x => x.Name == "cb_" + control)
                         .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                    System.Windows.Shapes.Path path = FindControls.FindVisualChildren<System.Windows.Shapes.Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
                          .FirstOrDefault();
@@ -384,11 +386,53 @@ namespace AdministratorApp.View.sales
         }
 
         #region reports
+
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        public void BuildReport()
+        {
+
+            //string firstTitle = "paymentsReport";
+            ////string secondTitle = "";
+            ////string subTitle = "";
+            //string Title = "";
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Sale\Payments\Ar\ArPayments.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Sale\Payments\En\EnPayments.rdlc";
+            }
+      
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
+
+            clsReports.PaymentsSale(payOps, rep, reppath, paramarr);
+            paramarr.Add(new ReportParameter("customerCompany", cb_customer.Text));
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
+
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
                 HelpClass.StartAwait(grid_main);
+
 
                 #region
                 BuildReport();
@@ -398,7 +442,7 @@ namespace AdministratorApp.View.sales
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     string filepath = saveFileDialog.FileName;
-                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
                 #endregion
 
@@ -411,6 +455,7 @@ namespace AdministratorApp.View.sales
             }
 
 
+
         }
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
@@ -421,21 +466,24 @@ namespace AdministratorApp.View.sales
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                string pdfpath = "";
 
+                string pdfpath = "";
+                //
                 pdfpath = @"\Thumb\report\temp.pdf";
-                //pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
                 BuildReport();
 
-                //LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                //wd_previewPdf w = new wd_previewPdf();
-                //w.pdfPath = pdfpath;
-                //if (!string.IsNullOrEmpty(w.pdfPath))
-                //{
-                //w.ShowDialog();
-                //w.wb_pdfWebViewer.Dispose();
-                //}
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+
+
+                }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
@@ -446,8 +494,6 @@ namespace AdministratorApp.View.sales
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
-
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)
@@ -455,14 +501,10 @@ namespace AdministratorApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
                 #region
-
                 BuildReport();
-                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -470,7 +512,6 @@ namespace AdministratorApp.View.sales
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
 
         }
 
@@ -481,22 +522,23 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 #region
-                Thread t1 = new Thread(() =>
+                //Thread t1 = new Thread(() =>
+                //{
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
                 {
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
                     {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                            // LocalReportExtensions.ExportToExcel(rep, filepath);
-                        }
-                    });
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
                 });
-                t1.Start();
-                #endregion
 
+
+                //});
+                //t1.Start();
+                #endregion
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -505,46 +547,9 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        public void BuildReport()
-        {
-
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath = "";
-            string firstTitle = "paymentsReport";
-            string secondTitle = "";
-            string subTitle = "";
-            string Title = "";
-
-            //bool isArabic = ReportCls.checkLang();
-            //if (isArabic)
-            //{
-            //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
-            //secondTitle = "vendors";
-            //}
-            //else
-            //{
-            //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
-            //secondTitle = "vendors";
-            //}
-            //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            //ReportCls.checkLang();
-            //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
-            paramarr.Add(new ReportParameter("trTitle", Title));
-            //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
-            //clsReports.setReportLanguage(paramarr);
-            //clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
+      
         #endregion
+
 
         PayOp payOpModel = new PayOp();
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\App.xaml
-28-1201855080
-7283169383
-89-871998579
+32-475268664
+10-615226766
+94280105939
 53-794481298
-MainWindow.xaml;View\applications\uc_applications.xaml;View\applications\uc_packages.xaml;View\applications\uc_versions.xaml;View\applications\us_programs.xaml;View\reports\uc_bookReport.xaml;View\reports\uc_paymentsReport.xaml;View\reports\uc_reports.xaml;View\sales\uc_packageUser.xaml;View\sales\uc_payment.xaml;View\sales\uc_posSerials.xaml;View\sales\uc_sale.xaml;View\sales\uc_sales.xaml;View\sectionData\uc_agents.xaml;View\sectionData\uc_customers.xaml;View\sectionData\uc_sectionData.xaml;View\sectionData\uc_users.xaml;View\settings\uc_settings.xaml;View\windows\wd_acceptCancelPopup.xaml;View\windows\wd_agentPackages.xaml;View\windows\wd_changePassword.xaml;View\windows\wd_countryPackageDate.xaml;View\windows\wd_customers.xaml;View\windows\wd_logIn.xaml;View\windows\wd_newCustomer.xaml;View\windows\wd_offlineActivation.xaml;View\windows\wd_seialsList.xaml;View\windows\wd_usersList.xaml;
+MainWindow.xaml;View\applications\uc_applications.xaml;View\applications\uc_packages.xaml;View\applications\uc_versions.xaml;View\applications\us_programs.xaml;View\reports\uc_bookReport.xaml;View\reports\uc_paymentsReport.xaml;View\reports\uc_reports.xaml;View\sales\uc_packageUser.xaml;View\sales\uc_payment.xaml;View\sales\uc_posSerials.xaml;View\sales\uc_sale.xaml;View\sales\uc_sales.xaml;View\sectionData\uc_agents.xaml;View\sectionData\uc_customers.xaml;View\sectionData\uc_sectionData.xaml;View\sectionData\uc_users.xaml;View\settings\emailGeneral\uc_emailGeneral.xaml;View\settings\emailGeneral\uc_emailsSetting.xaml;View\settings\emailGeneral\uc_emailTemplates.xaml;View\settings\uc_settings.xaml;View\windows\wd_acceptCancelPopup.xaml;View\windows\wd_agentPackages.xaml;View\windows\wd_changePassword.xaml;View\windows\wd_countryPackageDate.xaml;View\windows\wd_customers.xaml;View\windows\wd_logIn.xaml;View\windows\wd_newCustomer.xaml;View\windows\wd_offlineActivation.xaml;View\windows\wd_previewPdf.xaml;View\windows\wd_seialsList.xaml;View\windows\wd_usersList.xaml;
 
 False
 

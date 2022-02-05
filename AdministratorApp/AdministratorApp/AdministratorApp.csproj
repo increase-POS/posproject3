@@ -457,6 +457,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Thumb\report\tmp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Thumb\setting\emptylogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -473,6 +476,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Sale\Book\Ar\ArBook.rdlc" />
+    <EmbeddedResource Include="Reports\Sale\Book\En\EnBook.rdlc" />
     <EmbeddedResource Include="Reports\Sale\Book\Serials\Ar\serials.rdlc" />
     <Content Include="Reports\Sale\Book\Serials\En\serials.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -489,12 +494,20 @@
     <Content Include="Reports\statisticReports\En\EnPayments.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Sale\Payments\Ar\ArPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\Payments\En\EnPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <Resource Include="fonts\barcodeFont.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.BookSts.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PackageUser.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PaymentsSts.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PayOp.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PosSerials.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

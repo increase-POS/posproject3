@@ -176,6 +176,7 @@ namespace AdministratorApp.View.sales
 
         private void translate()
         {
+
             txt_title.Text = MainWindow.resourcemanager.GetString("trSales");
             txt_saleDetails.Text = MainWindow.resourcemanager.GetString("trSaleDetails");
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
@@ -652,11 +653,112 @@ namespace AdministratorApp.View.sales
         }
 
         #region reports
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        public void BuildReport()
+        {
+
+            //string firstTitle = "paymentsReport";
+            ////string secondTitle = "";
+            ////string subTitle = "";
+            //string Title = "";
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Sale\Payments\Ar\ArPayments.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Sale\Payments\En\EnPayments.rdlc";
+            }
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
+            List<PackageUser> purl = new List<PackageUser>();
+
+            clsReports.BookSale(purl, rep, reppath, paramarr);
+            SetReportparam(paramarr);
+        
+
+
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
+        public void SetReportparam(List<ReportParameter> paramarr)
+        {
+            // txt_title.Text = MainWindow.resourcemanager.GetString("trSales");
+            paramarr.Add(new ReportParameter("trSaleDetails", MainWindow.resourcemanagerreport.GetString("trSaleDetails")));
+            paramarr.Add(new ReportParameter("trAgentHint", MainWindow.resourcemanagerreport.GetString("trAgentHint")));
+
+            paramarr.Add(new ReportParameter("trCustomerHint", MainWindow.resourcemanagerreport.GetString("trCustomerHint")));
+            paramarr.Add(new ReportParameter("trServerState", MainWindow.resourcemanagerreport.GetString("trServerState")));
+            paramarr.Add(new ReportParameter("trPeriod", MainWindow.resourcemanagerreport.GetString("trPeriod")));
+            paramarr.Add(new ReportParameter("trPackageDetails", MainWindow.resourcemanagerreport.GetString("trPackageDetails")));
+            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trStatus", MainWindow.resourcemanagerreport.GetString("trStatus")));
+            paramarr.Add(new ReportParameter("trSerials", MainWindow.resourcemanagerreport.GetString("trSerials")));
+            paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));
+            paramarr.Add(new ReportParameter("trActive", MainWindow.resourcemanagerreport.GetString("trActive")));
+            paramarr.Add(new ReportParameter("trProgramDetails", MainWindow.resourcemanagerreport.GetString("trProgramDetails")));
+            paramarr.Add(new ReportParameter("trProgram", MainWindow.resourcemanagerreport.GetString("trProgram")));
+            paramarr.Add(new ReportParameter("trVersion", MainWindow.resourcemanagerreport.GetString("trVersion")));
+            paramarr.Add(new ReportParameter("trPackageLimits", MainWindow.resourcemanagerreport.GetString("trPackageLimits")));
+            paramarr.Add(new ReportParameter("trBranches", MainWindow.resourcemanagerreport.GetString("trBranches")));
+            paramarr.Add(new ReportParameter("trUsers", MainWindow.resourcemanagerreport.GetString("trUsers")));
+            paramarr.Add(new ReportParameter("trCustomers", MainWindow.resourcemanagerreport.GetString("trCustomers")));
+            paramarr.Add(new ReportParameter("trInvoices", MainWindow.resourcemanagerreport.GetString("trInvoices")));
+            paramarr.Add(new ReportParameter("trStores", MainWindow.resourcemanagerreport.GetString("trStores")));
+            paramarr.Add(new ReportParameter("trPOSs", MainWindow.resourcemanagerreport.GetString("trPOSs")));
+            paramarr.Add(new ReportParameter("trVendors", MainWindow.resourcemanagerreport.GetString("trVendors")));
+            paramarr.Add(new ReportParameter("trItems", MainWindow.resourcemanagerreport.GetString("trItems")));
+            paramarr.Add(new ReportParameter("trOfflineActivation", MainWindow.resourcemanagerreport.GetString("trOfflineActivation")));
+            paramarr.Add(new ReportParameter("trChangeDevice", MainWindow.resourcemanagerreport.GetString("trChangeDevice")));
+
+            paramarr.Add(new ReportParameter("Agent", ""));
+            paramarr.Add(new ReportParameter("Customer", ""));
+            paramarr.Add(new ReportParameter("ServerState", ""));
+            paramarr.Add(new ReportParameter("Period", ""));
+            paramarr.Add(new ReportParameter("Code", ""));
+            paramarr.Add(new ReportParameter("Name", ""));
+            paramarr.Add(new ReportParameter("Price", ""));
+            paramarr.Add(new ReportParameter("Status", ""));
+            paramarr.Add(new ReportParameter("ExpirationDate", ""));
+            paramarr.Add(new ReportParameter("Active", ""));
+            paramarr.Add(new ReportParameter("Program", ""));
+            paramarr.Add(new ReportParameter("Version", ""));
+            paramarr.Add(new ReportParameter("Branches", ""));
+            paramarr.Add(new ReportParameter("Users", ""));
+            paramarr.Add(new ReportParameter("Customers", ""));
+            paramarr.Add(new ReportParameter("Invoices", ""));
+            paramarr.Add(new ReportParameter("Stores", ""));
+            paramarr.Add(new ReportParameter("POSs", ""));
+            paramarr.Add(new ReportParameter("Vendors", ""));
+            paramarr.Add(new ReportParameter("Items", ""));
+            paramarr.Add(new ReportParameter("OfflineActivation", ""));
+            paramarr.Add(new ReportParameter("ChangeDevice", ""));
+            
+
+        }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
                 HelpClass.StartAwait(grid_main);
+
 
                 #region
                 BuildReport();
@@ -666,7 +768,7 @@ namespace AdministratorApp.View.sales
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     string filepath = saveFileDialog.FileName;
-                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
                 #endregion
 
@@ -678,20 +780,18 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
 
+
+
         }
         private void Btn_print_Click(object sender, RoutedEventArgs e)
         {//print
             try
             {
                 HelpClass.StartAwait(grid_main);
-
                 #region
-
                 BuildReport();
-                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                 #endregion
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -709,22 +809,23 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 #region
-                Thread t1 = new Thread(() =>
+                //Thread t1 = new Thread(() =>
+                //{
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
                 {
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
                     {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                            // LocalReportExtensions.ExportToExcel(rep, filepath);
-                        }
-                    });
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
                 });
-                t1.Start();
-                #endregion
 
+
+                //});
+                //t1.Start();
+                #endregion
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -743,21 +844,24 @@ namespace AdministratorApp.View.sales
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                string pdfpath = "";
 
+                string pdfpath = "";
+                //
                 pdfpath = @"\Thumb\report\temp.pdf";
-                //pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
                 BuildReport();
 
-                //LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                //wd_previewPdf w = new wd_previewPdf();
-                //w.pdfPath = pdfpath;
-                //if (!string.IsNullOrEmpty(w.pdfPath))
-                //{
-                    //w.ShowDialog();
-                    //w.wb_pdfWebViewer.Dispose();
-                //}
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+
+
+                }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
@@ -790,45 +894,7 @@ namespace AdministratorApp.View.sales
 
       
 
-        //ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        public void BuildReport()
-        {
-
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath = "";
-            string firstTitle = "paymentsReport";
-            string secondTitle = "";
-            string subTitle = "";
-            string Title = "";
-
-            //bool isArabic = ReportCls.checkLang();
-            //if (isArabic)
-            //{
-                //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
-                //secondTitle = "vendors";
-            //}
-            //else
-            //{
-                //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
-                //secondTitle = "vendors";
-            //}
-            //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            //ReportCls.checkLang();
-            //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
-            paramarr.Add(new ReportParameter("trTitle", Title));
-            //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
-            //clsReports.setReportLanguage(paramarr);
-            //clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
+    
         #endregion
     }
 }

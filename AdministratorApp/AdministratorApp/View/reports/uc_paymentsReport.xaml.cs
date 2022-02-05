@@ -25,6 +25,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using AdministratorApp.View.windows;
 
 namespace AdministratorApp.View.reports
 {
@@ -818,15 +819,15 @@ namespace AdministratorApp.View.reports
                 BuildReport();
 
                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                //wd_previewPdf w = new wd_previewPdf();
-                //w.pdfPath = pdfpath;
-                //if (!string.IsNullOrEmpty(w.pdfPath))
-                //{
-                //    w.ShowDialog();
-                //    w.wb_pdfWebViewer.Dispose();
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
 
 
-                //}
+                }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
