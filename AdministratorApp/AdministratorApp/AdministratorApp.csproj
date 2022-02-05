@@ -172,6 +172,8 @@
     <Compile Include="Classes\ApiClasses\PayOp.cs" />
     <Compile Include="Classes\ApiClasses\PosSerials.cs" />
     <Compile Include="Classes\ApiClasses\Programs.cs" />
+    <Compile Include="Classes\ApiClasses\SettingCls.cs" />
+    <Compile Include="Classes\ApiClasses\setValues.cs" />
     <Compile Include="Classes\ApiClasses\Statistics.cs" />
     <Compile Include="Classes\ApiClasses\Users.cs" />
     <Compile Include="Classes\ApiClasses\UsersLogs.cs" />
@@ -426,6 +428,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Thumb\setting\emptylogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Thumb\setting\tmp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="ar_file.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -440,10 +448,24 @@
     <Content Include="Reports\Sale\Book\Serials\En\serials.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\statisticReports\Ar\ArBook.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\statisticReports\En\EnBook.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\statisticReports\Ar\ArPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\statisticReports\En\EnPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <Resource Include="fonts\barcodeFont.ttf" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.BookSts.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PaymentsSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PosSerials.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

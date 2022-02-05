@@ -64,6 +64,52 @@ namespace AdministratorApp.Classes
 
         }
 
+        public static void BookReport(IEnumerable<BookSts> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetBook", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBook")));
+            //table columns
+            paramarr.Add(new ReportParameter("trNO", MainWindow.resourcemanagerreport.GetString("trNO")));
+            paramarr.Add(new ReportParameter("trBookDate", MainWindow.resourcemanagerreport.GetString("trBookDate")));
+            paramarr.Add(new ReportParameter("trUpgradeDate", MainWindow.resourcemanagerreport.GetString("trUpgradeDate")));
+            paramarr.Add(new ReportParameter("trPackage", MainWindow.resourcemanagerreport.GetString("trPackage")));
+            paramarr.Add(new ReportParameter("trAgent", MainWindow.resourcemanagerreport.GetString("trAgent")));
+            paramarr.Add(new ReportParameter("trCustomer", MainWindow.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));
+
+            DateFormConv(paramarr);
+        }
+
+        public static void PaymentsReport(IEnumerable<PaymentsSts> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetPayments", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPayments")));
+            //table columns
+            paramarr.Add(new ReportParameter("trProcess", MainWindow.resourcemanagerreport.GetString("trProcess")));
+            paramarr.Add(new ReportParameter("tr_Book", MainWindow.resourcemanagerreport.GetString("tr_Book")));
+            paramarr.Add(new ReportParameter("trProcessDate", MainWindow.resourcemanagerreport.GetString("trProcessDate")));
+            paramarr.Add(new ReportParameter("trExpireDate", MainWindow.resourcemanagerreport.GetString("trExpireDate")));
+            paramarr.Add(new ReportParameter("trAgent", MainWindow.resourcemanagerreport.GetString("trAgent")));
+            paramarr.Add(new ReportParameter("trCustomer", MainWindow.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trPayments", MainWindow.resourcemanagerreport.GetString("trPayments")));
+            DateFormConv(paramarr);
+        }
+
+        public static void DateFormConv(List<ReportParameter> paramarr)
+        {
+
+            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+        }
+
         //public static void bondsDocReport(LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;
@@ -102,6 +148,7 @@ namespace AdministratorApp.Classes
         //    }
         //    rep.DataSources.Add(new ReportDataSource("DataSetInvoice", invoiceQuery));
         //}
+
         public static void orderReport(IEnumerable<PosSerials> invoiceQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

@@ -24,6 +24,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using netoaster;
 
 namespace AdministratorApp.View.reports
 {
@@ -720,47 +722,83 @@ namespace AdministratorApp.View.reports
         #endregion
 
         #region reports
-        //ReportCls reportclass = new ReportCls();
+        ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        //public void BuildReport()
+        //{
+
+        //    List<ReportParameter> paramarr = new List<ReportParameter>();
+
+        //    string addpath = "";
+        //    string firstTitle = "paymentsReport";
+        //    string secondTitle = "";
+        //    string subTitle = "";
+        //    string Title = "";
+
+        //    //bool isArabic = ReportCls.checkLang();
+        //    //if (isArabic)
+        //    //{
+        //    //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
+        //    //secondTitle = "vendors";
+        //    //}
+        //    //else
+        //    //{
+        //    //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
+        //    //secondTitle = "vendors";
+        //    //}
+        //    //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+        //    //ReportCls.checkLang();
+        //    //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+        //    Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
+        //    paramarr.Add(new ReportParameter("trTitle", Title));
+        //    //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
+        //    //clsReports.setReportLanguage(paramarr);
+        //    //clsReports.Header(paramarr);
+
+        //    rep.SetParameters(paramarr);
+
+        //    rep.Refresh();
+        //}
         public void BuildReport()
         {
 
+            //string firstTitle = "paymentsReport";
+            ////string secondTitle = "";
+            ////string subTitle = "";
+            //string Title = "";
+
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
-            string addpath = "";
-            string firstTitle = "paymentsReport";
-            string secondTitle = "";
-            string subTitle = "";
-            string Title = "";
-
-            //bool isArabic = ReportCls.checkLang();
-            //if (isArabic)
-            //{
-            //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
-            //secondTitle = "vendors";
-            //}
-            //else
-            //{
-            //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
-            //secondTitle = "vendors";
-            //}
-            //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            //ReportCls.checkLang();
-            //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
-            paramarr.Add(new ReportParameter("trTitle", Title));
-            //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
-            //clsReports.setReportLanguage(paramarr);
-            //clsReports.Header(paramarr);
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\statisticReports\Ar\ArBook.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\statisticReports\En\EnBook.rdlc";
+            }
+            //D:\myproj\posproject3\AdministratorApp\AdministratorApp\Reports\statisticReports\En\EnBook.rdlc
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+       //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+          //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
+         
+            clsReports.BookReport(bookStsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
+
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {///pdf
+
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -773,7 +811,7 @@ namespace AdministratorApp.View.reports
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     string filepath = saveFileDialog.FileName;
-                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
                 #endregion
 
@@ -795,10 +833,8 @@ namespace AdministratorApp.View.reports
                 HelpClass.StartAwait(grid_main);
 
                 #region
-
                 BuildReport();
-                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count)) ;
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -818,20 +854,22 @@ namespace AdministratorApp.View.reports
                 HelpClass.StartAwait(grid_main);
 
                 #region
-                Thread t1 = new Thread(() =>
+                //Thread t1 = new Thread(() =>
+                //{
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
                 {
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
                     {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                            // LocalReportExtensions.ExportToExcel(rep, filepath);
-                        }
-                    });
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
                 });
-                t1.Start();
+
+
+                //});
+                //t1.Start();
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -851,20 +889,23 @@ namespace AdministratorApp.View.reports
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                string pdfpath = "";
 
+                string pdfpath = "";
+                //
                 pdfpath = @"\Thumb\report\temp.pdf";
-                //pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
                 BuildReport();
 
-                //LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
                 //wd_previewPdf w = new wd_previewPdf();
                 //w.pdfPath = pdfpath;
                 //if (!string.IsNullOrEmpty(w.pdfPath))
                 //{
-                //w.ShowDialog();
-                //w.wb_pdfWebViewer.Dispose();
+                //    w.ShowDialog();
+                //    w.wb_pdfWebViewer.Dispose();
+
+
                 //}
                 Window.GetWindow(this).Opacity = 1;
                 #endregion

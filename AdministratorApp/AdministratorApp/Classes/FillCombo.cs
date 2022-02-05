@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Drawing.Printing;
 namespace AdministratorApp.Classes
 {
     public class FillCombo
@@ -338,6 +338,30 @@ namespace AdministratorApp.Classes
 
         }
 
+        #endregion
+
+        #region Report
+        public static string sale_copy_count="1";
+ 
+        public static string print_on_save_sale;
+      
+        public static string email_on_save_sale;
+     
+        public static string rep_printer_name;
+    
+ 
+        public static string rep_print_count="1";
+        public static string docPapersize;
+    
+        static public string getdefaultPrinters()
+        {
+
+            PrinterSettings settings = new PrinterSettings();
+            string defaultPrinterName = settings.PrinterName;
+
+
+            return defaultPrinterName;
+        }
         #endregion
 
     }
