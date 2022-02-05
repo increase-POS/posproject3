@@ -1,4 +1,5 @@
 ﻿using AdministratorApp.Classes;
+using AdministratorApp.View.settings.emailGeneral;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace AdministratorApp.View.settings
         {
             get
             {
-                if (_instance == null)
+                //if (_instance == null)
                     _instance = new uc_settings();
                 return _instance;
             }
@@ -42,14 +43,14 @@ namespace AdministratorApp.View.settings
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
+                menuList = new List<string> { "emails" };
 
 
 
-                menuList = new List<string> { "users" };
 
 
 
-
+                Btn_emails_Click(btn_emails, null);
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -83,19 +84,22 @@ namespace AdministratorApp.View.settings
             }
         }
 
-        //private void Btn_permissions_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        Button button = sender as Button;
-        //        colorButtonRefreash(button.Tag.ToString());
-        //        grid_main.Children.Clear();
-        //        grid_main.Children.Add(uc_permissions.Instance);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
+        private void Btn_emails_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_emailGeneral.Instance);
+                uc_emailGeneral uc = new uc_emailGeneral();
+                grid_main.Children.Add(uc);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+ 
     }
 }
