@@ -286,6 +286,9 @@
     <Compile Include="View\windows\wd_offlineActivation.xaml.cs">
       <DependentUpon>wd_offlineActivation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_previewPdf.xaml.cs">
+      <DependentUpon>wd_previewPdf.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_seialsList.xaml.cs">
       <DependentUpon>wd_seialsList.xaml</DependentUpon>
     </Compile>
@@ -426,6 +429,10 @@
     <Page Include="View\windows\wd_offlineActivation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_previewPdf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_seialsList.xaml">
       <Generator>MSBuild:Compile</Generator>
