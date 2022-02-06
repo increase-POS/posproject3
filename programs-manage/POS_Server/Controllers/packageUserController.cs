@@ -145,6 +145,8 @@ namespace Programs_Server.Controllers
                                    join P in entity.packages on S.packageId equals P.packageId
                                    join D in entity.countryPackageDate on S.countryPackageId equals D.Id
                                    join N in entity.countriesCodes on D.countryId equals N.countryId
+                                   join PR in entity.programs on P.programId equals PR.programId
+                                   join V in entity.versions on PR.programId equals V.programId
                                    where S.packageUserId == packageUserId
                                    select new packageUserModel()
                                    {
@@ -177,7 +179,8 @@ namespace Programs_Server.Controllers
                                        price = D.price,
                                        currency = N.currency,
                                        canChngSer = S.canChngSer,
-
+                                       programName=PR.name,
+                                       verName=V.name,
                                    }).FirstOrDefault();
 
 
