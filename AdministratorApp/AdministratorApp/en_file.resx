@@ -2728,4 +2728,7 @@ Please add Email in setting</value>
   <data name="trSalesOrdersEmailTemplate" xml:space="preserve">
     <value>Sales orders email template</value>
   </data>
+  <data name="trActivationType" xml:space="preserve">
+    <value>Activation Type</value>
+  </data>
 </root>

@@ -2710,4 +2710,7 @@
   <data name="trSalesOrdersEmailTemplate" xml:space="preserve">
     <value>قالب بريد طلبات المبيعات</value>
   </data>
+  <data name="trActivationType" xml:space="preserve">
+    <value>نوع التفعيل</value>
+  </data>
 </root>
