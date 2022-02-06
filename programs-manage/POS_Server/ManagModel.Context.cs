@@ -45,5 +45,7 @@ namespace Programs_Server
         public virtual DbSet<puStatus> puStatus { get; set; }
         public virtual DbSet<posInfo> posInfo { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<setValues> setValues { get; set; }
+        public virtual DbSet<setting> setting { get; set; }
     }
 }

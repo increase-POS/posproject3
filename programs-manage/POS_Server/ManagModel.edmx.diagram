@@ -79,6 +79,9 @@
         <EntityTypeShape EntityType="incprogramsdbModel.posInfo" Width="1.5" PointX="15" PointY="38.5" />
         <AssociationConnector Association="incprogramsdbModel.FK_posInfo_posSerials" />
         <EntityTypeShape EntityType="incprogramsdbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="incprogramsdbModel.setValues" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="incprogramsdbModel.setting" Width="1.5" PointX="1.125" PointY="4" />
+        <AssociationConnector Association="incprogramsdbModel.FK_setValues_setting" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

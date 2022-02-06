@@ -375,5 +375,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="setValues">
+      <EntityTypeMapping TypeName="incprogramsdbModel.setValues">
+        <MappingFragment StoreEntitySet="setValues">
+          <ScalarProperty Name="settingId" ColumnName="settingId" />
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="isSystem" ColumnName="isSystem" />
+          <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="valId" ColumnName="valId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="setting">
+      <EntityTypeMapping TypeName="incprogramsdbModel.setting">
+        <MappingFragment StoreEntitySet="setting">
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="settingId" ColumnName="settingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

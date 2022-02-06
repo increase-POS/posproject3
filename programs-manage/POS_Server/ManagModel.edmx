@@ -74,8 +74,8 @@
           </Key>
           <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="custname" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="lastName" Type="nchar" MaxLength="10" />
-          <Property Name="company" Type="nchar" MaxLength="10" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="500" />
+          <Property Name="company" Type="nvarchar" MaxLength="500" />
           <Property Name="email" Type="nvarchar" MaxLength="500" />
           <Property Name="phone" Type="nvarchar" MaxLength="500" />
           <Property Name="mobile" Type="nvarchar" MaxLength="500" />
@@ -299,6 +299,25 @@
           <Property Name="createUserId" Type="int" />
           <Property Name="updateUserId" Type="int" />
           <Property Name="notes" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="settingId" />
+          </Key>
+          <Property Name="settingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="notes" Type="ntext" />
+        </EntityType>
+        <EntityType Name="setValues">
+          <Key>
+            <PropertyRef Name="valId" />
+          </Key>
+          <Property Name="valId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="value" Type="ntext" />
+          <Property Name="isDefault" Type="int" Nullable="false" />
+          <Property Name="isSystem" Type="int" Nullable="false" />
+          <Property Name="notes" Type="ntext" />
+          <Property Name="settingId" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -959,6 +978,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_setValues_setting">
+          <End Role="setting" Type="Self.setting" Multiplicity="0..1" />
+          <End Role="setValues" Type="Self.setValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="setting">
+              <PropertyRef Name="settingId" />
+            </Principal>
+            <Dependent Role="setValues">
+              <PropertyRef Name="settingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_users_countriesCodes">
           <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -1025,6 +1056,8 @@
           <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="puStatus" EntityType="Self.puStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="setValues" EntityType="Self.setValues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
@@ -1228,6 +1261,10 @@
             <End Role="packageUser" EntitySet="packageUser" />
             <End Role="puStatus" EntitySet="puStatus" />
           </AssociationSet>
+          <AssociationSet Name="FK_setValues_setting" Association="Self.FK_setValues_setting">
+            <End Role="setting" EntitySet="setting" />
+            <End Role="setValues" EntitySet="setValues" />
+          </AssociationSet>
           <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
             <End Role="countriesCodes" EntitySet="countriesCodes" />
             <End Role="users" EntitySet="users" />
@@ -1320,8 +1357,8 @@
           </Key>
           <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="custname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="company" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="company" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="mobile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -2350,6 +2387,12 @@
             <End Role="posInfo" EntitySet="posInfo" />
           </AssociationSet>
           <EntitySet Name="sysdiagrams" EntityType="incprogramsdbModel.sysdiagrams" />
+          <EntitySet Name="setValues" EntityType="incprogramsdbModel.setValues" />
+          <EntitySet Name="setting" EntityType="incprogramsdbModel.setting" />
+          <AssociationSet Name="FK_setValues_setting" Association="incprogramsdbModel.FK_setValues_setting">
+            <End Role="setting" EntitySet="setting" />
+            <End Role="setValues" EntitySet="setValues" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="agentCustomer">
           <Key>
@@ -2597,6 +2640,39 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="setValues">
+          <Key>
+            <PropertyRef Name="valId" />
+          </Key>
+          <Property Name="valId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isDefault" Type="Int32" Nullable="false" />
+          <Property Name="isSystem" Type="Int32" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="settingId" Type="Int32" />
+          <NavigationProperty Name="setting" Relationship="incprogramsdbModel.FK_setValues_setting" FromRole="setValues" ToRole="setting" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="settingId" />
+          </Key>
+          <Property Name="settingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="setValues" Relationship="incprogramsdbModel.FK_setValues_setting" FromRole="setting" ToRole="setValues" />
+        </EntityType>
+        <Association Name="FK_setValues_setting">
+          <End Type="incprogramsdbModel.setting" Role="setting" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.setValues" Role="setValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="setting">
+              <PropertyRef Name="settingId" />
+            </Principal>
+            <Dependent Role="setValues">
+              <PropertyRef Name="settingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2974,6 +3050,27 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="setValues">
+            <EntityTypeMapping TypeName="incprogramsdbModel.setValues">
+              <MappingFragment StoreEntitySet="setValues">
+                <ScalarProperty Name="settingId" ColumnName="settingId" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="isSystem" ColumnName="isSystem" />
+                <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="valId" ColumnName="valId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="setting">
+            <EntityTypeMapping TypeName="incprogramsdbModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="settingId" ColumnName="settingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -71,8 +71,8 @@
     </Key>
     <Property Name="custId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="custname" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="lastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="company" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="lastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="company" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="phone" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="mobile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -1101,6 +1101,12 @@
       <End Role="posInfo" EntitySet="posInfo" />
     </AssociationSet>
     <EntitySet Name="sysdiagrams" EntityType="incprogramsdbModel.sysdiagrams" />
+    <EntitySet Name="setValues" EntityType="incprogramsdbModel.setValues" />
+    <EntitySet Name="setting" EntityType="incprogramsdbModel.setting" />
+    <AssociationSet Name="FK_setValues_setting" Association="incprogramsdbModel.FK_setValues_setting">
+      <End Role="setting" EntitySet="setting" />
+      <End Role="setValues" EntitySet="setValues" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="agentCustomer">
     <Key>
@@ -1348,4 +1354,37 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <EntityType Name="setValues">
+    <Key>
+      <PropertyRef Name="valId" />
+    </Key>
+    <Property Name="valId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isDefault" Type="Int32" Nullable="false" />
+    <Property Name="isSystem" Type="Int32" Nullable="false" />
+    <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="settingId" Type="Int32" />
+    <NavigationProperty Name="setting" Relationship="incprogramsdbModel.FK_setValues_setting" FromRole="setValues" ToRole="setting" />
+  </EntityType>
+  <EntityType Name="setting">
+    <Key>
+      <PropertyRef Name="settingId" />
+    </Key>
+    <Property Name="settingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="setValues" Relationship="incprogramsdbModel.FK_setValues_setting" FromRole="setting" ToRole="setValues" />
+  </EntityType>
+  <Association Name="FK_setValues_setting">
+    <End Type="incprogramsdbModel.setting" Role="setting" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.setValues" Role="setValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="setting">
+        <PropertyRef Name="settingId" />
+      </Principal>
+      <Dependent Role="setValues">
+        <PropertyRef Name="settingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

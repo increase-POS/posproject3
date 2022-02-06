@@ -69,8 +69,8 @@
     </Key>
     <Property Name="custId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="custname" Type="nvarchar" MaxLength="500" Nullable="false" />
-    <Property Name="lastName" Type="nchar" MaxLength="10" />
-    <Property Name="company" Type="nchar" MaxLength="10" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="500" />
+    <Property Name="company" Type="nvarchar" MaxLength="500" />
     <Property Name="email" Type="nvarchar" MaxLength="500" />
     <Property Name="phone" Type="nvarchar" MaxLength="500" />
     <Property Name="mobile" Type="nvarchar" MaxLength="500" />
@@ -294,6 +294,25 @@
     <Property Name="createUserId" Type="int" />
     <Property Name="updateUserId" Type="int" />
     <Property Name="notes" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="setting">
+    <Key>
+      <PropertyRef Name="settingId" />
+    </Key>
+    <Property Name="settingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="200" />
+    <Property Name="notes" Type="ntext" />
+  </EntityType>
+  <EntityType Name="setValues">
+    <Key>
+      <PropertyRef Name="valId" />
+    </Key>
+    <Property Name="valId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="value" Type="ntext" />
+    <Property Name="isDefault" Type="int" Nullable="false" />
+    <Property Name="isSystem" Type="int" Nullable="false" />
+    <Property Name="notes" Type="ntext" />
+    <Property Name="settingId" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -954,6 +973,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_setValues_setting">
+    <End Role="setting" Type="Self.setting" Multiplicity="0..1" />
+    <End Role="setValues" Type="Self.setValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="setting">
+        <PropertyRef Name="settingId" />
+      </Principal>
+      <Dependent Role="setValues">
+        <PropertyRef Name="settingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_users_countriesCodes">
     <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
     <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -1020,6 +1051,8 @@
     <EntitySet Name="posSerials" EntityType="Self.posSerials" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="programs" EntityType="Self.programs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="puStatus" EntityType="Self.puStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="setValues" EntityType="Self.setValues" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
@@ -1222,6 +1255,10 @@
     <AssociationSet Name="FK_puStatus_packageUser" Association="Self.FK_puStatus_packageUser">
       <End Role="packageUser" EntitySet="packageUser" />
       <End Role="puStatus" EntitySet="puStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_setValues_setting" Association="Self.FK_setValues_setting">
+      <End Role="setting" EntitySet="setting" />
+      <End Role="setValues" EntitySet="setValues" />
     </AssociationSet>
     <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
       <End Role="countriesCodes" EntitySet="countriesCodes" />
