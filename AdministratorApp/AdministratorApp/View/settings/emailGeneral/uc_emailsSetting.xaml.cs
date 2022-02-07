@@ -62,7 +62,7 @@ namespace AdministratorApp.View.settings.emailGeneral
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "email", "port", "smtpClient", "side", "branchId", "password", };
+                requiredControlList = new List<string> { "name", "email", "port", "smtpClient", "side",  "password", };
                 if (MainWindow.lang.Equals("en"))
                 {
                     //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
