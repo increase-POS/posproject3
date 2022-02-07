@@ -362,6 +362,21 @@ namespace AdministratorApp.Classes
 
             return defaultPrinterName;
         }
+        static public void FillSideCombo(ComboBox COMBO)
+        {
+            #region fill deposit to combo
+            var list = new[] {
+  new { Text = MainWindow.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
+            new { Text = MainWindow.resourcemanager.GetString("trSales")  , Value = "sales" },
+          
+
+             };
+            COMBO.DisplayMemberPath = "Text";
+            COMBO.SelectedValuePath = "Value";
+            COMBO.ItemsSource = list;
+            #endregion
+
+        }
         #endregion
 
     }

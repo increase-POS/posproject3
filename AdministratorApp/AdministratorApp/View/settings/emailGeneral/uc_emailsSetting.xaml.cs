@@ -74,7 +74,7 @@ namespace AdministratorApp.View.settings.emailGeneral
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                FillCombo.FillSideCombo(cb_side);
                 Keyboard.Focus(tb_name);
                 await Search();
                 Clear();
@@ -93,7 +93,7 @@ namespace AdministratorApp.View.settings.emailGeneral
             txt_title.Text = MainWindow.resourcemanager.GetString("trSysEmails");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, MainWindow.resourcemanager.GetString("trDepartmentHent"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, MainWindow.resourcemanager.GetString("trSelectPosBranchHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, MainWindow.resourcemanager.GetString("trSelectPosBranchHint"));
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
@@ -123,10 +123,10 @@ namespace AdministratorApp.View.settings.emailGeneral
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
-                {
+                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
+                //{
 
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+              //      if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
 
                         sysEmail.emailId = 0;
@@ -137,10 +137,10 @@ namespace AdministratorApp.View.settings.emailGeneral
 
                         sysEmail.port = int.Parse(tb_port.Text);
                         sysEmail.isSSL = tgl_isSSL.IsChecked.Value;
-                        sysEmail.isMajor = tgl_isMajor.IsChecked.Value;
+                      //  sysEmail.isMajor = tgl_isMajor.IsChecked.Value;
                         sysEmail.smtpClient = tb_smtpClient.Text;
                         sysEmail.side = cb_side.SelectedValue.ToString();
-                        sysEmail.branchId = (int)cb_branchId.SelectedValue;
+                       // sysEmail.branchId = (int)cb_branchId.SelectedValue;
                         sysEmail.notes = tb_notes.Text;
                         sysEmail.createUserId = MainWindow.userLogin.userId;
                         sysEmail.updateUserId = MainWindow.userLogin.userId;
@@ -162,9 +162,9 @@ namespace AdministratorApp.View.settings.emailGeneral
 
 
                     }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -180,8 +180,8 @@ namespace AdministratorApp.View.settings.emailGeneral
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
-                {
+                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
+                //{
 
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
@@ -191,10 +191,10 @@ namespace AdministratorApp.View.settings.emailGeneral
                         sysEmail.name = tb_name.Text;
                         sysEmail.port = int.Parse(tb_port.Text);
                         sysEmail.isSSL = tgl_isSSL.IsChecked.Value;
-                        sysEmail.isMajor = tgl_isMajor.IsChecked.Value;
+                        sysEmail.isMajor = true;
                         sysEmail.smtpClient = tb_smtpClient.Text;
                         sysEmail.side = cb_side.SelectedValue.ToString();
-                        sysEmail.branchId = (int)cb_branchId.SelectedValue;
+                        sysEmail.branchId = 1;
                         sysEmail.notes = tb_notes.Text;
                         sysEmail.createUserId = MainWindow.userLogin.userId;
                         sysEmail.updateUserId = MainWindow.userLogin.userId;
@@ -212,9 +212,9 @@ namespace AdministratorApp.View.settings.emailGeneral
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -228,8 +228,8 @@ namespace AdministratorApp.View.settings.emailGeneral
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
-                {
+                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
+                //{
                     HelpClass.StartAwait(grid_main);
                     if (sysEmail.emailId != 0)
                     {
@@ -278,9 +278,9 @@ namespace AdministratorApp.View.settings.emailGeneral
                         }
                     }
                     HelpClass.EndAwait(grid_main);
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)

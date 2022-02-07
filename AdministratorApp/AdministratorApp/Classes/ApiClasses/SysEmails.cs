@@ -105,36 +105,7 @@ namespace AdministratorApp.Classes
            return await APIResult.post(method, parameters);
 
 
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //// 
-            //var myContent = JsonConvert.SerializeObject(obj);
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    // encoding parameter to get special characters
-            //    myContent = HttpUtility.UrlEncode(myContent);
-            //    request.RequestUri = new Uri(Global.APIUri + "SysEmails/Save?Object=" + myContent);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Post;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //        return message;
-            //    }
-            //    return "";
-            //}
+      
         }
 
         public async Task<SysEmails> GetByID(int emailId)
@@ -189,11 +160,11 @@ namespace AdministratorApp.Classes
         }
 
         //
-        public async Task<SysEmails> GetByBranchIdandSide(int branchId, string side)
+        public async Task<SysEmails> GetByBranchIdandSide( string side)
         {
             SysEmails item = new SysEmails();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("branchId", branchId.ToString());
+           
             parameters.Add("side", side.ToString());
 
             //#################
@@ -210,36 +181,7 @@ namespace AdministratorApp.Classes
             return item;
 
 
-            //SysEmails obj = new SysEmails();
-
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "SysEmails/GetByBranchIdandSide?branchId=" + branchId+ "&side=" + side);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-
-            //        obj = JsonConvert.DeserializeObject<SysEmails>(jsonString);
-
-            //        return obj;
-            //    }
-
-            //    return obj;
-            //}
+           
         }
 
         public async Task<int> Delete(int emailId, int userId, bool final)
