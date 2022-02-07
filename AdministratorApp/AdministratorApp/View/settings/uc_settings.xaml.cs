@@ -50,7 +50,7 @@ namespace AdministratorApp.View.settings
 
 
 
-                Btn_general_Click(btn_emails, null);
+                Btn_general_Click(btn_general, null);
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
