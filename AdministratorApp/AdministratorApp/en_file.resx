@@ -2740,4 +2740,7 @@ Please add Email in setting</value>
   <data name="trEmailSettings" xml:space="preserve">
     <value>Email Settings</value>
   </data>
+  <data name="trTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

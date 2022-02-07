@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Resources;
+using System.Reflection;
 
 namespace AdministratorApp.View.settings.emailGeneral
 {
@@ -45,7 +47,7 @@ namespace AdministratorApp.View.settings.emailGeneral
             }
         }
         string savePermission = "emailTemplates_save";
-        /*
+     
         SetValues setValuesModel = new SetValues();
         SetValues setValues = new SetValues();
         IEnumerable<SetValues> setValuessQuery;
@@ -55,7 +57,7 @@ namespace AdministratorApp.View.settings.emailGeneral
         SettingCls sett = new SettingCls();
         IEnumerable<SettingCls> setQuery;
         IEnumerable<SettingCls> setQueryView;
-        */
+       
         string searchText = "";
         public static List<string> requiredControlList;
 
@@ -72,22 +74,22 @@ namespace AdministratorApp.View.settings.emailGeneral
                 requiredControlList = new List<string> { "name", };
                 if (MainWindow.lang.Equals("en"))
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
 
 
                 Keyboard.Focus(tb_title);
-                /*
-                await Search();
+                
+                 Search();
                 Clear();
-                */
+                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -131,117 +133,128 @@ namespace AdministratorApp.View.settings.emailGeneral
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
-        {//add
+        {
             try
             {
-                /*
-                if (MainWindow.groupObject.HasPermissionAction(savePermission, MainWindow.groupObjects, "one"))
-                {
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this))
-                    {
 
-                        //write here Mr.Naji
+               
 
-                        /////
-                        int msg = 0;
-                        setValues = setValuessQuery.Where(x => x.notes == "title").FirstOrDefault();
-                        setValues.value = tb_title.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        //
+                    //write here Mr.Naji
 
-                        setValues = setValuessQuery.Where(x => x.notes == "text1").FirstOrDefault();
-                        setValues.value = tb_text1.Text;
+                    /////
+                    int msg = 0;
+                    setValues = setValuessQuery.Where(x => x.notes == "title").FirstOrDefault();
+                    setValues.value = tb_title.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    //
 
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "text2").FirstOrDefault();
-                        setValues.value = tb_text2.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "link1text").FirstOrDefault();
-                        setValues.value = tb_link1text.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "link2text").FirstOrDefault();
-                        setValues.value = tb_link2text.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "link3text").FirstOrDefault();
-                        setValues.value = tb_link3text.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "link1url").FirstOrDefault();
-                        setValues.value = tb_link1url.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "link2url").FirstOrDefault();
-                        setValues.value = tb_link2url.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                        setValues = setValuessQuery.Where(x => x.notes == "link3url").FirstOrDefault();
-                        setValues.value = tb_link3url.Text;
-                        msg += await setValuesModel.SaveValueByNotes(setValues);
-                    }
+                    setValues = setValuessQuery.Where(x => x.notes == "text1").FirstOrDefault();
+                    setValues.value = tb_text1.Text;
+
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "text2").FirstOrDefault();
+                    setValues.value = tb_text2.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "link1text").FirstOrDefault();
+                    setValues.value = tb_link1text.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "link2text").FirstOrDefault();
+                    setValues.value = tb_link2text.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "link3text").FirstOrDefault();
+                    setValues.value = tb_link3text.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "link1url").FirstOrDefault();
+                    setValues.value = tb_link1url.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "link2url").FirstOrDefault();
+                    setValues.value = tb_link2url.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+                    setValues = setValuessQuery.Where(x => x.notes == "link3url").FirstOrDefault();
+                    setValues.value = tb_link3url.Text;
+                    msg += await setValuesModel.SaveValueByNotes(setValues);
+
+              
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+
         }
 
         #endregion
         #region events
+        void Search()
+        {
+            if (setQuery is null)
+                RefreshSettingsList();
+       
+
+            searchText = tb_search.Text.ToLower();
+            if(searchText.Trim() !="" && searchText.Trim()!=null)
+            {
+                setQuery = setQuery.Where(s => (s.name.ToLower().Contains(searchText)));
+
+                RefreshSetttingsView();
+            }
+            
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                /*
-                await Search();
-                */
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                Search();
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+
         }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                /*
-                 
                 Clear();
-                */
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Dg_setValues_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Dg_setValues_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                /*
-                //selection
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
                 if (dg_setValues.SelectedIndex != -1)
                 {
                     if (dg_setValues.SelectedIndex != -1)
                     {
                         sett = dg_setValues.SelectedItem as SettingCls;
+                        setValuessQuery = await setValuesModel.GetBySetName(sett.name);
 
-                        List<SettingCls> settLst = await setModel.GetAll();
-                        SettingCls setting = settLst.Where(s => s.settingId == sett.settingId).FirstOrDefault();
-                        setValuessQuery = await setValuesModel.GetBySetName(setting.name);
+                        //List<SettingCls> settLst = await setModel.GetAll();
+                        //SettingCls setting = settLst.Where(s => s.settingId == sett.settingId).FirstOrDefault();
+                        //setValuessQuery = await setValuesModel.GetBySetName(setting.name);
+
                         tb_title.Text = setValuessQuery.Where(x => x.notes == "title").FirstOrDefault() is null ? ""
                         : setValuessQuery.Where(x => x.notes == "title").FirstOrDefault().value.ToString();
                         tb_text1.Text = setValuessQuery.Where(x => x.notes == "text1").FirstOrDefault() is null ? ""
@@ -276,77 +289,108 @@ namespace AdministratorApp.View.settings.emailGeneral
 
 
                 }
-                */
-                HelpClass.clearValidate(requiredControlList, this);
-                HelpClass.EndAwait(grid_main);
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {//refresh
-
-                HelpClass.StartAwait(grid_main);
-                await RefreshTablesList();
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
+      
         #endregion
 
         #region Refresh & Search
-        /*
-        async Task Search()
+        async void RefreshSettingsList()
         {
-            //search
-            if (tables is null)
-                await RefreshTablesList();
-            searchText = tb_search.Text.ToLower();
-            tablesQuery = tables.Where(s => (
-            s.name.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_tableState);
-            RefreshTablessView();
+            setQuery = await setModel.GetByNotes("emailtemp");
+            foreach (SettingCls row in setQuery)
+            {
+                switch (row.name)
+                {
+                    case "pur_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trPurchasesEmailTemplate");
+                        break;
+                    case "pur_order_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
+                        break;
+                    case "sale_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trSalesEmailTemplate");
+                        break;
+                    case "sale_order_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trSalesOrdersEmailTemplate");
+                        break;
+                    case "quotation_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trQuotationsEmailTemplate");
+                        break;
+                    case "required_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
+                        break;
+
+                }
+            }
+
+            dg_setValues.ItemsSource = setQuery;
+
         }
-        async Task<IEnumerable<Tables>> RefreshTablesList()
+        void RefreshSetttingsView()
         {
-            tables = await table.Get(MainWindow.branchLogin.branchId);
-            // tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId );
-            return tables;
+            //setQuery.ToList()[0].name = MainWindow.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
+            //setQuery.ToList()[1].name = MainWindow.resourcemanager.GetString("trSalesEmailTemplate");
+            //setQuery.ToList()[2].name = MainWindow.resourcemanager.GetString("trSalesOrdersEmailTemplate");
+            //setQuery.ToList()[3].name = MainWindow.resourcemanager.GetString("trQuotationsEmailTemplate");
+            //setQuery.ToList()[4].name = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
+            //setQuery.ToList()[5].name = MainWindow.resourcemanager.GetString("trPurchasesEmailTemplate");
+            dg_setValues.ItemsSource = setQuery;
         }
-        void RefreshTablessView()
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
-            dg_table.ItemsSource = tablesQuery;
-            txt_count.Text = tablesQuery.Count().ToString();
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                RefreshSettingsList();
+                // RefreshSetttingsView();
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
         }
-        */
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
-        /*
+         
     void Clear()
     {
-        this.DataContext = new Tables();
-        dg_table.SelectedIndex = -1;
-        // last 
+         
+        dg_setValues.SelectedIndex = -1;
+        tb_title.Text =
+                tb_text1.Text =
+                tb_text2.Text =
+                tb_link1text.Text =
+                tb_link2text.Text =
+                tb_link3text.Text =
+                tb_link1url.Text =
+                tb_link2url.Text =
+                tb_link3url.Text = "";
+                this.DataContext = new SetValues();
         HelpClass.clearValidate(requiredControlList, this);
 
     }
-    */
+    
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
