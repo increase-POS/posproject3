@@ -324,6 +324,27 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="sysEmails">
+    <Key>
+      <PropertyRef Name="emailId" />
+    </Key>
+    <Property Name="emailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="100" />
+    <Property Name="email" Type="nvarchar" MaxLength="100" />
+    <Property Name="password" Type="nvarchar" MaxLength="100" />
+    <Property Name="port" Type="int" Nullable="false" />
+    <Property Name="isSSL" Type="bit" Nullable="false" />
+    <Property Name="smtpClient" Type="nvarchar" MaxLength="100" />
+    <Property Name="side" Type="nvarchar" MaxLength="100" />
+    <Property Name="notes" Type="nvarchar" MaxLength="100" />
+    <Property Name="branchId" Type="int" />
+    <Property Name="isActive" Type="tinyint" Nullable="false" />
+    <Property Name="createUserId" Type="int" />
+    <Property Name="updateUserId" Type="int" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+    <Property Name="updateDate" Type="datetime2" Precision="7" />
+    <Property Name="isMajor" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="users">
     <Key>
       <PropertyRef Name="userId" />
@@ -985,6 +1006,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_sysEmails_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="sysEmails" Type="Self.sysEmails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="sysEmails">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sysEmails_users1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="sysEmails" Type="Self.sysEmails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="sysEmails">
+        <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_users_countriesCodes">
     <End Role="countriesCodes" Type="Self.countriesCodes" Multiplicity="0..1" />
     <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -1054,6 +1099,7 @@
     <EntitySet Name="setting" EntityType="Self.setting" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="setValues" EntityType="Self.setValues" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysEmails" EntityType="Self.sysEmails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
@@ -1259,6 +1305,14 @@
     <AssociationSet Name="FK_setValues_setting" Association="Self.FK_setValues_setting">
       <End Role="setting" EntitySet="setting" />
       <End Role="setValues" EntitySet="setValues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sysEmails_users" Association="Self.FK_sysEmails_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="sysEmails" EntitySet="sysEmails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sysEmails_users1" Association="Self.FK_sysEmails_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="sysEmails" EntitySet="sysEmails" />
     </AssociationSet>
     <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
       <End Role="countriesCodes" EntitySet="countriesCodes" />

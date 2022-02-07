@@ -396,5 +396,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysEmails">
+      <EntityTypeMapping TypeName="incprogramsdbModel.sysEmails">
+        <MappingFragment StoreEntitySet="sysEmails">
+          <ScalarProperty Name="isMajor" ColumnName="isMajor" />
+          <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+          <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="branchId" ColumnName="branchId" />
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="side" ColumnName="side" />
+          <ScalarProperty Name="smtpClient" ColumnName="smtpClient" />
+          <ScalarProperty Name="isSSL" ColumnName="isSSL" />
+          <ScalarProperty Name="port" ColumnName="port" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="emailId" ColumnName="emailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

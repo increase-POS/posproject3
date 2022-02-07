@@ -351,6 +351,8 @@
     <NavigationProperty Name="payOp" Relationship="incprogramsdbModel.FK_payOp_users" FromRole="users" ToRole="payOp" />
     <NavigationProperty Name="payOp1" Relationship="incprogramsdbModel.FK_payOp_users1" FromRole="users" ToRole="payOp" />
     <NavigationProperty Name="payOp2" Relationship="incprogramsdbModel.FK_payOp_users2" FromRole="users" ToRole="payOp" />
+    <NavigationProperty Name="sysEmails" Relationship="incprogramsdbModel.FK_sysEmails_users" FromRole="users" ToRole="sysEmails" />
+    <NavigationProperty Name="sysEmails1" Relationship="incprogramsdbModel.FK_sysEmails_users1" FromRole="users" ToRole="sysEmails" />
   </EntityType>
   <EntityType Name="versions">
     <Key>
@@ -1107,6 +1109,15 @@
       <End Role="setting" EntitySet="setting" />
       <End Role="setValues" EntitySet="setValues" />
     </AssociationSet>
+    <EntitySet Name="sysEmails" EntityType="incprogramsdbModel.sysEmails" />
+    <AssociationSet Name="FK_sysEmails_users" Association="incprogramsdbModel.FK_sysEmails_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="sysEmails" EntitySet="sysEmails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sysEmails_users1" Association="incprogramsdbModel.FK_sysEmails_users1">
+      <End Role="users" EntitySet="users" />
+      <End Role="sysEmails" EntitySet="sysEmails" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="agentCustomer">
     <Key>
@@ -1384,6 +1395,53 @@
       </Principal>
       <Dependent Role="setValues">
         <PropertyRef Name="settingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="sysEmails">
+    <Key>
+      <PropertyRef Name="emailId" />
+    </Key>
+    <Property Name="emailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="port" Type="Int32" Nullable="false" />
+    <Property Name="isSSL" Type="Boolean" Nullable="false" />
+    <Property Name="smtpClient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="side" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="branchId" Type="Int32" />
+    <Property Name="isActive" Type="Byte" Nullable="false" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="isMajor" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="users" Relationship="incprogramsdbModel.FK_sysEmails_users" FromRole="sysEmails" ToRole="users" />
+    <NavigationProperty Name="users1" Relationship="incprogramsdbModel.FK_sysEmails_users1" FromRole="sysEmails" ToRole="users" />
+  </EntityType>
+  <Association Name="FK_sysEmails_users">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.sysEmails" Role="sysEmails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="sysEmails">
+        <PropertyRef Name="createUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sysEmails_users1">
+    <End Type="incprogramsdbModel.users" Role="users" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.sysEmails" Role="sysEmails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="sysEmails">
+        <PropertyRef Name="updateUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

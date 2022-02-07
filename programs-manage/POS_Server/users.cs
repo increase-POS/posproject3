@@ -48,6 +48,8 @@ namespace Programs_Server
             this.payOp = new HashSet<payOp>();
             this.payOp1 = new HashSet<payOp>();
             this.payOp2 = new HashSet<payOp>();
+            this.sysEmails = new HashSet<sysEmails>();
+            this.sysEmails1 = new HashSet<sysEmails>();
         }
     
         public int userId { get; set; }
@@ -142,5 +144,9 @@ namespace Programs_Server
         public virtual ICollection<payOp> payOp1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sysEmails> sysEmails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sysEmails> sysEmails1 { get; set; }
     }
 }
