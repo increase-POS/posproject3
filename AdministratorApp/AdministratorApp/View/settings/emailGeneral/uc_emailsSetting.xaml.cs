@@ -102,7 +102,7 @@ namespace AdministratorApp.View.settings.emailGeneral
 
             dg_sysEmail.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
             dg_sysEmail.Columns[1].Header = MainWindow.resourcemanager.GetString("trEmail");
-            dg_sysEmail.Columns[2].Header = MainWindow.resourcemanager.GetString("trBranch");
+            dg_sysEmail.Columns[2].Header = MainWindow.resourcemanager.GetString("trDepartment");
             dg_sysEmail.Columns[3].Header = MainWindow.resourcemanager.GetString("trMajor");
 
 

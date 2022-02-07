@@ -135,7 +135,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="branch"  Binding="{Binding Path=branchName}">
+                            <DataGridTextColumn Width="*"  Header="side"  Binding="{Binding Path=side}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>

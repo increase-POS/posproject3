@@ -86,7 +86,7 @@ namespace AdministratorApp.View.sales
 
         private void translate()
         {
-            btn_sale.Content = MainWindow.resourcemanager.GetString("trBook");
+            btn_sale.Content = MainWindow.resourcemanager.GetString("trBookings");
             btn_packageUser.Content = MainWindow.resourcemanager.GetString("trPayments");
         }
         void colorButtonRefreash(string str)

@@ -2737,4 +2737,7 @@ Please add Email in setting</value>
   <data name="trServiceBook" xml:space="preserve">
     <value>Service Booking</value>
   </data>
+  <data name="trEmailSettings" xml:space="preserve">
+    <value>Email Settings</value>
+  </data>
 </root>

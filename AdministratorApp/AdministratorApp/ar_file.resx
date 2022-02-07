@@ -2719,4 +2719,7 @@
   <data name="trServiceBook" xml:space="preserve">
     <value>حجز خدمة</value>
   </data>
+  <data name="trEmailSettings" xml:space="preserve">
+    <value>إعدادات الإيميل</value>
+  </data>
 </root>
