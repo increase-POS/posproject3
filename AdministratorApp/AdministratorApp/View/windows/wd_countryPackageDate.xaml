@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdministratorApp.View.windows"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="wd_countryPackageDate" Height="450" Width="800"
+       Title="Increase-SCM" Height="450" Width="800"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStyle="None" 
         ResizeMode="NoResize" Margin="0"
