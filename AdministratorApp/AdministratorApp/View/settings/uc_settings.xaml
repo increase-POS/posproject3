@@ -21,9 +21,13 @@
             </Grid.ColumnDefinitions>
             <Button   Grid.Column="0"
              Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
+                 Content="general" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                      x:Name="btn_general" Click="Btn_general_Click" Tag="general"/>
+            <Button   Grid.Column="1"
+             Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
                  Content="emails" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                       x:Name="btn_emails" Click="Btn_emails_Click" Tag="emails"/>
-
+         
         </Grid>
         <Grid Grid.Row="1" x:Name="grid_main"/>
     </Grid>

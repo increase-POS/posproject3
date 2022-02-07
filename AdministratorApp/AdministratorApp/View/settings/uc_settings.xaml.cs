@@ -43,14 +43,14 @@ namespace AdministratorApp.View.settings
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
-                menuList = new List<string> { "emails" };
+                menuList = new List<string> { "emails" ,"general"};
 
 
 
 
 
 
-                Btn_emails_Click(btn_emails, null);
+                Btn_general_Click(btn_emails, null);
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainGrid);
@@ -83,7 +83,21 @@ namespace AdministratorApp.View.settings
                 }
             }
         }
-
+        private void Btn_general_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                uc_general uc = new uc_general();
+                grid_main.Children.Add(uc);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Btn_emails_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -100,6 +114,7 @@ namespace AdministratorApp.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
- 
+
+        
     }
 }
