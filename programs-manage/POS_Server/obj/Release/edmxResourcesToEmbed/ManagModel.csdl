@@ -1118,6 +1118,11 @@
       <End Role="users" EntitySet="users" />
       <End Role="sysEmails" EntitySet="sysEmails" />
     </AssociationSet>
+    <EntitySet Name="userSetValues" EntityType="incprogramsdbModel.userSetValues" />
+    <AssociationSet Name="FK_userSetValues_setValues" Association="incprogramsdbModel.FK_userSetValues_setValues">
+      <End Role="setValues" EntitySet="setValues" />
+      <End Role="userSetValues" EntitySet="userSetValues" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="agentCustomer">
     <Key>
@@ -1376,6 +1381,7 @@
     <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="settingId" Type="Int32" />
     <NavigationProperty Name="setting" Relationship="incprogramsdbModel.FK_setValues_setting" FromRole="setValues" ToRole="setting" />
+    <NavigationProperty Name="userSetValues" Relationship="incprogramsdbModel.FK_userSetValues_setValues" FromRole="setValues" ToRole="userSetValues" />
   </EntityType>
   <EntityType Name="setting">
     <Key>
@@ -1442,6 +1448,32 @@
       </Principal>
       <Dependent Role="sysEmails">
         <PropertyRef Name="updateUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="userSetValues">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="valId" Type="Int32" />
+    <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="createDate" Type="DateTime" Precision="7" />
+    <Property Name="updateDate" Type="DateTime" Precision="7" />
+    <Property Name="createUserId" Type="Int32" />
+    <Property Name="updateUserId" Type="Int32" />
+    <NavigationProperty Name="setValues" Relationship="incprogramsdbModel.FK_userSetValues_setValues" FromRole="userSetValues" ToRole="setValues" />
+  </EntityType>
+  <Association Name="FK_userSetValues_setValues">
+    <End Type="incprogramsdbModel.setValues" Role="setValues" Multiplicity="0..1" />
+    <End Type="incprogramsdbModel.userSetValues" Role="userSetValues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="setValues">
+        <PropertyRef Name="valId" />
+      </Principal>
+      <Dependent Role="userSetValues">
+        <PropertyRef Name="valId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

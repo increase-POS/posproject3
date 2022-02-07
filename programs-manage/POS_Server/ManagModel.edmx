@@ -383,6 +383,19 @@
           <Property Name="isOnline" Type="tinyint" />
           <Property Name="countryId" Type="int" />
         </EntityType>
+        <EntityType Name="userSetValues">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="valId" Type="int" />
+          <Property Name="note" Type="ntext" />
+          <Property Name="createDate" Type="datetime2" Precision="7" />
+          <Property Name="updateDate" Type="datetime2" Precision="7" />
+          <Property Name="createUserId" Type="int" />
+          <Property Name="updateUserId" Type="int" />
+        </EntityType>
         <EntityType Name="versions">
           <Key>
             <PropertyRef Name="verId" />
@@ -1047,6 +1060,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_userSetValues_setValues">
+          <End Role="setValues" Type="Self.setValues" Multiplicity="0..1" />
+          <End Role="userSetValues" Type="Self.userSetValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="setValues">
+              <PropertyRef Name="valId" />
+            </Principal>
+            <Dependent Role="userSetValues">
+              <PropertyRef Name="valId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_versions_programs">
           <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
           <End Role="versions" Type="Self.versions" Multiplicity="*" />
@@ -1106,6 +1131,7 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysEmails" EntityType="Self.sysEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userSetValues" EntityType="Self.userSetValues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="versions" EntityType="Self.versions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_agentCustomer_customers" Association="Self.FK_agentCustomer_customers">
             <End Role="customers" EntitySet="customers" />
@@ -1322,6 +1348,10 @@
           <AssociationSet Name="FK_users_countriesCodes" Association="Self.FK_users_countriesCodes">
             <End Role="countriesCodes" EntitySet="countriesCodes" />
             <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userSetValues_setValues" Association="Self.FK_userSetValues_setValues">
+            <End Role="setValues" EntitySet="setValues" />
+            <End Role="userSetValues" EntitySet="userSetValues" />
           </AssociationSet>
           <AssociationSet Name="FK_versions_programs" Association="Self.FK_versions_programs">
             <End Role="programs" EntitySet="programs" />
@@ -2458,6 +2488,11 @@
             <End Role="users" EntitySet="users" />
             <End Role="sysEmails" EntitySet="sysEmails" />
           </AssociationSet>
+          <EntitySet Name="userSetValues" EntityType="incprogramsdbModel.userSetValues" />
+          <AssociationSet Name="FK_userSetValues_setValues" Association="incprogramsdbModel.FK_userSetValues_setValues">
+            <End Role="setValues" EntitySet="setValues" />
+            <End Role="userSetValues" EntitySet="userSetValues" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="agentCustomer">
           <Key>
@@ -2716,6 +2751,7 @@
           <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="settingId" Type="Int32" />
           <NavigationProperty Name="setting" Relationship="incprogramsdbModel.FK_setValues_setting" FromRole="setValues" ToRole="setting" />
+          <NavigationProperty Name="userSetValues" Relationship="incprogramsdbModel.FK_userSetValues_setValues" FromRole="setValues" ToRole="userSetValues" />
         </EntityType>
         <EntityType Name="setting">
           <Key>
@@ -2782,6 +2818,32 @@
             </Principal>
             <Dependent Role="sysEmails">
               <PropertyRef Name="updateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="userSetValues">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="valId" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createDate" Type="DateTime" Precision="7" />
+          <Property Name="updateDate" Type="DateTime" Precision="7" />
+          <Property Name="createUserId" Type="Int32" />
+          <Property Name="updateUserId" Type="Int32" />
+          <NavigationProperty Name="setValues" Relationship="incprogramsdbModel.FK_userSetValues_setValues" FromRole="userSetValues" ToRole="setValues" />
+        </EntityType>
+        <Association Name="FK_userSetValues_setValues">
+          <End Type="incprogramsdbModel.setValues" Role="setValues" Multiplicity="0..1" />
+          <End Type="incprogramsdbModel.userSetValues" Role="userSetValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="setValues">
+              <PropertyRef Name="valId" />
+            </Principal>
+            <Dependent Role="userSetValues">
+              <PropertyRef Name="valId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3205,6 +3267,20 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="emailId" ColumnName="emailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userSetValues">
+            <EntityTypeMapping TypeName="incprogramsdbModel.userSetValues">
+              <MappingFragment StoreEntitySet="userSetValues">
+                <ScalarProperty Name="updateUserId" ColumnName="updateUserId" />
+                <ScalarProperty Name="createUserId" ColumnName="createUserId" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="valId" ColumnName="valId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -346,6 +346,9 @@
     <Compile Include="users.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="userSetValues.cs">
+      <DependentUpon>ManagModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="versions.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>

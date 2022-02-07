@@ -25,9 +25,6 @@ namespace Programs_Server.Controllers
 
             // public ResponseVM GetPurinv(string token)
 
-           
-            
-            
           token = TokenManager.readToken(HttpContext.Current.Request); 
  var strP = TokenManager.GetPrincipal(token);
             if (strP != "0") //invalid authorization

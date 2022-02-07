@@ -48,5 +48,6 @@ namespace Programs_Server
         public virtual DbSet<setValues> setValues { get; set; }
         public virtual DbSet<setting> setting { get; set; }
         public virtual DbSet<sysEmails> sysEmails { get; set; }
+        public virtual DbSet<userSetValues> userSetValues { get; set; }
     }
 }

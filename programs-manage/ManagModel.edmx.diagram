@@ -85,6 +85,8 @@
         <EntityTypeShape EntityType="incprogramsdbModel.sysEmails" Width="1.5" PointX="5.25" PointY="24.625" />
         <AssociationConnector Association="incprogramsdbModel.FK_sysEmails_users" />
         <AssociationConnector Association="incprogramsdbModel.FK_sysEmails_users1" />
+        <EntityTypeShape EntityType="incprogramsdbModel.userSetValues" Width="1.5" PointX="5.625" PointY="5.5" />
+        <AssociationConnector Association="incprogramsdbModel.FK_userSetValues_setValues" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

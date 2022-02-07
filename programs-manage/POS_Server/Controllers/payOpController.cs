@@ -643,5 +643,52 @@ namespace Programs_Server.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("getLastPayOp")]
+        public string getLastPayOp(string token)//int packageUserId
+        {
+
+            string message = "";
+
+            token = TokenManager.readToken(HttpContext.Current.Request);
+            var strP = TokenManager.GetPrincipal(token);
+            if (strP != "0") //invalid authorization
+            {
+                return TokenManager.GenerateToken(strP);
+            }
+            else
+            {
+                int packageUserId = 0;
+
+                packageUserController pucntrlr = new packageUserController();
+
+                IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+                foreach (Claim c in claims)
+                {
+                    if (c.Type == "packageUserId")
+                    {
+                        packageUserId = int.Parse(c.Value);
+                    }
+
+
+                }
+                try
+                {
+                    payOpModel payoprow = new payOpModel();
+                    payoprow = pucntrlr.getLastPayOp(packageUserId);
+
+                    return TokenManager.GenerateToken(payoprow);
+                }
+                catch
+                {
+                    return TokenManager.GenerateToken("0");
+                }
+            }
+
+
+
+        }
+
+
     }
 }
