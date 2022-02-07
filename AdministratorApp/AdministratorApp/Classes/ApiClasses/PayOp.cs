@@ -36,6 +36,9 @@ namespace AdministratorApp.ApiClasses
         public string packageNumber { get; set; }//bookNum
         public Nullable<System.DateTime> expireDate { get; set; }//expireDate
         public string currency { get; set; }
+        public Nullable<int> packageId { get; set; }
+ 
+
 
         private string urimainpath = "PayOp/";
         /// <summary>
@@ -101,6 +104,28 @@ namespace AdministratorApp.ApiClasses
            
         }
 
+        public async Task<PayOp> getLastPayOp(int packageUserId)
+        {
+            PayOp item = new PayOp();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("packageUserId", packageUserId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList(urimainpath + "getLastPayOp", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<PayOp>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+
+            return item;
+
+
+        }
 
         public async Task<List<PayOp>> GetByCustomerId(int customerId)
         {

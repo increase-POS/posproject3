@@ -661,17 +661,29 @@ namespace AdministratorApp.View.sales
         CountryPackageDate CountryPackageDateModel = new CountryPackageDate();
        // Country CountryModel = new Country();
         Packages PackagesModel = new Packages();
+        PayOp PayOpModel = new PayOp();
+        string result = "0";
         public async Task<string> getdata()
         {
-            agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+            PayOpModel = new PayOp();
+            PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
+            if (PayOpModel.payOpId<=0)
+            {
+                return "0";
+            } else
+            {
 
-            cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
 
-            CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)packUserRep.countryPackageId);
-            PackagesModel = await PackagesModel.GetByID((int)packUserRep.packageId);
-          
-          //  CountryPackageDateModel.monthCount;
-            return "1";
+                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+
+                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+
+                //  CountryPackageDateModel.monthCount;
+                return "1";
+            }
+         
         }
         public async Task<string> BuildReport()
         {
@@ -680,9 +692,16 @@ namespace AdministratorApp.View.sales
             ////string secondTitle = "";
             ////string subTitle = "";
             //string Title = "";
-
+           
             List<ReportParameter> paramarr = new List<ReportParameter>();
-
+            List<PackageUser> purl = new List<PackageUser>();
+            packUserRep = await packUserRep.GetByID(packuser.packageUserId);
+            await getdata();
+            if (PayOpModel.payOpId <= 0)
+            {
+                return "0";//not pay yet
+            }
+            else {
             string addpath;
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
@@ -697,12 +716,9 @@ namespace AdministratorApp.View.sales
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
-            List<PackageUser> purl = new List<PackageUser>();
-            packUserRep = await packUserRep.GetByID(packuser.packageUserId);
-            await getdata();
-           
+          
 
-            clsReports.setReportLanguage(paramarr);
+                clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
             SetReportparam(paramarr);
             clsReports.BookSale(purl, rep, reppath, paramarr);
@@ -710,6 +726,7 @@ namespace AdministratorApp.View.sales
 
             rep.Refresh();
             return "1";
+            }
 
         }
         public void SetReportparam(List<ReportParameter> paramarr)
@@ -755,10 +772,10 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));
             paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString() +" "+ CountryPackageDateModel.currency));
             paramarr.Add(new ReportParameter("Status", serverActiveConv(packUserRep.isActive)));
-            paramarr.Add(new ReportParameter("ExpirationDate",DateConvert(packUserRep.expireDate)));
+            paramarr.Add(new ReportParameter("ExpirationDate",DateConvert(PayOpModel.expireDate)));
           //  paramarr.Add(new ReportParameter("Active", ));
-            paramarr.Add(new ReportParameter("Program", packUserRep.programName));
-            paramarr.Add(new ReportParameter("Version", packUserRep.verName));
+            paramarr.Add(new ReportParameter("Program", PackagesModel.programName));
+            paramarr.Add(new ReportParameter("Version", PackagesModel.verName));
             paramarr.Add(new ReportParameter("Branches", UnlimitedConvert(PackagesModel.branchCount)));
             paramarr.Add(new ReportParameter("Users", UnlimitedConvert(PackagesModel.userCount)));
             paramarr.Add(new ReportParameter("Customers", UnlimitedConvert(PackagesModel.customerCount)));
@@ -770,6 +787,8 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("OfflineActivation", serverActiveationTypeConv(packUserRep.isOnlineServer)));
             paramarr.Add(new ReportParameter("ChangeDevice", ""));
 
+            paramarr.Add(new ReportParameter("trNotes", ""));
+            paramarr.Add(new ReportParameter("Notes", ""));
         }
         public string AgentNameConv(Users userModel)
         {
@@ -861,17 +880,34 @@ namespace AdministratorApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
-
                 #region
-                await BuildReport();
-
-                saveFileDialog.Filter = "PDF|*.pdf;";
-
-                if (saveFileDialog.ShowDialog() == true)
+                if (packuser.packageUserId <= 0)
                 {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                    //no book saved
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "You have to book first", animation: ToasterAnimation.FadeIn);
+
+                }
+                else
+                {
+                    result = await BuildReport();
+
+                    if (result=="0")
+                    {
+                        // not payed yet
+                        Toaster.ShowWarning(Window.GetWindow(this), message: "The customer must pay first", animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                    {
+                        saveFileDialog.Filter = "PDF|*.pdf;";
+
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            LocalReportExtensions.ExportToPDF(rep, filepath);
+                        }
+                    }
+                   
                 }
                 #endregion
 
@@ -892,10 +928,32 @@ namespace AdministratorApp.View.sales
             {
                 HelpClass.StartAwait(grid_main);
                 #region
-                await BuildReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
-                #endregion
-                HelpClass.EndAwait(grid_main);
+
+                if (packuser.packageUserId <= 0)
+                {
+                    //no book saved
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "You have to book first", animation: ToasterAnimation.FadeIn);
+
+                }
+                else
+                {
+                    result = await BuildReport();
+
+                    if (result == "0")
+                    {
+                        // not payed yet
+                        Toaster.ShowWarning(Window.GetWindow(this), message: "The customer must pay first", animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                    {
+                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+
+                    }
+}
+                    #endregion
+                    HelpClass.EndAwait(grid_main);
+                
             }
             catch (Exception ex)
             {
@@ -914,8 +972,25 @@ namespace AdministratorApp.View.sales
                 #region
                 //Thread t1 = new Thread(() =>
                 //{
-                await BuildReport();
-                this.Dispatcher.Invoke(() =>
+                if (packuser.packageUserId <= 0)
+                {
+                    //no book saved
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "You have to book first", animation: ToasterAnimation.FadeIn);
+
+                }
+                else
+                {
+                    result = await BuildReport();
+
+                    if (result == "0")
+                    {
+                        // not payed yet
+                        Toaster.ShowWarning(Window.GetWindow(this), message: "The customer must pay first", animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                    {
+                        this.Dispatcher.Invoke(() =>
                 {
                     saveFileDialog.Filter = "EXCEL|*.xls;";
                     if (saveFileDialog.ShowDialog() == true)
@@ -924,12 +999,14 @@ namespace AdministratorApp.View.sales
                         LocalReportExtensions.ExportToExcel(rep, filepath);
                     }
                 });
+                    }
 
-
-                //});
-                //t1.Start();
-                #endregion
-                HelpClass.EndAwait(grid_main);
+                    //});
+                    //t1.Start();
+}
+                    #endregion
+                    HelpClass.EndAwait(grid_main);
+                
             }
             catch (Exception ex)
             {
@@ -946,26 +1023,45 @@ namespace AdministratorApp.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 #region
-                Window.GetWindow(this).Opacity = 0.2;
+               
 
                 string pdfpath = "";
                 //
                 pdfpath = @"\Thumb\report\temp.pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
-                await BuildReport();
-
-                LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                wd_previewPdf w = new wd_previewPdf();
-                w.pdfPath = pdfpath;
-                if (!string.IsNullOrEmpty(w.pdfPath))
+                if (packuser.packageUserId <= 0)
                 {
-                    w.ShowDialog();
-                    w.wb_pdfWebViewer.Dispose();
-
+                    //no book saved
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "You have to book first", animation: ToasterAnimation.FadeIn);
 
                 }
-                Window.GetWindow(this).Opacity = 1;
+                else
+                {
+                    result = await BuildReport();
+
+                    if (result == "0")
+                    {
+                        // not payed yet
+                        Toaster.ShowWarning(Window.GetWindow(this), message: "The customer must pay first", animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                    {
+                        Window.GetWindow(this).Opacity = 0.2;
+                        LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                        wd_previewPdf w = new wd_previewPdf();
+                        w.pdfPath = pdfpath;
+                        if (!string.IsNullOrEmpty(w.pdfPath))
+                        {
+                            w.ShowDialog();
+                            w.wb_pdfWebViewer.Dispose();
+
+
+                        }
+                        Window.GetWindow(this).Opacity = 1;
+                    }
+                }
                 #endregion
 
                 HelpClass.EndAwait(grid_main);

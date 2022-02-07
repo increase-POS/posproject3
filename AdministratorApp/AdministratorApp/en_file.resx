@@ -2731,4 +2731,10 @@ Please add Email in setting</value>
   <data name="trActivationType" xml:space="preserve">
     <value>Activation Type</value>
   </data>
+  <data name="trBookings" xml:space="preserve">
+    <value>Bookings</value>
+  </data>
+  <data name="trServiceBook" xml:space="preserve">
+    <value>Service Booking</value>
+  </data>
 </root>

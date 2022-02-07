@@ -2713,4 +2713,10 @@
   <data name="trActivationType" xml:space="preserve">
     <value>نوع التفعيل</value>
   </data>
+  <data name="trBookings" xml:space="preserve">
+    <value>حجوزات</value>
+  </data>
+  <data name="trServiceBook" xml:space="preserve">
+    <value>حجز خدمة</value>
+  </data>
 </root>

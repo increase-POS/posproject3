@@ -542,6 +542,7 @@ namespace AdministratorApp.View.settings.emailGeneral
         {
             try
             {
+                tb_password.Text = pb_password.Password;
                 HelpClass.validate(requiredControlList, this);
                 p_error_password.Visibility = Visibility.Collapsed;
             }
