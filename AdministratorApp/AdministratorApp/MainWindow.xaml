@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdministratorApp"
         mc:Ignorable="d" Icon="/pic/increaseLogo.ico"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="MainWindow"   Loaded="Window_Loaded"  
+        Title="Increase-SCM"   Loaded="Window_Loaded"  
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"  WindowStyle="None"
         WindowState="Maximized" d:DesignWidth="1200" d:DesignHeight="800"   >
