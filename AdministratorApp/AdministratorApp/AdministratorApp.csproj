@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>increaseLogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
@@ -259,6 +262,9 @@
     <Compile Include="View\settings\emailGeneral\uc_emailTemplates.xaml.cs">
       <DependentUpon>uc_emailTemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\settings\uc_general.xaml.cs">
+      <DependentUpon>uc_general.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
@@ -270,6 +276,9 @@
     </Compile>
     <Compile Include="View\windows\wd_changePassword.xaml.cs">
       <DependentUpon>wd_changePassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_companyInfo.xaml.cs">
+      <DependentUpon>wd_companyInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_countryPackageDate.xaml.cs">
       <DependentUpon>wd_countryPackageDate.xaml</DependentUpon>
@@ -288,6 +297,9 @@
     </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_saleNote.xaml.cs">
+      <DependentUpon>wd_saleNote.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_seialsList.xaml.cs">
       <DependentUpon>wd_seialsList.xaml</DependentUpon>
@@ -394,6 +406,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\settings\uc_general.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\settings\uc_settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -407,6 +423,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_changePassword.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_companyInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -434,6 +454,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\windows\wd_saleNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_seialsList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -457,6 +481,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="increase-logo-01.ico" />
+    <Resource Include="increaseLogo.ico" />
     <Content Include="Thumb\report\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
