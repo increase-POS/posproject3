@@ -95,12 +95,14 @@ namespace AdministratorApp.Classes
             //table columns
             paramarr.Add(new ReportParameter("trProcess", MainWindow.resourcemanagerreport.GetString("trProcess")));
             paramarr.Add(new ReportParameter("tr_Book", MainWindow.resourcemanagerreport.GetString("tr_Book")));
+            paramarr.Add(new ReportParameter("trPackage", MainWindow.resourcemanagerreport.GetString("trPackage")));
             paramarr.Add(new ReportParameter("trProcessDate", MainWindow.resourcemanagerreport.GetString("trProcessDate")));
             paramarr.Add(new ReportParameter("trExpireDate", MainWindow.resourcemanagerreport.GetString("trExpireDate")));
             paramarr.Add(new ReportParameter("trAgent", MainWindow.resourcemanagerreport.GetString("trAgent")));
             paramarr.Add(new ReportParameter("trCustomer", MainWindow.resourcemanagerreport.GetString("trCustomer")));
             paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));
             paramarr.Add(new ReportParameter("trPayments", MainWindow.resourcemanagerreport.GetString("trPayments")));
+
             DateFormConv(paramarr);
         }
 
@@ -115,6 +117,7 @@ namespace AdministratorApp.Classes
             //table columns
             paramarr.Add(new ReportParameter("trProcessNumTooltip", MainWindow.resourcemanagerreport.GetString("trProcessNumTooltip")));
             paramarr.Add(new ReportParameter("trBookNum", MainWindow.resourcemanagerreport.GetString("trBookNum")));
+            paramarr.Add(new ReportParameter("trPackage", MainWindow.resourcemanagerreport.GetString("trPackage")));
             paramarr.Add(new ReportParameter("trProcessDate", MainWindow.resourcemanagerreport.GetString("trProcessDate")));
             paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));
             paramarr.Add(new ReportParameter("trPaid", MainWindow.resourcemanagerreport.GetString("trPaid")));

@@ -113,6 +113,7 @@ namespace AdministratorApp.ApiClasses
         public Nullable<int> updateUserIdPo { get; set; }
         public Nullable<System.DateTime> createDatePo { get; set; }//3-Upgrade Date
         public Nullable<System.DateTime> updateDatePo { get; set; }
+   
 
 
 

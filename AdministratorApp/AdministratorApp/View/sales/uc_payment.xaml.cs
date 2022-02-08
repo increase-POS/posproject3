@@ -170,9 +170,10 @@ namespace AdministratorApp.View.sales
 
             dg_payments.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcessNumTooltip");
             dg_payments.Columns[1].Header = MainWindow.resourcemanager.GetString("trBookNum");
-            dg_payments.Columns[2].Header = MainWindow.resourcemanager.GetString("trProcessDate");
-            dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trExpirationDate");
-            dg_payments.Columns[4].Header = MainWindow.resourcemanager.GetString("trPaid");
+            dg_payments.Columns[2].Header = MainWindow.resourcemanager.GetString("trPackage");
+            dg_payments.Columns[3].Header = MainWindow.resourcemanager.GetString("trProcessDate");
+            dg_payments.Columns[4].Header = MainWindow.resourcemanager.GetString("trExpirationDate");
+            dg_payments.Columns[5].Header = MainWindow.resourcemanager.GetString("trPaid");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
             tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");

@@ -37,8 +37,8 @@ namespace AdministratorApp.ApiClasses
         public Nullable<System.DateTime> expireDate { get; set; }//expireDate
         public string currency { get; set; }
         public Nullable<int> packageId { get; set; }
- 
 
+        public string packageName { get; set; }
 
         private string urimainpath = "PayOp/";
         /// <summary>

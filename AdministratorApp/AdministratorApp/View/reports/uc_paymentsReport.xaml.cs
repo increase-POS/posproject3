@@ -213,13 +213,14 @@ namespace AdministratorApp.View.reports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, MainWindow.resourcemanager.GetString("trSearchHint"));
 
             dg_book.Columns[0].Header = MainWindow.resourcemanager.GetString("trProcess");//Process Num
-            dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("tr_Book");//booked Num
-            dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trProcessDate");
-            dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trExpireDate");
-            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trAgent");
-            dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trCustomer");
-            dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trPrice");
-            dg_book.Columns[7].Header = MainWindow.resourcemanager.GetString("trPayments");
+            dg_book.Columns[1].Header = MainWindow.resourcemanager.GetString("tr_Book");//booked Num 
+            dg_book.Columns[2].Header = MainWindow.resourcemanager.GetString("trPackage");
+            dg_book.Columns[3].Header = MainWindow.resourcemanager.GetString("trProcessDate");
+            dg_book.Columns[4].Header = MainWindow.resourcemanager.GetString("trExpireDate");
+            dg_book.Columns[5].Header = MainWindow.resourcemanager.GetString("trAgent");
+            dg_book.Columns[6].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            dg_book.Columns[7].Header = MainWindow.resourcemanager.GetString("trPrice");
+            dg_book.Columns[8].Header = MainWindow.resourcemanager.GetString("trPayments");
 
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
             tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
