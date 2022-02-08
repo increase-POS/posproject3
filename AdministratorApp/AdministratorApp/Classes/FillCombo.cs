@@ -245,6 +245,16 @@ namespace AdministratorApp.Classes
             else
                 border.Visibility = Visibility.Collapsed;
         }
+        static public async Task fillCountriesLocal(ComboBox combo, int countryid )
+        {
+            if (citynum is null)
+                await RefreshCity();
+            FillCombo.citynumofcountry = FillCombo.citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
+            combo.ItemsSource = FillCombo.citynumofcountry;
+            combo.SelectedValuePath = "cityId";
+            combo.DisplayMemberPath = "cityCode";
+        
+        }
         #endregion
 
         #region fill user type

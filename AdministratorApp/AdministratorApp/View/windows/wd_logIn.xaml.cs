@@ -194,7 +194,7 @@ namespace AdministratorApp.View.windows
                             user.isOnline = 1;
 
                             int s = await userModel.Save(user);
-
+                         
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
@@ -212,8 +212,10 @@ namespace AdministratorApp.View.windows
                             }
                             Properties.Settings.Default.Save();
                             #endregion
+                            MainWindow.Region.countryId = 1;
 
                             MainWindow main = new MainWindow();
+
                             main.Show();
                             this.Close();
                         }

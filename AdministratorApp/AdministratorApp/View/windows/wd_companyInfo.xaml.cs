@@ -22,7 +22,7 @@ using System.Text.RegularExpressions;
 using netoaster;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Controls.Primitives;
-
+using AdministratorApp.ApiClasses;
 namespace AdministratorApp.View.windows
 {
     /// <summary>
@@ -30,9 +30,9 @@ namespace AdministratorApp.View.windows
     /// </summary>
     public partial class wd_companyInfo : Window
     {
-        /*
+        
         //phone variabels
-        IEnumerable<CountryCode> countrynum;
+        IEnumerable<Country> countrynum;
         IEnumerable<City> citynum;
         IEnumerable<City> citynumofcountry;
         string imgFileName = "pic/no-image-icon-125x125.png";
@@ -41,7 +41,7 @@ namespace AdministratorApp.View.windows
         int? countryid;
         Boolean firstchange = false;
         Boolean firstchangefax = false;
-        CountryCode countrycodes = new CountryCode();
+        Country countrycodes = new Country();
         City cityCodes = new City();
         OpenFileDialog openFileDialog = new OpenFileDialog();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -56,7 +56,7 @@ namespace AdministratorApp.View.windows
         SetValues setVLogo = new SetValues();
         SettingCls setModel = new SettingCls();
         SetValues valueModel = new SetValues();
-        */
+        public static List<string> requiredControlList;
 
         public bool isFirstTime = false;
 
@@ -73,12 +73,12 @@ namespace AdministratorApp.View.windows
         }
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            /*
+           
             try
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-
+                requiredControlList = new List<string> { "name", "address", "email", "mobile"  };
                 await fillCountries();
 
                 await fillCity();
@@ -163,7 +163,7 @@ namespace AdministratorApp.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+           
         }
         private void translate()
         {
@@ -183,132 +183,19 @@ namespace AdministratorApp.View.windows
             btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
         }
       
-        private void Tb_email_LostFocus(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {
-                if(isFirstTime)
-                    validateEmail(tb_email, p_errorEmail, tt_errorEmail);
-                else
-                    HelpClass.validateEmail(tb_email, p_errorEmail, tt_errorEmail);
-            }
-            catch(Exception ex)
-            { HelpClass.ExceptionMessage(ex, this); }
-            */
-        }
+    
    
-        private void tb_mobile_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            //doesn't allow spaces into textbox
-            e.Handled = e.Key == Key.Space;
-        }
+        
 
-        private void tb_phone_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Key == Key.Space;
-        }
+        
 
-        private void tb_fax_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Key == Key.Space;
-        }
-        private void tb_email_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = e.Key == Key.Space;
-        }
+    
 
-        private   void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
-                if (firstchange == true)
-                {
-                    if (cb_areaPhone.SelectedValue != null)
-                    {
-                        if (cb_areaPhone.SelectedIndex >= 0)
-                            countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-
-                        if (citynum != null)
-                        {
-                            citynumofcountry = citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
-                            cb_areaPhoneLocal.ItemsSource = citynumofcountry;
-                            cb_areaPhoneLocal.SelectedValuePath = "cityId";
-                            cb_areaPhoneLocal.DisplayMemberPath = "cityCode";
-                            if (citynumofcountry.Count() > 0)
-                            {
-
-                                cb_areaPhoneLocal.Visibility = Visibility.Visible;
-                            }
-                            else
-                            {
-                                cb_areaPhoneLocal.Visibility = Visibility.Collapsed;
-                            }
-                        }
-
-                    }
-                }
-                else
-                {
-                    firstchange = true;
-                }
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
-        private void Cb_areaFax_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
-            try
-            {
-                if (firstchangefax == true)
-                {
-                    if (cb_areaFax.SelectedValue != null)
-                    {
-                        if (cb_areaFax.SelectedIndex >= 0)
-                            countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        if (citynum != null)
-                        {
-                            citynumofcountry = citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
-
-                            cb_areaFaxLocal.ItemsSource = citynumofcountry;
-                            cb_areaFaxLocal.SelectedValuePath = "cityId";
-                            cb_areaFaxLocal.DisplayMemberPath = "cityCode";
-                            if (citynumofcountry.Count() > 0)
-                            {
-                                cb_areaFaxLocal.Visibility = Visibility.Visible;
-                            }
-                            else
-                            {
-                                cb_areaFaxLocal.Visibility = Visibility.Collapsed;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    firstchangefax = true;
-                }
-            }
-            catch(Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
+    
+      
         private void Img_customer_Click(object sender, RoutedEventArgs e)
         {//select image
-            /*
+          
             try
             {
                 if (sender != null)
@@ -331,19 +218,14 @@ namespace AdministratorApp.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+        
         }
-        private void Tb_email_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
-            if (!regex.IsMatch(e.Text))
-                e.Handled = true;
-        }
+    
         //area code methods
-        /*
-        async Task<IEnumerable<CountryCode>> RefreshCountry()
+      
+        async Task<IEnumerable<Country >> RefreshCountry()
         {
-            countrynum = await countrycodes.GetAllCountries();
+            countrynum = await countrycodes.GetAll();
             return countrynum;
         }
         private async Task fillCountries()
@@ -381,7 +263,7 @@ namespace AdministratorApp.View.windows
             if (citynum is null)
                 await RefreshCity();
         }
-        */
+   
         //end areacod
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -395,68 +277,11 @@ namespace AdministratorApp.View.windows
             }
         }
 
-        private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string name = sender.GetType().Name;
-                validateEmpty(name, sender);
-            }
-            catch(Exception ex)
-            { HelpClass.ExceptionMessage(ex, this); }
-        }
+  
 
-        private void Tb_validateEmptyTextChange(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                string name = sender.GetType().Name;
-                validateEmpty(name, sender);
-            }
-            catch(Exception ex)
-            { HelpClass.ExceptionMessage(ex, this); }
-        }
+       
 
-        private void validateEmpty(string name, object sender)
-        {
-            /*
-            try
-            {
-                if (!isFirstTime)
-            {
-                if (name == "TextBox")
-                {
-                    if ((sender as TextBox).Name == "tb_name")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorName, tt_errorName, "trEmptyNameToolTip");
-                    //else if ((sender as TextBox).Name == "tb_address")
-                    //    HelpClass.validateEmptyTextBox((TextBox)sender, p_errorAddress, tt_errorAddress, "trEmptyAddress");
-                    //else if ((sender as TextBox).Name == "tb_email")
-                    //    HelpClass.validateEmptyTextBox((TextBox)sender, p_errorEmail, tt_errorEmail, "trEmptyEmailToolTip");
-                    //else if ((sender as TextBox).Name == "tb_phone")
-                    //    HelpClass.validateEmptyTextBox((TextBox)sender, p_errorPhone, tt_errorPhone, "trEmptyPhoneToolTip");
-                    else if ((sender as TextBox).Name == "tb_mobile")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorMobile, tt_errorMobile, "trEmptyMobileToolTip");
-                    //else if ((sender as TextBox).Name == "tb_fax")
-                    //    HelpClass.validateEmptyTextBox((TextBox)sender, p_errorFax, tt_errorFax, "trEmptyFaxToolTip");
-                }
-            }
-            else
-            {
-                if (name == "TextBox")
-                {
-                    if ((sender as TextBox).Name == "tb_name")
-                        validateEmptyTextBox((TextBox)sender, p_errorName, tt_errorName, "Name cann't be empty");
-                    else if ((sender as TextBox).Name == "tb_mobile")
-                        validateEmptyTextBox((TextBox)sender, p_errorMobile, tt_errorMobile, "Mobile number cann't be empty");
-                }
-            }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
+    
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {//decimal
@@ -501,86 +326,18 @@ namespace AdministratorApp.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private bool validateEmail(TextBox tb, System.Windows.Shapes.Path p_error, ToolTip tt_error)
-        {
-            bool isValid = true;
-            /*
-            if (!tb.Text.Equals(""))
-            {
-                if (!ValidatorExtensions.IsValid(tb.Text))
-                {
-                    p_error.Visibility = Visibility.Visible;
-                    tt_error.Content = ("Email address is not valid");
-                    tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
-                    isValid = false;
-                }
-                else
-                {
-                    p_error.Visibility = Visibility.Collapsed;
-                    tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
-                    isValid = true;
-                }
-            }
-            */
-            return isValid;
-        }
-        public bool validateEmptyTextBox(TextBox tb, System.Windows.Shapes.Path p_error, ToolTip tt_error, string tr)
-        {
-            bool isValid = true;
-            /*
-            if (tb.Text.Equals(""))
-            {
-                p_error.Visibility = Visibility.Visible;
-                tt_error.Content = (tr);
-                tb.Background = (Brush)bc.ConvertFrom("#15FF0000");
-                isValid = false;
-            }
-            else
-            {
-                tb.Background = (Brush)bc.ConvertFrom("#f8f8f8");
-                p_error.Visibility = Visibility.Collapsed;
-            }
-            */
-            return isValid;
-        }
+     
+   
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            /*
+            
             try
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
                 #region validate
-                bool emailError = false;
-                if (!isFirstTime)
-                {
-                    //chk empty name
-                    HelpClass.validateEmptyTextBox(tb_name, p_errorName, tt_errorName, "trEmptyNameToolTip");
-                    //validate email
-                    HelpClass.validateEmail(tb_email, p_errorEmail, tt_errorEmail);
-                    if (!tb_email.Text.Equals(""))
-                        if (!ValidatorExtensions.IsValid(tb_email.Text))
-                            emailError = true;
-                    //chk empty mobile
-                    HelpClass.validateEmptyTextBox(tb_mobile, p_errorMobile, tt_errorMobile, "trEmptyMobileToolTip");
-                }
-                else
-                {
-                    //chk empty name
-                    validateEmptyTextBox(tb_name, p_errorName, tt_errorName, "Name cann't be empty");
-                    //validate email
-                    validateEmail(tb_email, p_errorEmail, tt_errorEmail);
-                    if (!tb_email.Text.Equals(""))
-                        if (!ValidatorExtensions.IsValid(tb_email.Text))
-                            emailError = true;
-                    //chk empty mobile
-                    validateEmptyTextBox(tb_mobile, p_errorMobile, tt_errorMobile, "Mobile number cann't be empty");
-                }
-                #endregion
-
-                #region save
-                if ((!tb_name.Text.Equals("")) && (!tb_mobile.Text.Equals("")) && !emailError)
+                if (HelpClass.validate(requiredControlList, this) &&    HelpClass.IsValidEmail(this))
                 {
                     //save name
                     if (!tb_name.Text.Equals(""))
@@ -607,7 +364,7 @@ namespace AdministratorApp.View.windows
                             MainWindow.Address = tb_address.Text;
                     }
                     //save email
-                    if ((!tb_email.Text.Equals("")) && (!emailError))
+                    if ((!tb_email.Text.Equals("")) )
                     {
                         setVEmail.value = tb_email.Text;
                         setVEmail.isSystem = 1;
@@ -630,8 +387,8 @@ namespace AdministratorApp.View.windows
                             MainWindow.Mobile = cb_areaMobile.Text + tb_mobile.Text;
                     }
                     //save phone
-                    if (!tb_phone.Text.Equals(""))
-                    {
+                    //if (!tb_phone.Text.Equals(""))
+                    //{
                         setVPhone.value = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                         setVPhone.isSystem = 1;
                         setVPhone.isDefault = 1;
@@ -639,10 +396,9 @@ namespace AdministratorApp.View.windows
                        int sPhone = await valueModel.Save(setVPhone);
                         if (!sPhone.Equals(0))
                             MainWindow.Phone = cb_areaPhone.Text + cb_areaPhoneLocal.Text + tb_phone.Text;
-                    }
+                    //}
                     //save fax
-                    if (!tb_fax.Text.Equals(""))
-                    {
+                   
                         setVFax.value = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
                         setVFax.isSystem = 1;
                         setVFax.isDefault = 1;
@@ -651,7 +407,7 @@ namespace AdministratorApp.View.windows
                         if (!sFax.Equals(0))
                             MainWindow.Fax = cb_areaFax.Text + cb_areaFaxLocal.Text + tb_fax.Text;
 
-                    }
+                  
                     //  save logo
                     // image
                   //  string sLogo = "";
@@ -693,11 +449,11 @@ namespace AdministratorApp.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+          
         }
         private async Task getImg()
         {
-            /*
+         
             try
             {
                 if (string.IsNullOrEmpty(setVLogo.value))
@@ -723,7 +479,7 @@ namespace AdministratorApp.View.windows
                         // configure trmporary path
                        // string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                         string dir = Directory.GetCurrentDirectory();
-                        string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
+                        string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
                         tmpPath = System.IO.Path.Combine(tmpPath, setVLogo.value);
                         openFileDialog.FileName = tmpPath;
                     }
@@ -732,9 +488,188 @@ namespace AdministratorApp.View.windows
                 }
             }
             catch { }
-            */
+         
+        }
+        #region Phone
+        
+        private async void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (cb_areaPhone.SelectedValue != null)
+                {
+                    if (cb_areaPhone.SelectedIndex >= 0)
+                    {
+                        countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid );
+                    }
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Cb_areaFax_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (cb_areaFax.SelectedValue != null)
+                {
+                    if (cb_areaFax.SelectedIndex >= 0)
+                    {
+                        countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid );
+                    }
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
+        private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void Tb_validateEmptyTextChange(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void tb_mobile_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void tb_fax_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void tb_phone_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void tb_email_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void Tb_email_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region validate - clearValidate - textChange - lostFocus - . . . . 
+
+        void Clear()
+        {
+            this.DataContext = new Users();
+
+            #region password-code
+        
+            #endregion
+            #region mobile-Phone-fax-country
+            //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
+            //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
+            //cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+          
+            cb_areaMobile.SelectedIndex = -1;
+            cb_areaPhone.SelectedIndex = -1;
+            cb_areaFax.SelectedIndex = -1;
+            cb_areaPhoneLocal.SelectedIndex = -1;
+            cb_areaFaxLocal.SelectedIndex = -1;
+            tb_mobile.Clear();
+            tb_phone.Clear();
+            tb_fax.Clear();
+            tb_email.Clear();
+            #endregion
+            #region image
+            HelpClass.clearImg(img_customer);
+            #endregion
+
+            // last 
+            HelpClass.clearValidate(requiredControlList, this);
+            p_errorEmail.Visibility = Visibility.Collapsed;
+        }
+
+        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                //only  digits
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                Regex regex = new Regex("[^0-9]+");
+                e.Handled = regex.IsMatch(e.Text);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                //only english and digits
+                Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
+                if (!regex.IsMatch(e.Text))
+                    e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                e.Handled = e.Key == Key.Space;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.validate(requiredControlList, this);
+                //p_error_password.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.validate(requiredControlList, this);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        #endregion
     }
 }

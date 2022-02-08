@@ -25,6 +25,7 @@ namespace AdministratorApp.View.windows
             InitializeComponent();
         }
         public static List<string> requiredControlList;
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {//mouse down
             try
@@ -57,7 +58,7 @@ namespace AdministratorApp.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+              //  sale_note
                 requiredControlList = new List<string> { "" };
 
                 #region translate

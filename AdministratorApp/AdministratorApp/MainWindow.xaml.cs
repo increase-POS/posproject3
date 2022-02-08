@@ -60,7 +60,7 @@ namespace AdministratorApp
         public static string Address;
         public static string Phone;
         public static string logoImage;
-
+        public static Country Region = new Country() ;
         public MainWindow()
         {
             try
