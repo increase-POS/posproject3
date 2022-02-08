@@ -80,7 +80,6 @@ namespace AdministratorApp.View.windows
                     HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "address", "email", "mobile"  };
                 await fillCountries();
-
                 await fillCity();
 
                 List<SettingCls> settingsCls = await setModel.GetAll();
@@ -535,40 +534,6 @@ namespace AdministratorApp.View.windows
             }
         }
 
-        private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Tb_validateEmptyTextChange(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void tb_mobile_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void tb_fax_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void tb_phone_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void tb_email_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void Tb_email_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         #endregion
 
@@ -578,9 +543,7 @@ namespace AdministratorApp.View.windows
         {
             this.DataContext = new Users();
 
-            #region password-code
-        
-            #endregion
+           
             #region mobile-Phone-fax-country
             //cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
             //cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
@@ -602,7 +565,7 @@ namespace AdministratorApp.View.windows
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
-            p_errorEmail.Visibility = Visibility.Collapsed;
+            p_error_email.Visibility = Visibility.Collapsed;
         }
 
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -671,5 +634,6 @@ namespace AdministratorApp.View.windows
         }
 
         #endregion
+       
     }
 }
