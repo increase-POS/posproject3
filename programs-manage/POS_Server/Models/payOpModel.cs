@@ -27,6 +27,7 @@ namespace Programs_Server.Models
         public string currency { get; set; }
         public string packageNumber { get; set; }//bookNum
         public Nullable<System.DateTime> expireDate { get; set; }//expireDate
+        public string packageName { get; set; }
 
 
     }

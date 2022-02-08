@@ -178,7 +178,6 @@ namespace Programs_Server.Controllers
         {
 
 
-
             string message = "";
 
             token = TokenManager.readToken(HttpContext.Current.Request);
@@ -235,6 +234,7 @@ namespace Programs_Server.Controllers
                                         
                                         expireDate = S.expireDate,
                                        currency=C.currency,
+                                        packageName=P.packageName,
 
                                     }).ToList();
 
