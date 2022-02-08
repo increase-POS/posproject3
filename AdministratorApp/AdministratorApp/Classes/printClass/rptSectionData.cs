@@ -24,11 +24,11 @@ namespace AdministratorApp.Classes
            // List<ReportParameter> listParam = new List<ReportParameter>();
 
             ReportCls rep = new ReportCls();
-            paramarr.Add(new ReportParameter("companyName", MainWindow.companyName));
-            paramarr.Add(new ReportParameter("Fax", MainWindow.Fax));
-            paramarr.Add(new ReportParameter("Tel", MainWindow.Mobile));
-            paramarr.Add(new ReportParameter("Address", MainWindow.Address));
-            paramarr.Add(new ReportParameter("Email", MainWindow.Email));
+            paramarr.Add(new ReportParameter("companyName", FillCombo.companyName));
+            paramarr.Add(new ReportParameter("Fax", FillCombo.Fax));
+            paramarr.Add(new ReportParameter("Tel", FillCombo.Mobile));
+            paramarr.Add(new ReportParameter("Address", FillCombo.Address));
+            paramarr.Add(new ReportParameter("Email", FillCombo.Email));
             paramarr.Add(new ReportParameter("logoImage", "file:\\" + rep.GetLogoImagePath()));
               
         }

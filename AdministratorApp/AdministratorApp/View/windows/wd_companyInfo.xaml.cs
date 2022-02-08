@@ -348,7 +348,7 @@ namespace AdministratorApp.View.windows
                        // string sName = await valueModel.Save(setVName);
                        int sName = await valueModel.Save(setVName);
                         if (!sName.Equals(0))
-                            MainWindow.companyName = tb_name.Text;
+                            FillCombo.companyName = tb_name.Text;
                     }
                     //save address
                     if (!tb_address.Text.Equals(""))
@@ -360,7 +360,7 @@ namespace AdministratorApp.View.windows
                        int sAddress = await valueModel.Save(setVAddress);
                      //   string sAddress = await valueModel.Save(setVAddress);
                         if (!sAddress.Equals(0))
-                            MainWindow.Address = tb_address.Text;
+                            FillCombo.Address = tb_address.Text;
                     }
                     //save email
                     if ((!tb_email.Text.Equals("")) )
@@ -372,7 +372,7 @@ namespace AdministratorApp.View.windows
                       //  string sEmail = await valueModel.Save(setVEmail);
                         int sEmail = await valueModel.Save(setVEmail);
                         if (!sEmail.Equals(0))
-                            MainWindow.Email = tb_email.Text;
+                            FillCombo.Email = tb_email.Text;
                     }
                     //save mobile
                     if (!tb_mobile.Text.Equals(""))
@@ -383,7 +383,7 @@ namespace AdministratorApp.View.windows
                         setVMobile.settingId = mobileId;
                         int sMobile = await valueModel.Save(setVMobile);
                         if (!sMobile.Equals(0))
-                            MainWindow.Mobile = cb_areaMobile.Text + tb_mobile.Text;
+                            FillCombo.Mobile = cb_areaMobile.Text + tb_mobile.Text;
                     }
                     //save phone
                     //if (!tb_phone.Text.Equals(""))
@@ -394,7 +394,7 @@ namespace AdministratorApp.View.windows
                         setVPhone.settingId = phoneId;
                        int sPhone = await valueModel.Save(setVPhone);
                         if (!sPhone.Equals(0))
-                            MainWindow.Phone = cb_areaPhone.Text + cb_areaPhoneLocal.Text + tb_phone.Text;
+                        FillCombo.Phone = cb_areaPhone.Text + cb_areaPhoneLocal.Text + tb_phone.Text;
                     //}
                     //save fax
                    
@@ -404,7 +404,7 @@ namespace AdministratorApp.View.windows
                         setVFax.settingId = faxId;
                        int sFax = await valueModel.Save(setVFax);
                         if (!sFax.Equals(0))
-                            MainWindow.Fax = cb_areaFax.Text + cb_areaFaxLocal.Text + tb_fax.Text;
+                            FillCombo.Fax = cb_areaFax.Text + cb_areaFaxLocal.Text + tb_fax.Text;
 
                   
                     //  save logo
@@ -422,10 +422,10 @@ namespace AdministratorApp.View.windows
                         sLogo = await valueModel.Save(setVLogo);
                         if (!sLogo.Equals(0))
                         {
-                            MainWindow.logoImage = setVLogo.value;
+                            FillCombo.logoImage = setVLogo.value;
                             string b = await setVLogo.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + sLogo), sLogo);
                             setVLogo.value = b;
-                            MainWindow.logoImage = b;
+                            FillCombo.logoImage = b;
                             sLogo = await valueModel.Save(setVLogo);
                             await valueModel.getImg(setVLogo.value);
                         }
@@ -436,7 +436,9 @@ namespace AdministratorApp.View.windows
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         await Task.Delay(1500);
+                      
                     }
+                  await  FillCombo.loading_getDefaultSystemInfo();
                     this.Close();
                 }
                 if (sender != null)

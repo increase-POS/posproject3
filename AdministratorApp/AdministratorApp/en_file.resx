@@ -2770,4 +2770,7 @@ Please add Email in setting</value>
   <data name="trUrlLink3" xml:space="preserve">
     <value>Url link3</value>
   </data>
+  <data name="trTerms" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
 </root>

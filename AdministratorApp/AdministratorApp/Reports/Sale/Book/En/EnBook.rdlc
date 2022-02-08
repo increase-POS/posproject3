@@ -2402,13 +2402,14 @@
                     <Value>=Parameters!trNotes.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
-                      <Color>#4e4e4e</Color>
+                      <Color>#178dd2</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Center</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
@@ -2416,7 +2417,7 @@
             <Top>5.58306in</Top>
             <Left>0.46759in</Left>
             <Height>0.3125in</Height>
-            <Width>0.77063in</Width>
+            <Width>7.28346in</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -2450,10 +2451,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>5.5775in</Top>
-            <Left>1.26461in</Left>
+            <Top>5.9525in</Top>
+            <Left>0.46759in</Left>
             <Height>0.3125in</Height>
-            <Width>6.48644in</Width>
+            <Width>7.28346in</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <Border>
@@ -2467,7 +2468,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>15.13347cm</Height>
+        <Height>15.9131cm</Height>
         <Style>
           <Border>
             <Style>None</Style>

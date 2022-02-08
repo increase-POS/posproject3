@@ -53,13 +53,13 @@ namespace AdministratorApp
         ImageBrush myBrush = new ImageBrush();
         public static string Currency;
         public static int CurrencyId;
-        public static string companyName;
-        public static string Email;
-        public static string Fax;
-        public static string Mobile;
-        public static string Address;
-        public static string Phone;
-        public static string logoImage;
+        //public static string companyName;
+        //public static string Email;
+        //public static string Fax;
+        //public static string Mobile;
+        //public static string Address;
+        //public static string Phone;
+        //public static string logoImage;
         public static Country Region = new Country() ;
         public MainWindow()
         {
@@ -491,7 +491,7 @@ namespace AdministratorApp
                 //loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
 
-
+              await  FillCombo.loading_getDefaultSystemInfo();
                 loading_getGroupObjects();
                 //loading_getUserPath();
                 //loading_getTax();

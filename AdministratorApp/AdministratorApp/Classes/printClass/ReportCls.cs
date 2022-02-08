@@ -596,7 +596,7 @@ namespace AdministratorApp.Classes
         {
             try
             {
-                string imageName = MainWindow.logoImage;
+                string imageName = FillCombo.logoImage;
                 string dir = Directory.GetCurrentDirectory();
                 string tmpPath = Path.Combine(dir, @"Thumb\setting");
                 tmpPath = Path.Combine(tmpPath, imageName);

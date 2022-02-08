@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using netoaster;
 
 namespace AdministratorApp.View.windows
 {
@@ -26,6 +27,10 @@ namespace AdministratorApp.View.windows
         }
         public static List<string> requiredControlList;
 
+        SetValues setVNote = new SetValues();
+        SettingCls set = new SettingCls();
+        SettingCls setModel = new SettingCls();
+        SetValues valueModel = new SetValues();
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {//mouse down
             try
@@ -52,7 +57,7 @@ namespace AdministratorApp.View.windows
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
 
             try
@@ -73,8 +78,10 @@ namespace AdministratorApp.View.windows
                 translat();
                 #endregion
 
-
-
+               // List<SettingCls> settingsCls = await setModel.GetAll();
+                List<SetValues> settingsValues = await valueModel.GetBySetName("sale_note");
+                setVNote = settingsValues.FirstOrDefault();
+                tb_notes.Text = setVNote.value;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -110,8 +117,29 @@ namespace AdministratorApp.View.windows
             this.Close();
         }
 
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                setVNote.value = tb_notes.Text.Trim();
+                int res = await valueModel.Save(setVNote);
+                if (res>0)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    await Task.Delay(1500);
+                }
+                else
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "Not saved", animation: ToasterAnimation.FadeIn);
+                    await Task.Delay(1500);
+                }
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+       
 
         }
     }

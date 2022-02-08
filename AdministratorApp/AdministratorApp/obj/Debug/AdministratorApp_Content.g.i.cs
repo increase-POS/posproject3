@@ -18,5 +18,15 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/statisticreports/en/enpayments.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/payments/ar/arpayments.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/payments/en/enpayments.rdlc")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/ar/invbody.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/ar/invitemrow.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/ar/invitemtable.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/ar/payrow.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/ar/paytable.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/invbody.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/invitemrow.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/invitemtable.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/payrow.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/paytable.tmp")]
 
 

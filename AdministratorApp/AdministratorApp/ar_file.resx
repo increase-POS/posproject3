@@ -2752,4 +2752,7 @@
   <data name="trUrlLink3" xml:space="preserve">
     <value>رابط url3</value>
   </data>
+  <data name="trTerms" xml:space="preserve">
+    <value>الشروط والاحكام</value>
+  </data>
 </root>

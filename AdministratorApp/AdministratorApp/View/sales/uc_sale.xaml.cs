@@ -662,15 +662,18 @@ namespace AdministratorApp.View.sales
        // Country CountryModel = new Country();
         Packages PackagesModel = new Packages();
         PayOp PayOpModel = new PayOp();
+      List< SetValues> SetValuesList = new List<SetValues>();
+        SetValues terms = new SetValues();
         string result = "0";
         public async Task<string> getdata()
         {
             PayOpModel = new PayOp();
             PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
-            if (PayOpModel.payOpId<=0)
+            if (PayOpModel.payOpId <= 0)
             {
                 return "0";
-            } else
+            }
+            else
             {
 
                 agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
@@ -679,11 +682,12 @@ namespace AdministratorApp.View.sales
 
                 CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
                 PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
-
+                SetValuesList = await terms.GetBySetName("sale_note");
+                terms = SetValuesList.FirstOrDefault();
                 //  CountryPackageDateModel.monthCount;
                 return "1";
             }
-         
+
         }
         public async Task<string> BuildReport()
         {
@@ -762,6 +766,7 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("trOfflineActivation", MainWindow.resourcemanagerreport.GetString("trActivationType")));
             paramarr.Add(new ReportParameter("trChangeDevice", MainWindow.resourcemanagerreport.GetString("trChangeDevice")));
             paramarr.Add(new ReportParameter("trBookNum", MainWindow.resourcemanagerreport.GetString("trBookNum")));
+            paramarr.Add(new ReportParameter("trNotes", MainWindow.resourcemanagerreport.GetString("trTerms")));
 
             paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));
             paramarr.Add(new ReportParameter("Agent", AgentNameConv(agentmodel)));
@@ -786,9 +791,9 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Items", UnlimitedConvert(PackagesModel.itemCount)));
             paramarr.Add(new ReportParameter("OfflineActivation", serverActiveationTypeConv(packUserRep.isOnlineServer)));
             paramarr.Add(new ReportParameter("ChangeDevice", ""));
-
-            paramarr.Add(new ReportParameter("trNotes", ""));
-            paramarr.Add(new ReportParameter("Notes", ""));
+            //trTerms
+          
+            paramarr.Add(new ReportParameter("Notes", terms.value));
         }
         public string AgentNameConv(Users userModel)
         {
@@ -875,6 +880,7 @@ namespace AdministratorApp.View.sales
                 value = count.ToString();
             return value;
         }
+
         private async void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try

@@ -184,6 +184,7 @@
     <Compile Include="Classes\ApiClasses\versions.cs" />
     <Compile Include="Classes\APIResult.cs" />
     <Compile Include="Classes\DynamicallyClass.cs" />
+    <Compile Include="Classes\EmailClass.cs" />
     <Compile Include="Classes\FillCombo.cs" />
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
@@ -483,6 +484,10 @@
     </Compile>
     <Resource Include="increase-logo-01.ico" />
     <Resource Include="increaseLogo.ico" />
+    <Resource Include="EmailTemplates\images\image-2.gif" />
+    <Resource Include="EmailTemplates\images\logo.png" />
+    <Resource Include="EmailTemplates\images\req1.png" />
+    <Resource Include="EmailTemplates\images\req2.gif" />
     <Content Include="Thumb\report\tmp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -529,6 +534,68 @@
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <Resource Include="fonts\barcodeFont.ttf" />
+    <None Include="EmailTemplates\ordertemplate\ar\invbody.tmp" />
+    <None Include="EmailTemplates\ordertemplate\ar\invfooter.tmp" />
+    <None Include="EmailTemplates\ordertemplate\ar\invheader.tmp" />
+    <None Include="EmailTemplates\ordertemplate\ar\invitemrow.tmp" />
+    <None Include="EmailTemplates\ordertemplate\ar\invitemtable.tmp" />
+    <None Include="EmailTemplates\ordertemplate\en\invbody.tmp" />
+    <None Include="EmailTemplates\ordertemplate\en\invfooter.tmp" />
+    <None Include="EmailTemplates\ordertemplate\en\invheader.tmp" />
+    <None Include="EmailTemplates\ordertemplate\en\invitemrow.tmp" />
+    <None Include="EmailTemplates\ordertemplate\en\invitemtable.tmp" />
+    <None Include="EmailTemplates\quotationtemplate\ar\invbody.tmp" />
+    <None Include="EmailTemplates\quotationtemplate\ar\invitemrow.tmp" />
+    <None Include="EmailTemplates\quotationtemplate\ar\invitemtable.tmp" />
+    <None Include="EmailTemplates\quotationtemplate\en\invbody.tmp" />
+    <None Include="EmailTemplates\quotationtemplate\en\invitemrow.tmp" />
+    <None Include="EmailTemplates\quotationtemplate\en\invitemtable.tmp" />
+    <None Include="EmailTemplates\reqtemplate\ar\invbody.tmp" />
+    <None Include="EmailTemplates\reqtemplate\ar\invfooter.tmp" />
+    <None Include="EmailTemplates\reqtemplate\ar\invheader.tmp" />
+    <None Include="EmailTemplates\reqtemplate\en\invbody.tmp" />
+    <None Include="EmailTemplates\reqtemplate\en\invfooter.tmp" />
+    <None Include="EmailTemplates\reqtemplate\en\invheader.tmp" />
+    <None Include="EmailTemplates\saleordertemplate\ar\invbody.tmp" />
+    <None Include="EmailTemplates\saleordertemplate\ar\invitemrow.tmp" />
+    <None Include="EmailTemplates\saleordertemplate\ar\invitemtable.tmp" />
+    <None Include="EmailTemplates\saleordertemplate\en\invbody.tmp" />
+    <None Include="EmailTemplates\saleordertemplate\en\invitemrow.tmp" />
+    <None Include="EmailTemplates\saleordertemplate\en\invitemtable.tmp" />
+    <None Include="EmailTemplates\saletemplate\ar\deliverydiv.tmp" />
+    <Content Include="EmailTemplates\saletemplate\ar\invbody.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\invitemrow.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\invitemtable.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\payrow.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\paytable.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="EmailTemplates\saletemplate\ar\taxdiv.tmp" />
+    <None Include="EmailTemplates\saletemplate\en\deliverydiv.tmp" />
+    <Content Include="EmailTemplates\saletemplate\en\invbody.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\invitemrow.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\invitemtable.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\payrow.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\paytable.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="EmailTemplates\saletemplate\en\taxdiv.tmp" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.BookSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PackageUser.datasource" />
