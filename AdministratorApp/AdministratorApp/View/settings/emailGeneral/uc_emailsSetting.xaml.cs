@@ -378,6 +378,7 @@ namespace AdministratorApp.View.settings.emailGeneral
                 {
                     sysEmail = dg_sysEmail.SelectedItem as SysEmails;
                     this.DataContext = sysEmail;
+                    pb_password.Password = Encoding.UTF8.GetString(Convert.FromBase64String(sysEmail.password));
                     if (sysEmail != null)
                     {
                         #region delete
@@ -447,9 +448,7 @@ namespace AdministratorApp.View.settings.emailGeneral
         {
             sysEmail = new SysEmails();
             this.DataContext = sysEmail;
-
-
-
+            pb_password.Clear();
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
