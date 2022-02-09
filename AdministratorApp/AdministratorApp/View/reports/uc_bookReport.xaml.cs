@@ -597,7 +597,9 @@ namespace AdministratorApp.View.reports
                 var tempName = bookStsQuery.GroupBy(s => new { s.customerId }).Select(s => new
                 {
                     id = s.Key,
-                    name = s.FirstOrDefault().customerName+" "+s.FirstOrDefault().customerLastName
+                    //name = s.FirstOrDefault().customerName+" "+s.FirstOrDefault().customerLastName
+                    name = s.FirstOrDefault().customerCompany
+
                 });
                 names.AddRange(tempName.Select(nn => nn.name.ToString()));
                 ids.AddRange(tempName.Select(mm => mm.id.customerId.Value));
@@ -651,7 +653,8 @@ namespace AdministratorApp.View.reports
                         if (ch == 'n')
                         {
                             var drawProfit = bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisMonth && c.bookDate <= firstOfNextMonth && c.customerId.Value == id)
-                                                            .Select(b => b.customerName+" "+b.customerLastName).Count();
+                                                             //.Select(b => b.customerName+" "+b.customerLastName).Count();
+                                                             .Select(b => b.customerCompany).Count();
 
                             countLst.Add(drawProfit);
                         }
@@ -661,7 +664,9 @@ namespace AdministratorApp.View.reports
                             for (int i = 0; i < otherIds.Count; i++)
                             {
                                 var drawCount = bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisMonth && c.bookDate <= firstOfNextMonth && c.customerId.Value == otherIds[i])
-                                                            .Select(b => b.customerName + " " + b.customerLastName).Count();
+                                                            //.Select(b => b.customerName + " " + b.customerLastName).Count();
+                                                            .Select(b => b.customerCompany).Count();
+
                                 sum = sum + drawCount;
                             }
                             countLst.Add(sum);
@@ -691,7 +696,8 @@ namespace AdministratorApp.View.reports
                     if (ch == 'n')
                     {
                         var drawCount= bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisYear && c.bookDate <= firstOfNextMYear && c.customerId.Value == id)
-                                                        .Select(b => b.customerName + " " + b.customerLastName).Count();
+                                                        //.Select(b => b.customerName + " " + b.customerLastName).Count();
+                                                        .Select(b => b.customerCompany).Count();
 
                         countLst.Add(drawCount);
                     }
@@ -701,7 +707,9 @@ namespace AdministratorApp.View.reports
                         for (int i = 0; i < otherIds.Count; i++)
                         {
                             var drawCount = bookStsQuery.ToList().Where(c => c.bookDate > firstOfThisYear && c.bookDate <= firstOfNextMYear && c.customerId.Value == id)
-                                                        .Select(b => b.customerName + " " + b.customerLastName).Count();
+                                                        //.Select(b => b.customerName + " " + b.customerLastName).Count();
+                                                        .Select(b => b.customerCompany).Count();
+
 
                             sum = sum + drawCount;
                         }

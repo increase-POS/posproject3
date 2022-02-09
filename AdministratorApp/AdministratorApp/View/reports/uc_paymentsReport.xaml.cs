@@ -425,7 +425,8 @@ namespace AdministratorApp.View.reports
             var tempName = paymentStsQuery.GroupBy(s => new { s.customerId }).Select(s => new
             {
                 customerId = s.FirstOrDefault().customerId,
-                customerName = s.FirstOrDefault().customerName + " " + s.FirstOrDefault().customerLastName
+                //customerName = s.FirstOrDefault().customerName + " " + s.FirstOrDefault().customerLastName
+                customerName = s.FirstOrDefault().customerCompany
             });
             names.AddRange(tempName.Select(nn => nn.customerName));
             ids.AddRange(tempName.Select(nn => nn.customerId.Value));
@@ -442,7 +443,8 @@ namespace AdministratorApp.View.reports
             resultList = paymentStsQuery.GroupBy(x => new { x.customerId, x.packageId }).Select(x => new PaymentsSts
             {
                 customerId = x.FirstOrDefault().customerId,
-                customerName = x.FirstOrDefault().customerName + " " + x.FirstOrDefault().customerLastName,
+                //customerName = x.FirstOrDefault().customerName + " " + x.FirstOrDefault().customerLastName,
+                customerName = x.FirstOrDefault().customerCompany,
                 packageId = x.FirstOrDefault().packageId,
                 totalnet = x.Sum(g => (decimal)g.totalnet)
             }
@@ -490,7 +492,8 @@ namespace AdministratorApp.View.reports
             var result = paymentStsQuery.GroupBy(s => new { s.customerId }).Select(s => new
             {
                 customerId = s.Key.customerId,
-                customerName = s.FirstOrDefault().customerName+" "+ s.FirstOrDefault().customerLastName,
+                //customerName = s.FirstOrDefault().customerName+" "+ s.FirstOrDefault().customerLastName,
+                customerName = s.FirstOrDefault().customerCompany,
                 count = s.Count()
             });
             titles.AddRange(result.Select(jj => jj.customerName));
