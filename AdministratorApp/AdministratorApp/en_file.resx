@@ -2773,4 +2773,7 @@ Please add Email in setting</value>
   <data name="trTerms" xml:space="preserve">
     <value>Terms and Conditions</value>
   </data>
+  <data name="trSoftware" xml:space="preserve">
+    <value>Software</value>
+  </data>
 </root>

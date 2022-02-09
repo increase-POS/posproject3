@@ -24,7 +24,8 @@ namespace AdministratorApp.Classes
             foreach (FileInfo fi in dir.GetFiles())
             {
                 filename = fi.FullName;
-                if (!FileIsLocked(filename))
+
+                if (!FileIsLocked(filename) && (fi.Extension=="PDF"|| fi.Extension == "pdf"))
                 {
                     fi.Delete();
                 }

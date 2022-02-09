@@ -974,6 +974,44 @@ namespace AdministratorApp.Classes
             }
         }
 
+        public static string DecTostring(decimal? dec)
+        {
+            string sdc = "0";
+            if (dec == null)
+            {
+
+            }
+            else
+            {
+                decimal dc = decimal.Parse(dec.ToString());
+
+                switch (MainWindow.accuracy)
+                {
+                    case "0":
+                        sdc = string.Format("{0:F0}", dc);
+                        break;
+                    case "1":
+                        sdc = string.Format("{0:F1}", dc);
+                        break;
+                    case "2":
+                        sdc = string.Format("{0:F2}", dc);
+                        break;
+                    case "3":
+                        sdc = string.Format("{0:F3}", dc);
+                        break;
+                    default:
+                        sdc = string.Format("{0:F1}", dc);
+                        break;
+                }
+
+            }
+
+
+            return sdc;
         }
+
+
+
+    }
 
 }

@@ -548,9 +548,215 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
+
         #endregion
 
+        #region email
+
+        PackageUser packUserRep = new PackageUser();
+        Users agentmodel = new Users();
+        Customers cumstomerModel = new Customers();
+        CountryPackageDate CountryPackageDateModel = new CountryPackageDate();
+        // Country CountryModel = new Country();
+        Packages PackagesModel = new Packages();
+        PayOp PayOpModel = new PayOp();
+        List<SetValues> SetValuesList = new List<SetValues>();
+        SetValues terms = new SetValues();
+        string result = "0";
+
+        SysEmails email = new SysEmails();
+        EmailClass mailtosend = new EmailClass();
+
+        SetValues setvmodel = new SetValues();
+        List<SetValues> setvlist = new List<SetValues>();
+        public async Task<string> getdata()
+        {
+            PayOpModel = new PayOp();
+            PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
+            if (PayOpModel.payOpId <= 0)
+            {
+                return "0";
+            }
+            else
+            {
+
+                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+
+                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+
+                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+                SetValuesList = await terms.GetBySetName("sale_note");
+                terms = SetValuesList.FirstOrDefault();
+                email = await email.GetByBranchIdandSide("sales");
+                setvlist = await setvmodel.GetBySetName("sale_email_temp");
+                //  CountryPackageDateModel.monthCount;
+                return "1";
+            }
+
+        }
+
+        public async void sendsaleEmail()
+        {
+            try
+            {
+                if ((packageUser.packageUserId > 0))
+                {
+                    packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
+                await getdata();
+                //
+               
+                
+                     
+            
+                    {
+                         
+                      
+                    
+                       
+                        if (cumstomerModel == null || cumstomerModel.custId == 0 )
+                        {
+                          
+                            //edit warning message to customer
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheVendorHasNoEmail"), animation: ToasterAnimation.FadeIn);
+                            });
+
+                        }
+                        else
+                        {
+                            //  int? itemcount = invoiceItems.Count();
+                            if (email.emailId == 0)
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoEmailForThisDept"), animation: ToasterAnimation.FadeIn);
+                                });
+                            else
+                            {
+                               
+
+                              
+                                {
+                                  
+                                    {
+
+                                        if (cumstomerModel.email.Trim() == "")
+                                        {
+                                            this.Dispatcher.Invoke(() =>
+                                            {
+                                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheVendorHasNoEmail"), animation: ToasterAnimation.FadeIn);
+                                            });
+                                        }
+
+                                        else
+                                        {
+                                            string pdfpath = "";
+                                      //    pdfpath = await SaveSalepdf();//temp comnt
+
+
+                                            mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel,CountryPackageDateModel, PackagesModel, agentmodel,  email, cumstomerModel, setvlist);
+
+
+                                         //   mailtosend.AddAttachTolist(pdfpath);//temp comnt
+                                            string msg = "";
+                                            this.Dispatcher.Invoke(() =>
+                                            {
+                                                msg = mailtosend.Sendmail();// temp comment
+                                                if (msg == "Failure sending mail.")
+                                                {
+                                                    // msg = "No Internet connection";
+
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
+                                                }
+                                                else if (msg == "mailsent")
+                                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
+                                                else
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
+                                            });
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereIsNoItemsToSend"), animation: ToasterAnimation.FadeIn);
+                    });
+                }
+
+
+                //
+
+            }
+            catch(Exception ex)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPrintEmptyInvoice"), animation: ToasterAnimation.FadeIn);
+                });
+            }
+        }
+
+        public async Task<string> SaveSalepdf()
+        {
+            //for email
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string pdfpath = "";
+            //
+            if ((packUserRep.packageUserId <= 0))
+            {
+                
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
+            }
+            else
+            {
+ 
+                {
+                    ////////////////////////
+                    string folderpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath) + @"\Thumb\report\";
+                    ReportCls.clearFolder(folderpath);
+
+                    pdfpath = @"\Thumb\report\File" + DateTime.Now.ToFileTime().ToString() + ".pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+ 
+                    
+                    {
+                       
+
+                        //prInvoice.agentCode = agentinv.code;
+                        ////new lines
+                        //prInvoice.agentName = agentinv.name;
+                        //prInvoice.agentCompany = agentinv.company;
+                    }
+                  
+                   // string reppath = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 0);
+                    ReportCls.checkLang();
+   
+                    clsReports.setReportLanguage(paramarr);
+                    clsReports.Header(paramarr);
+ 
+                    // multiplePaytable(paramarr);
+        
+                    }
+ 
+                    rep.SetParameters(paramarr);
+                    rep.Refresh();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+
+                 
+
+            }
+            return pdfpath;
+        }
+        #endregion
 
         PayOp payOpModel = new PayOp();
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -740,6 +946,39 @@ namespace AdministratorApp.View.sales
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_email_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+              //  if (MainWindow.groupObject.HasPermissionAction(sendEmailPermission, MainWindow.groupObjects, "one"))
+                {
+
+                    //await sendsaleEmail();
+                    ////
+                    Thread t1 = new Thread(() =>
+                    {
+                        sendsaleEmail();
+                    });
+                    t1.Start();
+                    ////
+                }
+
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

@@ -515,9 +515,41 @@ namespace AdministratorApp.Classes
             //}
 
         }
+
+        public static string AgentNameConv(Users userModel)
+        {
+            if (userModel.userId == 3)
+                return "Increase";
+            else
+                return userModel.name + " " + userModel.lastName;
+        }
+        public static string DateConvert(DateTime? date)
+        {
+            DateTime datetemp;
+
+            if (date is DateTime)
+                date = (DateTime)date;
+            else return date.ToString();
+
+            datetemp = DateTime.Parse(date.ToString());
+            switch (MainWindow.dateFormat)
+            {
+                case "ShortDatePattern":
+                    return datetemp.ToString(@"dd/MM/yyyy");
+                case "LongDatePattern":
+                    return datetemp.ToString(@"dddd, MMMM d, yyyy");
+                case "MonthDayPattern":
+                    return datetemp.ToString(@"MMMM dd");
+                case "YearMonthPattern":
+                    return datetemp.ToString(@"MMMM yyyy");
+                default:
+                    return datetemp.ToString(@"dd/MM/yyyy");
+            }
+
+        }
         #endregion
         #region email
-      
+
         #endregion
     }
 }

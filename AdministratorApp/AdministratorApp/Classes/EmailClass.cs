@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net.Mime;
-
+using AdministratorApp.ApiClasses;
 using System.Net;
 using System.IO;
 namespace AdministratorApp.Classes
@@ -395,7 +395,7 @@ namespace AdministratorApp.Classes
 
         //}
 
-        public  EmailClass fillSaleTempData(Invoice invoice, List<ItemTransfer> invoiceItems, List<PayedInvclass> mailpayedList, SysEmails email, Agent toAgent, List<SetValues> setvlist)
+        public  EmailClass fillSaleTempData(PackageUser pacuser, PayOp payoprow, CountryPackageDate CountryPackageDateModel,Packages PackagesModel,Users agentmodel, SysEmails email, Customers cumstomerModel, List<SetValues> setvlist)
         {
 
             string invheader = "";
@@ -419,7 +419,7 @@ namespace AdministratorApp.Classes
 
             mailtosend.password = Encoding.UTF8.GetString(Convert.FromBase64String(email.password));
             mailtosend.isSSl = (bool)email.isSSL;
-            mailtosend.AddTolist(toAgent.email);
+            mailtosend.AddTolist(cumstomerModel.email);
 
 
 
@@ -432,11 +432,7 @@ namespace AdministratorApp.Classes
             List<MailimageClass> imgs = new List<MailimageClass>();
             MailimageClass img = new MailimageClass();
 
-
-            decimal disval = repm.calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
-            decimal manualdisval = repm.calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
-            invoice.discountValue = disval + manualdisval;
-            invoice.discountType = "1";
+ 
 
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
@@ -444,7 +440,7 @@ namespace AdministratorApp.Classes
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invheader.tmp");
                 invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invfooter.tmp");
                 deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\deliverydiv.tmp");
-                if (invoice.invType == "s" || invoice.invType == "pw" || invoice.invType == "p")
+                
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invbody.tmp");
                     invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemtable.tmp");
@@ -456,29 +452,15 @@ namespace AdministratorApp.Classes
 
 
                 }
-                else if (invoice.invType == "or"|| invoice.invType == "ors")
-                {
-                    invbody = repm.ReadFile(@"EmailTemplates\saleordertemplate\ar\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\saleordertemplate\ar\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\saleordertemplate\ar\invitemrow.tmp");
-                }
-                else if (invoice.invType == "q"|| invoice.invType == "qs")
-                {
-                    invbody = repm.ReadFile(@"EmailTemplates\quotationtemplate\ar\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\quotationtemplate\ar\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\quotationtemplate\ar\invitemrow.tmp");
-                }
-
 
             }
             else
             { // en
 
-
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invheader.tmp");
                 invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invfooter.tmp");
                 deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\deliverydiv.tmp");
-                if (invoice.invType == "s" || invoice.invType == "pw" || invoice.invType == "p")
+                
                 {
 
                     invbody = repm.ReadFile(@"EmailTemplates\saletemplate\en\invbody.tmp");
@@ -490,29 +472,8 @@ namespace AdministratorApp.Classes
 
                     taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\taxdiv.tmp");
                 }
-                else if (invoice.invType == "or" || invoice.invType == "ors")
-                {
-                    invbody = repm.ReadFile(@"EmailTemplates\saleordertemplate\en\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\saleordertemplate\en\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\saleordertemplate\en\invitemrow.tmp");
-                }
-                else if (invoice.invType == "q" || invoice.invType == "qs")
-                {
-                    invbody = repm.ReadFile(@"EmailTemplates\quotationtemplate\en\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\quotationtemplate\en\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\quotationtemplate\en\invitemrow.tmp");
-                }
-                else
-                {
-                    invbody = repm.ReadFile(@"EmailTemplates\saletemplate\en\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemrow.tmp");
-
-                    paytable = repm.ReadFile(@"EmailTemplates\saletemplate\en\paytable.tmp");
-                    payrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\payrow.tmp");
-                }
+            
             }
-
 
             //header info
 
@@ -524,7 +485,6 @@ namespace AdministratorApp.Classes
             invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
             invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
             invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
-
 
             //BODY
 
@@ -540,134 +500,85 @@ namespace AdministratorApp.Classes
                   : setvlist.Where(x => x.notes == "text1").FirstOrDefault().value.ToString();
             invbody = invbody.Replace("[[thankstext]]", thankstext);
 
-
-            if (invoice.invoiceId > 0)
             {
 
-                if ((invoice.invType == "s" || invoice.invType == "sd" || invoice.invType == "sbd" || invoice.invType == "sb" || invoice.invType == "p" || invoice.invType == "pw"))
+                //if ((invoice.invType == "s" || invoice.invType == "sd" || invoice.invType == "sbd" || invoice.invType == "sb" || invoice.invType == "p" || invoice.invType == "pw"))
                 {
-                    decimal sump = mailpayedList.Sum(x => x.cash).Value;
-                    decimal deservd = (decimal)invoice.totalNet - sump;
+                  
+                  //  decimal deservd = (decimal)invoice.totalNet - sump;
 
                     cashTr = MainWindow.resourcemanagerreport.GetString("trCashType");
 
-                    sumP = reportclass.DecTostring(sump);
-                    deservedcash = reportclass.DecTostring(deservd);
+                    //sumP = reportclass.DecTostring(sump);
+                    //deservedcash = reportclass.DecTostring(deservd);
                     invbody = invbody.Replace("[[payedsum]]", sumP);
                     invbody = invbody.Replace("[[deservedcash]]", deservedcash);
                     //  paytable
                     // foreach
-                    string datapayrows = "";
-                    string paymethod = "";
-                    payrow = payrow.Replace("[[currency]]", MainWindow.Currency);
-                    foreach (PayedInvclass row in mailpayedList)
-                    {
-                        string rowhtml = payrow;
+                    //string datapayrows = "";
+                    //string paymethod = "";
+                    //payrow = payrow.Replace("[[currency]]", MainWindow.Currency);
+               
+                    //paytable = paytable.Replace("[[payrow]]", datapayrows);
 
-                        rowhtml = rowhtml.Replace("[[cashpayrow]]", reportclass.DecTostring(row.cash));
-
-                        paymethod = row.processType == "cash" ? cashTr : row.cardName;
-                        rowhtml = rowhtml.Replace("[[paymethodrow]]", paymethod);
-
-
-                        datapayrows += rowhtml;
-
-                    }
-                    paytable = paytable.Replace("[[payrow]]", datapayrows);
-
-                    // end foreach
-                    invbody = invbody.Replace("[[paytable]]", paytable);
+                    //// end foreach
+                    //invbody = invbody.Replace("[[paytable]]", paytable);
 
 
                 }
 
-                invbody = invbody.Replace("[[invoicecode]]", invoice.invNumber);
-                invbody = invbody.Replace("[[invoicedate]]", repm.DateToString(invoice.invDate));
+               
                 //invbody = invbody.Replace("[[invoicetotal]]", invoice.total.ToString());
-                invbody = invbody.Replace("[[invoicetotal]]", repm.DecTostring(invoice.total));
+            
                 //invbody = invbody.Replace("[[invoicediscount]]", invoice.discountValue.ToString());
-                if (invoice.discountType == "2")
+           
                 {
                     if (isArabic)
                     {
-                        invbody = invbody.Replace("[[invoicediscount]]", "% " + repm.DecTostring(invoice.discountValue));
+                        invbody = invbody.Replace("[[invoicediscount]]", CountryPackageDateModel.currency + " " + repm.DecTostring(payoprow.discountValue));
                     }
                     else
                     {
-                        invbody = invbody.Replace("[[invoicediscount]]", repm.DecTostring(invoice.discountValue) + " %");
-                    }
-
-                }
-                else
-                {
-                    if (isArabic)
-                    {
-                        invbody = invbody.Replace("[[invoicediscount]]", MainWindow.Currency + " " + repm.DecTostring(invoice.discountValue));
-                    }
-                    else
-                    {
-                        invbody = invbody.Replace("[[invoicediscount]]", repm.DecTostring(invoice.discountValue) + " " + MainWindow.Currency);
+                        invbody = invbody.Replace("[[invoicediscount]]", repm.DecTostring(payoprow.discountValue) + " " + CountryPackageDateModel.currency);
                     }
 
                 }
 
                 //invbody = invbody.Replace("[[invoicetax]]", invoice.tax.ToString());
-                if (invoice.tax == 0 || invoice.tax == null)
-                {
-                    invbody = invbody.Replace("[[invoicetax]]", repm.DecTostring(invoice.tax));
-                    invbody = invbody.Replace("[[trinvoicetax]]", MainWindow.resourcemanagerreport.GetString("trTax").Trim());
-                    invbody = invbody.Replace("[[taxdiv]]", "");
-                }
-                else
-                {
-
-                    taxdiv = taxdiv.Replace("[[invoicetax]]", repm.DecTostring(invoice.tax));
-                    taxdiv = taxdiv.Replace("[[trinvoicetax]]", MainWindow.resourcemanagerreport.GetString("trTax").Trim());
-                    invbody = invbody.Replace("[[taxdiv]]", taxdiv);
-                }
+            
                 //shipping cost section
-                if ((invoice.invType == "s" || invoice.invType == "or" || invoice.invType == "q" || invoice.invType == "qs" || invoice.invType == "ors"))
-                {
-                    if (invoice.shippingCost > 0)
-                    {
-                        deliverydiv = deliverydiv.Replace("[[shippingcost]]", repm.DecTostring(invoice.shippingCost));
-                        deliverydiv = deliverydiv.Replace("[[totaldeserved]]", repm.DecTostring(invoice.totalNet));
-
-                        invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet - invoice.shippingCost));
-                        invbody = invbody.Replace("[[deliverydiv]]", deliverydiv);
-                    }
-                    else
-                    {
-                        invbody = invbody.Replace("[[deliverydiv]]", "");
-                        invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet));
-                    }
-                }
-                else
-                {
-                    invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet));
-                    invbody = invbody.Replace("[[deliverydiv]]", "");
-
-                }
+               
                 // end shippingcost
 
             }
 
             //  invoiceItems.trQuantity trQTR
-
-            invitemtable = invitemtable.Replace("[[tritems]]", MainWindow.resourcemanagerreport.GetString("trItem").Trim());
-            invitemtable = invitemtable.Replace("[[trunit]]", MainWindow.resourcemanagerreport.GetString("trUnit").Trim());
+            // table header
+            invitemtable = invitemtable.Replace("[[trsoftware]]", MainWindow.resourcemanagerreport.GetString("trSoftware").Trim());
+    
             invitemtable = invitemtable.Replace("[[trprice]]", MainWindow.resourcemanagerreport.GetString("trPrice").Trim());
-            invitemtable = invitemtable.Replace("[[trquantity]]", MainWindow.resourcemanagerreport.GetString("trQTR").Trim());
-            invitemtable = invitemtable.Replace("[[trtotalrow]]", MainWindow.resourcemanagerreport.GetString("trTotal").Trim());
+            
+      
 
 
-            invbody = invbody.Replace("[[trinvoicecode]]", MainWindow.resourcemanagerreport.GetString("trInvoiceNumber").Trim() + ": ");
-            invbody = invbody.Replace("[[trinvoicedate]]", MainWindow.resourcemanagerreport.GetString("trDate").Trim() + ": ");
+            invbody = invbody.Replace("[[trcustomer]]", MainWindow.resourcemanagerreport.GetString("trCustomer").Trim() + ": ");
+            invbody = invbody.Replace("[[tragent]]", MainWindow.resourcemanagerreport.GetString("trAgent").Trim() + ": ");
+            invbody = invbody.Replace("[[customercompany]]", cumstomerModel.company.Trim());
+            invbody = invbody.Replace("[[agent]]", FillCombo.AgentNameConv(agentmodel));
 
-            // invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim() + ": ");
+            invbody = invbody.Replace("[[trbooknum]]", MainWindow.resourcemanagerreport.GetString("trBookNum").Trim() + ": ");
+            invbody = invbody.Replace("[[trexpirationdate]]", MainWindow.resourcemanagerreport.GetString("trExpirationDate").Trim() + ": ");
+            invbody = invbody.Replace("[[booknum]]", pacuser.packageNumber);
+            invbody = invbody.Replace("[[expirationdate]]", FillCombo.DateConvert(payoprow.expireDate));
+            // MainWindow.resourcemanagerreport.GetString("trBookDate").Trim() + ": ";
+       
+           // invbody = invbody.Replace("[[invoicedate]]", repm.DateToString(payoprow.createDate));
+            invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(payoprow.totalnet));//////////////
+
+
 
             invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim());
-            invbody = invbody.Replace("[[currency]]", MainWindow.Currency);
+            invbody = invbody.Replace("[[currency]]", CountryPackageDateModel.currency);
             //
 
             invbody = invbody.Replace("[[trinvoicediscount]]", MainWindow.resourcemanagerreport.GetString("trDiscount").Trim());
@@ -708,21 +619,20 @@ namespace AdministratorApp.Classes
             //  invitemtable
             // foreach
             string datarows = "";
-            foreach (ItemTransfer row in invoiceItems)
-            {
+            //foreach (ItemTransfer row in invoiceItems)
+            //{
                 string rowhtml = invitemrow;
-                row.price = decimal.Parse(SectionData.DecTostring(row.price));
-                rowhtml = rowhtml.Replace("[[col1]]", row.itemName.Trim());
-                rowhtml = rowhtml.Replace("[[col2]]", row.unitName.Trim());
-                rowhtml = rowhtml.Replace("[[col3]]", row.price.ToString());
-                rowhtml = rowhtml.Replace("[[col4]]", row.quantity.ToString());
+               // row.price = decimal.Parse(HelpClass.DecTostring(payoprow.price));
+                rowhtml = rowhtml.Replace("[[col1]]", PackagesModel.programName+" "+ PackagesModel.verName);
+                rowhtml = rowhtml.Replace("[[col2]]", HelpClass.DecTostring(payoprow.Price));
+             
 
-                rowhtml = rowhtml.Replace("[[col5]]", (row.quantity * row.price).ToString());
+            
                 //     rowhtml = rowhtml.Replace("[[col4]]", (row.quantity * row.price).ToString());
 
-                datarows += rowhtml;
+              datarows += rowhtml;
 
-            }
+            //}
             invitemtable = invitemtable.Replace("[[invitemrow]]", datarows);
             // end foreach
 

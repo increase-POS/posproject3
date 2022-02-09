@@ -769,7 +769,7 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("trNotes", MainWindow.resourcemanagerreport.GetString("trTerms")));
 
             paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));
-            paramarr.Add(new ReportParameter("Agent", AgentNameConv(agentmodel)));
+            paramarr.Add(new ReportParameter("Agent",FillCombo.AgentNameConv(agentmodel)));
             paramarr.Add(new ReportParameter("Customer", cumstomerModel.company));
             paramarr.Add(new ReportParameter("ServerState",""));
             paramarr.Add(new ReportParameter("Period", PeriodConv(CountryPackageDateModel)));
@@ -777,7 +777,7 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));
             paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString() +" "+ CountryPackageDateModel.currency));
             paramarr.Add(new ReportParameter("Status", serverActiveConv(packUserRep.isActive)));
-            paramarr.Add(new ReportParameter("ExpirationDate",DateConvert(PayOpModel.expireDate)));
+            paramarr.Add(new ReportParameter("ExpirationDate",FillCombo.DateConvert(PayOpModel.expireDate)));
           //  paramarr.Add(new ReportParameter("Active", ));
             paramarr.Add(new ReportParameter("Program", PackagesModel.programName));
             paramarr.Add(new ReportParameter("Version", PackagesModel.verName));
@@ -795,13 +795,7 @@ namespace AdministratorApp.View.sales
           
             paramarr.Add(new ReportParameter("Notes", terms.value));
         }
-        public string AgentNameConv(Users userModel)
-        {
-            if (userModel.userId == 3)
-                return "Increase";
-            else
-                return userModel.name + " " + userModel.lastName;
-        }
+     
 
 
 
@@ -836,30 +830,7 @@ namespace AdministratorApp.View.sales
             return period;
         }
 
-        public string  DateConvert(DateTime? date)
-        {
-            DateTime datetemp;
-
-            if (date is DateTime)
-                date = (DateTime)date;
-            else return date.ToString();
-
-            datetemp = DateTime.Parse(date.ToString());
-            switch (MainWindow.dateFormat)
-            {
-                case "ShortDatePattern":
-                    return datetemp.ToString(@"dd/MM/yyyy");
-                case "LongDatePattern":
-                    return datetemp.ToString(@"dddd, MMMM d, yyyy");
-                case "MonthDayPattern":
-                    return datetemp.ToString(@"MMMM dd");
-                case "YearMonthPattern":
-                    return datetemp.ToString(@"MMMM yyyy");
-                default:
-                    return datetemp.ToString(@"dd/MM/yyyy");
-            }
-
-        }
+     
 
         public string serverActiveationTypeConv(bool? isOnlineServer)
         {
