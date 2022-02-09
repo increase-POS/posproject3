@@ -128,19 +128,22 @@
                                                             IsEditable="True"
                                                             
                                                             SelectionChanged="Cb_customers_SelectionChanged"/>-->
+
+                                                <!--ItemsSource="{Binding customers}"
+                                                    SelectedItem="{Binding company}"
+                                                    SelectedValue="{Binding custId}"-->
+                                                
                                                 <dotNetKitControls:AutoCompleteComboBox   
-                                        x:Name="cb_customers" Padding="10,5,5,5"  Grid.Column="0"
-                                        TextBlock.Foreground="#4E4E4E"    Margin="4,0"
-                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                                        materialDesign:HintAssist.Hint="Customer..."    
-                                        VerticalAlignment="Top" BorderThickness="0" Height="40" 
+                                                    x:Name="cb_customers" Padding="10,5,5,5"  Grid.Column="0"
+                                                    TextBlock.Foreground="#4E4E4E"    Margin="4,0"
+                                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                                    materialDesign:HintAssist.Hint="Customer..."    
+                                                    VerticalAlignment="Top" BorderThickness="0" Height="40" 
                                         
-                                        SelectedValuePath="custId"
-                                        TextSearch.TextPath="company"
-                                        ItemsSource="{Binding customers}"
-                                        SelectedItem="{Binding company}"
-                                        SelectedValue="{Binding custId}"
-                                        >
+                                                    SelectedValuePath="custId"
+                                                    TextSearch.TextPath="company"
+                                                  
+                                                    SelectionChanged="Cb_customers_SelectionChanged">
                                                     <dotNetKitControls:AutoCompleteComboBox.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <VirtualizingStackPanel />

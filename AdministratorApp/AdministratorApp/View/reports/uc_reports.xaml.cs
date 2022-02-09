@@ -81,7 +81,7 @@ namespace AdministratorApp.View.reports
 
         private void translate()
         {
-            btn_book.Content = MainWindow.resourcemanager.GetString("trBook");
+            btn_book.Content = MainWindow.resourcemanager.GetString("trBookings");
             btn_payments.Content = MainWindow.resourcemanager.GetString("trPayments");
         }
 
