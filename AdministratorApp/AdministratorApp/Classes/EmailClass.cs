@@ -439,16 +439,16 @@ namespace AdministratorApp.Classes
             {
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invheader.tmp");
                 invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invfooter.tmp");
-                deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\deliverydiv.tmp");
+              //  deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\deliverydiv.tmp");
                 
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invbody.tmp");
                     invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemtable.tmp");
                     invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemrow.tmp");
 
-                    paytable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\paytable.tmp");
-                    payrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\payrow.tmp");
-                    taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\taxdiv.tmp");
+                //    paytable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\paytable.tmp");
+                //    payrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\payrow.tmp");
+                 //   taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\taxdiv.tmp");
 
 
                 }
@@ -459,7 +459,7 @@ namespace AdministratorApp.Classes
 
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invheader.tmp");
                 invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invfooter.tmp");
-                deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\deliverydiv.tmp");
+              //  deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\deliverydiv.tmp");
                 
                 {
 
@@ -467,10 +467,10 @@ namespace AdministratorApp.Classes
                     invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemtable.tmp");
                     invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemrow.tmp");
 
-                    paytable = repm.ReadFile(@"EmailTemplates\saletemplate\en\paytable.tmp");
-                    payrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\payrow.tmp");
+                    //paytable = repm.ReadFile(@"EmailTemplates\saletemplate\en\paytable.tmp");
+                    //payrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\payrow.tmp");
 
-                    taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\taxdiv.tmp");
+                    //taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\taxdiv.tmp");
                 }
             
             }
@@ -511,8 +511,8 @@ namespace AdministratorApp.Classes
 
                     //sumP = reportclass.DecTostring(sump);
                     //deservedcash = reportclass.DecTostring(deservd);
-                    invbody = invbody.Replace("[[payedsum]]", sumP);
-                    invbody = invbody.Replace("[[deservedcash]]", deservedcash);
+                    //invbody = invbody.Replace("[[payedsum]]", sumP);
+                    //invbody = invbody.Replace("[[deservedcash]]", deservedcash);
                     //  paytable
                     // foreach
                     //string datapayrows = "";
@@ -577,7 +577,7 @@ namespace AdministratorApp.Classes
 
 
 
-            invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim());
+           // invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim());
             invbody = invbody.Replace("[[currency]]", CountryPackageDateModel.currency);
             //
 
@@ -688,7 +688,245 @@ namespace AdministratorApp.Classes
 
         }
 
+        public EmailClass fillUpgradeTempData(PackageUser packUserRep, PayOp PayOpModel, CountryPackageDate CountryPackageDateModel, Packages PackagesModel, Users agentmodel, SysEmails email, Customers cumstomerModel, List<SetValues> setvlist, SetValues terms)
+        {
+            //packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist)
+            string invheader = "";
+            string invfooter = "";
+            string invbody = "";
+            string invitemtable = "";
+            string invitemrow = "";
+            string paytable = "";
+            string payrow = "";
+            string taxdiv = "";
+            string deliverydiv = "";
 
+            //payrow.tmp
+            //    paytable.tmp
+            EmailClass mailtosend = new EmailClass();
+            ReportCls reportclass = new ReportCls();
+
+            mailtosend.from = email.email;
+            mailtosend.smtpclient = email.smtpClient;
+            mailtosend.port = (int)email.port;
+
+            mailtosend.password = Encoding.UTF8.GetString(Convert.FromBase64String(email.password));
+            mailtosend.isSSl = (bool)email.isSSL;
+            mailtosend.AddTolist(cumstomerModel.email);
+
+
+
+            string cashTr = "";
+            string sumP = "";
+            string deservedcash = "";
+
+            // data
+            ReportCls repm = new ReportCls();
+            List<MailimageClass> imgs = new List<MailimageClass>();
+            MailimageClass img = new MailimageClass();
+
+
+
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invheader.tmp");
+                invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invfooter.tmp");
+                //  deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\deliverydiv.tmp");
+
+                {
+                    invbody = repm.ReadFile(@"EmailTemplates\upgradetmplate\ar\invbody.tmp");
+                    invitemtable = repm.ReadFile(@"EmailTemplates\upgradetmplate\ar\invitemtable.tmp");
+                    invitemrow = repm.ReadFile(@"EmailTemplates\upgradetmplate\ar\invitemrow.tmp");
+
+                }
+
+            }
+            else
+            { // en
+
+                invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invheader.tmp");
+                invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invfooter.tmp");
+                //  deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\deliverydiv.tmp");
+
+                {
+
+                    invbody = repm.ReadFile(@"EmailTemplates\upgradetmplate\en\invbody.tmp");
+                    invitemtable = repm.ReadFile(@"EmailTemplates\upgradetmplate\en\invitemtable.tmp");
+
+                }
+
+            }
+
+            //header info
+
+            invheader = invheader.Replace("[[companyname]]", FillCombo.companyName.Trim());
+            invheader = invheader.Replace("[[phone]]", FillCombo.Phone.Trim());
+            invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
+            invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
+            invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
+            invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
+            invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
+            invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
+
+            //BODY
+
+            // string title = "Purchase Order";
+            string title = setvlist.Where(x => x.notes == "title").FirstOrDefault() is null ? ""
+                : setvlist.Where(x => x.notes == "title").FirstOrDefault().value.ToString();
+            mailtosend.subject = title.Trim();
+            invheader = invheader.Replace("[[title]]", title.Trim());
+
+            invbody = invbody.Replace("[[thankstitle]]", title);
+            //   string thankstext = "Please provide to us,with a price list,along with your terms and conditions of sale, applicable discounts, shipping dates and additional sales and corporate policies. Should the information you provide be acceptable and competitive. ";
+            string thankstext = setvlist.Where(x => x.notes == "text1").FirstOrDefault() is null ? ""
+                  : setvlist.Where(x => x.notes == "text1").FirstOrDefault().value.ToString();
+            invbody = invbody.Replace("[[thankstext]]", thankstext);
+
+      
+            invbody = invbody.Replace("[[trcustomer]]", MainWindow.resourcemanagerreport.GetString("trCustomer").Trim() + ": ");
+            invbody = invbody.Replace("[[tragent]]", MainWindow.resourcemanagerreport.GetString("trAgent").Trim() + ": ");
+            invbody = invbody.Replace("[[customercompany]]", cumstomerModel.company.Trim());
+            invbody = invbody.Replace("[[agent]]", FillCombo.AgentNameConv(agentmodel));
+
+            invbody = invbody.Replace("[[trbooknum]]", MainWindow.resourcemanagerreport.GetString("trBookNum").Trim() + ": ");
+            invbody = invbody.Replace("[[trexpirationdate]]", MainWindow.resourcemanagerreport.GetString("trExpirationDate").Trim() + ": ");
+            invbody = invbody.Replace("[[booknum]]", packUserRep.packageNumber);
+            invbody = invbody.Replace("[[expirationdate]]", FillCombo.DateConvert(PayOpModel.expireDate));
+ 
+            // invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim());
+            invbody = invbody.Replace("[[currency]]", CountryPackageDateModel.currency);
+
+
+            // invitemtable file
+        invitemtable=  Fillpackdetails( packUserRep,  PayOpModel,  CountryPackageDateModel,   PackagesModel,  agentmodel,  cumstomerModel,invitemtable,   terms);
+
+            // string invoicenote = "Thank you for your cooperation. We have also enclosed our procurement specifications and conditions for your review <br/> Sincerely";
+            string invoicenote = setvlist.Where(x => x.notes == "text2").FirstOrDefault() is null ? ""
+                : setvlist.Where(x => x.notes == "text2").FirstOrDefault().value.ToString();
+            invbody = invbody.Replace("[[invoicenote]]", invoicenote);
+            string link1 = setvlist.Where(x => x.notes == "link1text").FirstOrDefault() is null ? ""
+                : setvlist.Where(x => x.notes == "link1text").FirstOrDefault().value.ToString();
+
+            string link2 = setvlist.Where(x => x.notes == "link2text").FirstOrDefault() is null ? ""
+                 : setvlist.Where(x => x.notes == "link2text").FirstOrDefault().value.ToString();
+            string link3 = setvlist.Where(x => x.notes == "link3text").FirstOrDefault() is null ? ""
+                : setvlist.Where(x => x.notes == "link3text").FirstOrDefault().value.ToString();
+
+            invfooter = invfooter.Replace("[[support]]", link1);
+            invfooter = invfooter.Replace("[[returnpolicy]]", link2);
+            invfooter = invfooter.Replace("[[aboutus]]", link3);
+            string link1url = setvlist.Where(x => x.notes == "link1url").FirstOrDefault() is null ? ""
+                       : setvlist.Where(x => x.notes == "link1url").FirstOrDefault().value.ToString();
+            string link2url = setvlist.Where(x => x.notes == "link2url").FirstOrDefault() is null ? ""
+                       : setvlist.Where(x => x.notes == "link2url").FirstOrDefault().value.ToString();
+            string link3url = setvlist.Where(x => x.notes == "link3url").FirstOrDefault() is null ? ""
+                       : setvlist.Where(x => x.notes == "link3url").FirstOrDefault().value.ToString();
+
+            invfooter = invfooter.Replace("[[supporturl]]", link1url);
+            invfooter = invfooter.Replace("[[returnpolicyurl]]", link2url);
+            invfooter = invfooter.Replace("[[aboutusurl]]", link3url);
+
+            invfooter = invfooter.Replace("[[year]]", DateTime.Now.Year.ToString());
+
+            invbody = invbody.Replace("[[invitemtable]]", invitemtable);
+
+            string mailbody = invheader + invbody + invfooter;
+
+
+
+            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(mailbody, null, "text/html");
+            string testpath = repm.GetPath(@"EmailTemplates\mail.html");
+            //
+            if (!File.Exists(testpath))
+            {
+                // Create a file to write to.
+                string createText = mailbody;
+                File.WriteAllText(testpath, createText);
+            }
+            else
+            {
+                File.Delete(testpath);
+                // Create a file to write to.
+                string createText = mailbody;
+                File.WriteAllText(testpath, createText);
+            }
+
+
+
+            img.path = repm.GetLogoImagePath();
+            img.imageId = "logo";
+            imgs.Add(img);
+
+            img = new MailimageClass();
+
+            img.path = repm.GetPath(@"EmailTemplates\images\bookimg.gif");
+
+            img.imageId = "image-2";
+            imgs.Add(img);
+
+            foreach (MailimageClass row in imgs)
+            {
+                htmlView.LinkedResources.Add(mailtosend.Linkimage(@row.path, row.imageId));
+            }
+
+            // 
+
+            mailtosend.htmlView = htmlView;
+
+
+            return mailtosend;
+
+
+
+
+        }
+
+        public string Fillpackdetails(PackageUser packUserRep, PayOp PayOpModel, CountryPackageDate CountryPackageDateModel, Packages PackagesModel, Users agentmodel,  Customers cumstomerModel, string htmltemp, SetValues terms)
+        {
+
+             htmltemp = htmltemp.Replace("[[trpackagedetails]]", MainWindow.resourcemanagerreport.GetString("trPackageDetails"));
+             htmltemp = htmltemp.Replace("[[trprogramdetails]]", MainWindow.resourcemanagerreport.GetString("trProgramDetails"));
+             htmltemp = htmltemp.Replace("[[trcode]]", MainWindow.resourcemanagerreport.GetString("trCode"));
+             htmltemp = htmltemp.Replace("[[code]]", PackagesModel.packageCode);
+             htmltemp = htmltemp.Replace("[[trprogram]]", MainWindow.resourcemanagerreport.GetString("trProgram"));
+             htmltemp = htmltemp.Replace("[[program]]", PackagesModel.programName);
+             htmltemp = htmltemp.Replace("[[trname]]", MainWindow.resourcemanagerreport.GetString("trName"));
+             htmltemp = htmltemp.Replace("[[name]]", PackagesModel.packageName);
+             htmltemp = htmltemp.Replace("[[trversion]]", MainWindow.resourcemanagerreport.GetString("trVersion"));
+             htmltemp = htmltemp.Replace("[[version]]", PackagesModel.verName);
+             htmltemp = htmltemp.Replace("[[trprice]]", MainWindow.resourcemanagerreport.GetString("trPrice"));
+             htmltemp = htmltemp.Replace("[[price]]", CountryPackageDateModel.price.ToString());
+             htmltemp = htmltemp.Replace("[[trstatus]]", MainWindow.resourcemanagerreport.GetString("trStatus"));
+             htmltemp = htmltemp.Replace("[[status]]", FillCombo.serverActiveConv(packUserRep.isActive));
+             htmltemp = htmltemp.Replace("[[trperiod]]", MainWindow.resourcemanagerreport.GetString("trPeriod"));
+             htmltemp = htmltemp.Replace("[[period]]", FillCombo.PeriodConv(CountryPackageDateModel));
+             htmltemp = htmltemp.Replace("[[tractivationtype]]", MainWindow.resourcemanagerreport.GetString("trActivationType"));
+             htmltemp = htmltemp.Replace("[[activationtype]]", FillCombo.serverActiveationTypeConv(packUserRep.isOnlineServer));
+             htmltemp = htmltemp.Replace("[[trpackagelimits]]", MainWindow.resourcemanagerreport.GetString("trPackageLimits"));
+             htmltemp = htmltemp.Replace("[[trbranches]]", MainWindow.resourcemanagerreport.GetString("trBranches"));
+             htmltemp = htmltemp.Replace("[[branches]]", FillCombo.UnlimitedConvert(PackagesModel.branchCount));
+             htmltemp = htmltemp.Replace("[[trstores]]", MainWindow.resourcemanagerreport.GetString("trStores"));
+             htmltemp = htmltemp.Replace("[[stores]]", FillCombo.UnlimitedConvert(PackagesModel.storeCount));
+
+             htmltemp = htmltemp.Replace("[[trusers]]", MainWindow.resourcemanagerreport.GetString("trUsers"));
+             htmltemp = htmltemp.Replace("[[users]]", FillCombo.UnlimitedConvert(PackagesModel.userCount));
+             htmltemp = htmltemp.Replace("[[trposs]]", MainWindow.resourcemanagerreport.GetString("trPOSs"));
+             htmltemp = htmltemp.Replace("[[poss]]", FillCombo.UnlimitedConvert(PackagesModel.posCount));
+             htmltemp = htmltemp.Replace("[[trcustomers]]", MainWindow.resourcemanagerreport.GetString("trCustomers"));
+             htmltemp = htmltemp.Replace("[[customers]]", FillCombo.UnlimitedConvert(PackagesModel.customerCount));
+             htmltemp = htmltemp.Replace("[[trvendors]]", MainWindow.resourcemanagerreport.GetString("trVendors"));
+             htmltemp = htmltemp.Replace("[[vendors]]", FillCombo.UnlimitedConvert(PackagesModel.vendorCount));
+             htmltemp = htmltemp.Replace("[[trinvoices]]", MainWindow.resourcemanagerreport.GetString("trInvoices"));
+             htmltemp = htmltemp.Replace("[[invoices]]", FillCombo.UnlimitedConvert(PackagesModel.salesInvCount));
+             htmltemp = htmltemp.Replace("[[tritems]]", MainWindow.resourcemanagerreport.GetString("trItems"));
+             htmltemp = htmltemp.Replace("[[items]]", FillCombo.UnlimitedConvert(PackagesModel.itemCount));
+             htmltemp = htmltemp.Replace("[[trterms]]", MainWindow.resourcemanagerreport.GetString("trTerms"));
+             htmltemp = htmltemp.Replace("[[terms]]", terms.value);
+            htmltemp = htmltemp.Replace("[[currency]]", CountryPackageDateModel.currency);
+
+            return htmltemp;
+        }
         //public EmailClass fillRequirdTempData(string total, string emailto, SysEmails email, List<SetValues> setvlist)
         //{// 
         //    string invheader = "";

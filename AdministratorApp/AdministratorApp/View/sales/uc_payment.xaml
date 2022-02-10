@@ -517,17 +517,12 @@
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="pay" Click="Btn_pay_Click" 
                         />
-           <Button Grid.Column="0" Grid.Row="1" 
+           <Button x:Name="btn_email_test" Grid.Column="0" Grid.Row="1" 
                         materialDesign:ButtonAssist.CornerRadius="10"   
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="Email" Click="Btn_email_Click" 
                         />
             </Grid>
         </Grid>
-        <Button Grid.Row="0" x:Name="btn_email"  
-            materialDesign:ButtonAssist.CornerRadius="10"   
-            Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
-            Margin="345,14,97,744"    Content="Email" Click="Btn_email_Click" Height="50" 
-                        />
     </Grid>
 </UserControl>

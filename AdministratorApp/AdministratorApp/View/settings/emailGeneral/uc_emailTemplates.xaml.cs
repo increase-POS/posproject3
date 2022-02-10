@@ -330,6 +330,12 @@ namespace AdministratorApp.View.settings.emailGeneral
                     case "required_email_temp":
                         row.trName = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
                         break;
+                    case "upgrade_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trBookingEmailTemplate");
+                        break;
+                    default:
+                        row.trName = row.name;
+                        break;
 
                 }
             }

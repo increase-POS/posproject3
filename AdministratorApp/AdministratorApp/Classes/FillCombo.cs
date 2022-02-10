@@ -547,6 +547,60 @@ namespace AdministratorApp.Classes
             }
 
         }
+
+
+        public static string serverActiveConv(int? isActive)
+        {
+            string value = "";
+            if (isActive == 1)
+                value = MainWindow.resourcemanagerreport.GetString("trValid");
+            else
+                value = MainWindow.resourcemanagerreport.GetString("trInValid");
+
+            return value;
+        }
+
+        public static string PeriodConv(CountryPackageDate CountryPackageDateModel)
+        {
+            string period = "";
+            int monthCount = int.Parse(CountryPackageDateModel.monthCount.ToString());
+            bool islimitDate = bool.Parse(CountryPackageDateModel.islimitDate.ToString());
+            if (!islimitDate)
+                period = MainWindow.resourcemanager.GetString("trUnLimited");
+            else
+            {
+                switch (monthCount)
+                {
+                    case 1: period = MainWindow.resourcemanagerreport.GetString("trOneMonth"); break;
+                    case 3: period = MainWindow.resourcemanagerreport.GetString("trThreeMonth"); break;
+                    case 6: period = MainWindow.resourcemanagerreport.GetString("trSixMonth"); break;
+                    case 12: period = MainWindow.resourcemanagerreport.GetString("trTwelveMonth"); break;
+                }
+            }
+            return period;
+        }
+
+
+
+        public static string serverActiveationTypeConv(bool? isOnlineServer)
+        {
+            string value = "";
+            if (isOnlineServer == true)
+                value = MainWindow.resourcemanagerreport.GetString("trOnline");
+            else
+                value = MainWindow.resourcemanagerreport.GetString("trOffline");
+
+            return value;
+        }
+        public static string UnlimitedConvert(int count)
+        {
+            string value = "";
+            if (count == -1)
+                value = MainWindow.resourcemanagerreport.GetString("trUnLimited");
+            else
+                value = count.ToString();
+            return value;
+        }
         #endregion
         #region email
 

@@ -9,23 +9,21 @@
     </div>
     <div class="inv-code" style="color: #47484b; padding: 10px; margin: 0;">
       <div style="float: left; width: 60%;">
-      <p style="font-family: 'Open Sans',sans-serif; font-size: 14px; font-weight: bold; padding: 0; margin: 0;">[[trinvoicecode]]  <span style="font-weight: normal; color: #7d7d7d;">[[invoicecode]]</span></p>
+      <p style="font-family: 'Open Sans',sans-serif; font-size: 14px; font-weight: bold; padding: 0; margin-bottom: 5px;">[[trcustomer]]  <span style="font-weight: normal; color: #7d7d7d;">[[customercompany]]</span></p>
+      <p style="font-family: 'Open Sans',sans-serif; font-size: 14px; font-weight: bold;padding: 0; margin: 0;">[[tragent]]  <span style="font-weight: normal; color: #7d7d7d;">[[agent]]</span></p>
       </div>
      <div style="float: left; width: 40%;">
-        <p style="font-family: 'Open Sans',sans-serif; font-size: 14px; font-weight: bold; padding: 0; margin: 0;">[[trinvoicedate]]<span style="font-weight: normal; color: #7d7d7d;">[[invoicedate]]</span></p>
-      </div>
+        <p style="font-family: 'Open Sans',sans-serif; font-size: 14px; font-weight: bold; padding: 0; margin-bottom: 8px;">[[trbooknum]]<span style="font-weight: normal; color: #7d7d7d;">[[booknum]]</span></p>
+        <p style="font-family: 'Open Sans',sans-serif; font-size: 14px; font-weight: bold; padding:0; margin: 0;">[[trexpirationdate]]<span style="font-weight: normal; color: #7d7d7d;">[[expirationdate]]</span></p>
+
+     </div>
     </div>
 [[invitemtable]]
     <div style="clear: both;"></div>
-[[paytable]]
-      <div class="inv-details" style="width: 50%; float: left; padding: 10px;">
+
+      <div class="inv-details" style="width: 50%; float: right; padding: 10px;">
       <div class="d-container" style="text-align: center; font-family:'Open Sans',sans-serif; font-size: 14px; font-weight: bold; color: #47484b;">
-        <div class="inv-total">
-          <div style="float: left; text-align: left; padding: 10px;"></div>
-          <div style="float: left; text-align: left;">
-            <p style="font-family:'Open Sans',sans-serif; font-size: 18px; font-weight: bold; color: #47484b;">[[trinvoicetotal]]: <span style="font-size: 14px; font-weight: normal; color: #47484b;">[[invoicetotal]]  [[currency]]</span></p>
-          </div>
-        </div>
+       
         <div style="clear: both;"></div>
         <div class="inv-Discount">
           <div style="float: left; text-align: left; padding: 10px;"></div>
@@ -33,23 +31,21 @@
             <p style="font-family:'Open Sans',sans-serif; font-size: 18px; font-weight: bold; color: #47484b;">[[trinvoicediscount]]: <span style="font-size: 14px; font-weight: normal; color: #47484b;">[[invoicediscount]]</span></p>
           </div>
         </div>	
-		[[taxdiv]]
+ 
       </div>
     </div>
     <div style="clear: both;"></div>
 	<div class="payments" style="width: 50%; float: left; padding: 10px;">
       <div class="d-container" style="font-family:'Open Sans',sans-serif; font-size: 14px; font-weight: bold; color: #47484b;">
         <div class="h-payed">
-          <h2 style="text-decoration: underline; margin-bottom: 3px; color: #47484b;">Paid:</h2>
-          <span style="font-size: 14px; font-weight: normal; color: #47484b;">[[payedsum]] [[currency]]</span>
+          <h2 style="text-decoration: underline; margin-bottom: 5px; color: #47484b;">Paid:</h2>
+          <span style="font-size: 14px; font-weight: normal; color: #47484b;">[[totalnet]] [[currency]]</span>
         </div>
         <div style="clear: both;"></div>
-        <div class="h-deserved">
-          <h2 style="text-decoration: underline; margin-bottom: 3px; color: #47484b;">Unpaid:</h2>
-          <span style="font-size: 14px; font-weight: normal; color: #47484b;">[[deservedcash]] [[currency]]</span>
-        </div>
+     
       </div>
     </div>
+
     <div class="inv-total-net" style="width: 50%; float: left; padding: 10px;">
       <div class="d-container" style="border-top: 2px solid #7d7d7d; text-align: center; font-family:'Open Sans',sans-serif; font-size: 14px; font-weight: bold; color: #47484b;">
         <div style="float: left; text-align: left; padding: 10px;"></div>
@@ -57,7 +53,6 @@
           <p style="font-family:'Open Sans',sans-serif; font-size: 22px; font-weight: bold; color: #47484b;">[[trtotalnet]]: <span style="font-size: 18px; font-weight: normal; color: #47484b;">[[totalnet]]  [[currency]]</span></p>
         </div>
       </div>
-	  [[deliverydiv]]
     </div><div style="clear: both;"></div>
     <div class="inv-note" style="width: 100%; float: left; padding: 10px; margin-top: 30px;">
       <p style="text-align: center; font-family:'Open Sans',sans-serif; font-size: 14px; color: #47484b; margin: auto; width: 80%; margin-bottom: 30px;">[[invoicenote]]</p>  

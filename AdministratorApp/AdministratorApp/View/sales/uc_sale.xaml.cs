@@ -772,24 +772,24 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Agent",FillCombo.AgentNameConv(agentmodel)));
             paramarr.Add(new ReportParameter("Customer", cumstomerModel.company));
             paramarr.Add(new ReportParameter("ServerState",""));
-            paramarr.Add(new ReportParameter("Period", PeriodConv(CountryPackageDateModel)));
+            paramarr.Add(new ReportParameter("Period", FillCombo.PeriodConv(CountryPackageDateModel)));
             paramarr.Add(new ReportParameter("Code", PackagesModel.packageCode));
             paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));
             paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString() +" "+ CountryPackageDateModel.currency));
-            paramarr.Add(new ReportParameter("Status", serverActiveConv(packUserRep.isActive)));
+            paramarr.Add(new ReportParameter("Status", FillCombo.serverActiveConv(packUserRep.isActive)));
             paramarr.Add(new ReportParameter("ExpirationDate",FillCombo.DateConvert(PayOpModel.expireDate)));
           //  paramarr.Add(new ReportParameter("Active", ));
             paramarr.Add(new ReportParameter("Program", PackagesModel.programName));
             paramarr.Add(new ReportParameter("Version", PackagesModel.verName));
-            paramarr.Add(new ReportParameter("Branches", UnlimitedConvert(PackagesModel.branchCount)));
-            paramarr.Add(new ReportParameter("Users", UnlimitedConvert(PackagesModel.userCount)));
-            paramarr.Add(new ReportParameter("Customers", UnlimitedConvert(PackagesModel.customerCount)));
-            paramarr.Add(new ReportParameter("Invoices", UnlimitedConvert(PackagesModel.salesInvCount)));
-            paramarr.Add(new ReportParameter("Stores", UnlimitedConvert(PackagesModel.storeCount)));
-            paramarr.Add(new ReportParameter("POSs", UnlimitedConvert(PackagesModel.posCount)));
-            paramarr.Add(new ReportParameter("Vendors", UnlimitedConvert(PackagesModel.vendorCount)));
-            paramarr.Add(new ReportParameter("Items", UnlimitedConvert(PackagesModel.itemCount)));
-            paramarr.Add(new ReportParameter("OfflineActivation", serverActiveationTypeConv(packUserRep.isOnlineServer)));
+            paramarr.Add(new ReportParameter("Branches", FillCombo.UnlimitedConvert(PackagesModel.branchCount)));
+            paramarr.Add(new ReportParameter("Users", FillCombo.UnlimitedConvert(PackagesModel.userCount)));
+            paramarr.Add(new ReportParameter("Customers", FillCombo.UnlimitedConvert(PackagesModel.customerCount)));
+            paramarr.Add(new ReportParameter("Invoices", FillCombo.UnlimitedConvert(PackagesModel.salesInvCount)));
+            paramarr.Add(new ReportParameter("Stores", FillCombo.UnlimitedConvert(PackagesModel.storeCount)));
+            paramarr.Add(new ReportParameter("POSs", FillCombo.UnlimitedConvert(PackagesModel.posCount)));
+            paramarr.Add(new ReportParameter("Vendors", FillCombo.UnlimitedConvert(PackagesModel.vendorCount)));
+            paramarr.Add(new ReportParameter("Items", FillCombo.UnlimitedConvert(PackagesModel.itemCount)));
+            paramarr.Add(new ReportParameter("OfflineActivation", FillCombo.serverActiveationTypeConv(packUserRep.isOnlineServer)));
             paramarr.Add(new ReportParameter("ChangeDevice", ""));
             //trTerms
           
@@ -799,58 +799,6 @@ namespace AdministratorApp.View.sales
 
 
 
-        public string serverActiveConv(int? isActive)
-        {
-            string value = "";
-            if (isActive == 1)
-                value = MainWindow.resourcemanagerreport.GetString("trValid");
-            else
-                value = MainWindow.resourcemanagerreport.GetString("trInValid");
-
-            return value;
-        }
-
-        public string PeriodConv(CountryPackageDate CountryPackageDateModel)
-        {
-            string period = "";
-            int monthCount = int.Parse(CountryPackageDateModel.monthCount.ToString());
-            bool islimitDate = bool.Parse(CountryPackageDateModel.islimitDate.ToString());
-            if (!islimitDate)
-                period = MainWindow.resourcemanager.GetString("trUnLimited");
-            else
-            {
-                switch (monthCount)
-                {
-                    case 1: period = MainWindow.resourcemanagerreport.GetString("trOneMonth"); break;
-                    case 3: period = MainWindow.resourcemanagerreport.GetString("trThreeMonth"); break;
-                    case 6: period = MainWindow.resourcemanagerreport.GetString("trSixMonth"); break;
-                    case 12: period = MainWindow.resourcemanagerreport.GetString("trTwelveMonth"); break;
-                }
-            }
-            return period;
-        }
-
-     
-
-        public string serverActiveationTypeConv(bool? isOnlineServer)
-        {
-            string value = "";
-            if (isOnlineServer == true)
-                value = MainWindow.resourcemanagerreport.GetString("trOnline");
-            else
-                value = MainWindow.resourcemanagerreport.GetString("trOffline");
-
-            return value;
-        }
-        public string UnlimitedConvert(int count)
-        {
-            string value = "";
-            if (count == -1)
-                value = MainWindow.resourcemanagerreport.GetString("trUnLimited");
-            else
-                value = count.ToString();
-            return value;
-        }
 
         private async void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf

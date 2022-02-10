@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/book/serials/ar/serialsmail.rdlc")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/book/serials/en/serialsmail.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/report/tmp.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/setting/emptylogo.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/setting/tmp.txt")]
@@ -28,5 +30,8 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/invitemtable.tmp")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/payrow.tmp")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/saletemplate/en/paytable.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/upgradetmplate/en/invbody.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/upgradetmplate/en/invitemrow.tmp")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("emailtemplates/upgradetmplate/en/invitemtable.tmp")]
 
 

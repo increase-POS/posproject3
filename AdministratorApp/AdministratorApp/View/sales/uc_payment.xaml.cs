@@ -54,7 +54,7 @@ namespace AdministratorApp.View.sales
             }
 
         }
-      
+
         public static List<string> requiredControlList;
         PackageUser packageUserModel = new PackageUser();
         PackageUser packageUser = new PackageUser();
@@ -70,73 +70,73 @@ namespace AdministratorApp.View.sales
         string searchText = "";
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //    HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "customer" , "packageNumber" };
+            requiredControlList = new List<string> { "customer", "packageNumber" };
 
-                #region translate
-                if (MainWindow.lang.Equals("en"))
-                {
-                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
+            #region translate
+            if (MainWindow.lang.Equals("en"))
+            {
+                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.LeftToRight;
+            }
+            else
+            {
+                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.RightToLeft;
+            }
+            translate();
+            #endregion
+
+            if (MainWindow.userLogin.type.Equals("ag"))
+                await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId);
+            else
+                await FillCombo.fillCustomer(cb_customer);
+
+            if (isFirstTime)
+                Clear();
+            else
+            {
+                cb_customer.SelectedValue = cusID;
+                if (!MainWindow.userLogin.type.Equals("ag"))
+                    try { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
+                    catch { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
                 else
+                    try { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
+                    catch { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
+                cb_packageNumber.SelectedValue = packuserID;
+
+                tb_discount.IsEnabled = true;
+
+                btn_upgrade.IsEnabled = true;
+
+                packageUser = cb_packageNumber.SelectedItem as PackageUser;
+
+                txt_period.Visibility = Visibility.Visible;
+
+                int index = packageUser.packageNumber.IndexOf("     ");
+                string s = packageUser.packageNumber.Substring(0, index);
+                txt_packageNumberTitle.Text = s;
+
+                grid_packageDetails.DataContext = packageUser;
+                grid_payDetails.DataContext = packageUser;
+
+                tb_discount.Text = discount_.ToString();
+
+
+                #region fill Package details
+                if (packageUser != null)
                 {
-                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
-                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                    txt_total.Text = txt_price.Text;
                 }
-                translate();
                 #endregion
 
-                if(MainWindow.userLogin.type.Equals("ag"))
-                    await FillCombo.fillCustomerByAgent(cb_customer , MainWindow.userLogin.userId);
-                else
-                    await FillCombo.fillCustomer(cb_customer);
+                isFirstTime = true;
 
-                if (isFirstTime)
-                    Clear();
-                else
-                {
-                    cb_customer.SelectedValue = cusID;
-                    if (!MainWindow.userLogin.type.Equals("ag"))
-                        try { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
-                        catch { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
-                    else
-                        try { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
-                        catch { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
-                    cb_packageNumber.SelectedValue = packuserID;
-
-                    tb_discount.IsEnabled = true;
-
-                    btn_upgrade.IsEnabled = true;
-
-                    packageUser = cb_packageNumber.SelectedItem as PackageUser;
-
-                    txt_period.Visibility = Visibility.Visible;
-
-                    int index = packageUser.packageNumber.IndexOf("     ");
-                    string s = packageUser.packageNumber.Substring(0, index);
-                    txt_packageNumberTitle.Text = s;
-
-                    grid_packageDetails.DataContext = packageUser;
-                    grid_payDetails.DataContext = packageUser;
-
-                    tb_discount.Text = discount_.ToString();
-
-
-                    #region fill Package details
-                    if (packageUser != null)
-                    {
-                        txt_total.Text = txt_price.Text;
-                    }
-                    #endregion
-
-                    isFirstTime = true;
-
-                }
-                HelpClass.EndAwait(grid_main);
+            }
+            HelpClass.EndAwait(grid_main);
             //}
             //catch (Exception ex)
             //{
@@ -266,7 +266,7 @@ namespace AdministratorApp.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                
+
                 await RefreshPayOpList();
                 await Search();
 
@@ -313,9 +313,9 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-      
+
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         { //only  digits
             try
@@ -378,9 +378,9 @@ namespace AdministratorApp.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
+
         #endregion
-       
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             GC.Collect();
@@ -412,7 +412,7 @@ namespace AdministratorApp.View.sales
             {
                 addpath = @"\Reports\Sale\Payments\En\EnPayments.rdlc";
             }
-      
+
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
@@ -563,12 +563,13 @@ namespace AdministratorApp.View.sales
         List<SetValues> SetValuesList = new List<SetValues>();
         SetValues terms = new SetValues();
         string result = "0";
-
+        PosSerials posSerialModel = new PosSerials();
         SysEmails email = new SysEmails();
         EmailClass mailtosend = new EmailClass();
 
         SetValues setvmodel = new SetValues();
         List<SetValues> setvlist = new List<SetValues>();
+        List<SetValues> setvUpgradelist = new List<SetValues>();
         public async Task<string> getdata()
         {
             PayOpModel = new PayOp();
@@ -590,6 +591,7 @@ namespace AdministratorApp.View.sales
                 terms = SetValuesList.FirstOrDefault();
                 email = await email.GetByBranchIdandSide("sales");
                 setvlist = await setvmodel.GetBySetName("sale_email_temp");
+                setvUpgradelist= await setvmodel.GetBySetName("upgrade_email_temp");
                 //  CountryPackageDateModel.monthCount;
                 return "1";
             }
@@ -603,24 +605,18 @@ namespace AdministratorApp.View.sales
                 if ((packageUser.packageUserId > 0))
                 {
                     packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
-                await getdata();
-                //
-               
-                
-                     
-            
+                    await getdata();
+                    //
+
                     {
-                         
-                      
-                    
-                       
-                        if (cumstomerModel == null || cumstomerModel.custId == 0 )
+
+                        if (cumstomerModel == null || cumstomerModel.custId == 0)
                         {
-                          
+
                             //edit warning message to customer
                             this.Dispatcher.Invoke(() =>
                             {
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheVendorHasNoEmail"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheCustomerHasNoEmail"), animation: ToasterAnimation.FadeIn);
                             });
 
                         }
@@ -634,35 +630,56 @@ namespace AdministratorApp.View.sales
                                 });
                             else
                             {
-                               
 
-                              
                                 {
-                                  
+
                                     {
 
                                         if (cumstomerModel.email.Trim() == "")
                                         {
                                             this.Dispatcher.Invoke(() =>
                                             {
-                                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheVendorHasNoEmail"), animation: ToasterAnimation.FadeIn);
+                                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheCustomerHasNoEmail"), animation: ToasterAnimation.FadeIn);
                                             });
                                         }
 
                                         else
                                         {
-                                            string pdfpath = "";
-                                      //    pdfpath = await SaveSalepdf();//temp comnt
-
-
-                                            mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel,CountryPackageDateModel, PackagesModel, agentmodel,  email, cumstomerModel, setvlist);
-
-
-                                         //   mailtosend.AddAttachTolist(pdfpath);//temp comnt
                                             string msg = "";
+
+                                            if (PayOpModel.type == "np" || PayOpModel.type == "chpr" || PayOpModel.type == "chpk")
+                                            {
+                                                //send upgrade email
+
+                                                string pdfpath = "";
+                                                pdfpath = await Saveupgradepdf(); 
+
+                                                mailtosend = mailtosend.fillUpgradeTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvUpgradelist, terms);
+
+                                                mailtosend.AddAttachTolist(pdfpath);
+
+                                                this.Dispatcher.Invoke(() =>
+                                                {
+                                                //    msg = mailtosend.Sendmail();// temp comment
+                                                if (msg == "Failure sending mail.")
+                                                    {
+                                                    // msg = "No Internet connection";
+
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
+                                                    }
+                                                    else if (msg == "mailsent")
+                                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
+                                                    else
+                                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
+                                                });
+                                            }
+                                            /////
+                                        //    mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist);
+ 
+                                            msg = "";
                                             this.Dispatcher.Invoke(() =>
                                             {
-                                                msg = mailtosend.Sendmail();// temp comment
+                                             //  msg = mailtosend.Sendmail();// temp comment
                                                 if (msg == "Failure sending mail.")
                                                 {
                                                     // msg = "No Internet connection";
@@ -674,6 +691,8 @@ namespace AdministratorApp.View.sales
                                                 else
                                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
                                             });
+
+
 
                                         }
                                     }
@@ -687,7 +706,7 @@ namespace AdministratorApp.View.sales
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereIsNoItemsToSend"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereIsNoBook"), animation: ToasterAnimation.FadeIn);
                     });
                 }
 
@@ -695,16 +714,71 @@ namespace AdministratorApp.View.sales
                 //
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPrintEmptyInvoice"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trEmailNotSend"), animation: ToasterAnimation.FadeIn);
                 });
             }
         }
 
-        public async Task<string> SaveSalepdf()
+        public async Task<string> BuildupgradeReport()
+        {
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath = "";
+            string firstTitle = "Serials";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
+            bool isArabic = ReportCls.checkLang();
+
+            addpath = @"\Reports\Sale\Book\Serials\En\serialsmail.rdlc";
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            PackageUser puModel = new PackageUser();
+            Customers cuModel = new Customers();
+            Users agModel = new Users();
+
+            puModel = packUserRep;
+            cuModel = cumstomerModel;
+            agModel = agentmodel;
+            string serkey = puModel.packageSaleCode;
+            string agentname = "";
+
+
+            agentname = FillCombo.AgentNameConv(agModel);
+
+
+            //ReportCls.checkLang();
+            //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            Title = "Serials";
+            paramarr.Add(new ReportParameter("trTitle", Title));
+
+            paramarr.Add(new ReportParameter("Agent", agentname));
+            paramarr.Add(new ReportParameter("Customer", cuModel.company));
+            paramarr.Add(new ReportParameter("serverKey", serkey));
+            paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));
+            paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));
+            paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));
+            paramarr.Add(new ReportParameter("trBookNum", MainWindow.resourcemanagerreport.GetString("trBookNum")));
+
+            List<PosSerials> repserialList = new List<PosSerials>();
+
+            repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
+            clsReports.serialsMailReport(repserialList.Where(s => s.isActive == 1), rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+            return "1";
+        }
+        public async Task<string> Saveupgradepdf()
         {
             //for email
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -712,46 +786,26 @@ namespace AdministratorApp.View.sales
             //
             if ((packUserRep.packageUserId <= 0))
             {
-                
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
+                this.Dispatcher.Invoke(() =>
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereIsNoBook"), animation: ToasterAnimation.FadeIn);
+                });
             }
             else
             {
- 
-                {
-                    ////////////////////////
-                    string folderpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath) + @"\Thumb\report\";
-                    ReportCls.clearFolder(folderpath);
 
-                    pdfpath = @"\Thumb\report\File" + DateTime.Now.ToFileTime().ToString() + ".pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
- 
-                    
-                    {
-                       
 
-                        //prInvoice.agentCode = agentinv.code;
-                        ////new lines
-                        //prInvoice.agentName = agentinv.name;
-                        //prInvoice.agentCompany = agentinv.company;
-                    }
-                  
-                   // string reppath = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 0);
-                    ReportCls.checkLang();
-   
-                    clsReports.setReportLanguage(paramarr);
-                    clsReports.Header(paramarr);
- 
-                    // multiplePaytable(paramarr);
-        
-                    }
- 
-                    rep.SetParameters(paramarr);
-                    rep.Refresh();
+                ////////////////////////
+                string folderpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath) + @"\Thumb\report\";
+                ReportCls.clearFolder(folderpath);
 
-                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                pdfpath = @"\Thumb\report\File" + DateTime.Now.ToFileTime().ToString() + ".pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                await BuildupgradeReport();
 
-                 
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+
+
 
             }
             return pdfpath;
@@ -761,30 +815,30 @@ namespace AdministratorApp.View.sales
         PayOp payOpModel = new PayOp();
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //    HelpClass.StartAwait(grid_main);
 
-                if ((cb_customer.SelectedIndex != -1)&&(isFirstTime))
-                {
-                    cb_packageNumber.SelectedItem = null;
-                    cb_packageNumber.IsEnabled = true;
-                    tb_discount.IsEnabled = true;
-                    //this.DataContext = cb_customer.SelectedItem as PayOp;
-                    if (!MainWindow.userLogin.type.Equals("ag"))
-                        await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
-                    else
-                        await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue , MainWindow.userLogin.userId);
-                    
+            if ((cb_customer.SelectedIndex != -1) && (isFirstTime))
+            {
+                cb_packageNumber.SelectedItem = null;
+                cb_packageNumber.IsEnabled = true;
+                tb_discount.IsEnabled = true;
+                //this.DataContext = cb_customer.SelectedItem as PayOp;
+                if (!MainWindow.userLogin.type.Equals("ag"))
+                    await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
+                else
+                    await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId);
 
-                    if (cb_packageNumber.Items.Count > 0)
-                        btn_upgrade.IsEnabled = true;
-                    else
-                        btn_upgrade.IsEnabled = false;
 
-                    await RefreshPayOpList();
-                    await Search();
-                }
+                if (cb_packageNumber.Items.Count > 0)
+                    btn_upgrade.IsEnabled = true;
+                else
+                    btn_upgrade.IsEnabled = false;
+
+                await RefreshPayOpList();
+                await Search();
+            }
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -795,7 +849,7 @@ namespace AdministratorApp.View.sales
             //}
         }
 
-       
+
         async Task<IEnumerable<PayOp>> RefreshPayOpList()
         {
             payOps = await payOpModel.GetByCustomerId((int)cb_customer.SelectedValue);
@@ -825,39 +879,39 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_packageNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
-            //try
-            //{
-                //HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //HelpClass.StartAwait(grid_main);
 
-                if ((cb_packageNumber.SelectedIndex != -1)&&(isFirstTime))
+            if ((cb_packageNumber.SelectedIndex != -1) && (isFirstTime))
+            {
+                tb_discount.Text = "0";
+
+                tb_discount.IsEnabled = true;
+
+                btn_upgrade.IsEnabled = true;
+
+                packageUser = cb_packageNumber.SelectedItem as PackageUser;
+
+                txt_period.Visibility = Visibility.Visible;
+
+                int index = packageUser.packageNumber.IndexOf("     ");
+                string s = packageUser.packageNumber.Substring(0, index);
+                txt_packageNumberTitle.Text = s;
+
+                grid_packageDetails.DataContext = packageUser;
+                grid_payDetails.DataContext = packageUser;
+
+                #region fill Package details
+                if (packageUser != null)
                 {
-                    tb_discount.Text = "0";
-
-                    tb_discount.IsEnabled = true;
-
-                    btn_upgrade.IsEnabled = true;
-
-                    packageUser = cb_packageNumber.SelectedItem as PackageUser;
-
-                    txt_period.Visibility = Visibility.Visible;
-
-                    int index = packageUser.packageNumber.IndexOf("     ");
-                    string s = packageUser.packageNumber.Substring(0 , index);
-                    txt_packageNumberTitle.Text = s;
-
-                    grid_packageDetails.DataContext = packageUser;
-                    grid_payDetails.DataContext = packageUser;
-
-                    #region fill Package details
-                    if (packageUser != null)
-                    {
-                        txt_total.Text = txt_price.Text;
-                    }
-                    #endregion
-
-                    await RefreshPayOpList();
-                    await Search();
+                    txt_total.Text = txt_price.Text;
                 }
+                #endregion
+
+                await RefreshPayOpList();
+                await Search();
+            }
             //    HelpClass.EndAwait(grid_main);
             //}
             //catch (Exception ex)
@@ -869,31 +923,31 @@ namespace AdministratorApp.View.sales
 
         private async void Btn_upgrade_Click(object sender, RoutedEventArgs e)
         {//upgrade
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //    HelpClass.StartAwait(grid_main);
 
-                if (packageUser.packageId > 0)
-                {
-                    MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
-                    uc_sales.Instance.Window_Loaded(null, null);
-                    uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
-                    uc_sale.Instance.UserControl_Loaded(null, null);
-                    uc_sale.Instance.package = package;
+            if (packageUser.packageId > 0)
+            {
+                MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
+                uc_sales.Instance.Window_Loaded(null, null);
+                uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
+                uc_sale.Instance.UserControl_Loaded(null, null);
+                uc_sale.Instance.package = package;
 
-                    uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
-                    uc_sale.Instance.oldAgentId = packageUser.userId.Value;
-                    uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
-                    uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
-                    uc_sale.Instance.packuser = packageUser;
-                    uc_sale.Instance.btn_serials.IsEnabled = true;
-                    uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
-                    uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
-                    HelpClass.clearValidate(uc_sale.requiredControlList, this);
-                }
+                uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
+                uc_sale.Instance.oldAgentId = packageUser.userId.Value;
+                uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
+                uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
+                uc_sale.Instance.packuser = packageUser;
+                uc_sale.Instance.btn_serials.IsEnabled = true;
+                uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
+                uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
+                HelpClass.clearValidate(uc_sale.requiredControlList, this);
+            }
 
-                Clear();
-                ClearPackageUser();
+            Clear();
+            ClearPackageUser();
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -957,7 +1011,7 @@ namespace AdministratorApp.View.sales
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-              //  if (MainWindow.groupObject.HasPermissionAction(sendEmailPermission, MainWindow.groupObjects, "one"))
+                //  if (MainWindow.groupObject.HasPermissionAction(sendEmailPermission, MainWindow.groupObjects, "one"))
                 {
 
                     //await sendsaleEmail();
@@ -992,7 +1046,7 @@ namespace AdministratorApp.View.sales
                     discount = decimal.Parse(tb_discount.Text);
 
                 txt_discount.Text = discount.ToString();
-                
+
                 totalNet = decimal.Parse(txt_price.Text) - discount;
                 txt_total.Text = totalNet.ToString();
 

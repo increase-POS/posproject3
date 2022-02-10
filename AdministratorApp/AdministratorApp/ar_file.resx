@@ -2758,4 +2758,13 @@
   <data name="trSoftware" xml:space="preserve">
     <value>البرنامج</value>
   </data>
+  <data name="trEmailNotSend" xml:space="preserve">
+    <value>لم يتم ارسال البريد الالكتروني</value>
+  </data>
+  <data name="trThereIsNoBook" xml:space="preserve">
+    <value>لا يوجد حجز</value>
+  </data>
+  <data name="trBookingEmailTemplate" xml:space="preserve">
+    <value>قالب بريد حجز نسخة</value>
+  </data>
 </root>

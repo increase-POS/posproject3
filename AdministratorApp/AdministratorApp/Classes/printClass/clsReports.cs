@@ -63,7 +63,18 @@ namespace AdministratorApp.Classes
       
 
         }
+        public static void serialsMailReport(IEnumerable<PosSerials> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
 
+            //  paramarr.Add(new ReportParameter("trVendor", MainWindow.resourcemanagerreport.GetString("trVendor")));
+            rep.DataSources.Add(new ReportDataSource("DataSetSerials", Query));
+
+
+
+        }
         public static void BookReport(IEnumerable<BookSts> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

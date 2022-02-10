@@ -2776,4 +2776,13 @@ Please add Email in setting</value>
   <data name="trSoftware" xml:space="preserve">
     <value>Software</value>
   </data>
+  <data name="trEmailNotSend" xml:space="preserve">
+    <value>The Email not sent</value>
+  </data>
+  <data name="trThereIsNoBook" xml:space="preserve">
+    <value>There Is No Booking</value>
+  </data>
+  <data name="trBookingEmailTemplate" xml:space="preserve">
+    <value>Booking Email Template</value>
+  </data>
 </root>
