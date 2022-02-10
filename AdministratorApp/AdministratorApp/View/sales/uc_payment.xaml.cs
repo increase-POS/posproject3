@@ -660,7 +660,7 @@ namespace AdministratorApp.View.sales
 
                                                 this.Dispatcher.Invoke(() =>
                                                 {
-                                                //    msg = mailtosend.Sendmail();// temp comment
+                                                 msg = mailtosend.Sendmail();// temp comment
                                                 if (msg == "Failure sending mail.")
                                                     {
                                                     // msg = "No Internet connection";
@@ -674,12 +674,12 @@ namespace AdministratorApp.View.sales
                                                 });
                                             }
                                             /////
-                                        //    mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist);
+                                        mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist);
  
                                             msg = "";
                                             this.Dispatcher.Invoke(() =>
                                             {
-                                             //  msg = mailtosend.Sendmail();// temp comment
+                                            msg = mailtosend.Sendmail();// temp comment
                                                 if (msg == "Failure sending mail.")
                                                 {
                                                     // msg = "No Internet connection";
