@@ -777,3 +777,5 @@ D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Reports\Sale\B
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\EmailTemplates\upgradetmplate\en\invbody.tmp
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\EmailTemplates\upgradetmplate\en\invitemrow.tmp
 D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\EmailTemplates\upgradetmplate\en\invitemtable.tmp
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Reports\Sale\Payments\Ar\ArPayDetail.rdlc
+D:\myproj\posproject3\AdministratorApp\AdministratorApp\bin\Debug\Reports\Sale\Payments\En\EnPayDetail.rdlc

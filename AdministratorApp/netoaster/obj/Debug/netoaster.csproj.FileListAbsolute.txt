@@ -247,4 +247,3 @@ E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.csproj.GenerateResou
 E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.dll
 E:\AdministratorApp 9-12-2021\netoaster\obj\Debug\netoaster.pdb
-D:\myproj\posproject3\AdministratorApp\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache

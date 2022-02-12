@@ -634,7 +634,7 @@
     <value>Item</value>
   </data>
   <data name="trNum" xml:space="preserve">
-    <value>Num</value>
+    <value>NO.</value>
   </data>
   <data name="trPaidHint" xml:space="preserve">
     <value>Paid...</value>
@@ -1753,10 +1753,10 @@
     <value>Purchase Orders</value>
   </data>
   <data name="trProcessNumHint" xml:space="preserve">
-    <value>Process Number...</value>
+    <value>Process No. ...</value>
   </data>
   <data name="trProcessNumTooltip" xml:space="preserve">
-    <value>Process Number</value>
+    <value>Process No.</value>
   </data>
   <data name="trDestructive" xml:space="preserve">
     <value>Destructive</value>
@@ -2570,10 +2570,10 @@ Please add Email in setting</value>
     <value>POS</value>
   </data>
   <data name="trBookNum" xml:space="preserve">
-    <value>Book Num</value>
+    <value>Book No.</value>
   </data>
   <data name="trBookNumHint" xml:space="preserve">
-    <value>Book Num...</value>
+    <value>Book No. ...</value>
   </data>
   <data name="trExpirationDate" xml:space="preserve">
     <value>Expiration Date</value>
@@ -2784,5 +2784,17 @@ Please add Email in setting</value>
   </data>
   <data name="trBookingEmailTemplate" xml:space="preserve">
     <value>Booking Email Template</value>
+  </data>
+  <data name="trNoConnection" xml:space="preserve">
+    <value>No Connection</value>
+  </data>
+  <data name="trNoMailConnection" xml:space="preserve">
+    <value>No Connection...Check the email setting</value>
+  </data>
+  <data name="trPayDate" xml:space="preserve">
+    <value>Pay Date</value>
+  </data>
+  <data name="trPayDetail" xml:space="preserve">
+    <value>Pay Detail</value>
   </data>
 </root>

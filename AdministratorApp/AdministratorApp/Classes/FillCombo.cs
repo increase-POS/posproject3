@@ -358,9 +358,9 @@ namespace AdministratorApp.Classes
         #region Report
         public static string sale_copy_count="1";
  
-        public static string print_on_save_sale;
+        public static string print_on_save_sale="1";
       
-        public static string email_on_save_sale;
+        public static string email_on_save_sale="1";
      
         public static string rep_printer_name;
     

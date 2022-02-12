@@ -503,7 +503,7 @@
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
-            <Border Grid.Row="2"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
+            <Border Grid.Row="3"  Height="1"  BorderBrush="{StaticResource LightGrey}" 
                     BorderThickness="1" Opacity="0.2" Margin="5,5,5,0"/>
 
             <Grid Grid.Row="3" Margin="5,5,5,10">
@@ -517,10 +517,15 @@
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="pay" Click="Btn_pay_Click" 
                         />
-           <Button x:Name="btn_email_test" Grid.Column="0" Grid.Row="1" 
+                <Button x:Name="btn_email_test" Grid.Column="0" Grid.Row="1" 
                         materialDesign:ButtonAssist.CornerRadius="10"   
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
                         Margin="5"    Content="Email" Click="Btn_email_Click" 
+                        />
+                <Button x:Name="btn_pdf_test" Grid.Column="0" 
+                        materialDesign:ButtonAssist.CornerRadius="10"   
+                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
+                        Margin="5,-49,5,59"    Content="PDF" Click="Btn_pdfPaytest_Click" 
                         />
             </Grid>
         </Grid>

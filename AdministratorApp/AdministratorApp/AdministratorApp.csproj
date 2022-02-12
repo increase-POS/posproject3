@@ -482,6 +482,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Reports\Sale\Payments\Ar\ArPayDetail.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\Payments\En\EnPayDetail.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="EmailTemplates\images\bookimg.gif" />
     <Content Include="Reports\Sale\Book\Serials\Ar\serialsmail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -625,6 +631,96 @@
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PaymentsSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PayOp.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PosSerials.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.BinaryConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.BsonObjectIdConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.DataSetConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.DataTableConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.DateTimeConverterBase.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.EntityKeyMemberConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.ExpandoObjectConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.IsoDateTimeConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.JavaScriptDateTimeConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.KeyValuePairConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.RegexConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.StringEnumConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.VersionConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Converters.XmlNodeConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.IJsonLineInfo.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonArrayAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonConstructorAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonContainerAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonConvert.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonConverter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonConverterAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonConverterCollection.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonDictionaryAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonException.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonIgnoreAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonObjectAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonPropertyAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonReader.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonReaderException.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonSerializationException.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonSerializer.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonSerializerSettings.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonTextReader.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonTextWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonValidatingReader.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.JsonWriterException.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.Extensions.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JArray.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JConstructor.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JContainer.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JObject.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JProperty.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JPropertyDescriptor.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JRaw.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JToken.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JTokenEqualityComparer.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JTokenReader.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JTokenWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Linq.JValue.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.Extensions.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.JsonSchema.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.JsonSchemaException.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.JsonSchemaGenerator.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.JsonSchemaResolver.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.ValidationEventArgs.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Schema.ValidationEventHandler.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.DefaultContractResolver.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.DefaultSerializationBinder.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.DiagnosticsTraceWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.DynamicValueProvider.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.ErrorContext.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.ErrorEventArgs.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.ExpressionValueProvider.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.IContractResolver.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.IReferenceResolver.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.ITraceWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.IValueProvider.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonArrayContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonContainerContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonDictionaryContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonDynamicContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonISerializableContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonLinqContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonObjectContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonPrimitiveContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonProperty.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonPropertyCollection.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.JsonStringContract.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.MemoryTraceWriter.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.OnErrorAttribute.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.ReflectionValueProvider.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.SerializationCallback.datasource" />
+    <None Include="Properties\DataSources\Newtonsoft.Json.Serialization.SerializationErrorCallback.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
