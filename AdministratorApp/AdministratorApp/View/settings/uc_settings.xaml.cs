@@ -43,7 +43,7 @@ namespace AdministratorApp.View.settings
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
-                menuList = new List<string> { "emails" ,"general"};
+                menuList = new List<string> { "emails" ,"general","reportsSettings"};
 
 
 
@@ -115,6 +115,21 @@ namespace AdministratorApp.View.settings
             }
         }
 
-        
+        private void Btn_reportsSettings_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                colorButtonRefreash(button.Tag.ToString());
+                grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_emailGeneral.Instance);
+                uc_reportsSettings uc = new uc_reportsSettings();
+                grid_main.Children.Add(uc);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

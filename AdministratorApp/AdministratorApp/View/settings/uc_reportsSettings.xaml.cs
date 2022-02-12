@@ -1,4 +1,5 @@
 ﻿using AdministratorApp.Classes;
+using AdministratorApp.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AdministratorApp.View.settings.emailGeneral
+namespace AdministratorApp.View.settings
 {
     /// <summary>
-    /// Interaction logic for uc_emailGeneral.xaml
+    /// Interaction logic for uc_reportsSettings.xaml
     /// </summary>
-    public partial class uc_emailGeneral : UserControl
+    public partial class uc_reportsSettings : UserControl
     {
-        public uc_emailGeneral()
+        public uc_reportsSettings()
         {
             InitializeComponent();
         }
-        private static uc_emailGeneral _instance;
-        public static uc_emailGeneral Instance
+        private static uc_reportsSettings _instance;
+        public static uc_reportsSettings Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new uc_emailGeneral();
+                    _instance = new uc_reportsSettings();
                 return _instance;
             }
         }
@@ -75,23 +76,24 @@ namespace AdministratorApp.View.settings.emailGeneral
         }
         private void translate()
         {
-            txt_emailsSettingInfo.Text = MainWindow.resourcemanager.GetString("trEmailSettings");
-            txt_emailsSettingHint.Text = MainWindow.resourcemanager.GetString("trEmailSettings") + "...";
-
-            txt_emailsTamplatesInfo.Text = MainWindow.resourcemanager.GetString("trEmailTemplates");
-            txt_emailsTamplatesHint.Text = MainWindow.resourcemanager.GetString("trEmailTemplates") + "...";
+            txt_systmSetting.Text = MainWindow.resourcemanager.GetString("trSystemSetting");
+            txt_systmSettingHint.Text = MainWindow.resourcemanager.GetString("trSystemSetting") + "...";
         }
-        private void Btn_emailsSetting_Click(object sender, RoutedEventArgs e)
+        private void Btn_systmSetting_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-
-                uc_emailsSetting uc = new uc_emailsSetting();
-                sc_main.Visibility = Visibility.Collapsed;
-                main.Children.Add(uc);
-
+                //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") || SectionData.isAdminPermision())
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_reportSystmSetting w = new wd_reportSystmSetting();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -102,26 +104,6 @@ namespace AdministratorApp.View.settings.emailGeneral
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_emailsTamplates_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
-
-                uc_emailTemplates uc = new uc_emailTemplates();
-                sc_main.Visibility = Visibility.Collapsed;
-                main.Children.Add(uc);
-
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        
     }
 }
