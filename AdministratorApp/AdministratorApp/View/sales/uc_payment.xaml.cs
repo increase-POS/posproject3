@@ -550,6 +550,50 @@ namespace AdministratorApp.View.sales
         }
 
         //pay preview
+
+      public async void  printOnPay()
+        {
+            if (packageUser.packageUserId > 0)
+            {
+                packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
+                await getdata();
+                #region
+                BuildPayReport();
+                this.Dispatcher.Invoke(() =>
+                {
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), 1);
+                });
+             
+                #endregion
+            }
+        }
+        public async void Previewpayoprow(int payOpId)
+        {
+            if (payOpId>0)
+            {
+                PayOpModel = new PayOp();
+                PayOpModel = await PayOpModel.GetByID(payOpId);
+
+                await GetPayrowdata();
+
+                Window.GetWindow(this).Opacity = 0.2;
+                string pdfpath = "";
+                //
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                BuildPayReport();
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+                }
+                Window.GetWindow(this).Opacity = 1;
+
+            }
+        }
         public void BuildPayReport()
         {
             //string firstTitle = "paymentsReport";
@@ -605,7 +649,7 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Customer", cumstomerModel.company));//
             paramarr.Add(new ReportParameter("Period", FillCombo.PeriodConv(CountryPackageDateModel)));//
             paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));//
-            paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString() + " " + CountryPackageDateModel.currency));//
+            paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString()));//
             paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));//
 
             paramarr.Add(new ReportParameter("trProcessNumTooltip", MainWindow.resourcemanagerreport.GetString("trProcessNumTooltip")));//
@@ -674,6 +718,22 @@ namespace AdministratorApp.View.sales
 
         }
 
+        public async Task<string> GetPayrowdata()
+        {
+            if (PayOpModel.packageUserId>0)
+            {
+                packUserRep = await packUserRep.GetByID((int)PayOpModel.packageUserId);
+                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+
+                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+
+                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+            }
+        
+                //  CountryPackageDateModel.monthCount;
+                return "1";
+        }
         public async void sendsaleEmail(int packageUserId)
         {
             try
@@ -1110,7 +1170,6 @@ namespace AdministratorApp.View.sales
                     t1.Start();
                     ////
                 }
-
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
@@ -1136,14 +1195,11 @@ namespace AdministratorApp.View.sales
                     packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
                     await getdata();
                     Window.GetWindow(this).Opacity = 0.2;
-
                 string pdfpath = "";
                 //
                 pdfpath = @"\Thumb\report\temp.pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-               
                   BuildPayReport();
-
                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
                 wd_previewPdf w = new wd_previewPdf();
                 w.pdfPath = pdfpath;
@@ -1151,8 +1207,6 @@ namespace AdministratorApp.View.sales
                 {
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
-
-
                 }
                 Window.GetWindow(this).Opacity = 1;
                 }
@@ -1171,15 +1225,11 @@ namespace AdministratorApp.View.sales
         {
             try
             {
-
                 if (!tb_discount.Text.Equals(""))
                     discount = decimal.Parse(tb_discount.Text);
-
                 txt_discount.Text = discount.ToString();
-
                 totalNet = decimal.Parse(txt_price.Text) - discount;
                 txt_total.Text = totalNet.ToString();
-
             }
             catch (Exception ex)
             {
