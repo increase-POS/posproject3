@@ -27,7 +27,10 @@
              Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
                  Content="emails" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
                       x:Name="btn_emails" Click="Btn_emails_Click" Tag="emails"/>
-         
+            <Button   Grid.Column="2"
+             Background="{StaticResource MainColor}" BorderBrush="{x:Null}" 
+                 Content="reports" FontWeight="Bold"      Margin="5" materialDesign:ButtonAssist.CornerRadius="10"
+                      x:Name="btn_reportsSettings" Click="Btn_reportsSettings_Click" Tag="reportsSettings"/>
         </Grid>
         <Grid Grid.Row="1" x:Name="grid_main"/>
     </Grid>
