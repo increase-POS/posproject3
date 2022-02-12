@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/payments/ar/arpaydetail.rdlc")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/payments/en/enpaydetail.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/book/serials/ar/serialsmail.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("reports/sale/book/serials/en/serialsmail.rdlc")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("thumb/report/tmp.txt")]

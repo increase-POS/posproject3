@@ -549,6 +549,82 @@ namespace AdministratorApp.View.sales
             }
         }
 
+        //pay preview
+        public void BuildPayReport()
+        {
+            //string firstTitle = "paymentsReport";
+            ////string secondTitle = "";
+            ////string subTitle = "";
+            //string Title = "";
+        
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+        
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Sale\Payments\Ar\ArPayDetail.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Sale\Payments\En\EnPayDetail.rdlc";
+            }
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
+
+            //   clsReports.PaymentsPaySale(paramarr);
+            List<PayOp> tempQuery = new List<PayOp>();
+            clsReports.PaymentsPaySale(tempQuery, rep, reppath);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+            SetPayparam(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+           
+
+        }
+
+        //end pay preview
+        public void SetPayparam(List<ReportParameter> paramarr)
+        {
+            paramarr.Add(new ReportParameter("trBookNum", MainWindow.resourcemanagerreport.GetString("trBookNum")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPayDetail")));
+            paramarr.Add(new ReportParameter("trAgentHint", MainWindow.resourcemanagerreport.GetString("trAgent")));//
+            paramarr.Add(new ReportParameter("trCustomerHint", MainWindow.resourcemanagerreport.GetString("trCustomer")));//
+            paramarr.Add(new ReportParameter("trPeriod", MainWindow.resourcemanagerreport.GetString("trPeriod")));//
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trPackage")));//
+            paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));//
+            paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));//
+            paramarr.Add(new ReportParameter("packageNumber", packUserRep.packageNumber.ToString()));//
+            paramarr.Add(new ReportParameter("Agent", FillCombo.AgentNameConv(agentmodel)));//
+            paramarr.Add(new ReportParameter("Customer", cumstomerModel.company));//
+            paramarr.Add(new ReportParameter("Period", FillCombo.PeriodConv(CountryPackageDateModel)));//
+            paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));//
+            paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString() + " " + CountryPackageDateModel.currency));//
+            paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));//
+
+            paramarr.Add(new ReportParameter("trProcessNumTooltip", MainWindow.resourcemanagerreport.GetString("trProcessNumTooltip")));//
+            paramarr.Add(new ReportParameter("PayNo",PayOpModel.code));//
+            paramarr.Add(new ReportParameter("trSoftware", MainWindow.resourcemanagerreport.GetString("trSoftware") ));//
+            paramarr.Add(new ReportParameter("software", PackagesModel.programName + " " + PackagesModel.verName));//
+            paramarr.Add(new ReportParameter("trDiscount", MainWindow.resourcemanagerreport.GetString("trDiscount")));//
+            paramarr.Add(new ReportParameter("trTotal", MainWindow.resourcemanagerreport.GetString("trTotal")));//
+            paramarr.Add(new ReportParameter("trPaid", MainWindow.resourcemanagerreport.GetString("trPaid")));//
+            paramarr.Add(new ReportParameter("Discount", reportclass.DecTostring(PayOpModel.discountValue)));//
+            paramarr.Add(new ReportParameter("Total", reportclass.DecTostring(PayOpModel.totalnet)));//
+            paramarr.Add(new ReportParameter("currency", CountryPackageDateModel.currency));//
+ 
+            paramarr.Add(new ReportParameter("Notes", PayOpModel.notes));
+
+            paramarr.Add(new ReportParameter("trPayDate", MainWindow.resourcemanagerreport.GetString("trPayDate")));//trPayDate
+            paramarr.Add(new ReportParameter("PayDate", FillCombo.DateConvert(PayOpModel.createDate)));//
+        }
+
         #endregion
 
         #region email
@@ -598,11 +674,11 @@ namespace AdministratorApp.View.sales
 
         }
 
-        public async void sendsaleEmail()
+        public async void sendsaleEmail(int packageUserId)
         {
             try
             {
-                if ((packageUser.packageUserId > 0))
+                if ((packageUserId > 0))
                 {
                     packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
                     await getdata();
@@ -665,7 +741,7 @@ namespace AdministratorApp.View.sales
                                                     {
                                                     // msg = "No Internet connection";
 
-                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoMailConnection"), animation: ToasterAnimation.FadeIn);
                                                     }
                                                     else if (msg == "mailsent")
                                                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
@@ -684,7 +760,7 @@ namespace AdministratorApp.View.sales
                                                 {
                                                     // msg = "No Internet connection";
 
-                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
+                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoMailConnection"), animation: ToasterAnimation.FadeIn);
                                                 }
                                                 else if (msg == "mailsent")
                                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
@@ -748,7 +824,6 @@ namespace AdministratorApp.View.sales
             agModel = agentmodel;
             string serkey = puModel.packageSaleCode;
             string agentname = "";
-
 
             agentname = FillCombo.AgentNameConv(agModel);
 
@@ -989,6 +1064,18 @@ namespace AdministratorApp.View.sales
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopPay"), animation: ToasterAnimation.FadeIn);
 
+                        if (FillCombo.email_on_save_sale=="1")
+                        {
+                            Thread t2 = new Thread(() =>
+                            {
+                                sendsaleEmail(packageUser.packageUserId);
+                            });
+                            t2.Start();
+                        }
+                        if (FillCombo.print_on_save_sale=="1")
+                        {
+
+                        }
                         await RefreshPayOpList();
                         await Search();
 
@@ -1018,7 +1105,7 @@ namespace AdministratorApp.View.sales
                     ////
                     Thread t1 = new Thread(() =>
                     {
-                        sendsaleEmail();
+                        sendsaleEmail(packageUser.packageUserId);
                     });
                     t1.Start();
                     ////
@@ -1033,6 +1120,49 @@ namespace AdministratorApp.View.sales
             {
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Btn_pdfPaytest_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                if (packageUser.packageUserId > 0)
+                {
+                    packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
+                    await getdata();
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                string pdfpath = "";
+                //
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+               
+                  BuildPayReport();
+
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                }
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

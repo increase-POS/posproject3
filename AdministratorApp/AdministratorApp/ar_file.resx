@@ -2767,4 +2767,16 @@
   <data name="trBookingEmailTemplate" xml:space="preserve">
     <value>قالب بريد حجز نسخة</value>
   </data>
+  <data name="trNoConnection" xml:space="preserve">
+    <value>لا يوجد اتصال</value>
+  </data>
+  <data name="trNoMailConnection" xml:space="preserve">
+    <value>لا يوجد اتصال...تحقق من اعدادات الايميل</value>
+  </data>
+  <data name="trPayDate" xml:space="preserve">
+    <value>تاريخ الدفع</value>
+  </data>
+  <data name="trPayDetail" xml:space="preserve">
+    <value>تفاصيل الدفعة</value>
+  </data>
 </root>
