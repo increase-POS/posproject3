@@ -1162,20 +1162,20 @@ namespace AdministratorApp.View.sales
 
                         if (FillCombo.print_on_save_sale == "1")
                         {
-                            Thread t2 = new Thread(() =>
-                            {
+                            //Thread t2 = new Thread(() =>
+                            //{
                                 printOnPay();
-                            });
-                            t2.Start();
+                            //});
+                            //t2.Start();
                         }
 
                         if (FillCombo.email_on_save_sale == "1")
                         {
-                            Thread t1 = new Thread(() =>
-                            {
+                            //Thread t1 = new Thread(() =>
+                            //{
                            sendsaleEmail(packageUser.packageUserId);
-                            });
-                            t1.Start();
+                            //});
+                            //t1.Start();
                        
                         
                         }
