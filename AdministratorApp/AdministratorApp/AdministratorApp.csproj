@@ -189,6 +189,7 @@
     <Compile Include="Classes\HelpClass.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
     <Compile Include="Classes\KeyValue.cs" />
+    <Compile Include="Classes\Pagination.cs" />
     <Compile Include="Classes\printClass\clsReports.cs" />
     <Compile Include="Classes\printClass\LocalReportExtensions.cs" />
     <Compile Include="Classes\printClass\numberToWord\CurrencyInfo.cs" />

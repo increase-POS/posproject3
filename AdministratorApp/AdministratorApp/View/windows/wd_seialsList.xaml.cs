@@ -47,7 +47,8 @@ namespace AdministratorApp.View.windows
         int isActiveCount = 0;
 
         //pagination
-        int pageIndex = 0 , pageIndexCurrent = 0, pageCount = 0;
+        //int pageIndex = 0 ;
+        int pageIndexCurrent = 0, pageCount = 0;
         List<Button> btnList = new List<Button>();
         int itemsPerPage = 20;
 
@@ -65,75 +66,80 @@ namespace AdministratorApp.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_serialsList);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+            btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
+            #region translate
+            if (MainWindow.lang.Equals("en"))
+            {
+                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.LeftToRight;
+            }
+            else
+            {
+                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.RightToLeft;
+            }
+            translat();
+            #endregion
 
-                #region translate
-                if (MainWindow.lang.Equals("en"))
-                {
-                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
-                    grid_serialsList.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
-                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
-                    grid_serialsList.FlowDirection = FlowDirection.RightToLeft;
-                }
-                translat();
-                #endregion
-
-                #region fill user type
-                var typelist = new[] {
+            #region fill user type
+            var typelist = new[] {
                 new { Text = "20"    , Value = "20" },
                 new { Text = "50"    , Value = "50" },
                 new { Text = "100"   , Value = "100"}
                     };
-                cb_itemPerPage.DisplayMemberPath = "Text";
-                cb_itemPerPage.SelectedValuePath = "Value";
-                cb_itemPerPage.ItemsSource = typelist;
+            cb_itemPerPage.DisplayMemberPath = "Text";
+            cb_itemPerPage.SelectedValuePath = "Value";
+            cb_itemPerPage.ItemsSource = typelist;
             #endregion
 
-                chk_allSerials.IsChecked = false;
-                posSerialsQuery = await RefreshList();
+            chk_allSerials.IsChecked = false;
+            posSerialsQuery = await RefreshList();
 
-                isActiveCount = posSerials.Count(s => s.isActive == 1);
-               
-                pu = await puModel.GetByID(packageUserID);
-                p = await pModel.GetByID(pu.packageId.Value);
+            isActiveCount = posSerials.Count(s => s.isActive == 1);
 
-                cb_itemPerPage.SelectedIndex = 0;
+            pu = await puModel.GetByID(packageUserID);
+            p = await pModel.GetByID(pu.packageId.Value);
+
+            cb_itemPerPage.SelectedIndex = 0;
 
 
-                RefreshView();
-
+            Tb_search_TextChanged(tb_search, null);
+                /*
+                    RefreshView();
+                    */
                 #region pagination
-                btnList.Add(btn_firstPage);
-                btnList.Add(btn_prevPage);
-                btnList.Add(btn_curPage);
-                btnList.Add(btn_nextPage);
-                btnList.Add(btn_lastPage);
+                /*
+                    btnList.Add(btn_firstPage);
+                    btnList.Add(btn_prevPage);
+                    btnList.Add(btn_curPage);
+                    btnList.Add(btn_nextPage);
+                    btnList.Add(btn_lastPage);
 
-                pageIndex = 1;
-                pageIndexCurrent = 1;
-                pageCount = posSerialsQuery.Count() / itemsPerPage;
+                    pageIndex = 1;
+                    pageIndexCurrent = 1;
+                    pageCount = posSerialsQuery.Count() / itemsPerPage;
 
-                if (pageCount == 1)
-                { btn_curPage.IsEnabled = false; btn_nextPage.IsEnabled = false; btn_lastPage.IsEnabled = false; }
-                else if (pageCount == 2)
-                { btn_nextPage.IsEnabled = false; }
+                    if (pageCount == 1)
+                    { btn_curPage.IsEnabled = false; btn_nextPage.IsEnabled = false; btn_lastPage.IsEnabled = false; }
+                    else if (pageCount == 2)
+                    { btn_nextPage.IsEnabled = false; }
+                    */
                 #endregion
 
-                //    HelpClass.EndAwait(grid_serialsList);
-                //}
-                //catch (Exception ex)
-                //{
-                //    HelpClass.EndAwait(grid_serialsList);
-                //    HelpClass.ExceptionMessage(ex, this);
-                //}
+                HelpClass.EndAwait(grid_main);
             }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         
         #region pagination
+        /*
         private void Btn_firstPage_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -256,7 +262,7 @@ namespace AdministratorApp.View.windows
           
           
         }
-
+        */
 
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {//only  digits
@@ -289,6 +295,7 @@ namespace AdministratorApp.View.windows
         {
             try
             {
+                /*
                 if (int.Parse(tb_page.Text) <= pageCount)
                 {
                     pageIndex = int.Parse(tb_page.Text);
@@ -310,6 +317,7 @@ namespace AdministratorApp.View.windows
                     }
                     RefreshView();
                 }
+                */
             }
             catch (Exception ex)
             {
@@ -327,7 +335,7 @@ namespace AdministratorApp.View.windows
         {//save
             try
             {
-                HelpClass.StartAwait(grid_serialsList);
+                HelpClass.StartAwait(grid_main);
 
                 //List<PosSerials> posSerialsNew = new List<PosSerials>();
                 //foreach (PosSerials row in dg_serials.Items)
@@ -364,11 +372,11 @@ namespace AdministratorApp.View.windows
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trIsActiveCountPopError"), animation: ToasterAnimation.FadeIn);
                 }
 
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.EndAwait(grid_main);
             }
                 catch (Exception ex)
                 {
-                    HelpClass.EndAwait(grid_serialsList);
+                    HelpClass.EndAwait(grid_main);
                     HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -378,35 +386,38 @@ namespace AdministratorApp.View.windows
             try
             {
                 txtSearch = tb_search.Text;
-
                 posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
-                                                          || (s.posName    != null ? s.posName.Contains(txtSearch)    : false)
-                                                          || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
-
+                || (s.posName    != null ? s.posName.Contains(txtSearch)    : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                /*
                 RefreshView();
-            }
+                */
+                refreshGrid();
+              }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+       
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
             {
 
-                HelpClass.StartAwait(grid_serialsList);
+                HelpClass.StartAwait(grid_main);
 
                 posSerialsQuery = await RefreshList();
-                RefreshView();
 
-                HelpClass.EndAwait(grid_serialsList);
+                /*
+                 RefreshView();
+                 */
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
 
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -509,9 +520,9 @@ namespace AdministratorApp.View.windows
 
             chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
 
-            tt_first.Content = MainWindow.resourcemanager.GetString("trFirst");
-            tt_last.Content = MainWindow.resourcemanager.GetString("trLast");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_page, "...");
+            //tt_first.Content = MainWindow.resourcemanager.GetString("trFirst");
+            //tt_last.Content = MainWindow.resourcemanager.GetString("trLast");
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_page, "...");
 
         }
 
@@ -521,7 +532,7 @@ namespace AdministratorApp.View.windows
             return posSerials;
         }
         List<PosSerials> posSerialsQueryPage = new List<PosSerials>();
-
+        /*
         private void RefreshView()
         {
             posSerialsQueryPage = new List<PosSerials>();
@@ -549,12 +560,192 @@ namespace AdministratorApp.View.windows
                                  MainWindow.resourcemanager.GetString("trOf")   + " " + pageCount.ToString();
             }
         }
+        */
         #endregion
+        #region Pagination Y
+        Pagination pagination = new Pagination();
+        Button[] btns;
+        public int pageIndex = 1;
+        void refreshGrid()
+        {
+            if (btns is null)
+                btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
+            dg_serials.ItemsSource = pagination.refrishPagination(posSerialsQuery, pageIndex, btns, itemsPerPage);
 
+        }
+
+        private void Tb_pageNumberSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+               
+
+                if (tb_pageNumberSearch.Text.Equals(""))
+                {
+                    pageIndex = 1;
+                }
+                else if (((posSerialsQuery.Count() - 1) / itemsPerPage) + 1 < int.Parse(tb_pageNumberSearch.Text))
+                {
+                    pageIndex = ((posSerialsQuery.Count() - 1) / itemsPerPage) + 1;
+                }
+                else
+                {
+                    pageIndex = int.Parse(tb_pageNumberSearch.Text);
+                }
+
+                #region
+                
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                || (s.posName != null ? s.posName.Contains(txtSearch) : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                txt_count.Text = posSerialsQuery.Count().ToString();
+
+                refreshGrid();
+                #endregion
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+    
+        private void Btn_firstPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                pageIndex = 1;
+                #region
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                || (s.posName != null ? s.posName.Contains(txtSearch) : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                txt_count.Text = posSerialsQuery.Count().ToString();
+                refreshGrid();
+                #endregion
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_prevPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                pageIndex = int.Parse(btn_prevPage.Content.ToString());
+                #region
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                || (s.posName != null ? s.posName.Contains(txtSearch) : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                txt_count.Text = posSerialsQuery.Count().ToString();
+                refreshGrid();
+                #endregion
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_activePage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                pageIndex = int.Parse(btn_activePage.Content.ToString());
+                #region
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                || (s.posName != null ? s.posName.Contains(txtSearch) : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                refreshGrid();
+                #endregion
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_nextPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                pageIndex = int.Parse(btn_nextPage.Content.ToString());
+                #region
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                || (s.posName != null ? s.posName.Contains(txtSearch) : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                txt_count.Text = posSerialsQuery.Count().ToString();
+                refreshGrid();
+                #endregion
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_lastPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                //posSerialsQuery = items.Where(x => x.isActive == tglCategoryState);
+                pageIndex = ((posSerialsQuery.Count() - 1) / itemsPerPage) + 1;
+                #region
+                posSerialsQuery = posSerialsQuery.Where(s => s.serial.Contains(txtSearch)
+                || (s.posName != null ? s.posName.Contains(txtSearch) : false)
+                || (s.branchName != null ? s.branchName.Contains(txtSearch) : false));
+                txt_count.Text = posSerialsQuery.Count().ToString();
+                refreshGrid();
+                #endregion
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
         #region reports
 
         //ReportCls reportclass = new ReportCls();
-  
+
         public async void  BuildReport()
         {
 
@@ -625,7 +816,7 @@ namespace AdministratorApp.View.windows
         {//pdf
             try
             {
-                HelpClass.StartAwait(grid_serialsList);
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 BuildReport();
@@ -639,11 +830,11 @@ namespace AdministratorApp.View.windows
                 }
                 #endregion
 
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -652,7 +843,7 @@ namespace AdministratorApp.View.windows
         {//excel
             try
             {
-                HelpClass.StartAwait(grid_serialsList);
+                HelpClass.StartAwait(grid_main);
 
                 PackageUser puModel = new PackageUser();
                 PackageUser pu = await puModel.GetByID(packageUserID);
@@ -678,11 +869,11 @@ namespace AdministratorApp.View.windows
                 t1.Start();
                 #endregion
 
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_serialsList);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -722,7 +913,10 @@ namespace AdministratorApp.View.windows
                 itemsPerPage = int.Parse(cb_itemPerPage.SelectedValue.ToString());
                 pageCount = posSerialsQuery.Count() / itemsPerPage;
                 pageIndex = 1;
-                RefreshView();
+            Tb_search_TextChanged(tb_search, null);
+            /*
+            RefreshView();
+            */
             //}
             //catch (Exception ex)
             //{
