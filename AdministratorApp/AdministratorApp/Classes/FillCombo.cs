@@ -79,7 +79,12 @@ namespace AdministratorApp.Classes
             combo.DisplayMemberPath = "packageName";
             combo.SelectedIndex = -1;
         }
-        
+        static public void fillRegion( )
+        {
+            MainWindow.Region = countrynum.Where(C=> C.isDefault==1).FirstOrDefault();
+           
+        }
+
         static public async Task fillPeriod(ComboBox combo, int customerId, int packageId)
         {
             countryPackageDates = await cpd.GetByCustomerPackId(customerId , packageId);

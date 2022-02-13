@@ -39,8 +39,9 @@ namespace AdministratorApp.View.windows
         bool isImgPressed = false;
 
         int? countryid;
-        Boolean firstchange = false;
-        Boolean firstchangefax = false;
+        bool firstchangephone = true;
+        bool firstchangefax = true;
+
         Country countrycodes = new Country();
         City cityCodes = new City();
         OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -498,7 +499,7 @@ namespace AdministratorApp.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (cb_areaPhone.SelectedValue != null)
+                if (cb_areaPhone.SelectedValue != null && !firstchangephone)
                 {
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
@@ -519,7 +520,7 @@ namespace AdministratorApp.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (cb_areaFax.SelectedValue != null)
+                if (cb_areaFax.SelectedValue != null && !firstchangefax)
                 {
                     if (cb_areaFax.SelectedIndex >= 0)
                     {

@@ -501,6 +501,8 @@ namespace AdministratorApp
               await  FillCombo.loading_getDefaultSystemInfo();
              await FillCombo.Getprintparameter();
                 loading_getGroupObjects();
+               await FillCombo.RefreshCountry();
+                FillCombo.fillRegion();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getDateForm();
