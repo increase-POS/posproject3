@@ -37,14 +37,14 @@ namespace AdministratorApp.View.windows
 
         // print
         SetValues print_on_save_salerow = new SetValues();
-        SetValues print_on_save_purrow = new SetValues();
-        SetValues email_on_save_salerow = new SetValues();
-        SetValues email_on_save_purrow = new SetValues();
+       // SetValues print_on_save_purrow = new SetValues();
+       SetValues email_on_save_salerow = new SetValues();
+     //   SetValues email_on_save_purrow = new SetValues();
         SetValues setvalueModel = new SetValues();
         string print_on_save_sale;
-        string print_on_save_pur;
+        //string print_on_save_pur;
         string email_on_save_sale;
-        string email_on_save_pur;
+        //string email_on_save_pur;
 
         List<SetValues> printList = new List<SetValues>();
 
@@ -59,25 +59,16 @@ namespace AdministratorApp.View.windows
             print_on_save_salerow = printList.Where(X => X.name == "print_on_save_sale").FirstOrDefault();
             print_on_save_sale = print_on_save_salerow.value;
 
-            print_on_save_purrow = printList.Where(X => X.name == "print_on_save_pur").FirstOrDefault();
-            print_on_save_pur = print_on_save_purrow.value;
+            //print_on_save_purrow = printList.Where(X => X.name == "print_on_save_pur").FirstOrDefault();
+            //print_on_save_pur = print_on_save_purrow.value;
 
             email_on_save_salerow = printList.Where(X => X.name == "email_on_save_sale").FirstOrDefault();
             email_on_save_sale = email_on_save_salerow.value;
 
-            email_on_save_purrow = printList.Where(X => X.name == "email_on_save_pur").FirstOrDefault();
-            email_on_save_pur = email_on_save_purrow.value;
-           /*
-            if (print_on_save_pur == "1")
-            {
-                tgl_printOnSavePur.IsChecked = true;
-            }
-            else
-            {
-                tgl_printOnSavePur.IsChecked = false;
-            }
-            */
-            //
+            //email_on_save_purrow = printList.Where(X => X.name == "email_on_save_pur").FirstOrDefault();
+            //email_on_save_pur = email_on_save_purrow.value;
+        
+        
             if (print_on_save_sale == "1")
             {
                 tgl_printOnSaveSale.IsChecked = true;
@@ -87,16 +78,7 @@ namespace AdministratorApp.View.windows
                 tgl_printOnSaveSale.IsChecked = false;
             }
             //
-            /*
-            if (email_on_save_pur == "1")
-            {
-                tgl_emailOnSavePur.IsChecked = true;
-            }
-            else
-            {
-                tgl_emailOnSavePur.IsChecked = false;
-            }
-            */
+     
             //////////////////
             if (email_on_save_sale == "1")
             {
@@ -107,11 +89,8 @@ namespace AdministratorApp.View.windows
                 tgl_emailOnSaveSale.IsChecked = false;
             }
 
-            /*
-            tgl_printOnSaveSale
-            tgl_emailOnSavePur
-            tgl_emailOnSaveSale
-            */
+         
+         
           
         }
 
@@ -253,14 +232,14 @@ namespace AdministratorApp.View.windows
             {
                 email_on_save_salerow.value = "0";
             }
-            msg = await setvalueModel.Save(print_on_save_purrow);
+            //msg = await setvalueModel.Save(print_on_save_purrow);
             msg = await setvalueModel.Save(print_on_save_salerow);
-            msg = await setvalueModel.Save(email_on_save_purrow);
+            //msg = await setvalueModel.Save(email_on_save_purrow);
             msg = await setvalueModel.Save(email_on_save_salerow);
 
 
             await Getprintparameter();
-            await MainWindow.Getprintparameter();
+            await FillCombo.Getprintparameter();
             if (msg > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
