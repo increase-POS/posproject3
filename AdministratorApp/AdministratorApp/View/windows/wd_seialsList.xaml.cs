@@ -531,7 +531,7 @@ namespace AdministratorApp.View.windows
             posSerials = await posSerialModel.GetSerialAndPosInfo(packageUserID);
             return posSerials;
         }
-        List<PosSerials> posSerialsQueryPage = new List<PosSerials>();
+        IEnumerable<PosSerials> posSerialsQueryPage = new List<PosSerials>();
         /*
         private void RefreshView()
         {
@@ -570,7 +570,8 @@ namespace AdministratorApp.View.windows
         {
             if (btns is null)
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-            dg_serials.ItemsSource = pagination.refrishPagination(posSerialsQuery, pageIndex, btns, itemsPerPage);
+            posSerialsQueryPage = pagination.refrishPagination(posSerialsQuery, pageIndex, btns, itemsPerPage);
+            dg_serials.ItemsSource = posSerialsQueryPage;
 
         }
 
@@ -885,7 +886,6 @@ namespace AdministratorApp.View.windows
             try
             {
                 chk_allSerials.Content = MainWindow.resourcemanager.GetString("trUnSelectAll");
-                /*
                 isActiveCount = posSerialsQueryPage.Count(c => c.isActive == 1);
 
                 foreach (var s in posSerialsQueryPage)
@@ -897,10 +897,9 @@ namespace AdministratorApp.View.windows
                     dg_serials.Items.Refresh();
                     }
                 }
-                */
-                cb_itemPerPage.IsEnabled = false;
-                grid_pagination.IsEnabled = false;
-                dg_serials.ItemsSource = posSerialsQuery;
+                //cb_itemPerPage.IsEnabled = false;
+                //grid_pagination.IsEnabled = false;
+                //dg_serials.ItemsSource = posSerialsQuery;
 
                 //itemsPerPage = posSerialsQuery.Count();
                 //pageIndex = 1;
@@ -921,22 +920,20 @@ namespace AdministratorApp.View.windows
             {
 
             chk_allSerials.Content = MainWindow.resourcemanager.GetString("trSelectAll");
-            cb_itemPerPage.IsEnabled = false;
-            grid_pagination.IsEnabled = false;
+            //cb_itemPerPage.IsEnabled = true;
+            //grid_pagination.IsEnabled = true;
             //dg_serials.ItemsSource = posSerialsQuery;
 
-            itemsPerPage = int.Parse(cb_itemPerPage.SelectedValue.ToString());
-            pageCount = posSerialsQuery.Count() / itemsPerPage;
-            pageIndex = 1;
-            Tb_search_TextChanged(tb_search, null);
-            /*
+            //itemsPerPage = int.Parse(cb_itemPerPage.SelectedValue.ToString());
+            //pageCount = posSerialsQuery.Count() / itemsPerPage;
+            //pageIndex = 1;
+            //Tb_search_TextChanged(tb_search, null);
                 foreach (var s in posSerialsQueryPage)
                 {
                     s.isActive = 0;
                 dg_serials.ItemsSource = posSerialsQueryPage;
                 dg_serials.Items.Refresh();
             }
-            */
             //RefreshView();
             //dg_serials.Items.Refresh();
             }
