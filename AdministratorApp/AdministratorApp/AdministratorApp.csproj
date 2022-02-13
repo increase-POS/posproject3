@@ -266,6 +266,9 @@
     <Compile Include="View\settings\uc_general.xaml.cs">
       <DependentUpon>uc_general.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\settings\uc_reportsSettings.xaml.cs">
+      <DependentUpon>uc_reportsSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
@@ -298,6 +301,9 @@
     </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_reportSystmSetting.xaml.cs">
+      <DependentUpon>wd_reportSystmSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_saleNote.xaml.cs">
       <DependentUpon>wd_saleNote.xaml</DependentUpon>
@@ -411,6 +417,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\settings\uc_reportsSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\settings\uc_settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -454,6 +464,10 @@
     <Page Include="View\windows\wd_previewPdf.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_reportSystmSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_saleNote.xaml">
       <SubType>Designer</SubType>

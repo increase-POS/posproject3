@@ -551,7 +551,7 @@ namespace AdministratorApp.View.sales
 
         //pay preview
 
-      public async void  printOnPay()
+        public async void printOnPay()
         {
             if (packageUser.packageUserId > 0)
             {
@@ -563,13 +563,13 @@ namespace AdministratorApp.View.sales
                 {
                     LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), 1);
                 });
-             
+
                 #endregion
             }
         }
         public async void Previewpayoprow(int payOpId)
         {
-            if (payOpId>0)
+            if (payOpId > 0)
             {
                 PayOpModel = new PayOp();
                 PayOpModel = await PayOpModel.GetByID(payOpId);
@@ -600,9 +600,9 @@ namespace AdministratorApp.View.sales
             ////string secondTitle = "";
             ////string subTitle = "";
             //string Title = "";
-        
+
             List<ReportParameter> paramarr = new List<ReportParameter>();
-        
+
             string addpath;
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
@@ -629,7 +629,7 @@ namespace AdministratorApp.View.sales
 
             rep.Refresh();
 
-           
+
 
         }
 
@@ -653,8 +653,8 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));//
 
             paramarr.Add(new ReportParameter("trProcessNumTooltip", MainWindow.resourcemanagerreport.GetString("trProcessNumTooltip")));//
-            paramarr.Add(new ReportParameter("PayNo",PayOpModel.code));//
-            paramarr.Add(new ReportParameter("trSoftware", MainWindow.resourcemanagerreport.GetString("trSoftware") ));//
+            paramarr.Add(new ReportParameter("PayNo", PayOpModel.code));//
+            paramarr.Add(new ReportParameter("trSoftware", MainWindow.resourcemanagerreport.GetString("trSoftware")));//
             paramarr.Add(new ReportParameter("software", PackagesModel.programName + " " + PackagesModel.verName));//
             paramarr.Add(new ReportParameter("trDiscount", MainWindow.resourcemanagerreport.GetString("trDiscount")));//
             paramarr.Add(new ReportParameter("trTotal", MainWindow.resourcemanagerreport.GetString("trTotal")));//
@@ -662,7 +662,7 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Discount", reportclass.DecTostring(PayOpModel.discountValue)));//
             paramarr.Add(new ReportParameter("Total", reportclass.DecTostring(PayOpModel.totalnet)));//
             paramarr.Add(new ReportParameter("currency", CountryPackageDateModel.currency));//
- 
+
             paramarr.Add(new ReportParameter("Notes", PayOpModel.notes));
 
             paramarr.Add(new ReportParameter("trPayDate", MainWindow.resourcemanagerreport.GetString("trPayDate")));//trPayDate
@@ -711,7 +711,7 @@ namespace AdministratorApp.View.sales
                 terms = SetValuesList.FirstOrDefault();
                 email = await email.GetByBranchIdandSide("sales");
                 setvlist = await setvmodel.GetBySetName("sale_email_temp");
-                setvUpgradelist= await setvmodel.GetBySetName("upgrade_email_temp");
+                setvUpgradelist = await setvmodel.GetBySetName("upgrade_email_temp");
                 //  CountryPackageDateModel.monthCount;
                 return "1";
             }
@@ -720,7 +720,7 @@ namespace AdministratorApp.View.sales
 
         public async Task<string> GetPayrowdata()
         {
-            if (PayOpModel.packageUserId>0)
+            if (PayOpModel.packageUserId > 0)
             {
                 packUserRep = await packUserRep.GetByID((int)PayOpModel.packageUserId);
                 agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
@@ -730,9 +730,9 @@ namespace AdministratorApp.View.sales
                 CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
                 PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
             }
-        
-                //  CountryPackageDateModel.monthCount;
-                return "1";
+
+            //  CountryPackageDateModel.monthCount;
+            return "1";
         }
         public async void sendsaleEmail(int packageUserId)
         {
@@ -788,7 +788,7 @@ namespace AdministratorApp.View.sales
                                                 //send upgrade email
 
                                                 string pdfpath = "";
-                                                pdfpath = await Saveupgradepdf(); 
+                                                pdfpath = await Saveupgradepdf();
 
                                                 mailtosend = mailtosend.fillUpgradeTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvUpgradelist, terms);
 
@@ -796,12 +796,12 @@ namespace AdministratorApp.View.sales
 
                                                 this.Dispatcher.Invoke(() =>
                                                 {
-                                                 msg = mailtosend.Sendmail();// temp comment
-                                                if (msg == "Failure sending mail.")
+                                                    msg = mailtosend.Sendmail();// temp comment
+                                                    if (msg == "Failure sending mail.")
                                                     {
-                                                    // msg = "No Internet connection";
+                                                        // msg = "No Internet connection";
 
-                                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoMailConnection"), animation: ToasterAnimation.FadeIn);
+                                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoMailConnection"), animation: ToasterAnimation.FadeIn);
                                                     }
                                                     else if (msg == "mailsent")
                                                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
@@ -810,12 +810,12 @@ namespace AdministratorApp.View.sales
                                                 });
                                             }
                                             /////
-                                        mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist);
- 
+                                            mailtosend = mailtosend.fillSaleTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvlist);
+
                                             msg = "";
                                             this.Dispatcher.Invoke(() =>
                                             {
-                                            msg = mailtosend.Sendmail();// temp comment
+                                                msg = mailtosend.Sendmail();// temp comment
                                                 if (msg == "Failure sending mail.")
                                                 {
                                                     // msg = "No Internet connection";
@@ -1124,7 +1124,7 @@ namespace AdministratorApp.View.sales
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopPay"), animation: ToasterAnimation.FadeIn);
 
-                        if (FillCombo.email_on_save_sale=="1")
+                        if (FillCombo.email_on_save_sale == "1")
                         {
                             Thread t2 = new Thread(() =>
                             {
@@ -1132,7 +1132,7 @@ namespace AdministratorApp.View.sales
                             });
                             t2.Start();
                         }
-                        if (FillCombo.print_on_save_sale=="1")
+                        if (FillCombo.print_on_save_sale == "1")
                         {
 
                         }
@@ -1195,20 +1195,20 @@ namespace AdministratorApp.View.sales
                     packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
                     await getdata();
                     Window.GetWindow(this).Opacity = 0.2;
-                string pdfpath = "";
-                //
-                pdfpath = @"\Thumb\report\temp.pdf";
-                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                  BuildPayReport();
-                LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                wd_previewPdf w = new wd_previewPdf();
-                w.pdfPath = pdfpath;
-                if (!string.IsNullOrEmpty(w.pdfPath))
-                {
-                    w.ShowDialog();
-                    w.wb_pdfWebViewer.Dispose();
-                }
-                Window.GetWindow(this).Opacity = 1;
+                    string pdfpath = "";
+                    //
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                    BuildPayReport();
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+                    }
+                    Window.GetWindow(this).Opacity = 1;
                 }
                 #endregion
 
@@ -1235,5 +1235,23 @@ namespace AdministratorApp.View.sales
             {
             }
         }
+        #region Button In DataGrid
+        void printRowFromDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        PayOp row = (PayOp)dg_payments.SelectedItems[0];
+
+                    }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion	
     }
 }

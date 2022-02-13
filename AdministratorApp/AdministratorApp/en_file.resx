@@ -2797,4 +2797,13 @@ Please add Email in setting</value>
   <data name="trPayDetail" xml:space="preserve">
     <value>Pay Detail</value>
   </data>
+  <data name="trEmailOnSaveSale" xml:space="preserve">
+    <value>Send an email when saving a sales invoice</value>
+  </data>
+  <data name="trPrintOnSaveSale" xml:space="preserve">
+    <value>Print when saving a sales invoice</value>
+  </data>
+  <data name="trSystemSetting" xml:space="preserve">
+    <value>System Settings</value>
+  </data>
 </root>

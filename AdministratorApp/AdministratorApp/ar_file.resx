@@ -2779,4 +2779,13 @@
   <data name="trPayDetail" xml:space="preserve">
     <value>تفاصيل الدفعة</value>
   </data>
+  <data name="trEmailOnSaveSale" xml:space="preserve">
+    <value>إرسال إيميل عند حفظ فاتورة مبيعات</value>
+  </data>
+  <data name="trPrintOnSaveSale" xml:space="preserve">
+    <value>طباعة عند حفظ فاتورة مبيعات</value>
+  </data>
+  <data name="trSystemSetting" xml:space="preserve">
+    <value>إعدادات النظام</value>
+  </data>
 </root>
