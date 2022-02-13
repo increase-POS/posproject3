@@ -2792,7 +2792,7 @@ Please add Email in setting</value>
     <value>No Connection...Check the email setting</value>
   </data>
   <data name="trPayDate" xml:space="preserve">
-    <value>Pay Date</value>
+    <value>Payment Date</value>
   </data>
   <data name="trPayDetail" xml:space="preserve">
     <value>Service Invoice</value>

@@ -2774,7 +2774,7 @@
     <value>لا يوجد اتصال...تحقق من اعدادات الايميل</value>
   </data>
   <data name="trPayDate" xml:space="preserve">
-    <value>تاريخ الدفع</value>
+    <value>تاريخ الدفعة</value>
   </data>
   <data name="trPayDetail" xml:space="preserve">
     <value>فاتورة خدمة</value>

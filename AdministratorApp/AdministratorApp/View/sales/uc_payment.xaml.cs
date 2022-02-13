@@ -561,7 +561,8 @@ namespace AdministratorApp.View.sales
                  await GetPrintdata();
                 
                 #region
-                BuildPayReport();
+                BuildPayReport(0);
+
                 this.Dispatcher.Invoke(() =>
                 {
                     LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), 1);
@@ -588,7 +589,7 @@ namespace AdministratorApp.View.sales
                 //
                 pdfpath = @"\Thumb\report\temp.pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                BuildPayReport();
+                BuildPayReport(1);
 
                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
                 wd_previewPdf w = new wd_previewPdf();
@@ -602,7 +603,7 @@ namespace AdministratorApp.View.sales
 
             }
         }
-        public void BuildPayReport()
+        public void BuildPayReport(int isCopy)
         {
             //string firstTitle = "paymentsReport";
             ////string secondTitle = "";
@@ -632,7 +633,7 @@ namespace AdministratorApp.View.sales
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
             SetPayparam(paramarr);
-
+            paramarr.Add(new ReportParameter("isCopy",isCopy.ToString()));//
             rep.SetParameters(paramarr);
 
             rep.Refresh();
@@ -1243,7 +1244,7 @@ namespace AdministratorApp.View.sales
                     //
                     pdfpath = @"\Thumb\report\temp.pdf";
                     pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                    BuildPayReport();
+                    BuildPayReport(1);
                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
                     wd_previewPdf w = new wd_previewPdf();
                     w.pdfPath = pdfpath;

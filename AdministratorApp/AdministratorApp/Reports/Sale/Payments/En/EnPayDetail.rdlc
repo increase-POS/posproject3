@@ -113,6 +113,45 @@
     <ReportSection>
       <Body>
         <ReportItems>
+          <Textbox Name="Textbox35">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>COPY</Value>
+                    <Style>
+                      <FontSize>110pt</FontSize>
+                      <FontWeight>Light</FontWeight>
+                      <Color>Gainsboro</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox30</rd:DefaultName>
+            <Top>3.64775cm</Top>
+            <Left>2.01144cm</Left>
+            <Height>4.39551cm</Height>
+            <Width>16.97713cm</Width>
+            <Visibility>
+              <Hidden>=iif(Parameters!isCopy.Value = "1",false,true)</Hidden>
+            </Visibility>
+            <RepeatWith>TablixEn2</RepeatWith>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
           <Textbox Name="agentTitle">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -139,6 +178,7 @@
             <Left>1.18768cm</Left>
             <Height>1.21167cm</Height>
             <Width>18.5cm</Width>
+            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -160,6 +200,7 @@
                     <Value>=Parameters!trCustomerHint.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -168,6 +209,7 @@
                     <Value>: </Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -182,8 +224,8 @@
             <Top>0.8202in</Top>
             <Left>0.35488in</Left>
             <Height>0.3125in</Height>
-            <Width>1.01737in</Width>
-            <ZIndex>1</ZIndex>
+            <Width>1.1389in</Width>
+            <ZIndex>2</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -205,6 +247,7 @@
                     <Value>=Parameters!trAgentHint.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -213,6 +256,7 @@
                     <Value>: </Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -227,8 +271,8 @@
             <Top>1.18131in</Top>
             <Left>0.35488in</Left>
             <Height>0.31945in</Height>
-            <Width>1.01737in</Width>
-            <ZIndex>2</ZIndex>
+            <Width>1.1389in</Width>
+            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -265,7 +309,7 @@
             <Left>5.66541in</Left>
             <Height>0.3125in</Height>
             <Width>2.08564in</Width>
-            <ZIndex>3</ZIndex>
+            <ZIndex>4</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -302,7 +346,7 @@
             <Left>5.66541in</Left>
             <Height>0.31806in</Height>
             <Width>2.08564in</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>5</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -336,10 +380,10 @@
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>0.81464in</Top>
-            <Left>1.40003in</Left>
+            <Left>1.53545in</Left>
             <Height>0.3125in</Height>
-            <Width>2.3605in</Width>
-            <ZIndex>5</ZIndex>
+            <Width>2.22508in</Width>
+            <ZIndex>6</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -373,10 +417,10 @@
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>1.1827in</Top>
-            <Left>1.40003in</Left>
+            <Left>1.53545in</Left>
             <Height>0.31806in</Height>
-            <Width>2.3605in</Width>
-            <ZIndex>6</ZIndex>
+            <Width>2.22508in</Width>
+            <ZIndex>7</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -398,6 +442,7 @@
                     <Value>=Parameters!trBookNum.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -406,6 +451,7 @@
                     <Value>:</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -421,7 +467,7 @@
             <Left>4.06533in</Left>
             <Height>0.3125in</Height>
             <Width>1.53064in</Width>
-            <ZIndex>7</ZIndex>
+            <ZIndex>8</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -443,6 +489,7 @@
                     <Value>=Parameters!trExpirationDate.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -451,6 +498,7 @@
                     <Value>:</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -466,7 +514,7 @@
             <Left>4.06533in</Left>
             <Height>0.31806in</Height>
             <Width>1.53064in</Width>
-            <ZIndex>8</ZIndex>
+            <ZIndex>9</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -503,7 +551,7 @@
             <Left>0.35488in</Left>
             <Height>0.3125in</Height>
             <Width>7.39618in</Width>
-            <ZIndex>9</ZIndex>
+            <ZIndex>10</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -531,10 +579,10 @@
                   <Width>2.25238cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.92931cm</Width>
+                  <Width>4.70204cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.95423cm</Width>
+                  <Width>3.18152cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -726,6 +774,7 @@
                                   <Value>=Parameters!PayNo.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>12pt</FontSize>
                                     <Color>DimGray</Color>
                                   </Style>
                                 </TextRun>
@@ -765,6 +814,7 @@
                                   <Value>=Parameters!PayDate.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>12pt</FontSize>
                                     <Color>DimGray</Color>
                                   </Style>
                                 </TextRun>
@@ -806,6 +856,7 @@
                                   <Value>=Parameters!software.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>12pt</FontSize>
                                     <Color>DimGray</Color>
                                   </Style>
                                 </TextRun>
@@ -847,6 +898,7 @@
                                   <Value>=Parameters!Price.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>12pt</FontSize>
                                     <Color>DimGray</Color>
                                   </Style>
                                 </TextRun>
@@ -854,6 +906,7 @@
                                   <Value xml:space="preserve"> </Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>12pt</FontSize>
                                     <Color>DimGray</Color>
                                   </Style>
                                 </TextRun>
@@ -861,6 +914,7 @@
                                   <Value>=Parameters!currency.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>12pt</FontSize>
                                     <Color>DimGray</Color>
                                   </Style>
                                 </TextRun>
@@ -1440,8 +1494,8 @@
             <Top>4.87228cm</Top>
             <Left>0.90139cm</Left>
             <Height>3.8cm</Height>
-            <Width>18.78628cm</Width>
-            <ZIndex>10</ZIndex>
+            <Width>18.7863cm</Width>
+            <ZIndex>11</ZIndex>
             <Style>
               <Border>
                 <Color>White</Color>
@@ -1459,6 +1513,7 @@
                     <Value>=Parameters!trPeriod.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -1467,6 +1522,7 @@
                     <Value>:</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -1481,8 +1537,8 @@
             <Top>1.54243in</Top>
             <Left>0.35488in</Left>
             <Height>0.3125in</Height>
-            <Width>1.00349in</Width>
-            <ZIndex>11</ZIndex>
+            <Width>1.1389in</Width>
+            <ZIndex>12</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1516,10 +1572,10 @@
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>1.54243in</Top>
-            <Left>1.40003in</Left>
+            <Left>1.53545in</Left>
             <Height>0.3125in</Height>
-            <Width>2.3605in</Width>
-            <ZIndex>12</ZIndex>
+            <Width>2.22508in</Width>
+            <ZIndex>13</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1541,6 +1597,7 @@
                     <Value>=Parameters!trName.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -1549,6 +1606,7 @@
                     <Value>:</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                       <Color>#4e4e4e</Color>
                     </Style>
@@ -1564,7 +1622,7 @@
             <Left>4.06533in</Left>
             <Height>0.3125in</Height>
             <Width>1.53064in</Width>
-            <ZIndex>13</ZIndex>
+            <ZIndex>14</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1601,7 +1659,7 @@
             <Left>5.66541in</Left>
             <Height>0.3125in</Height>
             <Width>2.08564in</Width>
-            <ZIndex>14</ZIndex>
+            <ZIndex>15</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2340,6 +2398,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="isCopy">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -2620,6 +2684,11 @@
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>24</RowIndex>
           <ParameterName>PayDate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>24</RowIndex>
+          <ParameterName>isCopy</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
