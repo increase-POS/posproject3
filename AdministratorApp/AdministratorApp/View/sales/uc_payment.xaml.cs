@@ -551,20 +551,24 @@ namespace AdministratorApp.View.sales
 
         //pay preview
 
-        public async void printOnPay()
+        public async Task<string> printOnPay()
         {
             if (packageUser.packageUserId > 0)
             {
                 packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
-                await getdata();
+                await GetPrintdata();
                 #region
                 BuildPayReport();
                 this.Dispatcher.Invoke(() =>
                 {
                     LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), 1);
                 });
-
+                return "1";
                 #endregion
+            }
+            else
+            {
+                return "0";
             }
         }
         public async void Previewpayoprow(int payOpId)
@@ -717,7 +721,31 @@ namespace AdministratorApp.View.sales
             }
 
         }
+        public async Task<string> GetPrintdata()
+        {
+            PayOpModel = new PayOp();
+            PayOpModel = await PayOpModel.getLastPayOp(packUserRep.packageUserId);
+            if (PayOpModel.payOpId <= 0)
+            {
+                return "0";
+            }
+            else
+            {
 
+                agentmodel = await agentmodel.GetByID((int)packUserRep.userId);
+
+                cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
+
+                CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
+                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+        
+              //  terms = SetValuesList.FirstOrDefault();
+
+                //  CountryPackageDateModel.monthCount;
+                return "1";
+            }
+
+        }
         public async Task<string> GetPayrowdata()
         {
             if (PayOpModel.packageUserId > 0)
@@ -1134,6 +1162,8 @@ namespace AdministratorApp.View.sales
                         }
                         if (FillCombo.print_on_save_sale == "1")
                         {
+
+                            printOnPay();
 
                         }
                         await RefreshPayOpList();
