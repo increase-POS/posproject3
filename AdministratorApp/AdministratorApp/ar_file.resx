@@ -2777,7 +2777,7 @@
     <value>تاريخ الدفع</value>
   </data>
   <data name="trPayDetail" xml:space="preserve">
-    <value>تفاصيل الدفعة</value>
+    <value>فاتورة خدمة</value>
   </data>
   <data name="trEmailOnSaveSale" xml:space="preserve">
     <value>إرسال إيميل عند حفظ فاتورة مبيعات</value>

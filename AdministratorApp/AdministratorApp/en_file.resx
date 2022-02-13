@@ -2795,7 +2795,7 @@ Please add Email in setting</value>
     <value>Pay Date</value>
   </data>
   <data name="trPayDetail" xml:space="preserve">
-    <value>Pay Detail</value>
+    <value>Service Invoice</value>
   </data>
   <data name="trEmailOnSaveSale" xml:space="preserve">
     <value>Send an email when saving a sales invoice</value>

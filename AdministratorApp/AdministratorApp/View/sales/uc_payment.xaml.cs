@@ -551,24 +551,27 @@ namespace AdministratorApp.View.sales
 
         //pay preview
 
-        public async Task<string> printOnPay()
+        public async void  printOnPay()
         {
             if (packageUser.packageUserId > 0)
             {
-                packUserRep = await packUserRep.GetByID(packageUser.packageUserId);
-                await GetPrintdata();
+                
+                    packUserRep =await  packUserRep.GetByID(packageUser.packageUserId);
+
+                 await GetPrintdata();
+                
                 #region
                 BuildPayReport();
                 this.Dispatcher.Invoke(() =>
                 {
                     LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), 1);
                 });
-                return "1";
+              //  return "1";
                 #endregion
             }
             else
             {
-                return "0";
+                //return "0";
             }
         }
         public async void Previewpayoprow(int payOpId)
@@ -586,6 +589,7 @@ namespace AdministratorApp.View.sales
                 pdfpath = @"\Thumb\report\temp.pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
                 BuildPayReport();
+
                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
                 wd_previewPdf w = new wd_previewPdf();
                 w.pdfPath = pdfpath;
@@ -654,6 +658,7 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("Period", FillCombo.PeriodConv(CountryPackageDateModel)));//
             paramarr.Add(new ReportParameter("Name", PackagesModel.packageName));//
             paramarr.Add(new ReportParameter("Price", CountryPackageDateModel.price.ToString()));//
+      
             paramarr.Add(new ReportParameter("ExpirationDate", FillCombo.DateConvert(PayOpModel.expireDate)));//
 
             paramarr.Add(new ReportParameter("trProcessNumTooltip", MainWindow.resourcemanagerreport.GetString("trProcessNumTooltip")));//
@@ -694,6 +699,7 @@ namespace AdministratorApp.View.sales
         SetValues setvmodel = new SetValues();
         List<SetValues> setvlist = new List<SetValues>();
         List<SetValues> setvUpgradelist = new List<SetValues>();
+        List<PosSerials> repserialList = new List<PosSerials>();
         public async Task<string> getdata()
         {
             PayOpModel = new PayOp();
@@ -710,12 +716,13 @@ namespace AdministratorApp.View.sales
                 cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
                 CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+                PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
                 SetValuesList = await terms.GetBySetName("sale_note");
                 terms = SetValuesList.FirstOrDefault();
                 email = await email.GetByBranchIdandSide("sales");
                 setvlist = await setvmodel.GetBySetName("sale_email_temp");
                 setvUpgradelist = await setvmodel.GetBySetName("upgrade_email_temp");
+                repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
                 //  CountryPackageDateModel.monthCount;
                 return "1";
             }
@@ -737,7 +744,7 @@ namespace AdministratorApp.View.sales
                 cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
                 CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+                PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
         
               //  terms = SetValuesList.FirstOrDefault();
 
@@ -756,13 +763,13 @@ namespace AdministratorApp.View.sales
                 cumstomerModel = await cumstomerModel.GetByID((int)packUserRep.customerId);
 
                 CountryPackageDateModel = await CountryPackageDateModel.GetByID((int)PayOpModel.countryPackageId);
-                PackagesModel = await PackagesModel.GetByID((int)PayOpModel.packageId);
+                PackagesModel = await PackagesModel.GetByID((int)CountryPackageDateModel.packageId);
             }
 
             //  CountryPackageDateModel.monthCount;
             return "1";
         }
-        public async void sendsaleEmail(int packageUserId)
+        public async void   sendsaleEmail(int packageUserId)
         {
             try
             {
@@ -816,7 +823,7 @@ namespace AdministratorApp.View.sales
                                                 //send upgrade email
 
                                                 string pdfpath = "";
-                                                pdfpath = await Saveupgradepdf();
+                                                pdfpath =  Saveupgradepdf();
 
                                                 mailtosend = mailtosend.fillUpgradeTempData(packUserRep, PayOpModel, CountryPackageDateModel, PackagesModel, agentmodel, email, cumstomerModel, setvUpgradelist, terms);
 
@@ -885,9 +892,10 @@ namespace AdministratorApp.View.sales
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trEmailNotSend"), animation: ToasterAnimation.FadeIn);
                 });
             }
+           
         }
 
-        public async Task<string> BuildupgradeReport()
+        public  void  BuildupgradeReport()
         {
 
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -929,9 +937,9 @@ namespace AdministratorApp.View.sales
             paramarr.Add(new ReportParameter("trExpirationDate", MainWindow.resourcemanagerreport.GetString("trExpirationDate")));
             paramarr.Add(new ReportParameter("trBookNum", MainWindow.resourcemanagerreport.GetString("trBookNum")));
 
-            List<PosSerials> repserialList = new List<PosSerials>();
+         //   List<PosSerials> repserialList = new List<PosSerials>();
 
-            repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
+         //   repserialList = await posSerialModel.GetByPackUserId(packUserRep.packageUserId);
             clsReports.serialsMailReport(repserialList.Where(s => s.isActive == 1), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
@@ -939,9 +947,9 @@ namespace AdministratorApp.View.sales
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            return "1";
+             
         }
-        public async Task<string> Saveupgradepdf()
+        public  string Saveupgradepdf()
         {
             //for email
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -957,18 +965,17 @@ namespace AdministratorApp.View.sales
             else
             {
 
-
                 ////////////////////////
                 string folderpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath) + @"\Thumb\report\";
                 ReportCls.clearFolder(folderpath);
 
                 pdfpath = @"\Thumb\report\File" + DateTime.Now.ToFileTime().ToString() + ".pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                await BuildupgradeReport();
-
-                LocalReportExtensions.ExportToPDF(rep, pdfpath);
-
-
+                 BuildupgradeReport();
+                this.Dispatcher.Invoke(() =>
+                {
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                });
 
             }
             return pdfpath;
@@ -1152,20 +1159,27 @@ namespace AdministratorApp.View.sales
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopPay"), animation: ToasterAnimation.FadeIn);
 
-                        if (FillCombo.email_on_save_sale == "1")
+
+                        if (FillCombo.print_on_save_sale == "1")
                         {
                             Thread t2 = new Thread(() =>
                             {
-                                sendsaleEmail(packageUser.packageUserId);
+                                printOnPay();
                             });
                             t2.Start();
                         }
-                        if (FillCombo.print_on_save_sale == "1")
+
+                        if (FillCombo.email_on_save_sale == "1")
                         {
-
-                            printOnPay();
-
+                            Thread t1 = new Thread(() =>
+                            {
+                           sendsaleEmail(packageUser.packageUserId);
+                            });
+                            t1.Start();
+                       
+                        
                         }
+                     
                         await RefreshPayOpList();
                         await Search();
 
@@ -1274,6 +1288,7 @@ namespace AdministratorApp.View.sales
                     if (vis is DataGridRow)
                     {
                         PayOp row = (PayOp)dg_payments.SelectedItems[0];
+                        Previewpayoprow(row.payOpId);
 
                     }
             }
