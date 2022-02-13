@@ -152,7 +152,8 @@ namespace Programs_Server.Controllers
                            S.discountValue,
                            S.customerId,
                            S.agentId,
-
+                           S.expireDate,
+                           S.packageId,
 
                        })
                        .FirstOrDefault();
@@ -623,7 +624,8 @@ namespace Programs_Server.Controllers
                                       discountValue = S.discountValue,
                                       customerId = S.customerId,
                                       agentId = S.agentId,
-                                     // packageNumber = S.packageNumber,
+                                      expireDate=S.expireDate,
+                                      // packageNumber = S.packageNumber,
 
 
                                   }).OrderBy(x => x.updateDate).ToList().Last();
