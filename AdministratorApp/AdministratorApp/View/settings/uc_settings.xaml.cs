@@ -44,7 +44,17 @@ namespace AdministratorApp.View.settings
                 if (sender != null)
                     HelpClass.StartAwait(grid_mainGrid);
                 menuList = new List<string> { "emails" ,"general","reportsSettings"};
-
+                #region translate
+                if (MainWindow.lang.Equals("en"))
+                {
+                    grid_mainGrid.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    grid_mainGrid.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+                #endregion
 
 
 
@@ -62,7 +72,12 @@ namespace AdministratorApp.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        public void translate()
+        {
+            btn_general.Content = MainWindow.resourcemanager.GetString("trGeneral");
+            btn_reportsSettings.Content = MainWindow.resourcemanager.GetString("trPrint");
+            btn_emails.Content = MainWindow.resourcemanager.GetString("trEmail");
+        }
         void colorButtonRefreash(string str)
         {
             foreach (Button button in FindControls.FindVisualChildren<Button>(this))

@@ -1,4 +1,5 @@
 ﻿using AdministratorApp.Classes;
+using AdministratorApp.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,5 +124,33 @@ namespace AdministratorApp.View.settings.emailGeneral
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Btn_systmSetting_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") || SectionData.isAdminPermision())
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_reportSystmSetting w = new wd_reportSystmSetting();
+                w.windowType = "e";
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
     }
 }

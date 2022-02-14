@@ -33,6 +33,7 @@ namespace AdministratorApp.View.windows
             catch (Exception ex)
             { HelpClass.ExceptionMessage(ex, this); }
         }
+        public string windowType = "";
         BrushConverter bc = new BrushConverter();
 
         // print
@@ -119,7 +120,23 @@ namespace AdministratorApp.View.windows
 
                 translate();
                 #endregion
+                if (windowType == "r")
+                {
+                    txt_printOnSaveSale.Visibility =
+                    tgl_printOnSaveSale.Visibility = Visibility.Visible;
 
+                    txt_emailOnSaveSale.Visibility =
+                    tgl_emailOnSaveSale.Visibility = Visibility.Collapsed;
+                }
+                else if (windowType == "e")
+                {
+                     txt_printOnSaveSale.Visibility =
+                     tgl_printOnSaveSale.Visibility = Visibility.Collapsed;
+
+                    txt_emailOnSaveSale.Visibility =
+                    tgl_emailOnSaveSale.Visibility = Visibility.Visible;
+
+                }
                 //code
                 await Getprintparameter();
 
