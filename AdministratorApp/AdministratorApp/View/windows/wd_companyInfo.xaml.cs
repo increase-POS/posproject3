@@ -504,9 +504,12 @@ namespace AdministratorApp.View.windows
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid );
+                        //await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid );
+                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
+                      
                     }
                 }
+                firstchangephone = false;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -525,9 +528,13 @@ namespace AdministratorApp.View.windows
                     if (cb_areaFax.SelectedIndex >= 0)
                     {
                         countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid );
+                        //await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid );
+                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
+                       
                     }
+                    
                 }
+                firstchangefax = false;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

@@ -82,7 +82,7 @@ namespace AdministratorApp.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBook", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBook")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBookings")));
             //table columns
             paramarr.Add(new ReportParameter("trNO", MainWindow.resourcemanagerreport.GetString("trNO")));
             paramarr.Add(new ReportParameter("trBookDate", MainWindow.resourcemanagerreport.GetString("trBookDate")));
