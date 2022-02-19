@@ -325,13 +325,14 @@
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="#737373" FontSize="10" VerticalAlignment="Center" Margin="10,5,5,5"/>
                         <Button DockPanel.Dock="Right" x:Name="btn_clear" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,1" 
                                 Click="Btn_clear_Click">
-                            <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="35" Height="35">
+                            <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"   Width="20" Height="20">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
                                              PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
                                 </materialDesign:PackIcon.ToolTip>
                             </materialDesign:PackIcon>
                         </Button>
+
                         <Separator Background="#999999" VerticalAlignment="Center" Width="auto" />
                     </DockPanel>
                     <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
@@ -348,17 +349,19 @@
                                         
                                         SelectionChanged="Cb_customer_SelectionChanged" 
                                         LostFocus="validateEmpty_LostFocus"/>-->
-                            <dotNetKitControls:AutoCompleteComboBox   
+
+                                        <!--SelectedValuePath="custId"
+                                        ItemsSource="{Binding customers}"
+                                        SelectedItem="{Binding company}"-->
+
+                                <dotNetKitControls:AutoCompleteComboBox   
                                         x:Name="cb_customer" Padding="10,5,5,5"  Grid.Column="0"
                                         TextBlock.Foreground="#4E4E4E"    Margin="4,0"
                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                         materialDesign:HintAssist.Hint="Customer..."    
                                         VerticalAlignment="Top" BorderThickness="0" Height="40" 
                                         
-                                        SelectedValuePath="custId"
                                         TextSearch.TextPath="company"
-                                        ItemsSource="{Binding customers}"
-                                        SelectedItem="{Binding company}"
                                         SelectedValue="{Binding custId}"
                                         
                                         LostFocus="validateEmpty_LostFocus" 

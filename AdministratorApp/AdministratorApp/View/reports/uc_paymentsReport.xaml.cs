@@ -849,9 +849,9 @@ namespace AdministratorApp.View.reports
 
         private async void Dg_book_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+               // HelpClass.StartAwait(grid_main);
 
                 PaymentsSts payment = dg_book.SelectedItem as PaymentsSts;
                 if (payment.packageUserId > 0)
@@ -878,13 +878,13 @@ namespace AdministratorApp.View.reports
                 //Clear();
                 //ClearPackageUser();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                //HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                //HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

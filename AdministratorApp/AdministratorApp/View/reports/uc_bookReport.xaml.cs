@@ -421,7 +421,7 @@ namespace AdministratorApp.View.reports
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
 
                 BookSts book = dg_book.SelectedItem as BookSts;
                 if (book.packageUserId > 0)
@@ -454,11 +454,11 @@ namespace AdministratorApp.View.reports
                 //Clear();
                 //ClearPackageUser();
 
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

@@ -68,109 +68,114 @@ namespace AdministratorApp.View.sales
 
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
-
-
-            package = new Packages();
-
-            this.DataContext = package;
-
-            #region translate
-            if (MainWindow.lang.Equals("en"))
+            try
             {
-                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
-                grid_main.FlowDirection = FlowDirection.LeftToRight;
-            }
-            else
-            {
-                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
-            }
-            translate();
-            #endregion
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
 
-            requiredControlList = new List<string> { "package", "customer", "isOnline", "period" };
+                package = new Packages();
 
-            FillCombo.fillServerState(cb_isOnline);
+                this.DataContext = package;
 
-            if (MainWindow.userLogin.type.Equals("ag"))
-            {
-                await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId);
-                try
+                #region translate
+                if (MainWindow.lang.Equals("en"))
                 {
-                    agent = await userModel.GetByID(MainWindow.userLogin.userId);
-                }
-                catch { agent = await userModel.GetByID(MainWindow.userLogin.userId); }
-                await FillCombo.fillAgentPackage(cb_package, MainWindow.userLogin.userId);
-                cb_package.IsEnabled = true;
-            }
-            else
-            {
-                await FillCombo.fillCustomer(cb_customer);
-                try
-                {
-                    agent = await userModel.GetByID(3);
-                }
-                catch { agent = await userModel.GetByID(3); }
-                cb_agent.Visibility = Visibility.Collapsed;
-            }
-            if (oldPackageId == 0)
-            {
-                Clear();
-                btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
-            }
-            else
-            {
-                #region expired date
-                string color = "#2491EA";
-                if (packuser.expireDate.Value < DateTime.Now)
-                    color = "#FF0000";
-                txt_date.Text = HelpClass.setDateFormat(packuser.expireDate.Value);
-                txt_date.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
-                #endregion
-
-                btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
-                cb_customer.SelectedValue = oldCustomerId;
-                try
-                {
-                    agent = await userModel.GetByID(MainWindow.userLogin.userId);
-                }
-                catch { agent = await userModel.GetByID(MainWindow.userLogin.userId); }
-                if (MainWindow.userLogin.type.Equals("ag"))
-                {
-                    cb_package.SelectedValue = oldPackageId;
-                    cb_period.SelectedValue = oldCountryPackageId;
-                }
-                cb_isOnline.SelectedValue = isOnline;
-                if (isOnline)
-                {
-                    txt_offlineActivation.Visibility = Visibility.Collapsed;
-                    btn_download.Visibility = Visibility.Collapsed;
-                    txt_activationCodeTitle.Visibility = Visibility.Visible;
-                    tb_activationCode.Visibility = Visibility.Visible;
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    txt_offlineActivation.Visibility = Visibility.Visible;
-                    btn_download.Visibility = Visibility.Visible;
-                    txt_activationCodeTitle.Visibility = Visibility.Collapsed;
-                    tb_activationCode.Visibility = Visibility.Collapsed;
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
-                tgl_isActive.IsChecked = Convert.ToBoolean(packuser.isActive);
-                tgl_device.IsChecked = Convert.ToBoolean(packuser.canChngSer);
+                translate();
+                #endregion
+
+                requiredControlList = new List<string> { "package", "customer", "isOnline", "period" };
+
+                FillCombo.fillServerState(cb_isOnline);
+
+                if (MainWindow.userLogin.type.Equals("ag"))
+                {
+                    try { await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId); }
+                    catch { await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId); }
+                
+                    try
+                    {
+                        agent = await userModel.GetByID(MainWindow.userLogin.userId);
+                    }
+                    catch { agent = await userModel.GetByID(MainWindow.userLogin.userId); }
+                    await FillCombo.fillAgentPackage(cb_package, MainWindow.userLogin.userId);
+                    cb_package.IsEnabled = true;
+                }
+                else
+                {
+                    try { await FillCombo.fillCustomer(cb_customer); }
+                    catch { await FillCombo.fillCustomer(cb_customer); }
+                    try
+                    {
+                        agent = await userModel.GetByID(3);
+                    }
+                    catch { agent = await userModel.GetByID(3); }
+                    cb_agent.Visibility = Visibility.Collapsed;
+                }
+                if (oldPackageId == 0)
+                {
+                    Clear();
+                    btn_add.Content = MainWindow.resourcemanager.GetString("trBook");
+                }
+                else
+                {
+                    #region expired date
+                    string color = "#2491EA";
+                    if (packuser.expireDate.Value < DateTime.Now)
+                        color = "#FF0000";
+                    txt_date.Text = HelpClass.setDateFormat(packuser.expireDate.Value);
+                    txt_date.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                    #endregion
+
+                    btn_add.Content = MainWindow.resourcemanager.GetString("trUpgrade");
+                    cb_customer.SelectedValue = oldCustomerId;
+                    try
+                    {
+                        agent = await userModel.GetByID(MainWindow.userLogin.userId);
+                    }
+                    catch { agent = await userModel.GetByID(MainWindow.userLogin.userId); }
+                    if (MainWindow.userLogin.type.Equals("ag"))
+                    {
+                        cb_package.SelectedValue = oldPackageId;
+                        cb_period.SelectedValue = oldCountryPackageId;
+                    }
+                    cb_isOnline.SelectedValue = isOnline;
+                    if (isOnline)
+                    {
+                        txt_offlineActivation.Visibility = Visibility.Collapsed;
+                        btn_download.Visibility = Visibility.Collapsed;
+                        txt_activationCodeTitle.Visibility = Visibility.Visible;
+                        tb_activationCode.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        txt_offlineActivation.Visibility = Visibility.Visible;
+                        btn_download.Visibility = Visibility.Visible;
+                        txt_activationCodeTitle.Visibility = Visibility.Collapsed;
+                        tb_activationCode.Visibility = Visibility.Collapsed;
+                    }
+                    tgl_isActive.IsChecked = Convert.ToBoolean(packuser.isActive);
+                    tgl_device.IsChecked = Convert.ToBoolean(packuser.canChngSer);
+                }
+
+                cb_agent.Text = agent.name + " " + agent.lastName;
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
-
-            cb_agent.Text = agent.name + " " + agent.lastName;
-
-            //HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translate()
@@ -220,36 +225,36 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-         //try
-         //{
-            if (cb_package.SelectedIndex != -1)
+            try
             {
-                package = cb_package.SelectedItem as Packages;
-
-                this.DataContext = package;
-                if (package != null)
+                if (cb_package.SelectedIndex != -1)
                 {
-                    try
+                    package = cb_package.SelectedItem as Packages;
+
+                    this.DataContext = package;
+                    if (package != null)
                     {
-                        await FillCombo.fillPeriod(cb_period, (int)cb_customer.SelectedValue, (int)cb_package.SelectedValue);
+                        try
+                        {
+                            await FillCombo.fillPeriod(cb_period, (int)cb_customer.SelectedValue, (int)cb_package.SelectedValue);
 
-                        #region fill period 
+                            #region fill period 
 
-                        if (oldPackageId != 0)
-                            cb_period.SelectedValue = oldCountryPackageId;
+                            if (oldPackageId != 0)
+                                cb_period.SelectedValue = oldCountryPackageId;
 
-                        #endregion
+                            #endregion
+                        }
+                        catch { }
                     }
-                    catch { }
+
                 }
 
             }
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
@@ -291,6 +296,8 @@ namespace AdministratorApp.View.sales
             cb_isOnline.SelectedIndex = -1;
             cb_package.ItemsSource = null;
             cb_period.ItemsSource = null;
+            tgl_device.IsChecked = false;
+            tgl_isActive.IsChecked = true;
             oldPackageId = 0;
             oldCountryPackageId = 0;
             cb_package.IsEnabled = false;
@@ -352,59 +359,59 @@ namespace AdministratorApp.View.sales
         #endregion
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//book
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
-
-            int msg = 0;
-
-            string pop = "";
-            if (HelpClass.validate(requiredControlList, this))
+            try
             {
-                packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
-                packuser.userId = agent.userId;
-                packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
-                packuser.createUserId = MainWindow.userID;
-                packuser.packageNumber = await packuserModel.generateNumber("si", agent.code, agent.userId);
-                if (tgl_isActive.IsChecked == true)
-                    packuser.isActive = 1;
-                else
-                    packuser.isActive = 0;
-                if (tgl_device.IsChecked == true)
-                    packuser.canChngSer = 1;
-                else
-                    packuser.canChngSer = 0;
+                HelpClass.StartAwait(grid_main);
 
-                packuser.canRenew = true;
-                packuser.packageSaleCode = packuser.packageSaleCode;
-                packuser.notes = "";
-                packuser.isOnlineServer = bool.Parse(cb_isOnline.SelectedValue.ToString());
-                packuser.countryPackageId = (int)cb_period.SelectedValue;
-                packuser.oldPackageId = oldPackageId;
-                packuser.oldCountryPackageId = oldCountryPackageId;
+                int msg = 0;
 
-                if (packuser.packageUserId == 0) pop = "trPopAddBook";
-                else pop = "trPopUpgradeSucceed";
-
-                msg = await packuserModel.packageBook(packuser);
-
-                if (msg <= 0)
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                else
+                string pop = "";
+                if (HelpClass.validate(requiredControlList, this))
                 {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString(pop), animation: ToasterAnimation.FadeIn);
-                    if (pop.Equals("trPopAddBook"))
-                        Clear();
-                }
-            }
+                    packuser.packageId = int.Parse(cb_package.SelectedValue.ToString());
+                    packuser.userId = agent.userId;
+                    packuser.customerId = int.Parse(cb_customer.SelectedValue.ToString());
+                    packuser.createUserId = MainWindow.userID;
+                    packuser.packageNumber = await packuserModel.generateNumber("si", agent.code, agent.userId);
+                    if (tgl_isActive.IsChecked == true)
+                        packuser.isActive = 1;
+                    else
+                        packuser.isActive = 0;
+                    if (tgl_device.IsChecked == true)
+                        packuser.canChngSer = 1;
+                    else
+                        packuser.canChngSer = 0;
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //    catch (Exception ex)
-            //    {
-            //        HelpClass.EndAwait(grid_main);
-            //        HelpClass.ExceptionMessage(ex, this);
-            //}
+                    packuser.canRenew = true;
+                    packuser.packageSaleCode = packuser.packageSaleCode;
+                    packuser.notes = "";
+                    packuser.isOnlineServer = bool.Parse(cb_isOnline.SelectedValue.ToString());
+                    packuser.countryPackageId = (int)cb_period.SelectedValue;
+                    packuser.oldPackageId = oldPackageId;
+                    packuser.oldCountryPackageId = oldCountryPackageId;
+
+                    if (packuser.packageUserId == 0) pop = "trPopAddBook";
+                    else pop = "trPopUpgradeSucceed";
+
+                    msg = await packuserModel.packageBook(packuser);
+
+                    if (msg <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString(pop), animation: ToasterAnimation.FadeIn);
+                        if (pop.Equals("trPopAddBook"))
+                            Clear();
+                    }
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_upgrade_Click(object sender, RoutedEventArgs e)
@@ -500,32 +507,32 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-         //try
-         //{
-            if (cb_customer.SelectedIndex != -1)
+            try
             {
-                cb_package.IsEnabled = true;
-                cb_period.IsEnabled = true;
+                if (cb_customer.SelectedIndex != -1)
+                {
+                    cb_package.IsEnabled = true;
+                    cb_period.IsEnabled = true;
 
-                if (MainWindow.userLogin.type != "ag")
-                {
-                    try
+                    if (MainWindow.userLogin.type != "ag")
                     {
-                        await FillCombo.fillPackageByCustomer(cb_package, (int)cb_customer.SelectedValue);
-                        cb_package.SelectedValue = oldPackageId;
+                        try
+                        {
+                            await FillCombo.fillPackageByCustomer(cb_package, (int)cb_customer.SelectedValue);
+                            cb_package.SelectedValue = oldPackageId;
+                        }
+                        catch { }
                     }
-                    catch { }
-                }
-                else
-                {
-                    await FillCombo.fillAgentPackage(cb_package, MainWindow.userLogin.userId);
+                    else
+                    {
+                        await FillCombo.fillAgentPackage(cb_package, MainWindow.userLogin.userId);
+                    }
                 }
             }
-            //}
-            //    catch (Exception ex)
-            //    {
-            //        HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -535,33 +542,33 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_period_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select period
-         //try
-         //{
-            if (cb_period.SelectedIndex != -1)
+            try
             {
-                CountryPackageDate cpd = new CountryPackageDate();
-                try
+                if (cb_period.SelectedIndex != -1)
                 {
-                    cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
+                    CountryPackageDate cpd = new CountryPackageDate();
+                    try
+                    {
+                        cpd = await cpdModel.GetByID((int)cb_period.SelectedValue);
+                    }
+                    catch { cpd = await cpdModel.GetByID((int)cb_period.SelectedValue); }
+                    txt_price.Text = cpd.price.ToString() + " " + cpd.currency.ToString();
                 }
-                catch { cpd = await cpdModel.GetByID((int)cb_period.SelectedValue); }
-                txt_price.Text = cpd.price.ToString() + " " + cpd.currency.ToString();
+                else
+                {
+                    txt_price.Text = "";
+                }
             }
-            else
-            {
-                txt_price.Text = "";
+                catch (Exception ex)
+                {
+                    HelpClass.ExceptionMessage(ex, this);
             }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
         }
         private void Cb_isOnline_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            if (cb_isOnline.SelectedIndex != -1)
+            try
+            {
+                if (cb_isOnline.SelectedIndex != -1)
             {
                 if (cb_isOnline.SelectedValue.ToString().Equals("False"))
                 {
@@ -588,11 +595,11 @@ namespace AdministratorApp.View.sales
                     tb_activationCode.Visibility = Visibility.Visible;
                 }
             }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         public async Task fillInputs(Packages _package, int agentID, int custID)

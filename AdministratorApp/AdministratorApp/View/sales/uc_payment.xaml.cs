@@ -70,80 +70,87 @@ namespace AdministratorApp.View.sales
         string searchText = "";
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
-
-            requiredControlList = new List<string> { "customer", "packageNumber" };
-
-            #region translate
-            if (MainWindow.lang.Equals("en"))
+            try
             {
-                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
-                grid_main.FlowDirection = FlowDirection.LeftToRight;
-            }
-            else
-            {
-                MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
-            }
-            translate();
-            #endregion
+                if(sender != null)
+                    HelpClass.StartAwait(grid_main);
 
-            if (MainWindow.userLogin.type.Equals("ag"))
-                await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId);
-            else
-                await FillCombo.fillCustomer(cb_customer);
+                requiredControlList = new List<string> { "customer", "packageNumber" };
 
-            if (isFirstTime)
-                Clear();
-            else
-            {
-                cb_customer.SelectedValue = cusID;
-                if (!MainWindow.userLogin.type.Equals("ag"))
-                    try { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
-                    catch { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
-                else
-                    try { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
-                    catch { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
-                cb_packageNumber.SelectedValue = packuserID;
-
-                tb_discount.IsEnabled = true;
-
-                btn_upgrade.IsEnabled = true;
-
-                packageUser = cb_packageNumber.SelectedItem as PackageUser;
-
-                txt_period.Visibility = Visibility.Visible;
-
-                int index = packageUser.packageNumber.IndexOf("     ");
-                string s = packageUser.packageNumber.Substring(0, index);
-                txt_packageNumberTitle.Text = s;
-
-                grid_packageDetails.DataContext = packageUser;
-                grid_payDetails.DataContext = packageUser;
-
-                tb_discount.Text = discount_.ToString();
-
-
-                #region fill Package details
-                if (packageUser != null)
+                #region translate
+                if (MainWindow.lang.Equals("en"))
                 {
-                    txt_total.Text = txt_price.Text;
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
                 #endregion
 
-                isFirstTime = true;
+                if (MainWindow.userLogin.type.Equals("ag"))
+                    try { await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId); }
+                    catch { await FillCombo.fillCustomerByAgent(cb_customer, MainWindow.userLogin.userId); }
+                else
+                    try { await FillCombo.fillCustomer(cb_customer); }
+                    catch { await FillCombo.fillCustomer(cb_customer); }
 
+                if (isFirstTime)
+                    Clear();
+                else
+                {
+                    cb_customer.SelectedValue = cusID;
+                    if (!MainWindow.userLogin.type.Equals("ag"))
+                        try { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
+                        catch { await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue); }
+                    else
+                        try { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
+                        catch { await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId); }
+                    cb_packageNumber.SelectedValue = packuserID;
+
+                    tb_discount.IsEnabled = true;
+
+                    btn_upgrade.IsEnabled = true;
+
+                    packageUser = cb_packageNumber.SelectedItem as PackageUser;
+
+                    txt_period.Visibility = Visibility.Visible;
+
+                    int index = packageUser.packageNumber.IndexOf("     ");
+                    string s = packageUser.packageNumber.Substring(0, index);
+                    txt_packageNumberTitle.Text = s;
+
+                    grid_packageDetails.DataContext = packageUser;
+                    grid_payDetails.DataContext = packageUser;
+
+                    tb_discount.Text = discount_.ToString();
+
+
+                    #region fill Package details
+                    if (packageUser != null)
+                    {
+                        try
+                        {
+                            txt_total.Text = (decimal.Parse(txt_price.Text) - discount_).ToString();
+                        }
+                        catch { }
+                    }
+                    #endregion
+
+                    isFirstTime = true;
+                }
+                if(sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
-            HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                if(sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region methods
@@ -986,38 +993,39 @@ namespace AdministratorApp.View.sales
         PayOp payOpModel = new PayOp();
         private async void Cb_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
-
-            if ((cb_customer.SelectedIndex != -1) && (isFirstTime))
+            try
             {
-                cb_packageNumber.SelectedItem = null;
-                cb_packageNumber.IsEnabled = true;
-                tb_discount.IsEnabled = true;
-                //this.DataContext = cb_customer.SelectedItem as PayOp;
-                if (!MainWindow.userLogin.type.Equals("ag"))
-                    await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
-                else
-                    await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId);
+                HelpClass.StartAwait(grid_main);
 
+                if (cb_customer.SelectedIndex != -1)
+                {
+                    if (isFirstTime)
+                    {
+                        cb_packageNumber.SelectedIndex = -1;
+                        cb_packageNumber.IsEnabled = true;
+                        tb_discount.IsEnabled = true;
+                        //this.DataContext = cb_customer.SelectedItem as PayOp;
+                        if (!MainWindow.userLogin.type.Equals("ag"))
+                            await FillCombo.fillBookNum(cb_packageNumber, (int)cb_customer.SelectedValue);
+                        else
+                            await FillCombo.fillBookNumAgent(cb_packageNumber, (int)cb_customer.SelectedValue, MainWindow.userLogin.userId);
 
-                if (cb_packageNumber.Items.Count > 0)
-                    btn_upgrade.IsEnabled = true;
-                else
-                    btn_upgrade.IsEnabled = false;
+                        if (cb_packageNumber.Items.Count > 0)
+                            btn_upgrade.IsEnabled = true;
+                        else
+                            btn_upgrade.IsEnabled = false;
+                    }
+                    await RefreshPayOpList();
+                    await Search();
+                }
 
-                await RefreshPayOpList();
-                await Search();
+                HelpClass.EndAwait(grid_main);
             }
-
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
 
@@ -1050,83 +1058,107 @@ namespace AdministratorApp.View.sales
 
         private async void Cb_packageNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select package
-         //try
-         //{
-         //HelpClass.StartAwait(grid_main);
-
-            if ((cb_packageNumber.SelectedIndex != -1) && (isFirstTime))
+            try
             {
-                tb_discount.Text = "0";
+                HelpClass.StartAwait(grid_main);
 
-                tb_discount.IsEnabled = true;
-
-                btn_upgrade.IsEnabled = true;
-
-                packageUser = cb_packageNumber.SelectedItem as PackageUser;
-
-                txt_period.Visibility = Visibility.Visible;
-
-                int index = packageUser.packageNumber.IndexOf("     ");
-                string s = packageUser.packageNumber.Substring(0, index);
-                txt_packageNumberTitle.Text = s;
-
-                grid_packageDetails.DataContext = packageUser;
-                grid_payDetails.DataContext = packageUser;
-
-                #region fill Package details
-                if (packageUser != null)
+                if ((cb_packageNumber.SelectedIndex != -1) && (isFirstTime))
                 {
-                    txt_total.Text = txt_price.Text;
-                }
-                #endregion
+                    tb_discount.Text = "0";
 
-                await RefreshPayOpList();
-                await Search();
+                    tb_discount.IsEnabled = true;
+
+                    btn_upgrade.IsEnabled = true;
+
+                    packageUser = cb_packageNumber.SelectedItem as PackageUser;
+
+                    txt_period.Visibility = Visibility.Visible;
+
+                    int index = packageUser.packageNumber.IndexOf("     ");
+                    string s = packageUser.packageNumber.Substring(0, index);
+                    txt_packageNumberTitle.Text = s;
+
+                    grid_packageDetails.DataContext = packageUser;
+                    grid_payDetails.DataContext = packageUser;
+
+                    #region fill Package details
+                    if (packageUser != null)
+                    {
+                        txt_total.Text = txt_price.Text;
+                    }
+                    #endregion
+
+                }
+                if(cb_packageNumber.SelectedIndex == -1)
+                {
+                    tb_discount.Text = "0";
+
+                    tb_discount.IsEnabled = true;
+
+                    btn_upgrade.IsEnabled = true;
+
+                    packageUser = new PackageUser();
+
+                    txt_period.Visibility = Visibility.Visible;
+
+                    txt_packageNumberTitle.Text = "";
+
+                    grid_packageDetails.DataContext = packageUser;
+                    grid_payDetails.DataContext = packageUser;
+
+                    #region fill Package details
+                    if (packageUser != null)
+                    {
+                        txt_total.Text = txt_price.Text;
+                    }
+                    #endregion
+                }
+
+
+                HelpClass.EndAwait(grid_main);
             }
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_upgrade_Click(object sender, RoutedEventArgs e)
         {//upgrade
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
-
-            if (packageUser.packageId > 0)
+            try
             {
-                MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
-                uc_sales.Instance.Window_Loaded(null, null);
-                uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
-                uc_sale.Instance.UserControl_Loaded(null, null);
-                uc_sale.Instance.package = package;
+                HelpClass.StartAwait(grid_main);
 
-                uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
-                uc_sale.Instance.oldAgentId = packageUser.userId.Value;
-                uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
-                uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
-                uc_sale.Instance.packuser = packageUser;
-                uc_sale.Instance.btn_serials.IsEnabled = true;
-                uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
-                uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
-                HelpClass.clearValidate(uc_sale.requiredControlList, this);
+                if (packageUser.packageId > 0)
+                {
+                    MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
+                    uc_sales.Instance.Window_Loaded(null, null);
+                    uc_sales.Instance.Btn_sale_Click(uc_sales.Instance.btn_sale, null);
+                    uc_sale.Instance.UserControl_Loaded(null, null);
+                    uc_sale.Instance.package = package;
+
+                    uc_sale.Instance.oldCustomerId = packageUser.customerId.Value;
+                    uc_sale.Instance.oldAgentId = packageUser.userId.Value;
+                    uc_sale.Instance.oldPackageId = packageUser.packageId.Value;
+                    uc_sale.Instance.oldCountryPackageId = packageUser.countryPackageId.Value;
+                    uc_sale.Instance.packuser = packageUser;
+                    uc_sale.Instance.btn_serials.IsEnabled = true;
+                    uc_sale.Instance.tb_activationCode.Text = packageUser.packageSaleCode;
+                    uc_sale.Instance.isOnline = packageUser.isOnlineServer.Value;
+                    HelpClass.clearValidate(uc_sale.requiredControlList, this);
+                }
+
+                Clear();
+                ClearPackageUser();
+
+                HelpClass.EndAwait(grid_main);
             }
-
-            Clear();
-            ClearPackageUser();
-
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_pay_Click(object sender, RoutedEventArgs e)
