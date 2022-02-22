@@ -201,7 +201,9 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                if (customer.custId > 0)
+                {
+                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
@@ -246,6 +248,10 @@ namespace AdministratorApp.View.sectionData
                         }
                     }
                 }
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -297,6 +303,7 @@ namespace AdministratorApp.View.sectionData
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                customer.custId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshCustomersList();

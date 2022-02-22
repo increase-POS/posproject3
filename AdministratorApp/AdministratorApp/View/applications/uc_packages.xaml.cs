@@ -265,7 +265,10 @@ namespace AdministratorApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this))
+                if (package.packageId > 0)
+                {
+
+                    if (HelpClass.validate(requiredControlList, this))
                 {
                     bool isExist = await HelpClass.isCodeExist(tb_code.Text ,"" , "Packages",package.packageId);
                    
@@ -369,6 +372,10 @@ namespace AdministratorApp.View.applications
                     else
                         HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
                 }
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -420,6 +427,7 @@ namespace AdministratorApp.View.applications
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                package.packageId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshPackagesList();

@@ -221,9 +221,10 @@ namespace AdministratorApp.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-
-                //chk duplicate userName
-                bool duplicateUserName = false;
+                if (user.userId > 0)
+                {
+                    //chk duplicate userName
+                    bool duplicateUserName = false;
                 duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, user.userId);
 
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
@@ -271,6 +272,11 @@ namespace AdministratorApp.View.sectionData
                         }
                     }
                 }
+
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -321,6 +327,7 @@ namespace AdministratorApp.View.sectionData
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                user.userId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshUsersList();

@@ -305,7 +305,9 @@ namespace AdministratorApp.View.applications
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (validate())
+                if (program.programId > 0)
+                {
+                    if (validate())
                 {
                     program.name = tb_name.Text;
                     program.details = tb_details.Text;
@@ -322,6 +324,9 @@ namespace AdministratorApp.View.applications
                         await Search();
                     }
                 }
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -373,6 +378,7 @@ namespace AdministratorApp.View.applications
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                program.programId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshProgramsList();
