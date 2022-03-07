@@ -831,5 +831,25 @@ namespace AdministratorApp.View.applications
                                                        , "posCount"   ,   "customerCount", "vendorCount"
                                                        , "salesInvCount", "itemCount"};
         }
+
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
