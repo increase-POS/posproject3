@@ -180,7 +180,7 @@
                 <Border Grid.Row="3"  Margin="10"   BorderBrush="#999999" BorderThickness="1">
                     <DataGrid x:Name="dg_serials"  Background="White"
                               Visibility="Visible" HorizontalContentAlignment="Center"
-                              CanUserAddRows="False"
+                              CanUserAddRows="False" IsReadOnly="True"
                               AutoGenerateColumns="False"    
                               ColumnWidth="SizeToHeader">
                         <DataGrid.Columns>
@@ -218,7 +218,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridCheckBoxColumn x:Name="col_active"  Width="0.5*"   Header="Active"   Binding="{Binding Path=isActive}"/>
+                            <DataGridCheckBoxColumn x:Name="col_active" IsReadOnly="False"  Width="0.5*"   Header="Active"   Binding="{Binding Path=isActive}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
