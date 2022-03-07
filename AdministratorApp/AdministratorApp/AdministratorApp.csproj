@@ -503,6 +503,15 @@
     <Content Include="Reports\Sale\Payments\En\EnPayDetail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\En\EnAgents.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\En\EnCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\En\EnUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="EmailTemplates\images\bookimg.gif" />
     <Content Include="Reports\Sale\Book\Serials\Ar\serialsmail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -642,10 +651,12 @@
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.BookSts.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Customers.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PackageUser.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PaymentsSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PayOp.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PosSerials.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Users.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
@@ -745,6 +756,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Reports\SectionData\Ar\" />
     <Folder Include="Thumb\customers\" />
     <Folder Include="Thumb\users\" />
   </ItemGroup>

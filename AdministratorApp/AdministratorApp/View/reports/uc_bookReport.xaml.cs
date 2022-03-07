@@ -734,43 +734,7 @@ namespace AdministratorApp.View.reports
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-        //public void BuildReport()
-        //{
-
-        //    List<ReportParameter> paramarr = new List<ReportParameter>();
-
-        //    string addpath = "";
-        //    string firstTitle = "paymentsReport";
-        //    string secondTitle = "";
-        //    string subTitle = "";
-        //    string Title = "";
-
-        //    //bool isArabic = ReportCls.checkLang();
-        //    //if (isArabic)
-        //    //{
-        //    //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
-        //    //secondTitle = "vendors";
-        //    //}
-        //    //else
-        //    //{
-        //    //addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
-        //    //secondTitle = "vendors";
-        //    //}
-        //    //string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-        //    //ReportCls.checkLang();
-        //    //subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-        //    Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport") + " / " + subTitle;
-        //    paramarr.Add(new ReportParameter("trTitle", Title));
-        //    //clsReports.cashTransferStsPayment(temp, rep, reppath, paramarr);
-        //    //clsReports.setReportLanguage(paramarr);
-        //    //clsReports.Header(paramarr);
-
-        //    rep.SetParameters(paramarr);
-
-        //    rep.Refresh();
-        //}
+ 
         public void BuildReport()
         {
 
