@@ -218,7 +218,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridCheckBoxColumn x:Name="col_active" IsReadOnly="False"  Width="0.5*"   Header="Active"   Binding="{Binding Path=isActive}"/>
+                            <DataGridCheckBoxColumn x:Name="col_active" IsReadOnly="False"  Width="0.5*"   Header="Active"   Binding="{Binding Path=isActive , NotifyOnTargetUpdated=True,  UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
