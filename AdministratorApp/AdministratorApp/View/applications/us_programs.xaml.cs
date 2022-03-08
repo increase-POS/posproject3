@@ -19,6 +19,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using AdministratorApp.View.windows;
+using System.IO;
 
 namespace AdministratorApp.View.applications
 {
@@ -513,7 +517,7 @@ namespace AdministratorApp.View.applications
                 {
                     TextBox textBox = FindControls.FindVisualChildren<TextBox>(this).Where(x => x.Name == "tb_" + control)
                         .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                    System.Windows.Shapes.Path path = FindControls.FindVisualChildren<System.Windows.Shapes.Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
                          .FirstOrDefault();
@@ -525,7 +529,7 @@ namespace AdministratorApp.View.applications
                 {
                     ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(this).Where(x => x.Name == "cb_" + control)
                         .FirstOrDefault();
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                    System.Windows.Shapes.Path path = FindControls.FindVisualChildren<System.Windows.Shapes.Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Name == "brd_" + control)
                          .FirstOrDefault();
@@ -543,7 +547,7 @@ namespace AdministratorApp.View.applications
             {
                 foreach (var control in requiredControlList)
                 {
-                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Name == "p_error_" + control)
+                    System.Windows.Shapes.Path path = FindControls.FindVisualChildren<System.Windows.Shapes.Path>(this).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     if (path != null)
                         HelpClass.clearValidate(path);
@@ -553,24 +557,176 @@ namespace AdministratorApp.View.applications
         }
         #endregion
 
+
+        #region reports
+
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        public void BuildReport()
+        {
+
+            //string firstTitle = "paymentsReport";
+            ////string secondTitle = "";
+            ////string subTitle = "";
+            //string Title = "";
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Applications\En\EnPrograms.rdlc";
+
+            }
+            else
+            {
+                addpath = @"\Reports\Applications\En\EnPrograms.rdlc";
+            }
+            //D:\myproj\posproject3\AdministratorApp\AdministratorApp\Reports\statisticReports\En\EnBook.rdlc
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            //     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            //  Title = MainWindow.resourcemanagerreport.GetString("trAccountantReport");
+
+            clsReports.programsReport(programsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
+
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                BuildReport();
+
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {
+            //preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+
+                string pdfpath = "";
+                //
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                BuildReport();
+
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)
         {
+            //print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                #region
+                BuildReport();
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.getdefaultPrinters(), FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {
+            //excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                #region
+                //Thread t1 = new Thread(() =>
+                //{
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
+                {
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
+                });
+
+
+                //});
+                //t1.Start();
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
+
+
+
+        #endregion
+
+     
     }
 }

@@ -544,6 +544,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="Reports\Applications\En\EnPackages.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Applications\En\EnPrograms.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Applications\En\EnVersions.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Reports\Sale\Book\Ar\ArBook.rdlc" />
     <EmbeddedResource Include="Reports\Sale\Book\En\EnBook.rdlc" />
     <EmbeddedResource Include="Reports\Sale\Book\Serials\Ar\serials.rdlc" />
@@ -652,11 +661,14 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.BookSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Customers.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Packages.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PackageUser.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PaymentsSts.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PayOp.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.PosSerials.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Programs.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Users.datasource" />
+    <None Include="Properties\DataSources\AdministratorApp.ApiClasses.Versions.datasource" />
     <None Include="Properties\DataSources\AdministratorApp.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonObjectId.datasource" />
     <None Include="Properties\DataSources\Newtonsoft.Json.Bson.BsonReader.datasource" />
@@ -756,6 +768,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Reports\Applications\Ar\" />
     <Folder Include="Reports\SectionData\Ar\" />
     <Folder Include="Thumb\customers\" />
     <Folder Include="Thumb\users\" />
