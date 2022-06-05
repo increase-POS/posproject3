@@ -1216,7 +1216,7 @@ namespace AdministratorApp.View.sales
                         await RefreshPayOpList();
                         await Search();
 
-                        ClearPackageUser();
+                        //ClearPackageUser();
                     }
                 }
                 HelpClass.EndAwait(grid_main);
