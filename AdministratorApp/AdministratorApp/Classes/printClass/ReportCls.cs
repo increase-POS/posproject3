@@ -1275,7 +1275,7 @@ namespace AdministratorApp.Classes
             return (Decrypt(text));
         }
         //////////
-        public static bool decodefile(string Source, string DestPath)
+        public  bool decodefile(string Source, string DestPath)
         {
             try
             {

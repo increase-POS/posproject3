@@ -14,7 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Microsoft.Win32;
+using Microsoft.Reporting.WinForms;
+using System.IO;
+using netoaster;
 namespace AdministratorApp.View.settings
 {
     /// <summary>
@@ -129,5 +132,39 @@ namespace AdministratorApp.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-    }
+        #region decode Error
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        #endregion
+        private void Btn_Decode_Click(object sender, RoutedEventArgs e)
+        {
+            ReportCls rc = new ReportCls();
+            bool res = false;
+            string sourcPath = "";
+            openFileDialog.Filter  = "File|*.er;";
+            openFileDialog.Title = "The Error File";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                sourcPath = openFileDialog.FileName;
+            }
+                saveFileDialog.Filter   = "File|*.xls;";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string Destpath = saveFileDialog.FileName;
+                saveFileDialog.Title = "The Excel File";
+                res = rc.decodefile(sourcPath, Destpath);
+                // rc.DelFile(pdfpath);
+                //  rc.decodefile(DestPath,@"D:\error.xls");
+                if (res)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                }
+            }
+
+            }
+        }
 }
