@@ -11,11 +11,11 @@
         <Border  Grid.Row="1" CornerRadius="10">
             <Grid >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition  Width="350"  />
                 </Grid.ColumnDefinitions>
 
-                <Grid Name="main" Grid.Column="1">
+                <Grid Name="main" Grid.Column="0">
                     <ScrollViewer Name="sc_main" >
                         <WrapPanel Margin="0,15,0,15" HorizontalAlignment="Left" >
 

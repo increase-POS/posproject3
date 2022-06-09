@@ -10,7 +10,7 @@
     <Grid x:Name="grid_main" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <!--<ColumnDefinition  Width="350"  />-->
+            <ColumnDefinition  Width="350"  />
         </Grid.ColumnDefinitions>
         <Border  Grid.Row="1" CornerRadius="10">
             <Grid >
