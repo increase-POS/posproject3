@@ -66,7 +66,7 @@ namespace AdministratorApp.ApiClasses
         public bool canRenew { get; set; }
         public bool isBooked { get; set; }
 
-
+        public string isDemo { get; set; }
         public Nullable<System.DateTime> bookDate { get; set; }
 
         public Nullable<System.DateTime> expireDate { get; set; }
@@ -150,6 +150,7 @@ namespace AdministratorApp.ApiClasses
         public int verId { get; set; }
         public string confirmStat { get; set; }
         public Nullable<int> canChngSer { get; set; }
+        public string isDemo { get; set; }
 
         private string urimainpath = "packageUser/";
         /// <summary>

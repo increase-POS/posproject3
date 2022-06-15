@@ -70,8 +70,7 @@ namespace Programs_Server.Controllers
                                         createUserId = S.createUserId,
                                         updateUserId = S.updateUserId,
                                         notes = S.notes,
-
-
+                                          isDemo=S.isDemo,
                                     }).ToList();
 
 
@@ -240,6 +239,7 @@ namespace Programs_Server.Controllers
                            S.createUserId,
                            S.updateUserId,
                            S.notes,
+                           S.isDemo,
                        })
                                    .FirstOrDefault();
                         return TokenManager.GenerateToken(row);
@@ -346,7 +346,7 @@ namespace Programs_Server.Controllers
                            //   updateDate = S.updateDate,
                            //   packageCode = S.packageCode,
                            storeCount = S.storeCount,
-
+                           isDemo = S.isDemo,
                            //    createUserId = S.createUserId,
                            //  updateUserId = S.updateUserId,
                            // notes = S.notes,
@@ -403,7 +403,7 @@ namespace Programs_Server.Controllers
                            createUserId = S.createUserId,
                            updateUserId = S.updateUserId,
                            notes = S.notes,
-
+                           isDemo=S.isDemo,
                        }).FirstOrDefault();
 
                     return row;
@@ -515,7 +515,7 @@ namespace Programs_Server.Controllers
 
                                 // tmpObject. createUserId = newObject.createUserId;
                                 tmpObject.notes = newObject.notes;
-
+                                tmpObject.isDemo = newObject.isDemo;
 
                                 entity.SaveChanges();
 
@@ -963,7 +963,9 @@ namespace Programs_Server.Controllers
                                     notes = S.notes,
                                     programName = G.name,
                                     verName = V.name,
+                                    isDemo=S.isDemo,
                                 }).ToList();
+
                         //    List = new List<packagesModel>();
                         //}
                         return TokenManager.GenerateToken(List);
@@ -1035,6 +1037,7 @@ namespace Programs_Server.Controllers
                                             createUserId = S.createUserId,
                                             updateUserId = S.updateUserId,
                                             notes = S.notes,
+                                            isDemo=S.isDemo,
                                         }).ToList();
 
                        var packages = packagess.GroupBy(x => x.packageId).Select(S=>new {
@@ -1060,6 +1063,7 @@ namespace Programs_Server.Controllers
                            createUserId =S.FirstOrDefault().createUserId,
                            updateUserId =S.FirstOrDefault().updateUserId,
                            notes =S.FirstOrDefault().notes,
+                           isDemo = S.FirstOrDefault().isDemo,
                        }) .ToList();
                         return TokenManager.GenerateToken(packages);
                     }
@@ -1139,7 +1143,7 @@ namespace Programs_Server.Controllers
                                        itemCount = S.itemCount,
                                        salesInvCount = S.salesInvCount,
                                        storeCount = S.storeCount,
-
+                                       isDemo=S.isDemo,
 
                                    }).ToList();
 
@@ -1169,7 +1173,7 @@ namespace Programs_Server.Controllers
                             salesInvCount = X.FirstOrDefault().salesInvCount,
                             storeCount = X.FirstOrDefault().storeCount,
 
-
+                            isDemo = X.FirstOrDefault().isDemo,
                         }).ToList();
                         return TokenManager.GenerateToken(glist);
 

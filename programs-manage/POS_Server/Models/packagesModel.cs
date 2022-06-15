@@ -33,10 +33,11 @@ namespace Programs_Server.Models
         public Nullable<int> updateUserId { get; set; }
         public bool canDelete { get; set; }
         public string notes { get; set; }
+        public string isDemo { get; set; }
 
 
-   
-    
+
+
 
     }
 

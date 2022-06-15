@@ -158,6 +158,7 @@ namespace Programs_Server.Models
         public string activeApp { get; set; }
         public string confirmStat { get; set; }
         public Nullable<int> canChngSer { get; set; }
+        public string isDemo{ get; set; }
 
     }
     public class SendDetail
