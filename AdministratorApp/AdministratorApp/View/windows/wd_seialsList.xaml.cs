@@ -132,16 +132,20 @@ namespace AdministratorApp.View.windows
                     //posSerialsQueryPage
                    
                     int x = posSerialsQueryPage.Count();
-                    foreach (PosSerials srow in posSerialsQuery)
+                    List<PosSerials> activeposSerialsQuery = posSerialsQuery.Where(X => X.isActive == 1).ToList();
+                    foreach (PosSerials srow in activeposSerialsQuery)
                     {
+
                         PosSerialsUpdate uprow = new PosSerialsUpdate();
                         uprow.serialId =srow.serialId ;
                         uprow.isActive = srow.isActive;
-                        //if(srow.isActive ==1)
-                        uplist.Add(uprow);
+                       // if (srow.isActive == 1)
+                            uplist.Add(uprow);
                     }
-                    int res = await posSerialModel.UpdateList(uplist.ToList(), MainWindow.userID);
+                    
 
+                   int res = await posSerialModel.UpdateList(uplist.ToList(), MainWindow.userID,  packageUserID);
+             
                     if (res > 0)
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);

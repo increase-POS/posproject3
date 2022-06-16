@@ -1165,7 +1165,8 @@ namespace Programs_Server.Controllers
             else
             {
                 int userId = 0;
-                string Object = "";
+                    int packageUserId = 0;
+                    string Object = "";
                 List<posSerials> newList = new List<posSerials>();
                 IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
                
@@ -1175,7 +1176,11 @@ namespace Programs_Server.Controllers
                     {
                         userId = int.Parse(c.Value);
                     }
-                    else if (c.Type == "newlistobject")
+                        if (c.Type == "packageUserId")
+                        {
+                            packageUserId = int.Parse(c.Value);
+                        }
+                        else if (c.Type == "newlistobject")
                     {
                         Object = c.Value.Replace("\\", string.Empty);
                         Object = Object.Trim('"');
@@ -1188,28 +1193,39 @@ namespace Programs_Server.Controllers
                 {
 
                     int res = 0;
+                        
+                        List<int> activeids = newList.Where(X=>X.isActive==1).Select(X => X.serialId).ToList();
 
-                    foreach (posSerials row in newList)
-                    {
-                            posSerials dbrow = new posSerials();
-                            dbrow = getbySerialId(row.serialId);
-                            dbrow.updateUserId = userId;
-                            dbrow.isActive = row.isActive;
-
-                            int id = serialSaveOrUpdate(dbrow);
-
-
-
-                        if (id > 0)
+                        using (incprogramsdbEntities entity = new incprogramsdbEntities())
                         {
-                            res++;
+                         entity.posSerials.Where(X => X.packageUserId == packageUserId && X.isActive == 1).ToList().Select(X => { X.isActive = 0; X.updateUserId = userId; return X; }).ToList();
+                           //entity.SaveChanges();
+                            entity.posSerials.Where(X => activeids.Contains(X.serialId)).ToList().Select(X => { X.isActive = 1; X.updateUserId = userId; return X; }).ToList();
 
+                            entity.SaveChanges();
                         }
+                        res = 1;
+                        //        foreach (posSerials row in newList)
+                        //{
+                        //        posSerials dbrow = new posSerials();
+                        //        dbrow = getbySerialId(row.serialId);
+                        //        dbrow.updateUserId = userId;
+                        //        dbrow.isActive = row.isActive;
+
+                        //        int id = serialSaveOrUpdate(dbrow);
 
 
-                    }
 
-                    message = res.ToString();
+                        //    if (id > 0)
+                        //    {
+                        //        res++;
+
+                        //    }
+
+
+                        //}
+
+                        message = res.ToString();
                 }
                 catch  
                 {
@@ -1225,6 +1241,86 @@ namespace Programs_Server.Controllers
                 return TokenManager.GenerateToken(ex.ToString());
             }
 }
-      
+
+        //
+
+        //[HttpPost]
+        //[Route("UpdateList")]
+        //public string UpdateList(string token)//string Object
+        //{
+        //    string message = "0";
+        //    try
+        //    {
+        //        token = TokenManager.readToken(HttpContext.Current.Request);
+        //        var strP = TokenManager.GetPrincipal(token);
+        //        if (strP != "0") //invalid authorization
+        //        {
+        //            return TokenManager.GenerateToken(strP);
+        //        }
+        //        else
+        //        {
+        //            int userId = 0;
+        //            string Object = "";
+        //            List<posSerials> newList = new List<posSerials>();
+        //            IEnumerable<Claim> claims = TokenManager.getTokenClaims(token);
+
+        //            foreach (Claim c in claims)
+        //            {
+        //                if (c.Type == "userId")
+        //                {
+        //                    userId = int.Parse(c.Value);
+        //                }
+        //                else if (c.Type == "newlistobject")
+        //                {
+        //                    Object = c.Value.Replace("\\", string.Empty);
+        //                    Object = Object.Trim('"');
+        //                    newList = JsonConvert.DeserializeObject<List<posSerials>>(Object, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+        //                }
+        //            }
+
+
+        //            try
+        //            {
+
+        //                int res = 0;
+
+        //                foreach (posSerials row in newList)
+        //                {
+        //                    posSerials dbrow = new posSerials();
+        //                    dbrow = getbySerialId(row.serialId);
+        //                    dbrow.updateUserId = userId;
+        //                    dbrow.isActive = row.isActive;
+
+        //                    int id = serialSaveOrUpdate(dbrow);
+
+
+
+        //                    if (id > 0)
+        //                    {
+        //                        res++;
+
+        //                    }
+
+
+        //                }
+
+        //                message = res.ToString();
+        //            }
+        //            catch
+        //            {
+        //                message = "0";
+        //                return TokenManager.GenerateToken(message);
+        //                //return TokenManager.GenerateToken(ex.ToString());
+        //            }
+        //            return TokenManager.GenerateToken(message);
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return TokenManager.GenerateToken(ex.ToString());
+        //    }
+        //}
+
     }
 }

@@ -266,7 +266,7 @@ namespace AdministratorApp.ApiClasses
 
         }
 
-        public async Task<int> UpdateList(List<PosSerialsUpdate> newList, int userId)
+        public async Task<int> UpdateList(List<PosSerialsUpdate> newList, int userId, int packageUserId)
         {
 
             //Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -284,7 +284,7 @@ namespace AdministratorApp.ApiClasses
             int res = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("userId", userId.ToString());
-
+            parameters.Add("packageUserId", packageUserId.ToString());
             var list = JsonConvert.SerializeObject(newList);
             parameters.Add("newlistobject", list);
             //#################
