@@ -15,8 +15,8 @@ namespace AdministratorApp.converters
             //trUnLimited
             if (value.ToString().Equals("-1"))
                 value = "";
-            else if (value.ToString().Equals("0"))
-                value = "1";
+            //else if (value.ToString().Equals("0"))
+            //    value = "1";
             return value;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

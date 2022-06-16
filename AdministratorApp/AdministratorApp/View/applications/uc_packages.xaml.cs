@@ -89,7 +89,6 @@ namespace AdministratorApp.View.applications
 
                 Keyboard.Focus(tb_code);
 
-                await RefreshPackagesList();
                 await Search();
                 Clear();
 
@@ -97,7 +96,6 @@ namespace AdministratorApp.View.applications
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -126,6 +124,8 @@ namespace AdministratorApp.View.applications
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_salesInvCount, MainWindow.resourcemanager.GetString("trInvoices")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemCount, MainWindow.resourcemanager.GetString("trItems")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
+            txt_demo.Text = MainWindow.resourcemanager.GetString("trDemoPackage");
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
@@ -169,7 +169,7 @@ namespace AdministratorApp.View.applications
                             package.branchCount = -1;
                         else
                         {
-                            if(tb_branchCount.Text.Equals("0"))
+                            if(tb_branchCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.branchCount = int.Parse("1");
                             else
                                 package.branchCount = int.Parse(tb_branchCount.Text);
@@ -178,7 +178,7 @@ namespace AdministratorApp.View.applications
                             package.storeCount = -1;
                         else
                         {
-                            if (tb_storeCount.Text.Equals("0"))
+                            if (tb_storeCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.storeCount = int.Parse("1");
                             else
                                 package.storeCount = int.Parse(tb_storeCount.Text);
@@ -187,7 +187,7 @@ namespace AdministratorApp.View.applications
                             package.posCount = -1;
                         else
                         {
-                            if (tb_posCount.Text.Equals("0"))
+                            if (tb_posCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.posCount = int.Parse("1");
                             else
                                 package.posCount = int.Parse(tb_posCount.Text);
@@ -196,7 +196,7 @@ namespace AdministratorApp.View.applications
                             package.userCount = -1;
                         else
                         {
-                            if (tb_userCount.Text.Equals("0"))
+                            if (tb_userCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.userCount = int.Parse("1");
                             else
                                 package.userCount = int.Parse(tb_userCount.Text);
@@ -205,7 +205,7 @@ namespace AdministratorApp.View.applications
                             package.vendorCount = -1;
                         else
                         {
-                            if (tb_vendorCount.Text.Equals("0"))
+                            if (tb_vendorCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.vendorCount = int.Parse("1");
                             else
                                 package.vendorCount = int.Parse(tb_vendorCount.Text);
@@ -214,7 +214,7 @@ namespace AdministratorApp.View.applications
                             package.customerCount = -1;
                         else
                         {
-                            if (tb_customerCount.Text.Equals("0"))
+                            if (tb_customerCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.customerCount = int.Parse("1");
                             else
                                 package.customerCount = int.Parse(tb_customerCount.Text);
@@ -223,7 +223,7 @@ namespace AdministratorApp.View.applications
                             package.itemCount = -1;
                         else
                         {
-                            if (tb_itemCount.Text.Equals("0"))
+                            if (tb_itemCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.itemCount = int.Parse("1");
                             else
                                 package.itemCount = int.Parse(tb_itemCount.Text);
@@ -232,13 +232,16 @@ namespace AdministratorApp.View.applications
                             package.salesInvCount = -1;
                         else
                         {
-                            if (tb_salesInvCount.Text.Equals("0"))
+                            if (tb_salesInvCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.salesInvCount = int.Parse("1");
                             else
                                 package.salesInvCount = int.Parse(tb_salesInvCount.Text);
                         }
                         package.notes = tb_notes.Text;
                         package.isActive = 1;
+                        string demo = "0";
+                        if (tgl_demo.IsChecked == true) demo = "1";
+                        package.isDemo = demo;
                         package.createUserId = MainWindow.userLogin.userId;
                         package.updateUserId = MainWindow.userLogin.userId;
 
@@ -290,7 +293,7 @@ namespace AdministratorApp.View.applications
                             package.branchCount = -1;
                         else
                         {
-                            if (tb_branchCount.Text.Equals("0"))
+                            if (tb_branchCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.branchCount = int.Parse("1");
                             else
                                 package.branchCount = int.Parse(tb_branchCount.Text);
@@ -299,7 +302,7 @@ namespace AdministratorApp.View.applications
                             package.storeCount = -1;
                         else
                         {
-                            if (tb_storeCount.Text.Equals("0"))
+                            if (tb_storeCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.storeCount = int.Parse("1");
                             else
                                 package.storeCount = int.Parse(tb_storeCount.Text);
@@ -308,7 +311,7 @@ namespace AdministratorApp.View.applications
                             package.posCount = -1;
                         else
                         {
-                            if (tb_posCount.Text.Equals("0"))
+                            if (tb_posCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.posCount = int.Parse("1");
                             else
                                 package.posCount = int.Parse(tb_posCount.Text);
@@ -317,7 +320,7 @@ namespace AdministratorApp.View.applications
                             package.userCount = -1;
                         else
                         {
-                            if (tb_userCount.Text.Equals("0"))
+                            if (tb_userCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.userCount = int.Parse("1");
                             else
                                 package.userCount = int.Parse(tb_userCount.Text);
@@ -326,7 +329,7 @@ namespace AdministratorApp.View.applications
                             package.vendorCount = -1;
                         else
                         {
-                            if (tb_vendorCount.Text.Equals("0"))
+                            if (tb_vendorCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.vendorCount = int.Parse("1");
                             else
                                 package.vendorCount = int.Parse(tb_vendorCount.Text);
@@ -335,7 +338,7 @@ namespace AdministratorApp.View.applications
                             package.customerCount = -1;
                         else
                         {
-                            if (tb_customerCount.Text.Equals("0"))
+                            if (tb_customerCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.customerCount = int.Parse("1");
                             else
                                 package.customerCount = int.Parse(tb_customerCount.Text);
@@ -344,7 +347,7 @@ namespace AdministratorApp.View.applications
                             package.itemCount = -1;
                         else
                         {
-                            if (tb_itemCount.Text.Equals("0"))
+                            if (tb_itemCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.itemCount = int.Parse("1");
                             else
                                 package.itemCount = int.Parse(tb_itemCount.Text);
@@ -353,7 +356,7 @@ namespace AdministratorApp.View.applications
                             package.salesInvCount = -1;
                         else
                         {
-                            if (tb_salesInvCount.Text.Equals("0"))
+                            if (tb_salesInvCount.Text.Equals("0") && !tgl_demo.IsChecked.Value)
                                 package.salesInvCount = int.Parse("1");
                             else
                                 package.salesInvCount = int.Parse(tb_salesInvCount.Text);
@@ -361,6 +364,9 @@ namespace AdministratorApp.View.applications
 
                         package.notes = tb_notes.Text;
                         package.isActive = 1;
+                        string demo = "0";
+                        if (tgl_demo.IsChecked == true) demo = "1";
+                        package.isDemo = demo;
                         package.createUserId = MainWindow.userLogin.userId;
                         package.updateUserId = MainWindow.userLogin.userId;
 
@@ -483,40 +489,45 @@ namespace AdministratorApp.View.applications
                     {
                         btn_packagePriceDate.IsEnabled = true;
 
+                        if(package.isDemo.Equals("1"))
+                            tgl_demo.IsChecked = true;
+                        else
+                            tgl_demo.IsChecked = false;
+
                         #region toggels
                         if (package.branchCount == -1)
-                            tgl_branch.IsChecked = true;
-                        else
-                            tgl_branch.IsChecked = false;
-                        if (package.userCount == -1)
-                            tgl_user.IsChecked = true;
-                        else
-                            tgl_user.IsChecked = false;
-                        if (package.customerCount == -1)
-                            tgl_customer.IsChecked = true;
-                        else
-                            tgl_customer.IsChecked = false;
-                        if (package.salesInvCount == -1)
-                            tgl_saleInv.IsChecked = true;
-                        else
-                            tgl_saleInv.IsChecked = false;
-                        if (package.storeCount == -1)
-                            tgl_store.IsChecked = true;
-                        else
-                            tgl_store.IsChecked = false;
-                        if (package.posCount == -1)
-                            tgl_pos.IsChecked = true;
-                        else
-                            tgl_pos.IsChecked = false;
-                        if (package.vendorCount == -1)
-                            tgl_vendor.IsChecked = true;
-                        else
-                            tgl_vendor.IsChecked = false;
-                        if (package.itemCount == -1)
-                            tgl_item.IsChecked = true;
-                        else
-                            tgl_item.IsChecked = false;
-                        #endregion
+                                tgl_branch.IsChecked = true;
+                            else
+                                tgl_branch.IsChecked = false;
+                            if (package.userCount == -1)
+                                tgl_user.IsChecked = true;
+                            else
+                                tgl_user.IsChecked = false;
+                            if (package.customerCount == -1)
+                                tgl_customer.IsChecked = true;
+                            else
+                                tgl_customer.IsChecked = false;
+                            if (package.salesInvCount == -1)
+                                tgl_saleInv.IsChecked = true;
+                            else
+                                tgl_saleInv.IsChecked = false;
+                            if (package.storeCount == -1)
+                                tgl_store.IsChecked = true;
+                            else
+                                tgl_store.IsChecked = false;
+                            if (package.posCount == -1)
+                                tgl_pos.IsChecked = true;
+                            else
+                                tgl_pos.IsChecked = false;
+                            if (package.vendorCount == -1)
+                                tgl_vendor.IsChecked = true;
+                            else
+                                tgl_vendor.IsChecked = false;
+                            if (package.itemCount == -1)
+                                tgl_item.IsChecked = true;
+                            else
+                                tgl_item.IsChecked = false;
+                            #endregion
 
                         #region delete
                         if (package.canDelete)
@@ -543,10 +554,9 @@ namespace AdministratorApp.View.applications
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-
+            {
                 HelpClass.StartAwait(grid_main);
                 await RefreshPackagesList();
                 await Search();
@@ -554,7 +564,6 @@ namespace AdministratorApp.View.applications
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1006,6 +1015,15 @@ namespace AdministratorApp.View.applications
 
 
         #endregion
- 
+
+        private void Tgl_demo_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Tgl_demo_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

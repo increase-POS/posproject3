@@ -395,7 +395,7 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource MainColor}">
                             <Grid   >
-                                <TextBox x:Name="tb_branchCount"  Text="{Binding branchCount, Converter={StaticResource countConverter}}" 
+                                <TextBox x:Name="tb_branchCount"  Text="{Binding branchCount , Converter={StaticResource countConverter}}" 
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="branch count..."  
                                          Foreground="#4E4E4E"  Padding="10,5,0,0" 
@@ -631,7 +631,13 @@
                                       Checked="Tgl_Count_Checked" Unchecked="Tgl_Count_Unchecked" />
                         </StackPanel>
                     </Grid>
-
+                    <StackPanel Grid.Column="1"  Margin="15,15,5,5" Orientation="Horizontal">
+                        <TextBlock x:Name="txt_demo" Text="demo package" Padding="10,15,15,15"/>
+                        <ToggleButton x:Name="tgl_demo"  Padding="10,15,5,5"
+                                      Height="14" Width="29" 
+                                      VerticalAlignment="Center"  Margin="10 0 10 0" 
+                                      Checked="Tgl_demo_Checked" Unchecked="Tgl_demo_Unchecked"/>
+                    </StackPanel>
                     <Grid Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>

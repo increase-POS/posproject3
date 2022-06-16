@@ -2788,4 +2788,7 @@
   <data name="trSystemSetting" xml:space="preserve">
     <value>إعدادات النظام</value>
   </data>
+  <data name="trDemoPackage" xml:space="preserve">
+    <value>الحزمة التجريبية</value>
+  </data>
 </root>
