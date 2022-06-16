@@ -377,8 +377,12 @@ namespace AdministratorApp.View.applications
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             resetRequiredControlList();
+                           
                             await RefreshPackagesList();
+                            
                             await Search();
+                            Clear();
+                            dg_package.SelectedIndex = index;
                         }
                     }
                     else
@@ -474,6 +478,7 @@ namespace AdministratorApp.View.applications
         }
         #endregion
         #region events
+        int index = -1;
         private void Dg_package_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
             try
@@ -482,6 +487,7 @@ namespace AdministratorApp.View.applications
 
                 if (dg_package.SelectedIndex != -1)
                 {
+                    index = dg_package.SelectedIndex;
                     package = dg_package.SelectedItem as Packages;
                     this.DataContext = package;
 
@@ -496,38 +502,38 @@ namespace AdministratorApp.View.applications
 
                         #region toggels
                         if (package.branchCount == -1)
-                                tgl_branch.IsChecked = true;
-                            else
-                                tgl_branch.IsChecked = false;
-                            if (package.userCount == -1)
-                                tgl_user.IsChecked = true;
-                            else
-                                tgl_user.IsChecked = false;
-                            if (package.customerCount == -1)
-                                tgl_customer.IsChecked = true;
-                            else
-                                tgl_customer.IsChecked = false;
-                            if (package.salesInvCount == -1)
-                                tgl_saleInv.IsChecked = true;
-                            else
-                                tgl_saleInv.IsChecked = false;
-                            if (package.storeCount == -1)
-                                tgl_store.IsChecked = true;
-                            else
-                                tgl_store.IsChecked = false;
-                            if (package.posCount == -1)
-                                tgl_pos.IsChecked = true;
-                            else
-                                tgl_pos.IsChecked = false;
-                            if (package.vendorCount == -1)
-                                tgl_vendor.IsChecked = true;
-                            else
-                                tgl_vendor.IsChecked = false;
-                            if (package.itemCount == -1)
-                                tgl_item.IsChecked = true;
-                            else
-                                tgl_item.IsChecked = false;
-                            #endregion
+                            tgl_branch.IsChecked = true;
+                        else
+                            tgl_branch.IsChecked = false;
+                        if (package.userCount == -1)
+                            tgl_user.IsChecked = true;
+                        else
+                            tgl_user.IsChecked = false;
+                        if (package.customerCount == -1)
+                            tgl_customer.IsChecked = true;
+                        else
+                            tgl_customer.IsChecked = false;
+                        if (package.salesInvCount == -1)
+                            tgl_saleInv.IsChecked = true;
+                        else
+                            tgl_saleInv.IsChecked = false;
+                        if (package.storeCount == -1)
+                            tgl_store.IsChecked = true;
+                        else
+                            tgl_store.IsChecked = false;
+                        if (package.posCount == -1)
+                            tgl_pos.IsChecked = true;
+                        else
+                            tgl_pos.IsChecked = false;
+                        if (package.vendorCount == -1)
+                            tgl_vendor.IsChecked = true;
+                        else
+                            tgl_vendor.IsChecked = false;
+                        if (package.itemCount == -1)
+                            tgl_item.IsChecked = true;
+                        else
+                            tgl_item.IsChecked = false;
+                        #endregion
 
                         #region delete
                         if (package.canDelete)
@@ -667,6 +673,7 @@ namespace AdministratorApp.View.applications
         void Clear()
         {
             this.DataContext = new Packages();
+            tgl_demo.IsChecked = false;
             tgl_branch.IsChecked = false;
             tgl_user.IsChecked = false;
             tgl_customer.IsChecked = false;
@@ -676,6 +683,8 @@ namespace AdministratorApp.View.applications
             tgl_vendor.IsChecked = false;
             tgl_item.IsChecked = false;
             btn_packagePriceDate.IsEnabled = false;
+            cb_program.SelectedIndex = -1;
+            cb_version.SelectedIndex = -1;
             HelpClass.clearValidate(requiredControlList,this);
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -828,13 +837,11 @@ namespace AdministratorApp.View.applications
             tb.IsEnabled = !isChk;
 
             if (isChk)
-                requiredControlList.Remove(required);
+            { requiredControlList.Remove(required); tb.Text = ""; }
             else
-                if(!requiredControlList.Contains(required))
-                    requiredControlList.Add(required);
-
-
-            tb.Text = "";
+                if (!requiredControlList.Contains(required))
+                requiredControlList.Add(required);
+            
             HelpClass.clearTextBoxValidate(tb , p);
 
         }
