@@ -25,6 +25,7 @@ namespace Programs_Server
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<agentCustomer> agentCustomer { get; set; }
         public virtual DbSet<agentPackage> agentPackage { get; set; }
         public virtual DbSet<cities> cities { get; set; }
         public virtual DbSet<countriesCodes> countriesCodes { get; set; }
@@ -36,18 +37,16 @@ namespace Programs_Server
         public virtual DbSet<objects> objects { get; set; }
         public virtual DbSet<packages> packages { get; set; }
         public virtual DbSet<packageUser> packageUser { get; set; }
+        public virtual DbSet<payOp> payOp { get; set; }
+        public virtual DbSet<posInfo> posInfo { get; set; }
         public virtual DbSet<posSerials> posSerials { get; set; }
         public virtual DbSet<programs> programs { get; set; }
-        public virtual DbSet<users> users { get; set; }
-        public virtual DbSet<versions> versions { get; set; }
-        public virtual DbSet<agentCustomer> agentCustomer { get; set; }
-        public virtual DbSet<payOp> payOp { get; set; }
         public virtual DbSet<puStatus> puStatus { get; set; }
-        public virtual DbSet<posInfo> posInfo { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<setValues> setValues { get; set; }
         public virtual DbSet<setting> setting { get; set; }
+        public virtual DbSet<setValues> setValues { get; set; }
         public virtual DbSet<sysEmails> sysEmails { get; set; }
+        public virtual DbSet<users> users { get; set; }
         public virtual DbSet<userSetValues> userSetValues { get; set; }
+        public virtual DbSet<versions> versions { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public customers()
         {
-            this.packageUser = new HashSet<packageUser>();
             this.agentCustomer = new HashSet<agentCustomer>();
+            this.packageUser = new HashSet<packageUser>();
             this.payOp = new HashSet<payOp>();
         }
     
@@ -38,19 +38,19 @@ namespace Programs_Server
         public string image { get; set; }
         public string notes { get; set; }
         public decimal balance { get; set; }
+        public byte balanceType { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> isActive { get; set; }
         public Nullable<int> countryId { get; set; }
-        public byte balanceType { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer { get; set; }
         public virtual countriesCodes countriesCodes { get; set; }
         public virtual users users { get; set; }
         public virtual users users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packageUser> packageUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
     }

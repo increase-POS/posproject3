@@ -337,9 +337,6 @@
     <Compile Include="setValues.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>ManagModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="sysEmails.cs">
       <DependentUpon>ManagModel.tt</DependentUpon>
     </Compile>

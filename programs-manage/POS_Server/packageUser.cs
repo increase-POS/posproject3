@@ -17,8 +17,8 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public packageUser()
         {
-            this.posSerials = new HashSet<posSerials>();
             this.payOp = new HashSet<payOp>();
+            this.posSerials = new HashSet<posSerials>();
             this.puStatus = new HashSet<puStatus>();
         }
     
@@ -60,9 +60,9 @@ namespace Programs_Server
         public virtual users users1 { get; set; }
         public virtual users users2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<posSerials> posSerials { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payOp> payOp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<posSerials> posSerials { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<puStatus> puStatus { get; set; }
     }

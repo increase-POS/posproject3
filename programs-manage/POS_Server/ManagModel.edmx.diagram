@@ -4,89 +4,88 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9c4a7faf90d64e34b32979a98c5c0e10" Name="Diagram1">
-        <EntityTypeShape EntityType="incprogramsdbModel.agentPackage" Width="1.5" PointX="5.25" PointY="40.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.cities" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.countriesCodes" Width="1.5" PointX="0.75" PointY="25.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.countryPackageDate" Width="1.5" PointX="5.25" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.customers" Width="1.5" PointX="8.25" PointY="31" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.error" Width="1.5" PointX="5.25" PointY="36.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.groupObject" Width="1.5" PointX="7.5" PointY="41.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.groups" Width="1.5" PointX="5.25" PointY="45.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.objects" Width="1.5" PointX="5.25" PointY="49" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.packages" Width="1.5" PointX="7.5" PointY="47.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.packageUser" Width="1.5" PointX="10.5" PointY="39" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.posSerials" Width="1.5" PointX="12.75" PointY="38.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.programs" Width="1.5" PointX="5.25" PointY="60.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.users" Width="1.5" PointX="3" PointY="34.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="incprogramsdbModel.versions" Width="1.5" PointX="10.5" PointY="48.375" IsExpanded="true" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentPackage_packages" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentPackage_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentPackage_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentPackage_users2" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_cities_countriesCodes" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_countryPackageDate_countriesCodes" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_customers_countriesCodes" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_users_countriesCodes" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_countryPackageDate_packages" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_countryPackageDate_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_countryPackageDate_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packageUser_countryPackageDate" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_customers_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_customers_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packageUser_customers" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_error_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_groups" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_objects" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_groupObject_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_groups_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_groups_users2" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_objects_objects" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_objects_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_objects_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packages_programs" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packages_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packages_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packages_versions" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packageUser_packages" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packageUser_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packageUser_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_packageUser_users2" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_posSerials_packageUser" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_posSerials_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_posSerials_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_programs_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_programs_users1" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_versions_programs" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_versions_users" ManuallyRouted="false" />
-        <AssociationConnector Association="incprogramsdbModel.FK_versions_users1" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="incprogramsdbModel.agentCustomer" Width="1.5" PointX="10.5" PointY="34" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_customers" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users1" />
-        <AssociationConnector Association="incprogramsdbModel.FK_agentCustomer_users2" />
-        <EntityTypeShape EntityType="incprogramsdbModel.payOp" Width="1.5" PointX="12.75" PointY="43.5" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_packageUser" />
-        <EntityTypeShape EntityType="incprogramsdbModel.puStatus" Width="1.5" PointX="12.75" PointY="48.375" />
-        <AssociationConnector Association="incprogramsdbModel.FK_puStatus_packageUser" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_countryPackageDate" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_customers" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_packages" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_users" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_users1" />
-        <AssociationConnector Association="incprogramsdbModel.FK_payOp_users2" />
-        <EntityTypeShape EntityType="incprogramsdbModel.posInfo" Width="1.5" PointX="15" PointY="38.5" />
-        <AssociationConnector Association="incprogramsdbModel.FK_posInfo_posSerials" />
-        <EntityTypeShape EntityType="incprogramsdbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="incprogramsdbModel.setValues" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="incprogramsdbModel.setting" Width="1.5" PointX="1.125" PointY="4" />
-        <AssociationConnector Association="incprogramsdbModel.FK_setValues_setting" />
-        <EntityTypeShape EntityType="incprogramsdbModel.sysEmails" Width="1.5" PointX="5.25" PointY="24.625" />
-        <AssociationConnector Association="incprogramsdbModel.FK_sysEmails_users" />
-        <AssociationConnector Association="incprogramsdbModel.FK_sysEmails_users1" />
-        <EntityTypeShape EntityType="incprogramsdbModel.userSetValues" Width="1.5" PointX="5.625" PointY="5.5" />
-        <AssociationConnector Association="incprogramsdbModel.FK_userSetValues_setValues" />
+      <Diagram DiagramId="438dbea627874df4b4b667255cfd5156" Name="Diagram1">
+        <EntityTypeShape EntityType="ManagModel.agentCustomer" Width="1.5" PointX="10.5" PointY="46.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.agentPackage" Width="1.5" PointX="5.25" PointY="47.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.cities" Width="1.5" PointX="3" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.countriesCodes" Width="1.5" PointX="0.75" PointY="33.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.countryPackageDate" Width="1.5" PointX="8.25" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.customers" Width="1.5" PointX="8.25" PointY="46.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.error" Width="1.5" PointX="5.25" PointY="42.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.groupObject" Width="1.5" PointX="10.5" PointY="50.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.groups" Width="1.5" PointX="5.25" PointY="51.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.objects" Width="1.5" PointX="5.25" PointY="55.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.packages" Width="1.5" PointX="7.5" PointY="53.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.packageUser" Width="1.5" PointX="13.5" PointY="45.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.payOp" Width="1.5" PointX="15.75" PointY="47.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.posInfo" Width="1.5" PointX="21" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.posSerials" Width="1.5" PointX="18.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.programs" Width="1.5" PointX="5.25" PointY="67.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.puStatus" Width="1.5" PointX="15.75" PointY="59.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.setting" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.setValues" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.sysEmails" Width="1.5" PointX="5.25" PointY="71.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.users" Width="1.5" PointX="3" PointY="42.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.userSetValues" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagModel.versions" Width="1.5" PointX="10.5" PointY="56.625" IsExpanded="true" />
+        <AssociationConnector Association="ManagModel.FK_agentCustomer_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentCustomer_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentCustomer_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentCustomer_users2" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentPackage_packages" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentPackage_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentPackage_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_agentPackage_users2" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_cities_countriesCodes" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_countryPackageDate_countriesCodes" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_customers_countriesCodes" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_users_countriesCodes" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_countryPackageDate_packages" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_countryPackageDate_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_countryPackageDate_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packageUser_countryPackageDate" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_countryPackageDate" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_customers_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_customers_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packageUser_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_error_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_groupObject_groups" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_groupObject_objects" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_groupObject_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_groupObject_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_groups_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_groups_users2" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_objects_objects" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_objects_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_objects_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packages_programs" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packages_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packages_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packages_versions" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packageUser_packages" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_packages" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packageUser_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packageUser_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_packageUser_users2" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_packageUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_posSerials_packageUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_puStatus_packageUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_payOp_users2" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_posInfo_posSerials" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_posSerials_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_posSerials_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_programs_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_programs_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_versions_programs" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_setValues_setting" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_userSetValues_setValues" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_sysEmails_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_sysEmails_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_versions_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagModel.FK_versions_users1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

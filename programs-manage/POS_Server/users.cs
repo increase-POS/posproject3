@@ -17,6 +17,9 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public users()
         {
+            this.agentCustomer = new HashSet<agentCustomer>();
+            this.agentCustomer1 = new HashSet<agentCustomer>();
+            this.agentCustomer2 = new HashSet<agentCustomer>();
             this.agentPackage = new HashSet<agentPackage>();
             this.agentPackage1 = new HashSet<agentPackage>();
             this.agentPackage2 = new HashSet<agentPackage>();
@@ -36,20 +39,17 @@ namespace Programs_Server
             this.packageUser = new HashSet<packageUser>();
             this.packageUser1 = new HashSet<packageUser>();
             this.packageUser2 = new HashSet<packageUser>();
+            this.payOp = new HashSet<payOp>();
+            this.payOp1 = new HashSet<payOp>();
+            this.payOp2 = new HashSet<payOp>();
             this.posSerials = new HashSet<posSerials>();
             this.posSerials1 = new HashSet<posSerials>();
             this.programs = new HashSet<programs>();
             this.programs1 = new HashSet<programs>();
-            this.versions = new HashSet<versions>();
-            this.versions1 = new HashSet<versions>();
-            this.agentCustomer = new HashSet<agentCustomer>();
-            this.agentCustomer1 = new HashSet<agentCustomer>();
-            this.agentCustomer2 = new HashSet<agentCustomer>();
-            this.payOp = new HashSet<payOp>();
-            this.payOp1 = new HashSet<payOp>();
-            this.payOp2 = new HashSet<payOp>();
             this.sysEmails = new HashSet<sysEmails>();
             this.sysEmails1 = new HashSet<sysEmails>();
+            this.versions = new HashSet<versions>();
+            this.versions1 = new HashSet<versions>();
         }
     
         public int userId { get; set; }
@@ -81,6 +81,12 @@ namespace Programs_Server
         public Nullable<byte> isOnline { get; set; }
         public Nullable<int> countryId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<agentCustomer> agentCustomer2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<agentPackage> agentPackage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -121,6 +127,12 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<packageUser> packageUser2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payOp> payOp2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<posSerials> posSerials { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<posSerials> posSerials1 { get; set; }
@@ -129,24 +141,12 @@ namespace Programs_Server
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<programs> programs1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<versions> versions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<versions> versions1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<agentCustomer> agentCustomer2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<payOp> payOp { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<payOp> payOp1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<payOp> payOp2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sysEmails> sysEmails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sysEmails> sysEmails1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<versions> versions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<versions> versions1 { get; set; }
     }
 }
