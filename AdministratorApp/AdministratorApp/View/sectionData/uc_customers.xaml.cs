@@ -88,7 +88,8 @@ namespace AdministratorApp.View.sectionData
                 FillCombo.fillAgentLevel(cb_custlevel);
 
                 Keyboard.Focus(tb_custCode);
-                
+
+                await RefreshCustomersList();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);

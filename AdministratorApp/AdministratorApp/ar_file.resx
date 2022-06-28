@@ -2791,4 +2791,7 @@
   <data name="trDemoPackage" xml:space="preserve">
     <value>الحزمة التجريبية</value>
   </data>
+  <data name="trLevelHint" xml:space="preserve">
+    <value>المستوى...</value>
+  </data>
 </root>

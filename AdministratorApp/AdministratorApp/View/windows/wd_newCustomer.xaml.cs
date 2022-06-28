@@ -91,7 +91,10 @@ namespace AdministratorApp.View.windows
                     HelpClass.getPhone(customer.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                 }
                 else
+                {
+                    customer = new Customers();
                     Clear();
+                }
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -385,8 +388,11 @@ namespace AdministratorApp.View.windows
                 HelpClass.StartAwait(grid_main);
                 if (HelpClass.validateWindow(requiredControlList, this) && HelpClass.IsValidEmailWindow(this))
                 {
-                    tb_custCode.Text = await HelpClass.generateRandomString(5, "", "Customers", customerID);
-                    customer.custCode = tb_custCode.Text;
+                    if (customer.custId == 0)
+                    {
+                        tb_custCode.Text = await HelpClass.generateRandomString(5, "", "Customers", 0);
+                        customer.custCode = tb_custCode.Text;
+                    }
                     customer.custname = tb_custname.Text;
                     customer.lastName = tb_lastName.Text;
                     customer.countryId = Convert.ToInt32(cb_country.SelectedValue);
@@ -404,6 +410,7 @@ namespace AdministratorApp.View.windows
                     customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
+                    customer.balance = 0;
 
                     int s = await customer.Save(customer);
                     if (s <= 0)
