@@ -586,7 +586,8 @@ namespace Programs_Server.Controllers
         {
 
             string message = "";
-
+            try {
+             
             token = TokenManager.readToken(HttpContext.Current.Request);
             var strP = TokenManager.GetPrincipal(token);
             if (strP != "0") //invalid authorization
@@ -624,19 +625,22 @@ namespace Programs_Server.Controllers
                     }
                     try
                     {
-                        customers customer;
+                           customers customer;
+                          
                         using (incprogramsdbEntities entity = new incprogramsdbEntities())
                         {
                             var customerEntity = entity.Set<customers>();
-                            customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
+                         customer = entity.customers.Where(p => p.custId == customerObj.custId).First();
                             customer.image = customerObj.image;
+                          
                             entity.SaveChanges();
+                            return TokenManager.GenerateToken(customer.custId.ToString());
                         }
                         // return customer.custId;
-                        return TokenManager.GenerateToken(customer.custId.ToString());
+                      
                     }
 
-                    catch
+                    catch (Exception ex)
                     {
                         return TokenManager.GenerateToken("0");
                     }
@@ -649,7 +653,11 @@ namespace Programs_Server.Controllers
             }
 
 
-
+            }
+            catch (Exception ex)
+            {
+                return TokenManager.GenerateToken(ex.ToString());
+            }
 
         }
 
