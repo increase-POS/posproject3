@@ -63,7 +63,7 @@ namespace AdministratorApp.View.sectionData
         {//load
             try
             {
-                HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main, "agents_loaded");
                 requiredControlList = new List<string> { "name", "lastName", "accountName",   "mobile" , "country" };
 
                 #region translate
@@ -96,12 +96,12 @@ namespace AdministratorApp.View.sectionData
                 await Search();
                 Clear();
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "agents_loaded");
             }
             catch (Exception ex)
             {
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "agents_loaded");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

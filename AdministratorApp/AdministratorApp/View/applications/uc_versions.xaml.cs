@@ -64,7 +64,7 @@ namespace AdministratorApp.View.applications
         {//load
             try
             {
-                HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main, "version_loaded");
                 requiredControlList = new List<string> { "name" ,"program"};
 
                 #region translate
@@ -88,12 +88,12 @@ namespace AdministratorApp.View.applications
                 await Search();
                 Clear();
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "version_loaded");
             }
             catch (Exception ex)
             {
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "version_loaded");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -161,16 +161,16 @@ namespace AdministratorApp.View.applications
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main, "agents_tgl");
                 if (versions is null)
                     await RefreshVersionsList();
                 tgl_versionState = 1;
                 await Search();
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "agents_tgl");
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "agents_tgl");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

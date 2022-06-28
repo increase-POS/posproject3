@@ -68,7 +68,7 @@ namespace AdministratorApp.View.applications
         {//load
             try
             {
-                HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main, "pack_load");
               
                 resetRequiredControlList();
 
@@ -92,11 +92,11 @@ namespace AdministratorApp.View.applications
                 await Search();
                 Clear();
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "pack_load");
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "pack_load");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -592,16 +592,16 @@ namespace AdministratorApp.View.applications
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main, "pack_tgl");
                 if (packages is null)
                     await RefreshPackagesList();
                 tgl_packageState = 1;
                 await Search();
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "pack_tgl");
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "pack_tgl");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

@@ -64,7 +64,7 @@ namespace AdministratorApp.View.applications
         {//load
             try
             {
-                HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main, "main_loaded");
                 requiredControlList = new List<string> { "name" };
                 if (MainWindow.lang.Equals("en"))
                 {
@@ -83,12 +83,12 @@ namespace AdministratorApp.View.applications
                 await Search();
                 Clear();
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "main_loaded");
             }
             catch (Exception ex)
             {
 
-                HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main, "main_loaded");
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
