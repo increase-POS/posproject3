@@ -2809,4 +2809,7 @@ Please add Email in setting</value>
   <data name="trDemoPackage" xml:space="preserve">
     <value>Demo package</value>
   </data>
+  <data name="trLevelHint" xml:space="preserve">
+    <value>Level...</value>
+  </data>
 </root>
