@@ -9,10 +9,9 @@ namespace AdministratorApp
     class Global
     {
         public const string APIKey = "1234";
-        //public const string APIUri = "https://141.95.1.58:44730/api/";
-        //public const string APIUri = "https://141.95.1.58:443/api/";
-        public const string APIUri = "https://192.168.1.5:443/api/";
+        //public const string APIUri = "https://192.168.1.5:443/api/";
         //public const string APIUri = "https://localhost:443/api/";
+        public const string APIUri = "https://145.239.195.166:443/api/";
 
         public static string ScannedImageLocation = "Thumb/Scan/scan.jpg";
         public const string TMPFolder = "Thumb";
