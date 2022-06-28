@@ -161,15 +161,12 @@ namespace AdministratorApp.View.applications
         {
             try
             {
-                if (tgl_isActive.IsFocused)
-                {
-                    HelpClass.StartAwait(grid_main, "agents_tgl");
-                    if (versions is null)
-                        await RefreshVersionsList();
-                    tgl_versionState = 1;
-                    await Search();
-                    HelpClass.EndAwait(grid_main, "agents_tgl");
-                }
+                HelpClass.StartAwait(grid_main, "agents_tgl");
+                if (versions is null)
+                    await RefreshVersionsList();
+                tgl_versionState = 1;
+                await Search();
+                HelpClass.EndAwait(grid_main, "agents_tgl");
             }
             catch (Exception ex)
             {

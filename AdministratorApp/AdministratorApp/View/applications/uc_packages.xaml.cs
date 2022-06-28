@@ -592,15 +592,12 @@ namespace AdministratorApp.View.applications
         {
             try
             {
-                if (tgl_isActive.IsFocused)
-                {
-                    HelpClass.StartAwait(grid_main, "pack_tgl");
-                    if (packages is null)
-                        await RefreshPackagesList();
-                    tgl_packageState = 1;
-                    await Search();
-                    HelpClass.EndAwait(grid_main, "pack_tgl");
-                }
+                HelpClass.StartAwait(grid_main, "pack_tgl");
+                if (packages is null)
+                    await RefreshPackagesList();
+                tgl_packageState = 1;
+                await Search();
+                HelpClass.EndAwait(grid_main, "pack_tgl");
             }
             catch (Exception ex)
             {
