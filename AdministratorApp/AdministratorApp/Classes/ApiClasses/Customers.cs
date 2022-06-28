@@ -280,7 +280,7 @@ namespace AdministratorApp.ApiClasses
                 {
                     // configure trmporery path
                     string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = Path.Combine(dir, Global.TMPFolder);
+                    string tmpPath = Path.Combine(dir, Global.TMPCustomersFolder);
                     tmpPath = Path.Combine(tmpPath, imageName + extension);
                     if (System.IO.File.Exists(tmpPath))
                     {
@@ -316,9 +316,10 @@ namespace AdministratorApp.ApiClasses
                         {
                             // save image name in DB
                             Customers customer = new Customers();
+                            customer.balance = 0;
                             customer.custId = customerId;
                             customer.image = fileName;
-                            await updateImage(customer);
+                         int ress=   await updateImage(customer);
                             return fileName;
                         }
                     }

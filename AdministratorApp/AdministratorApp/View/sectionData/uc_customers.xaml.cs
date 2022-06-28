@@ -169,7 +169,7 @@ namespace AdministratorApp.View.sectionData
                     customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
-                    customer.balance = 0;
+                 //   customer.balance = 0;
 
                     int s =await customer.Save(customer);
                     if (s <= 0)

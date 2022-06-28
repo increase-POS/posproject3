@@ -274,6 +274,7 @@ namespace AdministratorApp.ApiClasses
                         {
                             // save image name in DB
                             Users user = new Users();
+                            user.balance = 0;
                             user.userId = userId;
                             user.image = fileName;
                             await updateImage(user);
