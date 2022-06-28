@@ -48,7 +48,7 @@ namespace AdministratorApp
         internal static string dateFormat;
         internal static string accuracy;
         static public GroupObject groupObject = new GroupObject();
-        static public List<GroupObject> groupObjects = new List<GroupObject>();
+        //static public List<GroupObject> groupObjects = new List<GroupObject>();
         Users userModel = new Users();
         ImageBrush myBrush = new ImageBrush();
         public static string Currency;
@@ -224,7 +224,7 @@ namespace AdministratorApp
             }
         }
         */
-        async void loading_getUserPersonalInfo()
+        async Task loading_getUserPersonalInfo()
         {
             #region user personal info
             txt_userName.Text = userLogin.name;
@@ -263,14 +263,14 @@ namespace AdministratorApp
             {
                 clearImg();
             }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_getUserPersonalInfo"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
+            //foreach (var item in loadingList)
+            //{
+            //    if (item.key.Equals("loading_getUserPersonalInfo"))
+            //    {
+            //        item.value = true;
+            //        break;
+            //    }
+            //}
             #endregion
         }
         /*
@@ -448,6 +448,7 @@ namespace AdministratorApp
             }
         }
         */
+        /*
         async void loading_getGroupObjects()
         {
             try
@@ -465,6 +466,7 @@ namespace AdministratorApp
                 }
             }
         }
+        */
 
         #endregion
 
@@ -481,42 +483,20 @@ namespace AdministratorApp
                 translate();
 
                 #region loading
-                loadingList = new List<keyValueBool>();
-                bool isDone = true;
-                loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getDateForm", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getRegionAndCurrency", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getStorageCost", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getAccurac", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getItemUnitsUsers", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_GlobalItemUnitsList", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
+                //loadingList = new List<keyValueBool>();
+                //bool isDone = true;
+                //loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
+                //loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
+                
 
               await  FillCombo.loading_getDefaultSystemInfo();
              await FillCombo.Getprintparameter();
-                loading_getGroupObjects();
+                //loading_getGroupObjects();
                await FillCombo.RefreshCountry();
                 FillCombo.fillRegion();
-                //loading_getUserPath();
-                //loading_getTax();
-                //loading_getDateForm();
-                //loading_getRegionAndCurrency();
-                //loading_getStorageCost();
-                //loading_getAccurac();
-                //loading_getItemUnitsUsers();
-                loading_getUserPersonalInfo();
-                //loading_getDefaultSystemInfo();
-                //loading_getprintSitting();
-                //loading_GlobalItemUnitsList();
-                //loading_GlobalUnitsList();
-                //loading_POSList();
-
+                await loading_getUserPersonalInfo();
+               
+                /*
                 do
                 {
                     isDone = true;
@@ -542,6 +522,7 @@ namespace AdministratorApp
                     }
                 }
                 while (!isDone);
+                */
                 #endregion
 
                 if (MainWindow.userLogin.type == "ag")
