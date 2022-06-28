@@ -359,9 +359,10 @@ namespace AdministratorApp.View.sales
         {
             try
             {
-                HelpClass.EndAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await Search();
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {

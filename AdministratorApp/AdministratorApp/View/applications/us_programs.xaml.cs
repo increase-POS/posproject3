@@ -174,12 +174,15 @@ namespace AdministratorApp.View.applications
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                if (programs is null)
-                    await RefreshProgramsList();
-                tgl_programState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
+                if (tgl_isActive.IsFocused)
+                {
+                    HelpClass.StartAwait(grid_main);
+                    if (programs is null)
+                        await RefreshProgramsList();
+                    tgl_programState = 1;
+                    await Search();
+                    HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {

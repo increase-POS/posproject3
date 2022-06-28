@@ -227,12 +227,15 @@ namespace AdministratorApp.View.sales
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                if (packageUsers is null)
-                    await RefreshPackageUserList();
-                tgl_packageUserState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
+                if (tgl_isActive.IsFocused)
+                {
+                    HelpClass.StartAwait(grid_main);
+                    if (packageUsers is null)
+                        await RefreshPackageUserList();
+                    tgl_packageUserState = 1;
+                    await Search();
+                    HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {

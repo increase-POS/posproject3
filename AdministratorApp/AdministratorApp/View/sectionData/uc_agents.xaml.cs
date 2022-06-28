@@ -380,12 +380,15 @@ namespace AdministratorApp.View.sectionData
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                if (users is null)
-                    await RefreshUsersList();
-                tgl_userState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
+                if (tgl_isActive.IsFocused)
+                {
+                    HelpClass.StartAwait(grid_main);
+                    if (users is null)
+                        await RefreshUsersList();
+                    tgl_userState = 1;
+                    await Search();
+                    HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {
