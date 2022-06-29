@@ -169,7 +169,7 @@ namespace AdministratorApp.View.sectionData
                     customer.isActive = 1;
                     customer.createUserId = MainWindow.userLogin.userId;
                     customer.updateUserId = MainWindow.userLogin.userId;
-                 //   customer.balance = 0;
+                    customer.balance = 0;
 
                     int s =await customer.Save(customer);
                     if (s <= 0)
@@ -233,8 +233,7 @@ namespace AdministratorApp.View.sectionData
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshCustomersList();
-                        await Search();
+                        
                         if (isImgPressed)
                         {
                             int customerId = s;
@@ -250,7 +249,10 @@ namespace AdministratorApp.View.sectionData
                                 HelpClass.clearImg(btn_image);
                             }
                         }
-                    }
+
+                            await RefreshCustomersList();
+                            await Search();
+                        }
                 }
                 }
                 else

@@ -248,7 +248,7 @@ namespace AdministratorApp.View.sectionData
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await Search();
+                        
                         if (isImgPressed)
                         {
                             int userId = s;
@@ -264,7 +264,10 @@ namespace AdministratorApp.View.sectionData
                                 HelpClass.clearImg(btn_image);
                             }
                         }
-                    }
+
+                            await RefreshUsersList();
+                            await Search();
+                        }
                 }
                 }
                 else
